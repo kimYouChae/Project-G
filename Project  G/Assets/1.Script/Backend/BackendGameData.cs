@@ -1,36 +1,17 @@
 using BackEnd;
 using System.Collections.Generic;
 using System.Text;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class UserData 
 {
     public int level = 1;
-    public float atk = 3.5f;
-    public string info = string.Empty;
-    public Dictionary<string, int> inventory = new Dictionary<string, int>();
-    public List<string> equipment = new List<string>();
 
     // 데이터 디버깅용 함수
     public override string ToString()
     {
         StringBuilder result = new StringBuilder();
         result.AppendLine($"level : {level}");
-        result.AppendLine($"atk : {atk}");
-        result.AppendLine($"info : {info}");
-
-        result.AppendLine($"inventory");
-        foreach (var itemKey in inventory.Keys)
-        {
-            result.AppendLine($"| {itemKey} : {inventory[itemKey]}개");
-        }
-
-        result.AppendLine($"equipment");
-        foreach (var equip in equipment)
-        {
-            result.AppendLine($"| {equip}");
-        }
 
         return result.ToString();
     }
@@ -67,26 +48,11 @@ public class BackendGameData
 
         Debug.Log("데이터를 초기화합니다.");
         userData.level = 1;
-        userData.atk = 3.5f;
-        userData.info = "친추는 언제나 환영입니다.";
-
-        userData.equipment.Add("전사의 투구");
-        userData.equipment.Add("강철 갑옷");
-        userData.equipment.Add("헤르메스의 군화");
-
-        userData.inventory.Add("빨간포션", 1);
-        userData.inventory.Add("하얀포션", 1);
-        userData.inventory.Add("파란포션", 1);
 
         Debug.Log("뒤끝 업데이트 목록에 해당 데이터들을 추가합니다.");
         // ! 데이터테이블에 데이터를 넣으려면 Param에 뭔저 넣어야함!
         Param param = new Param();
         param.Add("level", userData.level);
-        param.Add("atk", userData.atk);
-        param.Add("info", userData.info);
-        param.Add("equipment", userData.equipment);
-        param.Add("inventory", userData.inventory);
-
 
         Debug.Log("게임 정보 데이터 삽입을 요청합니다.");
         var bro = Backend.GameData.Insert("USER_DATA", param);
@@ -133,20 +99,6 @@ public class BackendGameData
                 userData = new UserData();
 
                 userData.level = int.Parse(gameDataJson[0]["level"].ToString());
-                userData.atk = float.Parse(gameDataJson[0]["atk"].ToString());
-                userData.info = gameDataJson[0]["info"].ToString();
-
-                // 딕셔너리 파싱
-                foreach (string itempkey in gameDataJson[0]["inventory"].Keys)
-                {
-                    userData.inventory.Add(itempkey, int.Parse(gameDataJson[0]["inventory"][itempkey].ToString()));
-                }
-
-                // 리스트 파싱 
-                foreach (LitJson.JsonData equip in gameDataJson[0]["equipment"])
-                {
-                    userData.equipment.Add(equip.ToString());
-                }
 
                 Debug.Log(userData.ToString());
             }
@@ -163,8 +115,6 @@ public class BackendGameData
         // Step 4. 게임 정보 수정 구현하기
         Debug.Log("레벨을 1 증가시킵니다");
         userData.level += 1;
-        userData.atk += 3.5f;
-        userData.info = $"{userData.level} 번 째 정보변경 ";
     }
 
     public void GameDataUpdate()
@@ -179,11 +129,6 @@ public class BackendGameData
 
         Param param = new Param();
         param.Add("level", userData.level);
-        param.Add("atk", userData.atk);
-        param.Add("info", userData.info);
-        param.Add("equipment", userData.equipment);
-        param.Add("inventory", userData.inventory);
-
         BackendReturnObject bro = null;
 
         if (string.IsNullOrEmpty(gameDataRowInDate))
