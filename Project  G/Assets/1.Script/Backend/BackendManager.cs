@@ -22,9 +22,10 @@ public class BackendManager : MonoBehaviour
             Debug.LogError("초기화 실패 : " + bro); 
         }
 
-        PlayerLogIn();
     }
 
+    #region 테스트용
+    
     void PlayerLogIn()
     {
         // BackendLogin.Instance.CustomSignUp("user1", "1234"); // [추가] 뒤끝 회원가입 함수
@@ -47,4 +48,5 @@ public class BackendManager : MonoBehaviour
 
         Debug.Log("테스트를 종료합니다.");
     }
+    #endregion
 }
