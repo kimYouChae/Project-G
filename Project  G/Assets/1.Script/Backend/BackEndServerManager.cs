@@ -42,6 +42,8 @@ public class BackEndServerManager : MonoBehaviour
         return instance;
     }
 
+    #region 게스트 로그인 / 로컬에 있는 게스트 정보 가져오기
+
     public void GuestLogin(Action<bool, string> func)
     {
         Enqueue(Backend.BMember.GuestLogin, callback =>
@@ -67,11 +69,11 @@ public class BackEndServerManager : MonoBehaviour
     {
         isLogin = true;
 
-        OnBackendAUthorized();
+        OnBackendAuthorized();
     }
 
     // 유저 정보 불러오기 
-    private void OnBackendAUthorized() 
+    private void OnBackendAuthorized() 
     {
         // GetUserInfo : 로컬에 저장된 유저 정보 불러오기 (비동기)
         Enqueue(Backend.BMember.GetUserInfo, callback =>
@@ -89,15 +91,20 @@ public class BackEndServerManager : MonoBehaviour
 
             // BackendReturnObject 형태로 return (return value : json형태)
             var info = callback.GetReturnValuetoJSON()["row"];
+
+            Debug.Log(info);
+
             if (info["nickname"] == null)
             {
+                Debug.Log("닉네임이 NULL입니다");
                 // 로그인 UI : 닉네임 UI
 
+                // !!!여기서 return됨 
                 return;
             }
 
             myNickName = info["nickname"].ToString();
-            myIndate = info["inData"].ToString();
+            myIndate = info["inDate"].ToString();
 
             if (loginSuccessFunc != null)
             {
@@ -106,4 +113,28 @@ public class BackEndServerManager : MonoBehaviour
 
         });
     }
+    #endregion
+
+    #region 닉네임 불러오기
+
+    // 닉네임 업데이트
+    // 닉네임이 없으면 매치 서버 접속이 안됨
+    public void UpdateNickName(string nickname ,Action<bool, string> func) 
+    {
+        Enqueue(Backend.BMember.UpdateNickname, nickname, callback =>
+        {
+            if (!callback.IsSuccess()) 
+            {
+                Debug.LogError("닉네임 생성 실패\n" + callback.ToString());
+
+                func(false, string.Format(BackendError,
+                    callback.GetStatusCode(), callback.GetErrorCode(), callback.GetMessage()));
+            }
+
+            loginSuccessFunc = func;
+            OnBackendAuthorized();
+        });
+    }
+
+    #endregion
 }
