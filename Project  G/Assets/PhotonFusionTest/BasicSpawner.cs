@@ -93,6 +93,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
         input.Set(data);
     }
+
     async void StartGame(GameMode mode)
     {
         Debug.Log("실행");
