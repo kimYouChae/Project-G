@@ -23,7 +23,7 @@ public class FusionCallBack : MonoBehaviour , INetworkRunnerCallbacks
         Debug.Log($"📋 세션 리스트 업데이트됨 - 총 {sessionList.Count}개");
 
         // 세션 출력 
-        FusionManager.GetInstance().DebugCurrSession(sessionList);
+        FusionManager.GetInstance().SettingSessionInfo(sessionList);
     }
 
     public void OnSceneLoadDone(NetworkRunner runner)

@@ -63,7 +63,6 @@ public class LobbyUI : MonoBehaviour
     [Space]
     [SerializeField] private Button hostRoomButton; // 호스트 버튼 (방 생성)
     [SerializeField] private Button joinRoomButton;   // 방 참가 버튼 
-    [SerializeField] private Button createRoomButton;  // 방 생성 버튼 
 
     [Space]
     [SerializeField] private GameObject createRoomUi; // 방생성 UI
@@ -71,6 +70,7 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private GameObject inRoomUi;      // 생성한 방 UI
 
     [Header("방 생성")]
+    [SerializeField] private Button createRoomButton;  // 방 생성 버튼 
     [SerializeField] private TMP_InputField roomNameInputField;
     [Header("방 정보")]
     [SerializeField] private MapType mapType = MapType.Basic;   // 맵 타입
@@ -79,8 +79,15 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private ModeType modeType = ModeType.Fight;     // 모드 타입
     [SerializeField] private int roomPassword;      // 방 비번 (랜덤)
 
-    [Header("생성한 방")]
+    [Header("생성한 방 목록(임시)")]
+    [SerializeField] private Button updateRoomListButton;     // 룸 목록 업데이트
+    [SerializeField] private Button enterRoom;    // 방에 입장 
+    [SerializeField] private TextMeshProUGUI[] roomInfoTexts;   // 방 텍스트 리스트 
 
+    [Header("비밀번호")]
+    [SerializeField] private GameObject passWordPopUp;  // 비번 팝업
+    [SerializeField] private TMP_InputField passWordText;
+    [SerializeField] private Button enterPassWord;
 
     private const int maxPasswordDigit = 8;
 
@@ -88,19 +95,33 @@ public class LobbyUI : MonoBehaviour
     {
         // 방생성 버튼 -> 방 생성 UI 켜기
         hostRoomButton.onClick.AddListener(() => OnOffCreateRoomUI(true));
-        // 방 Join 버튼 -> 룸 목록 UI 켜기
-        joinRoomButton.onClick.AddListener( () => OnOffRoolListUi(true));
-        // 방 생성 버튼 -> room 정보 바탕으로 방 생성
-        // 1. 방 정보 세팅
-        // 2. 방 생성
-        // 3. 후 방 UI 
+        // 참가하기 버튼 
+        joinRoomButton.onClick.AddListener( () => 
+        {
+            OnOffRoolListUi(true);      // ->룸 목록 UI 켜기
+            UpdatdCurrentRoomInfo();    // 생성된 방 리스트 업데이트
+        });
+        // IN ROOM 생성 버튼 
         createRoomButton.onClick.AddListener ( () =>
             {
-                RoomInfoSetting();
-                FusionRoomCreate();
-                OnOffRoomUI(true);
+                RoomInfoSetting();  // 1. 방 정보 세팅
+                FusionRoomCreate(); // 2. 방 생성
+                OnOffRoomUI(true); // 3. 후 방 UI 
             }
         );
+
+        // 방 목록 업데이트 버튼
+        updateRoomListButton.onClick.AddListener(UpdatdCurrentRoomInfo);
+        // 방에 입장 버튼
+        enterRoom.onClick.AddListener( () => 
+        {
+            JoinRoom(); // 방 참가 
+            OnOffRoolListUi(false);
+            OnOffRoomUI(true); 
+        });
+
+        // 비번입력후 버튼
+        enterPassWord.onClick.AddListener(EnterPassWord);
 
         // 방 비번 랜덤으로 설정 
         roomPassword = GetRandomNPassword();
@@ -166,14 +187,85 @@ public class LobbyUI : MonoBehaviour
 
     #endregion
 
-    public void UpdatdCurrentRoomInfo(List<SessionInfo> sessionList) 
+    // 생성된 방 리스트 업데이트 
+    public void UpdatdCurrentRoomInfo() 
     {
-        // 꺼져있으면 업데이트 x 
-        if (inRoomUi.activeSelf == false)
+        // 방리스트 Ui 꺼져있으면 업데이트 x 
+        if (roomListUi.activeSelf == false)
             return;
 
-        // UI에 생성 로직 작성필요
-        // 매번 업데이트하면 비효율적일지도, 생각해봐야함 
+        // 현재 만들어진 세션 
+        List<SessionInfo> sessionIninfo = FusionManager.GetInstance().sessionInfoLists;
 
+        Debug.Log("방 세션 갯수: " + sessionIninfo.Count);
+
+        string format = "방 이름 :  {0}  인원 : {1}";
+        for (int i = 0; i < sessionIninfo.Count; i++) 
+        {
+            SessionInfo info = sessionIninfo[i];
+
+            Debug.Log("방 이름 : " + info.Name);
+            roomInfoTexts[i].text = string.Format(format , info.Name , info.PlayerCount );
+        }
     }
+
+    // 방에 참가하기 
+    public void JoinRoom() 
+    {
+        // ##TODO : 임시 - 첫번째 방으로 들어가기, 추후 선택한 방으로 들어가기 기능 추가 
+
+        SessionInfo info = FusionManager.GetInstance().sessionInfoLists[0];
+        if (info == null)
+            return;
+
+        // 비밀번호가 있는 방이면 비번 입력
+        SessionProperty pass;
+        if (info.Properties.TryGetValue("Password", out pass))
+        {
+            // 팝업 켜기 
+            passWordPopUp.SetActive(true);
+            return;
+        }
+
+        // 방 참가 시도 
+        FusionManager.GetInstance().JoinFusionRoom(info.Name);
+    }
+
+    private void EnterPassWord() 
+    {
+
+        // 비번 입력받기
+        string inputPassword = passWordText.text;
+
+        // ##TODO : 임시 - 첫번째 비번 기준 , 추후 수정필요 
+        SessionInfo info = FusionManager.GetInstance().sessionInfoLists[0];
+        if (info == null)
+            return;
+
+        SessionProperty value;
+        // 비번이 없으면 return
+        if (!info.Properties.TryGetValue("Password", out value))
+        {
+            Debug.Log("해당 Room에 비밀번호가 존재하지 않습니다!");
+            return;
+        }
+        if (inputPassword.Equals(string.Empty))
+            return;
+
+        int roomPassword = (int)value;
+        
+        // 같으면 
+        if(int.Parse(inputPassword) == roomPassword) 
+        {
+            Debug.Log("올바른 비밀번호를 입력 했습니다! 방에 입장 합니다");
+            JoinRoom();
+        }
+        else 
+        {
+            Debug.Log("비밀번호가 다릅니다! ");
+        }
+
+        passWordPopUp.SetActive(false);
+    }
+
 }

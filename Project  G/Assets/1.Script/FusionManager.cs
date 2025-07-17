@@ -14,9 +14,14 @@ public class FusionManager : MonoBehaviour
     [SerializeField] private NetworkRunner runner;
     // 콜백
     [SerializeField] private FusionCallBack callback;
+    // 세션 리스트
+    [SerializeField] private List<SessionInfo> sessionInfoList;
 
     [Header("임시 컴포넌트")]
     public LobbyUI lobbyUi;
+
+    // 프로퍼티
+    public List<SessionInfo> sessionInfoLists { get => sessionInfoList; }
 
     public static FusionManager GetInstance()
     {
@@ -44,6 +49,8 @@ public class FusionManager : MonoBehaviour
         // 콜백 등록 
         // runner.AddCallbacks(callback);
 
+        sessionInfoList = new List<SessionInfo>();
+
         StartAsync();
 
     }
@@ -54,6 +61,7 @@ public class FusionManager : MonoBehaviour
         var joinResult = await runner.JoinSessionLobby(SessionLobby.Shared);
     }
 
+    // 방 생성 
     public async void CreateFusionRoom(GameMode mode) 
     {
         Debug.Log("=====*&^%방생성*&^%=====");
@@ -91,14 +99,45 @@ public class FusionManager : MonoBehaviour
         }
         catch (Exception ex) 
         {
-            Debug.Log("예외발생 + " + ex);
+            Debug.Log("방 생성중!! 예외발생 + " + ex);
         }
-
-        // Debug.Log("여기까지 왜 안와");
     }
 
-    // 현재 session 정보 
-    public void DebugCurrSession(List<SessionInfo> sessionList)
+    // 방 참가
+    public async Task JoinFusionRoom(string roomName, GameMode mode = GameMode.Client) 
+    {
+        try 
+        {
+            StartGameArgs gamdArgs = new StartGameArgs()
+            {
+                GameMode = mode,
+                SessionName = roomName
+            };
+
+            // 참가
+            StartGameResult temp = await runner.StartGame(gamdArgs);
+
+            if (temp.Ok)
+                Debug.Log("===방참가 완 !ㅊㅊㅊㅊㅊㅊ");
+            else
+                Debug.Log("===방참가 실패===");
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("방 참가중!! 예외발생 + " + ex);
+        }
+    }
+
+    public void SettingSessionInfo(List<SessionInfo> sessionlist) 
+    {
+        this.sessionInfoList = sessionlist;
+
+        // 출력 
+        DebugCurrSession(sessionlist);
+    }
+
+    // 현재 session 정보 출력 
+    private void DebugCurrSession(List<SessionInfo> sessionList)
     {
         if (sessionList == null)
         {
@@ -111,8 +150,7 @@ public class FusionManager : MonoBehaviour
         int index = 1;
         foreach (SessionInfo info in sessionList) 
         {
-            Debug.Log($"{index}번째 방");
-            Debug.Log($" 방 이름 :  {info.Name} \n 방 인원 : {info.PlayerCount} \n");
+            Debug.Log($" {index}번째 \n 방 이름 :  {info.Name} \n 방 인원 : {info.PlayerCount} \n");
             
             var properties = info.Properties;
             foreach(var dic in properties) 
@@ -122,9 +160,6 @@ public class FusionManager : MonoBehaviour
 
             index++;
         }
-
-        // LobbyUi 업데이트 
-        lobbyUi.UpdatdCurrentRoomInfo(sessionList);
 
     }
     
