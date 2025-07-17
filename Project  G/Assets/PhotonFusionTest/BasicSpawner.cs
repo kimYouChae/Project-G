@@ -4,6 +4,7 @@ using Fusion.Sockets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -49,6 +50,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     // 플레이어 참가
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
+        Debug.Log(" [OnPlayerJoined] 콜백 실행");
         if (runner.IsServer)
         {
             // Create a unique position for the player
@@ -100,6 +102,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         // Create the Fusion runner and let it know that we will be providing user input
         _runner = gameObject.AddComponent<NetworkRunner>();
         gameObject.AddComponent<RunnerSimulatePhysics2D>();
+        _runner.AddCallbacks(this); 
         _runner.ProvideInput = true;
 
         // Create the NetworkSceneInfo from the current scene
@@ -118,16 +121,18 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             Scene = scene,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
         });
+
+        Debug.Log("대충생성");
     }
 
     public void OnConnectedToServer(NetworkRunner runner)
     {
-        throw new NotImplementedException();
+        Debug.Log("✔️ [OnConnectedToServer] 호출됨");
     }
 
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
     {
-        throw new NotImplementedException();
+        Debug.Log("✔️ [OnConnectedToServer] 실패");
     }
 
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
