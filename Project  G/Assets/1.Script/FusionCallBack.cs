@@ -16,7 +16,19 @@ public class FusionCallBack : MonoBehaviour , INetworkRunnerCallbacks
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log($"✔️ [OnPlayerJoined] 호출됨 - Player: {player}");
+
+        // 플레이어 추가 
+        FusionManager.GetInstance().AddPlayerref(player);
     }
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        Debug.Log($"✔️ [OnPlayerLeft] 호출됨 - Player: {player}");
+
+        // 플레이어 추가 
+        FusionManager.GetInstance().RemovePlayerref(player);
+    }
+
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
@@ -84,12 +96,6 @@ public class FusionCallBack : MonoBehaviour , INetworkRunnerCallbacks
     }
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-    {
-        //throw new NotImplementedException();
-    }
-
-
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
         //throw new NotImplementedException();
     }

@@ -16,12 +16,14 @@ public class FusionManager : MonoBehaviour
     [SerializeField] private FusionCallBack callback;
     // 세션 리스트
     [SerializeField] private List<SessionInfo> sessionInfoList;
+    // 들어온 플레이어 정보
+    [SerializeField] private List<PlayerRef> joinPlayersRefInfo;
 
-    [Header("임시 컴포넌트")]
-    public LobbyUI lobbyUi;
+    [SerializeField] private LobbyUIManager lobbyUIManager;
 
     // 프로퍼티
-    public List<SessionInfo> sessionInfoLists { get => sessionInfoList; }
+    public List<SessionInfo> SessionInfoLists { get => sessionInfoList; }
+    public List<PlayerRef> JoinPlayersRefInfo { get => joinPlayersRefInfo; }
 
     public static FusionManager GetInstance()
     {
@@ -47,12 +49,12 @@ public class FusionManager : MonoBehaviour
             callback = gameObject.AddComponent<FusionCallBack>();
 
         // 콜백 등록 
-        // runner.AddCallbacks(callback);
+        runner.AddCallbacks(callback);
 
         sessionInfoList = new List<SessionInfo>();
+        joinPlayersRefInfo = new List<PlayerRef>();
 
         StartAsync();
-
     }
 
     private async Task StartAsync()
@@ -67,7 +69,7 @@ public class FusionManager : MonoBehaviour
         Debug.Log("=====*&^%방생성*&^%=====");
 
         // 콜백 등록 
-        runner.AddCallbacks(callback);
+        // runner.AddCallbacks(callback);
 
         Debug.Log($"방생성 정보 :{FusionRoomInfo.RoomName} / {FusionRoomInfo.Password} ");
 
@@ -92,15 +94,18 @@ public class FusionManager : MonoBehaviour
             StartGameResult temp = await runner.StartGame(gameArgs);
 
             if (temp.Ok)
-                Debug.Log("===ㅊㅊㅊㅊ방생성 완 !ㅊㅊㅊㅊㅊㅊ");
+                Debug.Log("👌방 생성 완");
             else
-                Debug.Log("===저런 방생성 실패===");
+                Debug.Log("🆖 방 생성 오류 ");
 
         }
         catch (Exception ex) 
         {
             Debug.Log("방 생성중!! 예외발생 + " + ex);
         }
+
+        
+
     }
 
     // 방 참가
@@ -118,9 +123,9 @@ public class FusionManager : MonoBehaviour
             StartGameResult temp = await runner.StartGame(gamdArgs);
 
             if (temp.Ok)
-                Debug.Log("===방참가 완 !ㅊㅊㅊㅊㅊㅊ");
+                Debug.Log("👌방 참가 완");
             else
-                Debug.Log("===방참가 실패===");
+                Debug.Log("🆖 방참가 실패===");
         }
         catch (Exception ex)
         {
@@ -160,7 +165,44 @@ public class FusionManager : MonoBehaviour
 
             index++;
         }
-
     }
-    
+
+    // PlayerRef 추가 
+    public void AddPlayerref(PlayerRef pr) 
+    {
+        if(joinPlayersRefInfo == null)
+            joinPlayersRefInfo = new List<PlayerRef>();
+
+        joinPlayersRefInfo.Add(pr);
+
+        // 플레이어 출력
+        PrintPlayerRef();
+
+        // UI
+        lobbyUIManager.UpdateWaitingRoomInfo();
+    }
+
+    // PlayerRef 삭제
+    public void RemovePlayerref(PlayerRef pr) 
+    {
+        if (joinPlayersRefInfo == null)
+            return;
+
+        joinPlayersRefInfo.Remove(pr);
+    }
+
+    private void PrintPlayerRef() 
+    {
+        Debug.Log("참가한 플레이어 정보 업데이트");
+        for (int i = 0; i < joinPlayersRefInfo.Count; i++) 
+        {
+            Debug.Log($"플레이어 정보 : {joinPlayersRefInfo[i].PlayerId}");
+        }
+    }
+
+    // 현재 Runner가 접속해있는 session return 
+    public SessionInfo currSession() 
+    {
+        return runner.SessionInfo;
+    }
 }

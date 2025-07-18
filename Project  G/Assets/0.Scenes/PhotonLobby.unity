@@ -1547,6 +1547,13 @@ MonoBehaviour:
   passWordPopUp: {fileID: 440719663}
   passWordText: {fileID: 36869663}
   enterPassWord: {fileID: 1162446704}
+  waitingRoomTitle: {fileID: 921494302}
+  waitingPlayerName:
+  - {fileID: 1598249083}
+  - {fileID: 365638465}
+  - {fileID: 666886057}
+  - {fileID: 1932699891}
+  startGameButton: {fileID: 912114974}
 --- !u!1 &365638463
 GameObject:
   m_ObjectHideFlags: 0
@@ -4107,6 +4114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runner: {fileID: 0}
   callback: {fileID: 1095903630}
+  joinPlayersRefInfo: []
   lobbyUi: {fileID: 357092600}
 --- !u!114 &1095903630
 MonoBehaviour:
@@ -5591,7 +5599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1390255637}
   m_Layer: 5
-  m_Name: InRoomPanel
+  m_Name: WaitinRoomPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
