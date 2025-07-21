@@ -1,3 +1,4 @@
+using BackEnd;
 using Fusion;
 using Fusion.Sockets;
 using System;
@@ -6,26 +7,25 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class FusionManager : MonoBehaviour 
+public class FusionLobbyManager : MonoBehaviour 
 {
-    private static FusionManager instance;
+    private static FusionLobbyManager instance;
 
     // 네트워크 주체
     [SerializeField] private NetworkRunner runner;
     // 콜백
-    [SerializeField] private FusionCallBack callback;
+    [SerializeField] private FusionLobbyCallBack callback;
     // 세션 리스트
     [SerializeField] private List<SessionInfo> sessionInfoList;
     // 들어온 플레이어 정보
     [SerializeField] private List<PlayerRef> joinPlayersRefInfo;
 
-    [SerializeField] private LobbyUIManager lobbyUIManager;
 
     // 프로퍼티
     public List<SessionInfo> SessionInfoLists { get => sessionInfoList; }
     public List<PlayerRef> JoinPlayersRefInfo { get => joinPlayersRefInfo; }
 
-    public static FusionManager GetInstance()
+    public static FusionLobbyManager GetInstance()
     {
         if (instance == null)
         {
@@ -45,8 +45,8 @@ public class FusionManager : MonoBehaviour
         // 네트워크와 통신하기 위해서 
         if (!gameObject.TryGetComponent<NetworkRunner>(out runner))
             runner = gameObject.AddComponent<NetworkRunner>();
-         if(!gameObject.TryGetComponent<FusionCallBack>(out callback))
-            callback = gameObject.AddComponent<FusionCallBack>();
+         if(!gameObject.TryGetComponent<FusionLobbyCallBack>(out callback))
+            callback = gameObject.AddComponent<FusionLobbyCallBack>();
 
         // 콜백 등록 
         runner.AddCallbacks(callback);
@@ -60,7 +60,7 @@ public class FusionManager : MonoBehaviour
     private async Task StartAsync()
     {
         // 로비에 접속 필요 
-        var joinResult = await runner.JoinSessionLobby(SessionLobby.Shared);
+        await runner.JoinSessionLobby(SessionLobby.Shared);
     }
 
     // 방 생성 
@@ -173,13 +173,19 @@ public class FusionManager : MonoBehaviour
         if(joinPlayersRefInfo == null)
             joinPlayersRefInfo = new List<PlayerRef>();
 
+        // 이미 참가해있으면 추가 x
+        if (joinPlayersRefInfo.Contains(pr))
+        { 
+            Debug.Log(pr.PlayerId + " : 이미 참가해있습니다");    
+            return;
+        }
+
+        Debug.Log("플레이어 Ref : " + pr );
+
         joinPlayersRefInfo.Add(pr);
 
         // 플레이어 출력
         PrintPlayerRef();
-
-        // UI
-        lobbyUIManager.UpdateWaitingRoomInfo();
     }
 
     // PlayerRef 삭제
@@ -205,4 +211,19 @@ public class FusionManager : MonoBehaviour
     {
         return runner.SessionInfo;
     }
+
+    // 방 목록 업데이트
+    public async void RefresshRoomList() 
+    {
+        Debug.Log("방 목록 업데이트중.....");
+
+        if (runner == null)
+            return;
+
+        // 로비에 다시 조인 -> OnSessionListUpdated 콜백이 호출됨. 
+        await StartAsync();
+    }
+
+
+
 }

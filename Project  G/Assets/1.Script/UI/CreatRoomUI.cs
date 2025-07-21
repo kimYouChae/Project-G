@@ -93,17 +93,23 @@ public partial class LobbyUIManager : MonoBehaviour
 
         if (!isCreatePassword) 
         {
-            Debug.Log("비밀 번호를 생성해야합니다!");
+            Debug.Log("비밀 번호를 복사 해야합니다!");
+
+            // ##TODO : 팝업 띄우기 
+
             return;
         }
 
         if (string.IsNullOrEmpty(FusionRoomInfo.RoomName))
         {
             Debug.LogError("방 이름이 비어 있습니다!");
+
+            // ##TODO : 팝업 띄우기 
+
             return;
         }
 
         //FusionManager의 메서드 실행 
-        FusionManager.GetInstance().CreateFusionRoom(GameMode.Host);
+        FusionLobbyManager.GetInstance().CreateFusionRoom(GameMode.Host);
     }
 }

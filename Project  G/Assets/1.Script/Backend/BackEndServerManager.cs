@@ -38,6 +38,11 @@ public class BackEndServerManager : MonoBehaviour
         return instance;
     }
 
+    public string ReturnNickName() 
+    {
+        return playerInfo.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+    }
+
     #region 게스트 로그인 / 로컬에 있는 게스트 정보 가져오기
 
     public void GuestLogin(Action onComplete = null) 

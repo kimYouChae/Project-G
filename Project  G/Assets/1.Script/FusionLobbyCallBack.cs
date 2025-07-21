@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FusionCallBack : MonoBehaviour , INetworkRunnerCallbacks
+public class FusionLobbyCallBack : MonoBehaviour , INetworkRunnerCallbacks
 {
 
     public void OnConnectedToServer(NetworkRunner runner)
@@ -17,8 +17,14 @@ public class FusionCallBack : MonoBehaviour , INetworkRunnerCallbacks
     {
         Debug.Log($"✔️ [OnPlayerJoined] 호출됨 - Player: {player}");
 
+        // rpc 추가
+        FusionToBackend.GetInstance().RPC_SendUserInfo(BackEndServerManager.GetInstance().ReturnNickName(), player);
+
         // 플레이어 추가 
-        FusionManager.GetInstance().AddPlayerref(player);
+        FusionLobbyManager.GetInstance().AddPlayerref(player);
+
+        // 대기방 업데이트
+        LobbyUIManager.GetInstance().UpdateWaitingRoomInfo();
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -26,7 +32,7 @@ public class FusionCallBack : MonoBehaviour , INetworkRunnerCallbacks
         Debug.Log($"✔️ [OnPlayerLeft] 호출됨 - Player: {player}");
 
         // 플레이어 추가 
-        FusionManager.GetInstance().RemovePlayerref(player);
+        FusionLobbyManager.GetInstance().RemovePlayerref(player);
     }
 
 
@@ -35,7 +41,7 @@ public class FusionCallBack : MonoBehaviour , INetworkRunnerCallbacks
         Debug.Log($"📋 세션 리스트 업데이트됨 - 총 {sessionList.Count}개");
 
         // 세션 출력 
-        FusionManager.GetInstance().SettingSessionInfo(sessionList);
+        FusionLobbyManager.GetInstance().SettingSessionInfo(sessionList);
     }
 
     public void OnSceneLoadDone(NetworkRunner runner)

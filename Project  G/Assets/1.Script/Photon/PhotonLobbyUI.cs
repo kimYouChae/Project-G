@@ -134,7 +134,7 @@ public class PhotonLobbyUI : MonoBehaviour
         }
 
         //FusionManager의 메서드 실행 
-        FusionManager.GetInstance().CreateFusionRoom(GameMode.Host);
+        FusionLobbyManager.GetInstance().CreateFusionRoom(GameMode.Host);
     }
 
     #endregion
@@ -147,7 +147,7 @@ public class PhotonLobbyUI : MonoBehaviour
             return;
 
         // 현재 만들어진 세션 
-        List<SessionInfo> sessionIninfo = FusionManager.GetInstance().SessionInfoLists;
+        List<SessionInfo> sessionIninfo = FusionLobbyManager.GetInstance().SessionInfoLists;
 
         Debug.Log("방 세션 갯수: " + sessionIninfo.Count);
 
@@ -167,7 +167,7 @@ public class PhotonLobbyUI : MonoBehaviour
         string inputPassword = passWordText.text;
 
         // ##TODO : 임시 - 첫번째 비번 기준 , 추후 수정필요 
-        SessionInfo info = FusionManager.GetInstance().SessionInfoLists[0];
+        SessionInfo info = FusionLobbyManager.GetInstance().SessionInfoLists[0];
         if (info == null)
             return;
 
@@ -190,7 +190,7 @@ public class PhotonLobbyUI : MonoBehaviour
 
             Debug.Log($"!@#$ 방이름 {info.Name}!@#$");
             // 방 참가 시도 
-            FusionManager.GetInstance().JoinFusionRoom(info.Name);
+            FusionLobbyManager.GetInstance().JoinFusionRoom(info.Name);
 
         }
         else 
@@ -208,12 +208,12 @@ public class PhotonLobbyUI : MonoBehaviour
         if (inRoomUi.activeSelf == false)
             return;
 
-        SessionInfo info = FusionManager.GetInstance().SessionInfoLists[0];
+        SessionInfo info = FusionLobbyManager.GetInstance().SessionInfoLists[0];
 
         // 방제 업데이트
         waitingRoomTitle.text = info.Name;
         // 플레이어 정보 입력 
-        List < PlayerRef > te = FusionManager.GetInstance().JoinPlayersRefInfo;
+        List < PlayerRef > te = FusionLobbyManager.GetInstance().JoinPlayersRefInfo;
         for (int i = 0; i < te.Count; i++) 
         {
             waitingPlayerName[i].text = te[i].PlayerId.ToString();
