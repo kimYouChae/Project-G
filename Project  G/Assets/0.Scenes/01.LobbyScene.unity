@@ -554,6 +554,7 @@ MonoBehaviour:
   playeRefObject: {fileID: 5019087312113146078, guid: f4af809239abeea4fa78547f224f2c17, type: 3}
   scrollViewContent: {fileID: 1040050549}
   playerRefObj: []
+  gameStartButton: {fileID: 902814394}
 --- !u!1 &134551526
 GameObject:
   m_ObjectHideFlags: 0
@@ -3055,7 +3056,7 @@ GameObject:
   - component: {fileID: 902814395}
   - component: {fileID: 902814394}
   m_Layer: 5
-  m_Name: EnterRoomButton
+  m_Name: GameStartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5129,6 +5130,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460528265}
   m_CullTransparentMesh: 1
+--- !u!1 &1537980767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1537980768}
+  - component: {fileID: 1537980769}
+  m_Layer: 0
+  m_Name: FusionSceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1537980768
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537980767}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1537980769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537980767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63cd1f7efd9460943837a86557e64342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runner: {fileID: 0}
+  isLoading: 0
+  LogSceneLoadErrors: 1
 --- !u!1 &1559455101
 GameObject:
   m_ObjectHideFlags: 0
@@ -7111,7 +7159,7 @@ GameObject:
   - component: {fileID: 2127121119}
   - component: {fileID: 2127121118}
   m_Layer: 5
-  m_Name: RoomListScroll
+  m_Name: UserListScroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7217,3 +7265,4 @@ SceneRoots:
   - {fileID: 1802163082}
   - {fileID: 1167762166}
   - {fileID: 710741106}
+  - {fileID: 1537980768}
