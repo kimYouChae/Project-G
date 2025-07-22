@@ -24,6 +24,7 @@ public class FusionLobbyManager : MonoBehaviour
     // 프로퍼티
     public List<SessionInfo> SessionInfoLists { get => sessionInfoList; }
     public List<PlayerRef> JoinPlayersRefInfo { get => joinPlayersRefInfo; }
+    public NetworkRunner Runner { get => runner; }
 
     public static FusionLobbyManager GetInstance()
     {
@@ -87,6 +88,8 @@ public class FusionLobbyManager : MonoBehaviour
                 {
                    { "Password" , (SessionProperty)FusionRoomInfo.Password }
                 },
+
+                SceneManager = FusionSceneManager.GetInstance()
 
             };
 

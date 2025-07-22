@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public partial class LobbyUIManager : MonoBehaviour
 {
@@ -13,6 +14,16 @@ public partial class LobbyUIManager : MonoBehaviour
     [SerializeField] GameObject scrollViewContent;
 
     [SerializeField] List<GameObject> playerRefObj;
+
+    [SerializeField] Button gameStartButton;
+
+    private void InitWaitinRoomUI() 
+    {
+        gameStartButton.onClick.AddListener(() => 
+        {
+            FusionSceneManager.GetInstance().ChangeScene( FusionLobbyManager.GetInstance().Runner , SceneState.Game);
+        });
+    }
 
     public void UpdateWaitingRoomInfo()
     {

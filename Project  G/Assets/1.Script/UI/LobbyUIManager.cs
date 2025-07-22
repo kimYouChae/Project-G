@@ -42,6 +42,7 @@ public partial class LobbyUIManager : MonoBehaviour
         InitLobbyUI();
         InitCreateRoomInfo();
         InitRoomListUi();
+        InitWaitinRoomUI();
     }
 
 
