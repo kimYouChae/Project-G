@@ -44,18 +44,19 @@ public class FusionLobbyManager : MonoBehaviour
         }
 
         // 네트워크와 통신하기 위해서 
-        if (!gameObject.TryGetComponent<NetworkRunner>(out runner))
-            runner = gameObject.AddComponent<NetworkRunner>();
          if(!gameObject.TryGetComponent<FusionLobbyCallBack>(out callback))
             callback = gameObject.AddComponent<FusionLobbyCallBack>();
-
-        // 콜백 등록 
-        runner.AddCallbacks(callback);
 
         sessionInfoList = new List<SessionInfo>();
         joinPlayersRefInfo = new List<PlayerRef>();
 
+        // NetworkRunner 세팅
+        runner = FusionSettingRunner.GetInstance().InitNetWorkRunner();
+
+        // runner 세팅 이후 : 로비에 등록
         StartAsync();
+        // runner 세팅 이후 : 콜백 등록 
+        runner.AddCallbacks(callback);
     }
 
     private async Task StartAsync()
