@@ -1,6 +1,7 @@
 using Fusion;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Unity.Collections.Unicode;
@@ -19,6 +20,8 @@ public class FusionSceneManager : MonoBehaviour, INetworkSceneManager
     /// </summary>
 
     private static FusionSceneManager instance;
+
+    public SceneState state = SceneState.Lobby;
 
     [SerializeField]
     private NetworkRunner runner;   // FusionLobbyManager의 Runner을 가져와야함 
@@ -55,9 +58,17 @@ public class FusionSceneManager : MonoBehaviour, INetworkSceneManager
     public void ChangeScene(NetworkRunner nrunner, SceneState state)
     {
         this.runner = nrunner;
+        this.state = state;
+
+        int index = (int)state;
+        if (index < 0 || index >= SceneManager.sceneCountInBuildSettings)
+        {
+            Debug.LogError($"씬 인덱스({index})가 Build Settings에 존재하지 않습니다.");
+            return;
+        }
 
         Debug.Log("FusionSceneManager : 씬 전환 메서드 실행 ");
-        var scene = SceneRef.FromIndex((int)state);
+        var scene = SceneRef.FromIndex(index);
 
         if (nrunner == null)
         {
@@ -156,11 +167,14 @@ public void Initialize(NetworkRunner runner)
 
    public SceneRef GetSceneRef(GameObject gameObject)
     {
+        Debug.Log("?!!!!!!!!!!!!!!!!!!!!!!!" + gameObject.name);
         return SceneRef.FromIndex(gameObject.scene.buildIndex);
     }
 
     public SceneRef GetSceneRef(string sceneNameOrPath)
     {
+        Debug.Log("?!!!!!!!!!!!!!!!!!!!!!!!" + sceneNameOrPath);
+
         int buildIndex = FusionUnitySceneManagerUtils.GetSceneBuildIndex(sceneNameOrPath);
         if (buildIndex >= 0)
         {
@@ -178,11 +192,23 @@ public void Initialize(NetworkRunner runner)
     {
         yield return null;
 
+        // Fusion에게 "씬 로딩 시작!" 라고 알림
+        // -> 씬 전환 콜백 실행됨.
+        runner.InvokeSceneLoadStart(sceneRef);
+
         // 씬을 여기서 직접 로드 (동기 또는 Unity 비동기)
         SceneManager.LoadScene(sceneRef.AsIndex, LoadSceneMode.Single);
 
-        // Fusion에게 "씬 로딩 완료!" 라고 알림
-        runner.InvokeSceneLoadStart(sceneRef);
+        Scene loadedScene = SceneManager.GetSceneByBuildIndex(sceneRef.AsIndex);
+        while (!loadedScene.isLoaded)
+            yield return null;
+
+        // Fusion에게 "씬 로딩 시작!" 라고 알림
+        // -> 씬 전환 완료 콜백 실행됨.
+        // 씬 로드 완료 콜백
+        List<NetworkObject> sceneNetworkObjects = new List<NetworkObject>();
+        var temp = new SceneLoadDoneArgs(sceneRef , sceneNetworkObjects.ToArray()) { };
+        runner.InvokeSceneLoadDone(temp);
     }
 
     IEnumerator UnloadSceneCoroutine(SceneRef sceneRef) 

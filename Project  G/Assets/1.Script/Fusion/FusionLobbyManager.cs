@@ -62,7 +62,7 @@ public class FusionLobbyManager : MonoBehaviour
     private async Task StartAsync()
     {
         // 로비에 접속 필요 
-        await runner.JoinSessionLobby(SessionLobby.Shared);
+        await runner.JoinSessionLobby(SessionLobby.ClientServer);
     }
 
     // 방 생성 

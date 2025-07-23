@@ -1,7 +1,12 @@
 using Fusion;
+using Mono.Cecil;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FusionInGameManager : MonoBehaviour
 {
@@ -12,14 +17,14 @@ public class FusionInGameManager : MonoBehaviour
     // 콜백
     [SerializeField] private FusionInGameCallBack callback;
     // 생성할 네트워크 프리팹
-    [SerializeField] private NetworkPrefabRef playerPrefab;
+    [SerializeField] private NetworkObject playerPrefab;
 
     [Header("===Player===")]
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
     [SerializeField] Transform[] spawnedPoint;
     [SerializeField] LayerMask[] playerLayerList;
 
-    public NetworkPrefabRef NetworkPlayerPrefab { get => playerPrefab; }
+    public NetworkObject NetworkPlayerPrefab { get => playerPrefab; }
 
     public static FusionInGameManager GetInstance()
     {
@@ -53,10 +58,31 @@ public class FusionInGameManager : MonoBehaviour
 
     private void Start()
     {
-        // InstancePlayer();
+        // 리소스 폴더에서 가져오기 
+        //GameObject var = Resources.Load<GameObject>("PlayerPrefab");
+        // playerPrefab = var.GetComponent<NetworkObject>();
+
+        // 명시적으로 등록 
+        SceneRef currentSceneRef = SceneRef.FromIndex(SceneManager.GetActiveScene().buildIndex);
+
+        if (runner == null) 
+        {
+            Debug.Log("여기서는 NULL 일 수가 없음");
+            return;
+        }
+        Debug.Log(currentSceneRef);
+        NetworkObject[] networkObjects = new NetworkObject[1] { playerPrefab };
+        runner.RegisterSceneObjects(currentSceneRef, networkObjects);
+
     }
 
-    private void InstancePlayer() 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+            InstancePlayer(); 
+    }
+
+    public void InstancePlayer() 
     {
         if (runner == null) 
         {
@@ -66,16 +92,28 @@ public class FusionInGameManager : MonoBehaviour
         // 서버(호스트)만 오브젝트 생성 가능 
         if (runner.IsServer) 
         {
+            Debug.Log("playerPrefab isValid: " + playerPrefab.IsValid);
+
+            Debug.Log("현재 세션에 들어온 인원 " + runner.ActivePlayers.Count());
+            
             int index = 0;
             foreach (PlayerRef pl in runner.ActivePlayers) 
             {
-                NetworkObject netPlayerObj = runner.Spawn(playerPrefab , spawnedPoint[index].position , Quaternion.identity );
-                netPlayerObj.gameObject.layer = playerLayerList[index];
 
-                // 딕셔너리에 넣기
-                _spawnedCharacters.Add(pl, netPlayerObj);
+                try
+                {
+                    NetworkObject netPlayerObj = runner.Spawn(playerPrefab, spawnedPoint[0].position, Quaternion.identity);
+                    netPlayerObj.gameObject.layer = playerLayerList[index];
 
-                index++;
+                    // 딕셔너리에 넣기
+                    _spawnedCharacters.Add(pl, netPlayerObj);
+
+                    index++;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"🔥 Spawn 예외 (PlayerRef {pl}): {e}");
+                }
             }
         }
     }

@@ -32,9 +32,15 @@ public class FusionInGameCallBack : MonoBehaviour , INetworkRunnerCallbacks
     public void OnSceneLoadDone(NetworkRunner runner)
     {
         Debug.Log($"💿 [OnSceneLoadDone] 호출");
-    }
 
-    public void OnSceneLoadStart(NetworkRunner runner)
+        if (FusionSceneManager.GetInstance().state == SceneState.Game)
+        {
+            // FusionInGameManager.GetInstance().InstancePlayer();
+        }
+    }
+   
+
+public void OnSceneLoadStart(NetworkRunner runner)
     {
         Debug.Log($"💿 [OnSceneLoadStart] 호출");
     }

@@ -28,10 +28,10 @@ public class Player : NetworkBehaviour
 
     private void Update()
     {
-        if (Object.HasInputAuthority && Input.GetKeyDown(KeyCode.R))
-        {
-            RPC_SendMessage("Hey Mate!");
-        }
+        //if (Object.HasInputAuthority && Input.GetKeyDown(KeyCode.R))
+        //{
+            // RPC_SendMessage("Hey Mate!");
+        //}
     }
 
     public override void Spawned()
