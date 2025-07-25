@@ -5219,6 +5219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63cd1f7efd9460943837a86557e64342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   runner: {fileID: 0}
   isLoading: 0
   LogSceneLoadErrors: 1

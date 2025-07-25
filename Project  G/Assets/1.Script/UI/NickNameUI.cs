@@ -29,5 +29,8 @@ public partial class LobbyUIManager : MonoBehaviour
         }
 
         BackEndServerManager.GetInstance().UpdateNickName(nickName);
+
+        // 화면 전환
+        ChangePanel(LobbyPanelType.NickName , LobbyPanelType.Lobby);
     }
 }
