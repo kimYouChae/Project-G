@@ -88,6 +88,9 @@ public class BackEndServerManager : MonoBehaviour
             // 끝난 후 콜백 실행 
             onComplete?.Invoke();
 
+            // 포톤 닉네임 세팅 
+            PunLobbyManager.GetInstance().SettingNickName(ReturnNickName());
+
         });
     }
 

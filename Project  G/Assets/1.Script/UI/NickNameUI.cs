@@ -30,6 +30,9 @@ public partial class LobbyUIManager : MonoBehaviour
 
         BackEndServerManager.GetInstance().UpdateNickName(nickName);
 
+        // 포톤 닉네임 세팅 
+        PunLobbyManager.GetInstance().SettingNickName(nickName);
+
         // 화면 전환
         ChangePanel(LobbyPanelType.NickName , LobbyPanelType.Lobby);
     }

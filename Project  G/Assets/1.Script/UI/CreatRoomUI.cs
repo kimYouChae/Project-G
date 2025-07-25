@@ -108,7 +108,7 @@ public partial class LobbyUIManager : MonoBehaviour
             return;
         }
 
-        //FusionManager의 메서드 실행 
-        // FusionLobbyManager.GetInstance().CreateFusionRoom(GameMode.Host);
+        // PunLobbyManager 매서드 실행
+        PunLobbyManager.GetInstance().CreateCusomRoom();
     }
 }

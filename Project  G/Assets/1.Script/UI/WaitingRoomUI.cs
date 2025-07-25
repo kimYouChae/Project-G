@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -20,39 +22,33 @@ public partial class LobbyUIManager : MonoBehaviour
     {
         gameStartButton.onClick.AddListener(() => 
         {
-            // FusionSceneManager.GetInstance().ChangeScene( FusionLobbyManager.GetInstance().Runner , SceneState.Game);
+            // 마스터클라이언트만 가능 
+            if (PhotonNetwork.IsMasterClient)
+                SceneManager.GetInstance().ChangeScene(SceneType.Game);
         });
     }
 
-    public void UpdateWaitingRoomInfo()
+    public void UpdateWaitingRoomInfo(Player[] playerref)
     {
-        /*
-        // 현재 세션에 대한 정보를 가져옴
-        SessionInfo info = FusionLobbyManager.GetInstance().currSession();
+        // 현재 방 대한 정보를 가져옴
+        Room info = PhotonNetwork.CurrentRoom;
 
         // 방제 업데이트
         roomTitle.text = info.Name;
 
-        // 플레이어 정보 입력 
-        List<PlayerRef> playerref = FusionLobbyManager.GetInstance().JoinPlayersRefInfo;
-
         // 리스트 초기화
         DestoryListObject(playerRefObj);
 
-        for (int i = 0; i < playerref.Count; i++)
+        for (int i = 0; i < playerref.Length; i++)
         {
             GameObject temp = Instantiate(playeRefObject);
             TextMeshProUGUI text = temp.GetComponentInChildren<TextMeshProUGUI>();
-
-            // ref에 따른 닉네임으로 설정 
-            Debug.Log("Ui : 플레이어 re " + playerref[i]);
-            text.text = FusionToBackend.GetInstance().PlayerRefToNickName(playerref[i]);
+            text.text = playerref[i].NickName;
 
             playerRefObj.Add(temp);
 
             temp.transform.SetParent(scrollViewContent.transform);
         }
-        */
     }
 
 
