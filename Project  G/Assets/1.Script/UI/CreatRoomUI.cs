@@ -1,4 +1,3 @@
-using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -110,6 +109,6 @@ public partial class LobbyUIManager : MonoBehaviour
         }
 
         //FusionManager의 메서드 실행 
-        FusionLobbyManager.GetInstance().CreateFusionRoom(GameMode.Host);
+        // FusionLobbyManager.GetInstance().CreateFusionRoom(GameMode.Host);
     }
 }

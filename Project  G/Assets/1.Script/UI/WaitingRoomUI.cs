@@ -1,4 +1,3 @@
-using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,12 +20,13 @@ public partial class LobbyUIManager : MonoBehaviour
     {
         gameStartButton.onClick.AddListener(() => 
         {
-            FusionSceneManager.GetInstance().ChangeScene( FusionLobbyManager.GetInstance().Runner , SceneState.Game);
+            // FusionSceneManager.GetInstance().ChangeScene( FusionLobbyManager.GetInstance().Runner , SceneState.Game);
         });
     }
 
     public void UpdateWaitingRoomInfo()
     {
+        /*
         // 현재 세션에 대한 정보를 가져옴
         SessionInfo info = FusionLobbyManager.GetInstance().currSession();
 
@@ -52,6 +52,7 @@ public partial class LobbyUIManager : MonoBehaviour
 
             temp.transform.SetParent(scrollViewContent.transform);
         }
+        */
     }
 
 

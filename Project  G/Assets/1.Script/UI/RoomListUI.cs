@@ -1,4 +1,3 @@
-using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -44,7 +43,7 @@ public partial class LobbyUIManager : MonoBehaviour
 
     private void RefreshRoomList() 
     {
-        FusionLobbyManager.GetInstance().RefresshRoomList();
+        
     }
 
     private void UpdateRoomList() 
@@ -54,6 +53,7 @@ public partial class LobbyUIManager : MonoBehaviour
 
         roomObjList.Clear();
 
+        /*
         // 다시 룸(세선) 정보로 생성 
         for (int i = 0; i < FusionLobbyManager.GetInstance().SessionInfoLists.Count; i++) 
         {
@@ -76,14 +76,17 @@ public partial class LobbyUIManager : MonoBehaviour
                 infoObj.RoomObjectIndex = i;
             }
         }
+        */
     }
 
     private void JoinRoom() 
     {
+        /*
         if (currSelectRoomIndex < 0 && currSelectRoomIndex >= FusionLobbyManager.GetInstance().SessionInfoLists.Count)
             return;
 
         EnterPassWord();
+        */
     }
 
 
@@ -98,6 +101,7 @@ public partial class LobbyUIManager : MonoBehaviour
         // 비번 입력받기
         string inputPassword = passWordText.text;
 
+        /*
         // 선택한 방
         SessionInfo info = FusionLobbyManager.GetInstance().SessionInfoLists[currSelectRoomIndex];
         if (info == null)
@@ -130,6 +134,7 @@ public partial class LobbyUIManager : MonoBehaviour
         {
             Debug.Log("비밀번호가 다릅니다! ");
         }
+        */
     }
 
 }
