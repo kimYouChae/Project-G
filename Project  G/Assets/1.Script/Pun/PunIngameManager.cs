@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public enum DirType 
@@ -12,6 +13,9 @@ public enum DirType
 
 public class PunIngameManager : MonoBehaviour
 {
+
+    private static PunIngameManager instance;   // 인스턴스
+
     [Header("===플레이어 스폰===")]
     [SerializeField] private PhotonView localPlayer;
     [SerializeField] private List<PhotonView> playerList;
@@ -19,6 +23,32 @@ public class PunIngameManager : MonoBehaviour
     [Header("===총알 스폰===")]
     [SerializeField] private List<Transform> playerField; // 필드 위치 (현재 왼 -> 오 순서)
     [SerializeField] private Vector2[] indexToSpawnPoint;   // 부모 기준 스포너 위치 
+
+    public List<Transform> PlayerField { get => playerField; }
+    public Vector2[] IndexToSpawnPoint { get => indexToSpawnPoint;}
+
+
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(instance);
+        }
+
+        instance = this;
+    }
+
+    public static PunIngameManager GetInstance()
+    {
+        if (instance == null)
+        {
+            Debug.LogError("PunIngameManager 인스턴스가 존재하지 않습니다.");
+            return null;
+        }
+
+        return instance;
+    }
+
 
     private void Start()
     {
@@ -33,7 +63,6 @@ public class PunIngameManager : MonoBehaviour
 
     private void CreatePlayer() 
     {
-        
         if (PhotonNetwork.InRoom)
         {
             // 고유한 ActorNum을 가짐 (1부터시작)
@@ -73,11 +102,13 @@ public class PunIngameManager : MonoBehaviour
         for (int dir = 0; dir < 4; dir++) 
         {
             GameObject spawner = PhotonNetwork.Instantiate("BulletSpawner", new Vector3(0, 0, 0), Quaternion.identity);
+            PhotonView view  = spawner.GetComponent<PhotonView>();
 
-            spawner.transform.SetParent(playerField[index]);
-            spawner.transform.localPosition = indexToSpawnPoint[dir];
+            view.RPC("SetParentTrasform", RpcTarget.AllBuffered , index, dir );
 
             yield return new WaitForSeconds(10f);
         }
     }
+
+
 }
