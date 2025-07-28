@@ -24,7 +24,7 @@ public partial class LobbyUIManager : MonoBehaviour
         {
             // 마스터클라이언트만 가능 
             if (PhotonNetwork.IsMasterClient)
-                SceneManager.GetInstance().ChangeScene(SceneType.Game);
+                PhotonSceneManager.GetInstance().ChangeScene(SceneType.Game);
         });
     }
 

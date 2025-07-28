@@ -6,9 +6,9 @@ public enum SceneType
     Lobby, Game
 }
 
-public class SceneManager : MonoBehaviour
+public class PhotonSceneManager : MonoBehaviour
 {
-    private static SceneManager instance;   // 인스턴스
+    private static PhotonSceneManager instance;   // 인스턴스
 
     void Awake()
     {
@@ -21,11 +21,11 @@ public class SceneManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public static SceneManager GetInstance()
+    public static PhotonSceneManager GetInstance()
     {
         if (instance == null)
         {
-            Debug.LogError("BackEndServerManager 인스턴스가 존재하지 않습니다.");
+            Debug.LogError("PhotonSceneManager 인스턴스가 존재하지 않습니다.");
             return null;
         }
 
