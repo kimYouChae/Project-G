@@ -61,7 +61,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
             }
             else
             {
-                Debug.LogError("Position 형변환 실패: " + posObj.GetType());
+                Debug.LogError("NetPlayer : Position 형변환 실패: " + posObj.GetType());
             }
 
             /*
