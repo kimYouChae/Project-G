@@ -47,6 +47,7 @@ MonoBehaviour:
   - RPC_SettingAngle
   - TriggerBullet
   - RPC_TriggerBullet
+  - RPC_StopAll
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

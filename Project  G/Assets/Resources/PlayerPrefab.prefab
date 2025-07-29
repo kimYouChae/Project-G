@@ -195,7 +195,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88c6c07f9903e7f4291f77f26d820a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerIndex: 0
   speed: 3
   dir: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
-  playerIndex: 0
+  view: {fileID: 0}
+  flag: 1
