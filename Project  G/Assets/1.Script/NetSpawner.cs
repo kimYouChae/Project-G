@@ -57,11 +57,16 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
         }
     }
 
-    public void SettingOwner(Transform trs, DirType type) 
+    public void SettingParent(int index, int dir) 
     {
-        this.ownerTrs = trs;
-        // owner 지정은 RPC
-        // view.RPC("RPC_SettingOwner", RpcTarget.AllBuffered , viewId);
+        view.RPC("RPC_SetParentTrasform", RpcTarget.AllBuffered, index, dir);
+    }
+
+    public void SettingOwner(int viewId, DirType type) 
+    {
+        // this.ownerTrs = trs;
+        // owner 지정은 RPC : view아이디는 로컬의 플레이어 id
+        view.RPC("RPC_SettingOwner", RpcTarget.AllBuffered , viewId);
 
         this.directType = type;
 
@@ -70,21 +75,21 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
         {
             case DirType.Left:
                 moveNetSpawner += MoveFllowToUpDown;
-                
-                // 회전
-                transform.eulerAngles = new Vector3(0,0,-90f);
+
+                // 회전 동기화 
+                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, new Vector3(0, 0, -90f));
                 break;
             case DirType.Right:
                 moveNetSpawner += MoveFllowToUpDown;
 
-                // 회전
-                transform.eulerAngles = new Vector3(0, 0, 90f);
+                // 회전 동기화
+                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, new Vector3(0, 0, 90f));
                 break;
             case DirType.Top:
                 moveNetSpawner += MoveFllowToLeftRIght;
 
-                // 회전
-                transform.eulerAngles = new Vector3(0, 0, 180f);
+                // 회전 동기화
+                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, new Vector3(0, 0, -180));
                 break;
             case DirType.Bottom:
                 moveNetSpawner += MoveFllowToLeftRIght;
@@ -124,15 +129,17 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
 
     private IEnumerator ShootBulletCicle() 
     {
-        float coolTime = 3f;
         while (true) 
         {
             // ## 임시 쿨타임 Nf
+            float coolTime = Random.Range(3f, 5f);
+            
             yield return new WaitForSeconds(coolTime);
 
-            coolTime = Random.Range(3f, 5f);
             // 총알생성 RPC 실행 
-            view.RPC("RPC_ShootBullet", RpcTarget.AllBuffered);
+            // 총알 두개 생성 방지 -> isMine 검사
+            if(photonView.IsMine)
+                view.RPC("RPC_ShootBullet", RpcTarget.AllBuffered);
         }
     }
 
@@ -165,5 +172,13 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
 
         if (temp != null)
             ownerTrs = temp.transform;
+        else
+            Debug.Log($"{viewID}에 해당하는 PhotonView없음");
+    }
+
+    [PunRPC]
+    public void RPC_SettingAngle(Vector3 enAle) 
+    {
+        transform.eulerAngles = enAle;
     }
 }

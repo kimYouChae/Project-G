@@ -6,17 +6,26 @@ using Photon.Pun;
 
 public class NetPlayer : MonoBehaviourPun, IPunObservable
 {
+    [Header("===Info===")]
+    [SerializeField] private int playerIndex;
+
+    [Header("===Move===")]
     [SerializeField] private float speed = 3.0f;
     [SerializeField] private Vector3 dir;
-    [SerializeField] private Rigidbody2D rb;
 
-    [SerializeField] private int playerIndex;
+    [Header("===Component===")]
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private PhotonView view;
+
+    [Header("===Test===")]
+    [SerializeField] bool flag = true; // true : 테스트할 때 충돌 x 
 
     public int PlayerIndex { get => playerIndex; }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        view = GetComponent<PhotonView>();
     }
 
     private void FixedUpdate()
@@ -76,5 +85,31 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
             }
             */
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!photonView.IsMine)
+            return;
+
+#if UNITY_EDITOR
+        // 테스트용 -> 충돌 x 
+        if (flag)
+            return;
+#endif
+
+        // 임시 총알 레이어 번호 설정 
+        if (collision.gameObject.layer == 7)
+        {
+            view.RPC("RPC_TriggerBullet" , RpcTarget.AllBuffered);
+        }
+    }
+
+    [PunRPC]
+    public void RPC_TriggerBullet() 
+    {
+        Debug.Log($"충돌했습니다");
+
+        TimeManager.Stop();
     }
 }

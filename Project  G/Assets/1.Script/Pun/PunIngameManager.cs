@@ -102,11 +102,13 @@ public class PunIngameManager : MonoBehaviour
         for (int dir = 0; dir < 4; dir++) 
         {
             GameObject spawnerObj = PhotonNetwork.Instantiate("BulletSpawner", new Vector3(0, 0, 0), Quaternion.identity);
-            PhotonView view  = spawnerObj.GetComponent<PhotonView>();
+            NetSpawner spawner = spawnerObj.GetComponent<NetSpawner>();
+            spawner.SettingParent(index, dir);
 
-            view.RPC("RPC_SetParentTrasform", RpcTarget.AllBuffered , index, dir );
-
-            spawnerObj.GetComponent<NetSpawner>().SettingOwner( localPlayer.transform , (DirType)dir );
+            if (localPlayer != null)
+                spawner.SettingOwner(localPlayer.ViewID, (DirType)dir);
+            else
+                Debug.LogWarning("localPlayer가 NULL입니다 왜지/!??");
 
             yield return new WaitForSeconds(10f);
         }
