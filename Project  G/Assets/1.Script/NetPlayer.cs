@@ -101,14 +101,20 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         // 임시 총알 레이어 번호 설정 
         if (collision.gameObject.layer == 7)
         {
-            view.RPC("RPC_TriggerBullet" , RpcTarget.AllBuffered);
+            view.RPC("RPC_TriggerBullet", RpcTarget.AllBuffered, photonView.ViewID) ;
         }
     }
 
     [PunRPC]
-    public void RPC_TriggerBullet() 
+    public void RPC_TriggerBullet(int viewId) 
     {
         Debug.Log($"충돌했습니다");
+
+        PhotonView view = PhotonView.Find(viewId);
+        if (view != null) 
+        {
+            InGameUI.GetInstance().HighlightPlayer(view.transform);
+        }
 
         TimeManager.Stop();
     }
