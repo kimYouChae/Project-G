@@ -44,6 +44,9 @@ MonoBehaviour:
   - RPC_SetParentTrasform
   - RPC_SettingOwner
   - RPC_ShootBullet
+  - RPC_SettingAngle
+  - TriggerBullet
+  - RPC_TriggerBullet
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
