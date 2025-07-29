@@ -1,19 +1,31 @@
 using Photon.Pun;
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class NetSpawner : MonoBehaviourPun, IPunObservable
 {
+    [SerializeField] private PhotonView view;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform ownerTrs;    // 따라다닐 기준이 되는 trs
     [SerializeField] private DirType directType;    // 내가 위치한 방향 
     [SerializeField] private Action moveNetSpawner;
 
+    [Header("===Bullet===")]
+    [SerializeField] private Transform shootPosi;   //총알 쏠 위치 
+    [SerializeField] private GameObject bulletPrefab;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        view = GetComponent<PhotonView>();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(ShootBulletCicle());
     }
 
     private void FixedUpdate()
@@ -48,16 +60,32 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
     public void SettingOwner(Transform trs, DirType type) 
     {
         this.ownerTrs = trs;
+        // owner 지정은 RPC
+        // view.RPC("RPC_SettingOwner", RpcTarget.AllBuffered , viewId);
+
         this.directType = type;
 
         // 방향에 따라 움직임 다르게 
         switch (directType)
         {
             case DirType.Left:
+                moveNetSpawner += MoveFllowToUpDown;
+                
+                // 회전
+                transform.eulerAngles = new Vector3(0,0,-90f);
+                break;
             case DirType.Right:
                 moveNetSpawner += MoveFllowToUpDown;
+
+                // 회전
+                transform.eulerAngles = new Vector3(0, 0, 90f);
                 break;
             case DirType.Top:
+                moveNetSpawner += MoveFllowToLeftRIght;
+
+                // 회전
+                transform.eulerAngles = new Vector3(0, 0, 180f);
+                break;
             case DirType.Bottom:
                 moveNetSpawner += MoveFllowToLeftRIght;
                 break;
@@ -94,8 +122,22 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
         rb.velocity = new Vector2(directionX, 0).normalized * 3f;
     }
 
+    private IEnumerator ShootBulletCicle() 
+    {
+        float coolTime = 3f;
+        while (true) 
+        {
+            // ## 임시 쿨타임 Nf
+            yield return new WaitForSeconds(coolTime);
+
+            coolTime = Random.Range(3f, 5f);
+            // 총알생성 RPC 실행 
+            view.RPC("RPC_ShootBullet", RpcTarget.AllBuffered);
+        }
+    }
+
     [PunRPC]
-    public void SetParentTrasform(int playerIndex, int dir)
+    public void RPC_SetParentTrasform(int playerIndex, int dir)
     {
         // 플레이어에 저장되어 있는 index , 좌상우하 방향
 
@@ -103,5 +145,25 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
 
         transform.SetParent(parent);
         transform.localPosition = PunIngameManager.GetInstance().IndexToSpawnPoint[dir];
+    }
+
+    [PunRPC]
+    public void RPC_ShootBullet() 
+    {
+        GameObject temp = Instantiate(bulletPrefab, shootPosi );
+        Vector3 destination = ownerTrs.position;
+
+        // 총알에 방향벡터 지정해주기
+        Vector3 dir = destination - shootPosi.position;
+        temp.GetComponent<BasicBullet>().DirectVector = dir;
+    }
+
+    [PunRPC]
+    public void RPC_SettingOwner(int viewID) 
+    {
+        PhotonView temp = PhotonView.Find(viewID);
+
+        if (temp != null)
+            ownerTrs = temp.transform;
     }
 }

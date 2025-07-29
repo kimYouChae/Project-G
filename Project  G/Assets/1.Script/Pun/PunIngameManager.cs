@@ -104,9 +104,9 @@ public class PunIngameManager : MonoBehaviour
             GameObject spawnerObj = PhotonNetwork.Instantiate("BulletSpawner", new Vector3(0, 0, 0), Quaternion.identity);
             PhotonView view  = spawnerObj.GetComponent<PhotonView>();
 
-            view.RPC("SetParentTrasform", RpcTarget.AllBuffered , index, dir );
+            view.RPC("RPC_SetParentTrasform", RpcTarget.AllBuffered , index, dir );
 
-            spawnerObj.GetComponent<NetSpawner>().SettingOwner(localPlayer.transform , (DirType)dir );
+            spawnerObj.GetComponent<NetSpawner>().SettingOwner( localPlayer.transform , (DirType)dir );
 
             yield return new WaitForSeconds(10f);
         }
