@@ -68,7 +68,7 @@ public class PunIngameManager : MonoBehaviour
             // 고유한 ActorNum을 가짐 (1부터시작)
             int index = PhotonNetwork.LocalPlayer.ActorNumber - 1;
             // Resources 파일 하위에 동일한 이름의 오브젝트가 있어야함 ! 
-            GameObject temp = PhotonNetwork.Instantiate("PlayerPrefab", playerField[index].position, Quaternion.identity);
+            GameObject temp = PhotonNetwork.Instantiate("Player_1", playerField[index].position, Quaternion.identity);
             temp.GetComponent<NetPlayer>().SetIndex(index);
             // 리스트에 저장 
             playerList.Add(localPlayer);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;  // 두트윈 
 
-public class InGameUI : MonoBehaviour
+public partial class InGameUI : MonoBehaviour
 {
     private static InGameUI instance;   // 인스턴스
 

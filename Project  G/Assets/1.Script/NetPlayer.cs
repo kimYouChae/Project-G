@@ -16,6 +16,8 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [Header("===Component===")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private PhotonView view;
+    [SerializeField] NetPlayerAnimator netAnimator;
+    [SerializeField] private Animator animator;
 
     [Header("===Test===")]
     [SerializeField] bool flag = true; // true : 테스트할 때 충돌 x 
@@ -26,6 +28,8 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     {
         rb = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
+        netAnimator = GetComponent<NetPlayerAnimator>();
+        netAnimator.SetAnimator(animator);
     }
 
     private void FixedUpdate()
@@ -36,6 +40,17 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
         dir.x = Input.GetAxisRaw("Horizontal");
         dir.y = Input.GetAxisRaw("Vertical");
+
+        if (dir.x < 0)  // 왼
+            netAnimator.ChangeAnimation(CharaterAniState.left);
+        if(dir.x > 0 )  // 오
+            netAnimator.ChangeAnimation(CharaterAniState.right);
+        if(dir.y < 0)   // 아래
+            netAnimator.ChangeAnimation(CharaterAniState.back);
+        if(dir.y > 0 )  // 위
+            netAnimator.ChangeAnimation(CharaterAniState.front);
+        if(dir.x == 0 && dir.y == 0)    // 가만히
+            netAnimator.ChangeAnimation(CharaterAniState.none); 
 
         rb.velocity = dir.normalized * speed;
     }
