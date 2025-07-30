@@ -29,6 +29,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         rb = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
         netAnimator = GetComponent<NetPlayerAnimator>();
+        animator = GetComponent<Animator>();
         netAnimator.SetAnimator(animator);
     }
 

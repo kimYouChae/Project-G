@@ -21,7 +21,7 @@ public class NetPlayerAnimator : MonoBehaviour
     const string rightParameter = "isRightWalk";
 
     public void ChangeAnimation( CharaterAniState nextState ) 
-    {
+    { 
         Action action;
         if(charaterAniStateToAction.TryGetValue( nextState, out action) ) 
         {
@@ -30,9 +30,9 @@ public class NetPlayerAnimator : MonoBehaviour
     }
     
 
-    public void SetAnimator(Animator animator) 
+    public void SetAnimator(Animator ani) 
     {   
-        this.animator = animator;
+        this.animator = ani;
         charaterAniStateToAction = new Dictionary<CharaterAniState, Action>() 
         {
             { CharaterAniState.none , () =>
