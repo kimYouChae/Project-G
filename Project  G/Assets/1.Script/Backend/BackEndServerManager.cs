@@ -3,13 +3,7 @@ using UnityEngine;
 using static BackEnd.SendQueue;
 using BackEnd;
 using LitJson;
-
-public enum NickCheckResultType
-{
-    NoPlayerInfo,
-    NoNickname,
-    HasNickname
-}
+using BackEnd.Content;
 
 public class BackEndServerManager : MonoBehaviour
 {
@@ -17,6 +11,8 @@ public class BackEndServerManager : MonoBehaviour
 
     [Header("===INFO===")]
     [SerializeField] private BackendReturnObject playerInfo;
+
+    public BackendReturnObject PlayerInfo { get => playerInfo; }
 
     void Awake()
     {
@@ -80,10 +76,11 @@ public class BackEndServerManager : MonoBehaviour
             Debug.Log("로컬의 유저 데이터를 저장합니다");
             // 가져온 유저 정보 출력 
             playerInfo = callback;
-            // string userJson = playerInfo.ReturnValue;
+
+            string userJson = playerInfo.ReturnValue;
             // JsonData data = playerInfo.GetReturnValuetoJSON();    // Lit Json 데이터타입
 
-            // Debug.Log(userJson);
+            Debug.Log("로컬에 저장되어 있는 정보 :" + userJson);
 
             // 끝난 후 콜백 실행 
             onComplete?.Invoke();
@@ -131,4 +128,5 @@ public class BackEndServerManager : MonoBehaviour
     }
 
     #endregion
+
 }
