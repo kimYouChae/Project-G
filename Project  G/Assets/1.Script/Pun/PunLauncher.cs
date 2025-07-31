@@ -35,6 +35,8 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarningFormat("Pun : OnDisconnected 콜백실행 | 연결안됨 :  {0}", cause);
+
+        LobbyUIManager.GetInstance().ChangePanel( LobbyPanelType.None , LobbyPanelType.UnTitled );
     }
 
     /// <summary>
