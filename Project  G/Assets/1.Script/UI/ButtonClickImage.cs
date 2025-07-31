@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,6 +22,8 @@ public class ButtonClickImage : MonoBehaviour
         myImage = GetComponent<Image>();
         oriSprite = GetComponent<Image>().sprite;
         trigger = GetComponent<EventTrigger>();
+        if(trigger == null)
+            trigger = gameObject.AddComponent<EventTrigger>();
 
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerEnter;

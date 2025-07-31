@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum LobbyPanelType
-{
-    Title, NickName , Lobby, RoomList, CreateRoom , WaitingRoom
-}
 
 public partial class LobbyUIManager : MonoBehaviour
 {
@@ -15,9 +11,10 @@ public partial class LobbyUIManager : MonoBehaviour
     private static LobbyUIManager instance;
 
     [Header("---LobbyUIManager---")]
-    [SerializeField] GameObject[] panelList;
-    [SerializeField] LobbyPanelType prePanel;
-    [SerializeField] LobbyPanelType currPanel;
+    [SerializeField] private GameObject[] panelList;
+    [SerializeField] private LobbyPanelType prePanel;
+    [SerializeField] private LobbyPanelType currPanel;
+    [SerializeField] private Sprite[] characterSprite;
 
     public static LobbyUIManager GetInstance()
     {
@@ -35,14 +32,19 @@ public partial class LobbyUIManager : MonoBehaviour
         {
             instance = this;
         }
+    }
 
+    private void Start()
+    {
         // 다른 partial 클래스 초기화
         InitTitleUI();
         InitNickNameUI();
+        InitCharacterSelectUI();
         InitLobbyUI();
         InitCreateRoomInfo();
         InitRoomListUi();
         InitWaitinRoomUI();
+        InitUnTitledUI();
     }
 
 
@@ -52,8 +54,16 @@ public partial class LobbyUIManager : MonoBehaviour
         prePanel = curr;
         currPanel = next;
 
-        if (panelList[(int)prePanel].activeSelf)
-            panelList[(int)prePanel].SetActive(false);
+        if (curr == LobbyPanelType.None)
+        {
+            // 다 끄기
+            OffAllPanel();
+        }
+        else 
+        {
+            if (panelList[(int)prePanel].activeSelf)
+                panelList[(int)prePanel].SetActive(false);
+        }
 
         if (!panelList[(int)currPanel].activeSelf)
             panelList[(int)currPanel].SetActive(true);
@@ -65,6 +75,14 @@ public partial class LobbyUIManager : MonoBehaviour
         for (int i = 0; i < list.Count; i++)
         {
             Destroy(list[i]);
+        }
+    }
+
+    private void OffAllPanel() 
+    {
+        for(int i = 0; i < panelList.Length; i++) 
+        {
+            panelList[i].SetActive(false);
         }
     }
 }

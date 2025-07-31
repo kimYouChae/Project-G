@@ -34,6 +34,6 @@ public partial class LobbyUIManager : MonoBehaviour
         PunLobbyManager.GetInstance().SettingNickName(nickName);
 
         // 화면 전환
-        ChangePanel(LobbyPanelType.NickName , LobbyPanelType.Lobby);
+        ChangePanel(LobbyPanelType.NickName , LobbyPanelType.CharacterSelect);
     }
 }
