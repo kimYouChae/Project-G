@@ -22,7 +22,7 @@ public class PhotonSceneManager : Singleton<PhotonSceneManager>
             string roomTypeString = (string)type;
 
             // 현재 맵 타입에 대한 씬 타입
-            SceneType sceneType = MapNameToSceneType(MapTypeByStr(roomTypeString));
+            SceneType sceneType = MapNameToSceneType(Extension.StringToEnum<MapType>(roomTypeString));
 
             // 씬 변경 ( 씬 타입 따라 )
             ChangeScene(sceneType);
@@ -32,11 +32,6 @@ public class PhotonSceneManager : Singleton<PhotonSceneManager>
             // 없으면 기본맵으로 이동
             ChangeScene(SceneType.Game_Forest);
         }
-    }
-
-    private MapType MapTypeByStr(string type) 
-    {
-        return (MapType)Enum.Parse(typeof(MapType), type);
     }
 
     private SceneType MapNameToSceneType(MapType type) 

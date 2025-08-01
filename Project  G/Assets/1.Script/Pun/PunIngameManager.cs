@@ -3,12 +3,14 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
-public enum DirType 
+public class InGamePlayer 
 {
-    Left, Top, Right, Bottom
+    // 맵 상 어느 사분면에 있는지 
+    QuadrantType quadrantType;
+    // Photonview
+    PhotonView view;
 }
 
 public class PunIngameManager : Singleton<PunIngameManager>
@@ -16,15 +18,12 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
     [Header("===플레이어 스폰===")]
     [SerializeField] private PhotonView localPlayer;
+    [SerializeField] private QuadrantType localQuadrantType;
     [SerializeField] private List<PhotonView> playerList;
+    [SerializeField] private Transform[] playerField;       // 사분면 순서대로 배치되어 있어야함 
 
-    [Header("===총알 스폰===")]
-    [SerializeField] private List<Transform> playerField; // 필드 위치 (현재 왼 -> 오 순서)
-    [SerializeField] private Vector2[] indexToSpawnPoint;   // 부모 기준 스포너 위치 
-
-    public List<Transform> PlayerField { get => playerField; }
-    public Vector2[] IndexToSpawnPoint { get => indexToSpawnPoint;}
-
+    public QuadrantType LocalQuadrantType { get => localQuadrantType;  }
+    public Transform[] PlayerField { get => playerField; }
 
     protected override void Singleton_Awake()
     {
@@ -34,41 +33,38 @@ public class PunIngameManager : Singleton<PunIngameManager>
     private void Start()
     {
         playerList = new List<PhotonView>();
-
-        InitBulletSpawnList();
-
-        CreatePlayer();
+        MemberTwoCreatePlayer();
 
         StartCoroutine(GenerateBulletSpawner());
     }
 
-    private void CreatePlayer() 
+    private void MemberTwoCreatePlayer() 
     {
         if (PhotonNetwork.InRoom)
         {
             // 고유한 ActorNum을 가짐 (1부터시작)
             int index = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+            // 보통 호스트가 1으로 설정되는듯
+
+            QuadrantType quType = (QuadrantType)index;
+            Vector2 playerPosi = Define.twoMemberPoint[quType];
+
             // Resources 파일 하위에 동일한 이름의 오브젝트가 있어야함 ! 
-            GameObject temp = PhotonNetwork.Instantiate("Player_1", playerField[index].position, Quaternion.identity);
+            GameObject temp = PhotonNetwork.Instantiate("Player_1", playerPosi, Quaternion.identity);
             temp.GetComponent<NetPlayer>().SetIndex(index);
             // 리스트에 저장 
             playerList.Add(localPlayer);
 
             // 내것만 저장
-            if(temp.GetComponent<PhotonView>().IsMine)
+            if (temp.GetComponent<PhotonView>().IsMine)
+            {
                 localPlayer = temp.GetComponent<PhotonView>();
+                localQuadrantType = quType;
+
+                // 내 정보 업데이트
+                InGameUI.GetInstance().UpdatePlayerInfoText();
+            }
         }
-    }
-
-    private void InitBulletSpawnList() 
-    {
-        indexToSpawnPoint = new Vector2[4];
-
-        // 부모 기준 스포너 위치 
-        indexToSpawnPoint[(int)DirType.Left] = new Vector2(-0.57f,0);
-        indexToSpawnPoint[(int)DirType.Top] = new Vector2(0,0.55f);
-        indexToSpawnPoint[(int)DirType.Right] = new Vector2(0.57f,0);
-        indexToSpawnPoint[(int)DirType.Bottom] = new Vector2(0, -0.55f);
     }
 
     IEnumerator GenerateBulletSpawner() 
@@ -84,7 +80,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
         {
             GameObject spawnerObj = PhotonNetwork.Instantiate("BulletSpawner", new Vector3(0, 0, 0), Quaternion.identity);
             NetSpawner spawner = spawnerObj.GetComponent<NetSpawner>();
-            spawner.SettingParent(index, dir);
+            spawner.SettingParent(index, (DirType)dir);
 
             if (localPlayer != null)
                 spawner.SettingOwner(localPlayer.ViewID, (DirType)dir);

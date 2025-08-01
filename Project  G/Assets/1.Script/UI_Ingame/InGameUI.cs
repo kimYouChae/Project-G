@@ -7,6 +7,8 @@ public partial class InGameUI : MonoBehaviour
 {
     private static InGameUI instance;   // 인스턴스
 
+    [Space]
+    [Header("===InGameUI===")]
     [SerializeField] Camera camera;
     [SerializeField] float cameraFarZ = -5f;
 

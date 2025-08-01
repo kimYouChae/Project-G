@@ -57,7 +57,7 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
         }
     }
 
-    public void SettingParent(int index, int dir) 
+    public void SettingParent(int index, DirType dir) 
     {
         view.RPC("RPC_SetParentTrasform", RpcTarget.AllBuffered, index, dir);
     }
@@ -144,14 +144,14 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    public void RPC_SetParentTrasform(int playerIndex, int dir)
+    public void RPC_SetParentTrasform(int playerIndex, DirType dir)
     {
         // 플레이어에 저장되어 있는 index , 좌상우하 방향
 
         Transform parent = PunIngameManager.Instance.PlayerField[playerIndex];
 
         transform.SetParent(parent);
-        transform.localPosition = PunIngameManager.Instance.IndexToSpawnPoint[dir];
+        transform.localPosition = Define.twoMemberSpawnerPoint[dir];
     }
 
     [PunRPC]
