@@ -25,9 +25,9 @@ public partial class LobbyUIManager : MonoBehaviour
             selectButton.onClick.AddListener(() => 
             {
                 // 캐릭터 세팅 
-                UserDataManager.GetInstance().SetCharacterIndex(currSelectCharacter);
+                UserDataManager.Instance.SetCharacterIndex(currSelectCharacter);
                 // 캐릭터 생성
-                UserDataManager.GetInstance().InsertToUserTable();
+                UserDataManager.Instance.InsertToUserTable();
                 // panel 전환
                 ChangePanel(LobbyPanelType.CharacterSelect , LobbyPanelType.Lobby);
                 // 로비UI 세팅

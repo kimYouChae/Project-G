@@ -28,10 +28,10 @@ public partial class LobbyUIManager : MonoBehaviour
             return;
         }
 
-        BackEndServerManager.GetInstance().UpdateNickName(nickName);
+        BackEndServerManager.Instance.UpdateNickName(nickName);
 
         // 포톤 닉네임 세팅 
-        PunLobbyManager.GetInstance().SettingNickName(nickName);
+        PunLobbyManager.Instance.SettingNickName(nickName);
 
         // 화면 전환
         ChangePanel(LobbyPanelType.NickName , LobbyPanelType.CharacterSelect);

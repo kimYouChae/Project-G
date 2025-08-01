@@ -44,7 +44,7 @@ public partial class LobbyUIManager : MonoBehaviour
 
     private void RefreshRoomList() 
     {
-        PunLobbyManager.GetInstance().RefreshRoomList();
+        PunLobbyManager.Instance.RefreshRoomList();
     }
 
     public void UpdateRoomList() 
@@ -56,9 +56,9 @@ public partial class LobbyUIManager : MonoBehaviour
 
         
         // 다시 룸(세선) 정보로 생성 
-        for (int i = 0; i < PunLobbyManager.GetInstance().RoomInfoList.Count; i++) 
+        for (int i = 0; i < PunLobbyManager.Instance.RoomInfoList.Count; i++) 
         {
-            RoomInfo roomInfo = PunLobbyManager.GetInstance().RoomInfoList[i];
+            RoomInfo roomInfo = PunLobbyManager.Instance.RoomInfoList[i];
         
             // 오브젝트 생성
             GameObject temp = Instantiate(roomInfoPrefab);
@@ -86,7 +86,7 @@ public partial class LobbyUIManager : MonoBehaviour
     private void JoinRoom() 
     {
         
-        if (currSelectRoomIndex < 0 && currSelectRoomIndex >= PunLobbyManager.GetInstance().RoomInfoList.Count)
+        if (currSelectRoomIndex < 0 && currSelectRoomIndex >= PunLobbyManager.Instance.RoomInfoList.Count)
             return;
 
         EnterPassWord();
@@ -107,7 +107,7 @@ public partial class LobbyUIManager : MonoBehaviour
 
         
         // 선택한 방
-        RoomInfo info = PunLobbyManager.GetInstance().RoomInfoList[currSelectRoomIndex];
+        RoomInfo info = PunLobbyManager.Instance.RoomInfoList[currSelectRoomIndex];
         if (info == null)
             return;
 
@@ -132,7 +132,7 @@ public partial class LobbyUIManager : MonoBehaviour
             Debug.Log("올바른 비밀번호를 입력 했습니다! 방에 입장 합니다");
 
             // 방 참가 시도 
-            PunLobbyManager.GetInstance().JoinRoom(info.Name);
+            PunLobbyManager.Instance.JoinRoom(info.Name);
 
             // panel 변경 
             ChangePanel(LobbyPanelType.RoomList, LobbyPanelType.WaitingRoom);

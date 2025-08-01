@@ -31,10 +31,8 @@ public class UserData
     }
 }
 
-public class UserDataManager : MonoBehaviour
+public class UserDataManager : Singleton<UserDataManager>
 {
-    // 싱글톤 
-    private static UserDataManager instance;
 
     // 유저데이터
     [SerializeField]
@@ -45,23 +43,9 @@ public class UserDataManager : MonoBehaviour
 
     public UserData UserData { get => userData;  }
 
-    public static UserDataManager GetInstance()
+    protected override void Singleton_Awake()
     {
-        if (instance == null)
-        {
-            Debug.LogError("UserDataManager 인스턴스가 존재하지 않습니다.");
-            return null;
-        }
-        return instance;
-    }
 
-    private void Awake()
-    {
-        if (!instance)
-        {
-            instance = this;
-        }
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -94,7 +78,7 @@ public class UserDataManager : MonoBehaviour
     {
         Param param = new Param();
         //로컬에 저장된 닉네임 
-        param.Add("UserNickName", BackEndServerManager.GetInstance().ReturnNickName());
+        param.Add("UserNickName", BackEndServerManager.Instance.ReturnNickName());
         param.Add("UserApreaIndex",userData.UserAppearType);
         param.Add("MapByScore" , userData.MapTypeToScore);
         return param;
@@ -124,7 +108,7 @@ public class UserDataManager : MonoBehaviour
         Debug.Log("게임 정보 조회 함수를 실행합니다");
 
         Where where = new Where();
-        where.Equal("owner_inDate" , BackEndServerManager.GetInstance().PlayerInfo.GetInDate());
+        where.Equal("owner_inDate" , BackEndServerManager.Instance.PlayerInfo.GetInDate());
         // owner_inData 칼럼이 "로컬에 저장된 returnObject의 inData"
 
         // 테이블명, where절, 불러올 게임정보 row 갯수
@@ -178,4 +162,6 @@ public class UserDataManager : MonoBehaviour
  
         }
     }
+
+
 }

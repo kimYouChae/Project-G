@@ -54,14 +54,14 @@ public partial class LobbyUIManager : MonoBehaviour
         {
             MapType mapType = (MapType)type.GetValue(i);
             scoreText[i].text =
-                UserDataManager.GetInstance().UserData.MapTypeToScore[mapType].ToString();
+                UserDataManager.Instance.UserData.MapTypeToScore[mapType].ToString();
         }    
     }
 
     // 캐릭터 이미지 설정
     public void SettingProfile() 
     {
-        int userIndex = (int)UserDataManager.GetInstance().UserData.UserAppearType;
+        int userIndex = (int)UserDataManager.Instance.UserData.UserAppearType;
 
         Array type = System.Enum.GetValues(typeof(CharacterType));
         if (userIndex < 0 || userIndex >= type.Length) return;
@@ -70,7 +70,7 @@ public partial class LobbyUIManager : MonoBehaviour
 
         characterImage.sprite = characterSprite[userIndex];
 
-        userNickNameText.text = UserDataManager.GetInstance().UserData.NickName;
-
+        userNickNameText.text = UserDataManager.Instance.UserData.NickName;
+            
     }
 }

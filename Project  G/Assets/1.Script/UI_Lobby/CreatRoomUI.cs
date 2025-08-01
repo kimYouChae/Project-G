@@ -109,6 +109,6 @@ public partial class LobbyUIManager : MonoBehaviour
         }
 
         // PunLobbyManager 매서드 실행
-        PunLobbyManager.GetInstance().CreateCusomRoom();
+        PunLobbyManager.Instance.CreateCusomRoom();
     }
 }

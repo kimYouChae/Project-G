@@ -5,33 +5,16 @@ using BackEnd;
 using LitJson;
 using BackEnd.Content;
 
-public class BackEndServerManager : MonoBehaviour
+public class BackEndServerManager : Singleton<BackEndServerManager>
 {
-    private static BackEndServerManager instance;   // 인스턴스
-
     [Header("===INFO===")]
     [SerializeField] private BackendReturnObject playerInfo;
 
     public BackendReturnObject PlayerInfo { get => playerInfo; }
 
-    void Awake()
+    protected override void Singleton_Awake()
     {
-        if (instance != null)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
-
-    public static BackEndServerManager GetInstance()
-    {
-        if (instance == null)
-        {
-            Debug.LogError("BackEndServerManager 인스턴스가 존재하지 않습니다.");
-            return null;
-        }
-
-        return instance;
+        
     }
 
     public string ReturnNickName() 
@@ -86,7 +69,7 @@ public class BackEndServerManager : MonoBehaviour
             onComplete?.Invoke();
 
             // 포톤 닉네임 세팅 
-            PunLobbyManager.GetInstance().SettingNickName(ReturnNickName());
+            PunLobbyManager.Instance.SettingNickName(ReturnNickName());
 
         });
     }
@@ -126,6 +109,8 @@ public class BackEndServerManager : MonoBehaviour
             GetUserInfo();
         });
     }
+
+
 
     #endregion
 

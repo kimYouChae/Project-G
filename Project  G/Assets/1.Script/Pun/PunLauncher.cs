@@ -55,7 +55,7 @@ public class PunLauncher : MonoBehaviourPunCallbacks
         Debug.Log($"Pun : roomList 콜백실행 | 방 목록이 업데이트 되었습니다");
 
         // 룸 리스트 넘기기 
-        PunLobbyManager.GetInstance().SettingSession(roomList);
+        PunLobbyManager.Instance.SettingSession(roomList);
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Pun : OnPlayerEnteredRoom 콜백실행 | {newPlayer.NickName} 새로 들어왔습니다");
 
-        PunLobbyManager.GetInstance().UpdateRoomUser();
+        PunLobbyManager.Instance.UpdateRoomUser();
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Pun : OnPlayerLeftRoom 콜백실행 | {otherPlayer.NickName} 새로 들어왔습니다");
 
-        PunLobbyManager.GetInstance().UpdateRoomUser();
+        PunLobbyManager.Instance.UpdateRoomUser();
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ public class PunLauncher : MonoBehaviourPunCallbacks
         Debug.Log($"Pun : OnJoinedRoom 콜백실행 | Room에 접속 했습니다");
 
         // 내가 방에 성공적으로 입장 헀을 때
-        PunLobbyManager.GetInstance().UpdateRoomUser();
+        PunLobbyManager.Instance.UpdateRoomUser();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)

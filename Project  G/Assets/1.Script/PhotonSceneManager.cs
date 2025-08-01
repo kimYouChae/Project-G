@@ -6,30 +6,11 @@ public enum SceneType
     Lobby, Game
 }
 
-public class PhotonSceneManager : MonoBehaviour
+public class PhotonSceneManager : Singleton<PhotonSceneManager>
 {
-    private static PhotonSceneManager instance;   // 인스턴스
-
-    void Awake()
+    protected override void Singleton_Awake()
     {
-        if (instance != null)
-        {
-            Destroy(instance);
-        }
-
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
-    public static PhotonSceneManager GetInstance()
-    {
-        if (instance == null)
-        {
-            Debug.LogError("PhotonSceneManager 인스턴스가 존재하지 않습니다.");
-            return null;
-        }
-
-        return instance;
+        
     }
 
     // 임시 : 씬 동기 전환 
@@ -41,6 +22,7 @@ public class PhotonSceneManager : MonoBehaviour
 
         PhotonNetwork.LoadLevel(next);
     }
+
 
     private string TypeBySceneName(SceneType type) 
     {

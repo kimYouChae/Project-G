@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PunLobbyManager : MonoBehaviour
+public class PunLobbyManager : Singleton<PunLobbyManager>
 {
-    private static PunLobbyManager instance;   // 인스턴스
-
     // 생성된 방 정보
     private List<RoomInfo> roomInfoList;
     // room에 참가한 플레이어 정보
@@ -17,26 +15,10 @@ public class PunLobbyManager : MonoBehaviour
     public List<RoomInfo> RoomInfoList { get { return roomInfoList; } }
     public Player[] PlayerList { get { return playerList; } }
 
-    void Awake()
+
+    protected override void Singleton_Awake()
     {
-        if (instance != null)
-        {
-            Destroy(instance);
-        }
-        instance = this;
 
-        roomInfoList = new List<RoomInfo>();
-    }
-
-    public static PunLobbyManager GetInstance()
-    {
-        if (instance == null)
-        {
-            Debug.LogError("BackEndServerManager 인스턴스가 존재하지 않습니다.");
-            return null;
-        }
-
-        return instance;
     }
 
     // 세션 세팅
@@ -142,4 +124,5 @@ public class PunLobbyManager : MonoBehaviour
         // 방에 접속하기 
         PhotonNetwork.JoinRoom(title);
     }
+
 }
