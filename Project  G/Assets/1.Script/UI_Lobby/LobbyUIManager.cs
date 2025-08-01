@@ -16,6 +16,7 @@ public partial class LobbyUIManager : MonoBehaviour
     [SerializeField] private LobbyPanelType prePanel;
     [SerializeField] private LobbyPanelType currPanel;
     [SerializeField] private Sprite[] characterSprite;
+    [SerializeField] private Sprite[] mapSprite;
 
     public static LobbyUIManager GetInstance()
     {

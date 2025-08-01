@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // room을 만들 때 설정하는 데이터를 담아놓는 용도
-public static class FusionRoomInfo
+public static class PhotonRoomInfo
 {
     // 방 이름
     public static string RoomName
@@ -27,6 +27,13 @@ public static class FusionRoomInfo
         get => PlayerPrefs.GetInt("MaxUser");
         set => PlayerPrefs.SetInt("MaxUser", value);
     }
+
+    // 맵 타입
+    public static string MapTypeName
+    {
+        get => PlayerPrefs.GetString("MapType");
+        set => PlayerPrefs.SetString("MapType", value);
+    }
 }
 
 
@@ -41,6 +48,13 @@ public partial class LobbyUIManager : MonoBehaviour
     [SerializeField] int roomMaxUser = 2;
     [SerializeField] int roomPassword;
     [SerializeField] bool isCreatePassword = false;
+
+    [Header("Map Select")]
+    [SerializeField] Image mapImage;
+    [SerializeField] TextMeshProUGUI mapTitle;
+    [SerializeField] Button rightButton;
+    [SerializeField] Button leftButton;
+    [SerializeField] int currMapIndex = 0;
 
     private const int maxPasswordDigit = 8;
 
@@ -58,6 +72,13 @@ public partial class LobbyUIManager : MonoBehaviour
                 FusionCreateRoom(); // 2. 방 생성 (비번생성 후 생성 필요)
                 ChangePanel(LobbyPanelType.CreateRoom, LobbyPanelType.WaitingRoom);  // 3. 대기룸으로
             });
+
+        // 맵 타입 버튼
+        if (rightButton != null)
+            rightButton.onClick.AddListener(() => { ChangeMapIndex(++currMapIndex); });
+        if (leftButton != null)
+            leftButton.onClick.AddListener(() => { ChangeMapIndex(--currMapIndex); });
+
     }
 
     // 비밀번호 복사
@@ -73,9 +94,10 @@ public partial class LobbyUIManager : MonoBehaviour
 
     private void RoominfoSetting() 
     {
-        FusionRoomInfo.RoomName = roomTitleField.text;
-        FusionRoomInfo.MaxUser = roomMaxUser;
-        FusionRoomInfo.Password = roomPassword;
+        PhotonRoomInfo.RoomName = roomTitleField.text;
+        PhotonRoomInfo.MaxUser = roomMaxUser;
+        PhotonRoomInfo.Password = roomPassword;;
+        PhotonRoomInfo.MapTypeName = ((MapType)currMapIndex).ToString();
     }
 
     // 비밀번호 랜덤 생성
@@ -88,7 +110,7 @@ public partial class LobbyUIManager : MonoBehaviour
 
     private void FusionCreateRoom() 
     {
-        Debug.Log($"방 생성 시도 - RoomName: {FusionRoomInfo.RoomName}");
+        Debug.Log($"방 생성 시도 - RoomName: {PhotonRoomInfo.RoomName}");
 
         if (!isCreatePassword) 
         {
@@ -99,7 +121,7 @@ public partial class LobbyUIManager : MonoBehaviour
             return;
         }
 
-        if (string.IsNullOrEmpty(FusionRoomInfo.RoomName))
+        if (string.IsNullOrEmpty(PhotonRoomInfo.RoomName))
         {
             Debug.LogError("방 이름이 비어 있습니다!");
 
@@ -110,5 +132,18 @@ public partial class LobbyUIManager : MonoBehaviour
 
         // PunLobbyManager 매서드 실행
         PunLobbyManager.Instance.CreateCusomRoom();
+    }
+
+    private void ChangeMapIndex(int idx) 
+    {
+        if(idx < 0)
+            idx = mapSprite.Length - 1;
+        if (idx >= mapSprite.Length)
+            idx = 0;
+
+        currMapIndex = idx;
+
+        mapImage.sprite = mapSprite[currMapIndex];
+        mapTitle.text = Define.MapName[currMapIndex];
     }
 }

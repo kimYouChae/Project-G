@@ -92,6 +92,9 @@ public class PunLauncher : MonoBehaviourPunCallbacks
 
         // 내가 방에 성공적으로 입장 헀을 때
         PunLobbyManager.Instance.UpdateRoomUser();
+
+        // 방에 들어왔을 때 방 정보 출력
+        // PunLobbyManager.Instance.PrintRoomInfo(PhotonNetwork.CurrentRoom);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)

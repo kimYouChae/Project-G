@@ -45,7 +45,7 @@ public class UserDataManager : Singleton<UserDataManager>
 
     protected override void Singleton_Awake()
     {
-
+        SetUpDontDestroy();
     }
 
     private void Start()

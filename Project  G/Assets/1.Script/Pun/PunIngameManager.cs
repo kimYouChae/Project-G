@@ -11,10 +11,8 @@ public enum DirType
     Left, Top, Right, Bottom
 }
 
-public class PunIngameManager : MonoBehaviour
+public class PunIngameManager : Singleton<PunIngameManager>
 {
-
-    private static PunIngameManager instance;   // 인스턴스
 
     [Header("===플레이어 스폰===")]
     [SerializeField] private PhotonView localPlayer;
@@ -28,27 +26,10 @@ public class PunIngameManager : MonoBehaviour
     public Vector2[] IndexToSpawnPoint { get => indexToSpawnPoint;}
 
 
-    void Awake()
+    protected override void Singleton_Awake()
     {
-        if (instance != null)
-        {
-            Destroy(instance);
-        }
-
-        instance = this;
+        
     }
-
-    public static PunIngameManager GetInstance()
-    {
-        if (instance == null)
-        {
-            Debug.LogError("PunIngameManager 인스턴스가 존재하지 않습니다.");
-            return null;
-        }
-
-        return instance;
-    }
-
 
     private void Start()
     {
@@ -113,6 +94,5 @@ public class PunIngameManager : MonoBehaviour
             yield return new WaitForSeconds(10f);
         }
     }
-
 
 }

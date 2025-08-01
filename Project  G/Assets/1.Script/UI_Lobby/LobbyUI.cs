@@ -26,7 +26,11 @@ public partial class LobbyUIManager : MonoBehaviour
     {
         // 방생성(호스트)
         if (hostButton != null)
-            hostButton.onClick.AddListener(() => ChangePanel(LobbyPanelType.Lobby, LobbyPanelType.CreateRoom));
+            hostButton.onClick.AddListener(() =>
+            {
+                ChangePanel(LobbyPanelType.Lobby, LobbyPanelType.CreateRoom);
+                ChangeMapIndex(currMapIndex);
+            } );
 
         // 방 참가(클라이언트)
         if (clientButton != null)

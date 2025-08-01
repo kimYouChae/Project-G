@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -65,16 +66,18 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable() 
         {
             // 방 이름
-            { "RoomName" , FusionRoomInfo.RoomName },
+            { "RoomName" , PhotonRoomInfo.RoomName },
             // 비밀번호
-            { "Password" , FusionRoomInfo.Password },
+            { "Password" , PhotonRoomInfo.Password },
             // 게임이 시작 했는지
-            { "IsStartGame" , false }
+            { "IsStartGame" , false },
+            // 맵 타입
+            { "MapType" , PhotonRoomInfo.MapTypeName }
         };
 
         RoomOptions roomOption = new RoomOptions()
         {
-            MaxPlayers = FusionRoomInfo.MaxUser,
+            MaxPlayers = PhotonRoomInfo.MaxUser,
 
             // 방 내부에서 접근 가능한 데이터
             CustomRoomProperties = hashtable,
@@ -82,7 +85,7 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
             // 로비에서 방 리스트 볼 때 노출할 목록
             CustomRoomPropertiesForLobby = new string[]
             {
-                "RoomName", "Password"
+                "RoomName", "Password" , "MapType"
             }
         };
 
@@ -90,7 +93,7 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         // PhotonNetwork의 CurrentRoom에 방 정보가 저장됨 
         bool isSuccess = PhotonNetwork.CreateRoom
         (
-            FusionRoomInfo.RoomName,
+            PhotonRoomInfo.RoomName,
             roomOption
         );
 
@@ -99,8 +102,31 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         else
             Debug.Log("방 생성에 실패 했습니다 ");
 
-
     }
+    
+    public void PrintRoomInfo(Room info) 
+    {
+        if (info == null)
+        {
+            Debug.Log("방이 NULL입니다");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.Append("방 이름 : " + info.Name + " \n");
+        sb.Append("방 인원 : " + info.MaxPlayers + " \n");
+        if (info.CustomProperties.TryGetValue("Password", out object value)) 
+        {
+            sb.Append("방 비번 :" + value + "\n");
+        }
+        if (info.CustomProperties.TryGetValue("MapType", out object type)) 
+        {
+            sb.Append("방 타입 :" + type + "\n");
+        }
+
+        Debug.Log(sb);
+    }
+
 
     // 룸 목록 업데이트
     public void RefreshRoomList() 

@@ -148,10 +148,10 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
     {
         // 플레이어에 저장되어 있는 index , 좌상우하 방향
 
-        Transform parent = PunIngameManager.GetInstance().PlayerField[playerIndex];
+        Transform parent = PunIngameManager.Instance.PlayerField[playerIndex];
 
         transform.SetParent(parent);
-        transform.localPosition = PunIngameManager.GetInstance().IndexToSpawnPoint[dir];
+        transform.localPosition = PunIngameManager.Instance.IndexToSpawnPoint[dir];
     }
 
     [PunRPC]

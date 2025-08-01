@@ -30,3 +30,14 @@ public enum MapType
     Hell,
     IceVillage
 }
+
+public enum SceneType
+{
+    Lobby,
+    Game_Forest,
+    Game_GiganticTree,
+    Game_Market,
+    Game_Island,
+    Game_Hell,
+    Game_IceVillage
+}
