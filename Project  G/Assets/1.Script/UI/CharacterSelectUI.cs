@@ -26,10 +26,12 @@ public partial class LobbyUIManager : MonoBehaviour
             {
                 // 캐릭터 세팅 
                 UserDataManager.GetInstance().SetCharacterIndex(currSelectCharacter);
-                // panel 전환
-                ChangePanel(LobbyPanelType.CharacterSelect , LobbyPanelType.Lobby);
                 // 캐릭터 생성
                 UserDataManager.GetInstance().InsertToUserTable();
+                // panel 전환
+                ChangePanel(LobbyPanelType.CharacterSelect , LobbyPanelType.Lobby);
+                // 로비UI 세팅
+                SettingProfile();
             });
     }
 

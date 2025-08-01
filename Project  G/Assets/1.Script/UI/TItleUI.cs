@@ -44,11 +44,15 @@ public partial class LobbyUIManager : MonoBehaviour
                 // 3. 닉네임 있으면 
                 case NickCheckResultType.HasNickname:
                     Debug.Log("닉네임이 있습니다. 로비 panel로 갑니다");
-                    // 3-1. lobby Ui On
-                    ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
 
                     // 뒤끝 테이블에 저장되어 있는 유저 정보 가져오기 
                     UserDataManager.GetInstance().GetUserDataInTable();
+
+                    // 3-1. lobby Ui On
+                    ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
+
+                    // 프로필 세팅
+                    SettingProfile();
 
                     break;
             }

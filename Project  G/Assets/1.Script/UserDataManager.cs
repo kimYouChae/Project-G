@@ -10,9 +10,11 @@ using UnityEngine.Android;
 [System.Serializable]
 public class UserData 
 {
+    private string nickName;        // 닉네임
     private CharacterType userAppearType;    // 외형 인덱스 
     private Dictionary<MapType, float> mapTypeToScore;  // 맵 타입별 점수 
 
+    public string NickName { get => nickName; set => nickName = value; }
     public CharacterType UserAppearType { get => userAppearType; set => userAppearType = value; }
     public Dictionary<MapType, float> MapTypeToScore { get => mapTypeToScore; set => mapTypeToScore = value; }
 
@@ -20,7 +22,7 @@ public class UserData
     public void PrintUser() 
     {
         StringBuilder sb    = new StringBuilder();
-        sb.Append("**유저번호 : " + userAppearType + "\n");
+        sb.Append( "**유저닉네임 : " + nickName + " / 유저번호 : " + userAppearType + "\n");
         foreach(var temp in mapTypeToScore) 
         {
             sb.Append("맵 타입 : " +  temp.Key + " | 점수 : " + temp.Value );
@@ -91,6 +93,8 @@ public class UserDataManager : MonoBehaviour
     private Param GetUserDataParam()
     {
         Param param = new Param();
+        //로컬에 저장된 닉네임 
+        param.Add("UserNickName", BackEndServerManager.GetInstance().ReturnNickName());
         param.Add("UserApreaIndex",userData.UserAppearType);
         param.Add("MapByScore" , userData.MapTypeToScore);
         return param;
@@ -145,6 +149,8 @@ public class UserDataManager : MonoBehaviour
                 // 불러온 게임 정보의 고유값
                 string gameDataInrow = gamedataJson[0]["inDate"].ToString();
 
+                // 0. 닉네임
+                string nickName = gamedataJson[0]["UserNickName"].ToString();
 
                 // 1. 외형 인덱스
                 string apreadIndex = gamedataJson[0]["UserApreaIndex"].ToString();
@@ -162,6 +168,7 @@ public class UserDataManager : MonoBehaviour
                     }
                 }
 
+                userData.NickName = nickName;
                 userData.UserAppearType = (CharacterType)(int.Parse(apreadIndex));
                 userData.MapTypeToScore = tempDic;
             }

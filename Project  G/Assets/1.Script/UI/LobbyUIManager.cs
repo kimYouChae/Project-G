@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -49,7 +50,7 @@ public partial class LobbyUIManager : MonoBehaviour
 
 
     // 패널 변경 
-    public void ChangePanel(LobbyPanelType curr, LobbyPanelType next) 
+    public void ChangePanel(LobbyPanelType curr, LobbyPanelType next, Action action = null) 
     {
         prePanel = curr;
         currPanel = next;
@@ -66,7 +67,15 @@ public partial class LobbyUIManager : MonoBehaviour
         }
 
         if (!panelList[(int)currPanel].activeSelf)
+        {
+            // 패널 켜기 
             panelList[(int)currPanel].SetActive(true);
+
+            // 패널 켜졋을 때 액션
+            action?.Invoke();
+        }  
+
+        
     }
 
     // 리스트 비우기
