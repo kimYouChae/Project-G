@@ -9,6 +9,24 @@ EditorBuildSettings:
     path: Assets/0.Scenes/01.LobbyScene.unity
     guid: ab44867fc93371b49accd7fc4419a877
   - enabled: 1
-    path: Assets/0.Scenes/02.GameScene.unity
+    path: Assets/0.Scenes/02.Forest.unity
     guid: dc314136ed6d56a49baa0dcf7e82f1c7
+  - enabled: 1
+    path: Assets/0.Scenes/02.GiganticTree.unity
+    guid: 4f0b5fb2b9b5ffb42bcad1ae9e161a7b
+  - enabled: 1
+    path: Assets/0.Scenes/02.Hell.unity
+    guid: 8719ddebf41d37046b8e0d102323da07
+  - enabled: 1
+    path: Assets/0.Scenes/02.IceVillage.unity
+    guid: 19c2eed6d35aa0e429b6fc6bbba92465
+  - enabled: 1
+    path: Assets/0.Scenes/02.Island.unity
+    guid: 878ca03adb8a2d641b14f4bf97c9535b
+  - enabled: 1
+    path: Assets/0.Scenes/02.Market.unity
+    guid: b64ad4f8900f0bd49a4bc9533947c73c
+  - enabled: 1
+    path: Assets/0.Scenes/Backend.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
