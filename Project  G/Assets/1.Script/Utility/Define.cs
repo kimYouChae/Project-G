@@ -22,5 +22,26 @@ static public class Define
         { SceneType.Game_Hell , "02.Hell"},
         { SceneType.Game_IceVillage , "02.IceVillage"},
     };
-    
+
+    public static readonly Dictionary<QuadrantType, Vector2> twoMemberPoint = new Dictionary<QuadrantType, Vector2>()
+    {
+        { QuadrantType.one , new Vector2(5.5f , 0) },
+        { QuadrantType.two , new Vector2(-5.5f , 0 ) }
+    };
+
+    public static readonly Dictionary<QuadrantType, Vector2> fourMemberPoint = new Dictionary<QuadrantType, Vector2>()
+    {
+        { QuadrantType.one , new Vector2(10f,5f) },
+        { QuadrantType.two , new Vector2(5f,10f) },
+        { QuadrantType.three , new Vector2(10f,5f) },
+        { QuadrantType.four , new Vector2(5f,10f) }
+    };
+
+    public static readonly Dictionary<DirType, Vector2> twoMemberSpawnerPoint = new Dictionary<DirType, Vector2>()
+    {
+        { DirType.Left, new Vector2(-0.57f,0)},
+        {DirType.Top , new Vector2(0,0.55f) },
+        {DirType.Right ,new Vector2(0.57f,0)},
+        {DirType.Bottom, new Vector2(0, -0.55f ) }
+    };
 }

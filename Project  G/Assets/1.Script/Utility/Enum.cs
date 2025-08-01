@@ -41,3 +41,12 @@ public enum SceneType
     Game_Hell,
     Game_IceVillage
 }
+
+public enum DirType
+{
+    Left, Top, Right, Bottom
+}
+public enum QuadrantType    // 맵 상 사분면
+{
+    one, two, three, four
+}
