@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -7,10 +8,25 @@ using UnityEngine;
 
 public class InGamePlayer 
 {
-    // 맵 상 어느 사분면에 있는지 
-    QuadrantType quadrantType;
-    // Photonview
-    PhotonView view;
+    private int actorNum;
+    private string nickName;
+    private float score;
+
+    public InGamePlayer(int actorNum, string nickName, float score)
+    {
+        this.actorNum = actorNum;
+        this.nickName = nickName;
+        this.score = score;
+    }
+
+    public int ActorNum { get => actorNum;}
+    public string NickName { get => nickName; }
+    public float Score { get => score;  }
+
+    public void PrintPlayer() 
+    {
+        Debug.Log($"{actorNum} 에 해당하는 플레이어 정보 : {nickName} : {score}");
+    }
 }
 
 public class PunIngameManager : Singleton<PunIngameManager>
@@ -21,6 +37,9 @@ public class PunIngameManager : Singleton<PunIngameManager>
     [SerializeField] private QuadrantType localQuadrantType;
     [SerializeField] private List<PhotonView> playerList;
     [SerializeField] private Transform[] playerField;       // 사분면 순서대로 배치되어 있어야함 
+
+    [SerializeField]
+    private Dictionary<int, InGamePlayer> ingamePlayer;
 
     public QuadrantType LocalQuadrantType { get => localQuadrantType;  }
     public Transform[] PlayerField { get => playerField; }
@@ -33,6 +52,8 @@ public class PunIngameManager : Singleton<PunIngameManager>
     private void Start()
     {
         playerList = new List<PhotonView>();
+        ingamePlayer = new Dictionary<int, InGamePlayer>();
+
         MemberTwoCreatePlayer();
 
         StartCoroutine(GenerateBulletSpawner());
@@ -61,10 +82,42 @@ public class PunIngameManager : Singleton<PunIngameManager>
                 localPlayer = temp.GetComponent<PhotonView>();
                 localQuadrantType = quType;
 
-                // 내 정보 업데이트
-                InGameUI.GetInstance().UpdatePlayerInfoText();
+                UserDataRaiseEvent(index);
             }
         }
+    }
+    
+    private void UserDataRaiseEvent(int actorNum) 
+    {
+        Debug.Log("유저데이터Raise이벤트");
+
+        MapType currMapType = GetMapType();
+
+        // 현재 타입에 해당하는 맵 타입
+        // 현재 방 정보의 커스텀 정보에 접근 (hashTable에서 matType검사)
+
+        object[] contcnt = new object[]
+        {
+            actorNum,
+            UserDataManager.Instance.UserData.NickName,
+            UserDataManager.Instance.UserData.MapTypeToScore[currMapType],
+        };
+
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        SendOptions sendOption = new SendOptions { Reliability = true };
+
+        PhotonNetwork.RaiseEvent((byte)PunEventType.UserDataSync,
+            contcnt,
+            raiseEventOptions,
+            sendOption);
+    }
+
+    public void AddInGamePlayer(int actorNum, InGamePlayer player) 
+    {
+        Debug.Log("인게임Player딕셔너리에 추가");
+        ingamePlayer.Add(actorNum, player);
+
+        InGameUI.GetInstance().UpdatePlayerInfoText(player);
     }
 
     IEnumerator GenerateBulletSpawner() 
@@ -91,4 +144,18 @@ public class PunIngameManager : Singleton<PunIngameManager>
         }
     }
 
+    #region Photon 관련 공통함수 
+
+    public MapType GetMapType() 
+    {
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("MapType", out object type))
+        {
+            string typeString = (string)type;
+            return Extension.StringToEnum<MapType>(typeString);
+        }
+
+        return MapType.None;
+    }
+
+    #endregion
 }
