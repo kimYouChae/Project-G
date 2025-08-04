@@ -28,7 +28,8 @@ public enum MapType
     Market,
     Island,
     Hell,
-    IceVillage
+    IceVillage,
+    None
 }
 
 public enum SceneType

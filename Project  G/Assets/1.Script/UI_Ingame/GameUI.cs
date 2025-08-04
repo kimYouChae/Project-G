@@ -4,48 +4,50 @@ using TMPro;
 using UnityEngine;
 using Photon.Pun;
 using System.Text;
+using System;
 
 public partial class InGameUI : MonoBehaviour
 {
     [Space]
     [Header("===GameUI===")]
+    [Header("플레이어정보")]
     // 사분면을 지켜서 순서대로 담아둬야함 !
     [SerializeField] TextMeshProUGUI[] playerInfoText;
-    [SerializeField] PhotonView view;
 
-    private void Start()
-    {
-        view = GetComponent<PhotonView>();
-    }
+    [Header("Text")]
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI timeText;
 
-    public void UpdatePlayerInfoText() 
+    public void UpdatePlayerInfoText(InGamePlayer player) 
     {
-        view.RPC("RPC_UpdatePlayerInfoText", RpcTarget.AllBuffered);
-    }
+        int actorNum = player.ActorNum;
+        string nick = player.NickName;
+        float score = player.Score;
 
-    [PunRPC]
-    public void RPC_UpdatePlayerInfoText() 
-    {
         // 로컬 플레이어의 사분면 위치에 해당하는 TMP
-        TextMeshProUGUI tmp = playerInfoText[(int)PunIngameManager.Instance.LocalQuadrantType];
+        TextMeshProUGUI tmp = playerInfoText[actorNum];
 
         StringBuilder sb = new StringBuilder();
-
-        sb.Append($"유저 닉네임 : {UserDataManager.Instance.UserData.NickName} \n");
+        sb.Append($"유저 닉네임 : {nick} \n");
 
         // 현재 타입에 해당하는 맵 타입
         // 현재 방 정보의 커스텀 정보에 접근 (hashTable에서 matType검사)
-        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("MapType", out object type))
-        {
-            // 현재 방의 맵 타입(MapType)의 string 
-            string roomTypeString = (string)type;
-
-            // 현재 맵 타입에 대한 씬 타입
-            MapType mapType = Extension.StringToEnum<MapType>(roomTypeString);
-
-            sb.Append($"현재 맵 최고점수: {UserDataManager.Instance.UserData.MapTypeToScore[mapType]} \n");
-        }
+        MapType type = PunIngameManager.Instance.GetMapType();
+        sb.Append($"현재 {type}맵 최고점수: {score} \n");
 
         tmp.text = sb.ToString();
+
+        Debug.Log(tmp);
     }
+
+    public void UpdateTimeText(float time) 
+    {
+        timeText.text = Math.Round(time, 2).ToString();
+    }
+
+    public void UpdateScoreText(float score) 
+    {
+        scoreText.text = Math.Round(score, 2).ToString();
+    }
+    
 }

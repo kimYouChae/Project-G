@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    [SerializeField] private float startScore = 0;
+    [SerializeField] private float currScore = 0;
+    [SerializeField] private float currTime = 0;
 
     [SerializeField] private float rateInCrease = 0.7f;    // (임시) 상승폭  
     [SerializeField] private float rateTime = 0.1f;     // 상승 시간 쿨타임
+
+    const float oneFrame = 0.02f;
 
     protected override void Singleton_Awake()
     {
@@ -17,6 +20,7 @@ public class ScoreManager : Singleton<ScoreManager>
     private void Start()
     {
         StartCoroutine(InCreaseScore());
+        StartCoroutine(InCreateTime());
     }
 
     IEnumerator InCreaseScore() 
@@ -25,7 +29,19 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             yield return new WaitForSeconds(rateTime);
 
-            startScore += rateInCrease;
+            currScore += rateInCrease;
+            InGameUI.GetInstance().UpdateScoreText(currScore);
+        }
+    }
+
+    IEnumerator InCreateTime() 
+    {
+        while (true) 
+        {
+            yield return new WaitForSeconds(oneFrame);
+
+            currTime += oneFrame;
+            InGameUI.GetInstance().UpdateTimeText(currTime);
         }
     }
 
