@@ -12,6 +12,9 @@ public class ScoreManager : Singleton<ScoreManager>
 
     const float oneFrame = 0.02f;
 
+    public float CurrScore { get => currScore; }
+    public float CurrTime { get => currTime;  }
+
     protected override void Singleton_Awake()
     {
 

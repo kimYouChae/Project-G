@@ -1,5 +1,6 @@
 using BackEnd;
 using LitJson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,14 @@ public class UserData
     public CharacterType UserAppearType { get => userAppearType; set => userAppearType = value; }
     public Dictionary<MapType, float> MapTypeToScore { get => mapTypeToScore; set => mapTypeToScore = value; }
 
+    public void SettingTypeByScoreRound(MapType type, float score) 
+    {
+        if (mapTypeToScore.TryGetValue(type, out float value)) 
+        {
+            mapTypeToScore[type] = (float)Math.Round(score, 2);
+        }
+    }
+
     // 정보 출력
     public void PrintUser() 
     {
@@ -33,7 +42,6 @@ public class UserData
 
 public class UserDataManager : Singleton<UserDataManager>
 {
-
     // 유저데이터
     [SerializeField]
     private UserData userData;
@@ -107,9 +115,8 @@ public class UserDataManager : Singleton<UserDataManager>
     {
         Debug.Log("게임 정보 조회 함수를 실행합니다");
 
-        Where where = new Where();
-        where.Equal("owner_inDate" , BackEndServerManager.Instance.PlayerInfo.GetInDate());
-        // owner_inData 칼럼이 "로컬에 저장된 returnObject의 inData"
+        // 조건 세팅
+        Where where = ConditionIsOwnerDataisLocal();
 
         // 테이블명, where절, 불러올 게임정보 row 갯수
         BackendReturnObject bro = Backend.GameData.GetMyData(Define.USERTABLE , where, 10);
@@ -163,5 +170,35 @@ public class UserDataManager : Singleton<UserDataManager>
         }
     }
 
+    public void SettingScore(float score) 
+    {
+        MapType type = PunIngameManager.Instance.GetMapType();
 
+        if (type == MapType.None)
+            return;
+
+        userData.SettingTypeByScoreRound(type, score);
+    }
+
+    // 유저테이블에 정보 업데이트
+    public void UpdateUserData() 
+    {
+        // MapByScore 칼럼의 값을 수정
+        Param param = new Param();
+        param.Add("MapByScore", userData.MapTypeToScore);
+
+        // 조건 세팅
+        Where where = ConditionIsOwnerDataisLocal();
+
+        // 업데이트
+        Backend.GameData.Update(Define.USERTABLE, where, param);
+    }
+
+    private Where ConditionIsOwnerDataisLocal() 
+    {
+        // owner_inData 칼럼이 "로컬에 저장된 returnObject의 inData"
+        Where where = new Where();
+        where.Equal("owner_inDate", BackEndServerManager.Instance.PlayerInfo.GetInDate());
+        return where;
+    }
 }
