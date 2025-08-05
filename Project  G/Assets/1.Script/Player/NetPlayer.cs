@@ -131,6 +131,9 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     {
         Debug.Log($"충돌했습니다");
 
+        // 점수-시간 변동 x 
+        ScoreManager.Instance.IsReadyToCount = false;
+
         PhotonView view = PhotonView.Find(viewId);
         if (view != null) 
         {

@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: 0
+  isReadToMove: 0
   speed: 3
   dir: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}

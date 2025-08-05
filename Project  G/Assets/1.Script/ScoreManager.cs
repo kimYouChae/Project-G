@@ -1,51 +1,47 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
+    [SerializeField] private float startTime;   // 네트워크상 시작시간
+    [SerializeField] private bool isReadyToCount = false;
+
     [SerializeField] private float currScore = 0;
     [SerializeField] private float currTime = 0;
 
-    [SerializeField] private float rateInCrease = 0.7f;    // (임시) 상승폭  
-    [SerializeField] private float rateTime = 0.1f;     // 상승 시간 쿨타임
 
     const float oneFrame = 0.02f;
 
     public float CurrScore { get => currScore; }
     public float CurrTime { get => currTime;  }
+    public bool IsReadyToCount { get => isReadyToCount; set => isReadyToCount = value; }
 
     protected override void Singleton_Awake()
     {
 
     }
 
-    public void StartScore()
+    private void Update()
     {
-        StartCoroutine(InCreaseScore());
-        StartCoroutine(InCreateTime());
+        if (!isReadyToCount)
+            return;
+
+        double elapsed = PhotonNetwork.Time - startTime;
+
+        currTime = (float)elapsed;
+        currScore = (float)elapsed * 1.7f;
+
+        InGameUI.GetInstance().UpdateScoreText(currScore);
+        InGameUI.GetInstance().UpdateTimeText(currTime);
     }
 
-    IEnumerator InCreaseScore() 
+    public void ScoreBegin(float networkStartTime) 
     {
-        while(true) 
-        {
-            yield return new WaitForSeconds(rateTime);
+        startTime = networkStartTime;
 
-            currScore += rateInCrease;
-            InGameUI.GetInstance().UpdateScoreText(currScore);
-        }
+        isReadyToCount = true;
     }
-
-    IEnumerator InCreateTime() 
-    {
-        while (true) 
-        {
-            yield return new WaitForSeconds(oneFrame);
-
-            currTime += oneFrame;
-            InGameUI.GetInstance().UpdateTimeText(currTime);
-        }
-    }
-
 }

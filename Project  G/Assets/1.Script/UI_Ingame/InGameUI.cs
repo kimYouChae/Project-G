@@ -26,6 +26,7 @@ public partial class InGameUI : MonoBehaviour
 
     public GameObject LoadingPanel { get => loadingPanel;}
     public TextMeshProUGUI CountDownText { get => countDownText; set => countDownText = value; }
+    public GameObject GamePanel { get => gamePanel; set => gamePanel = value; }
 
     void Awake()
     {

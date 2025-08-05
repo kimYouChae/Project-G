@@ -101,8 +101,9 @@ public class PunIngameManager : Singleton<PunIngameManager>
         Debug.Log("게임 시작!");
 
         InGameUI.GetInstance().CountDownText.gameObject.SetActive(false);
+        InGameUI.GetInstance().GamePanel.SetActive(true);
         localPlayer.GetComponent<NetPlayer>().IsReadToMove = true;
-        ScoreManager.Instance.StartScore();
+        ScoreManager.Instance.ScoreBegin((float)PhotonNetwork.Time);
 
         StartCoroutine(GenerateBulletSpawner());
     }
