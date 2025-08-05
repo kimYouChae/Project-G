@@ -10,6 +10,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [SerializeField] private int playerIndex;
 
     [Header("===Move===")]
+    [SerializeField] private bool isReadToMove = false;
     [SerializeField] private float speed = 3.0f;
     [SerializeField] private Vector3 dir;
 
@@ -23,6 +24,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [SerializeField] bool flag = true; // true : 테스트할 때 충돌 x 
 
     public int PlayerIndex { get => playerIndex; }
+    public bool IsReadToMove { get => isReadToMove; set => isReadToMove = value; }
 
     private void Start()
     {
@@ -35,6 +37,9 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
     private void FixedUpdate()
     {
+        if (!isReadToMove)
+            return;
+
         // 내거만 조종 가능
         if (photonView.IsMine == false)
             return;

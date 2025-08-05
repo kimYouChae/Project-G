@@ -35,26 +35,74 @@ public class PunIngameManager : Singleton<PunIngameManager>
     [Header("===플레이어 스폰===")]
     [SerializeField] private PhotonView localPlayer;
     [SerializeField] private QuadrantType localQuadrantType;
-    [SerializeField] private List<PhotonView> playerList;
     [SerializeField] private Transform[] playerField;       // 사분면 순서대로 배치되어 있어야함 
 
     [SerializeField]
     private Dictionary<int, InGamePlayer> ingamePlayer;
+    
 
     public QuadrantType LocalQuadrantType { get => localQuadrantType;  }
     public Transform[] PlayerField { get => playerField; }
 
     protected override void Singleton_Awake()
     {
-        
+
     }
 
     private void Start()
     {
-        playerList = new List<PhotonView>();
         ingamePlayer = new Dictionary<int, InGamePlayer>();
 
         MemberTwoCreatePlayer();
+
+        StartCoroutine(Test());
+    }
+
+    IEnumerator Test ()
+    {
+        // 로딩 UI ON
+        InGameUI.GetInstance().LoadingPanel.SetActive(true);
+
+        // 딕셔너리에 들어온 count가 방의 입장인원과 같으면 -> 게임 시작 
+        while (true) 
+        {
+            if (ingamePlayer.Count == PhotonNetwork.CurrentRoom.PlayerCount)
+                break;
+
+            yield return null;
+        }
+
+        // 로딩 UI OFF
+        InGameUI.GetInstance().LoadingPanel.SetActive(false);
+
+        // 시작 시간 지정
+        double startTime = PhotonNetwork.Time + 3.0;
+
+        Debug.Log("시작시간 + " + startTime);
+        int prevSec = -1;
+        while (true)
+        {
+            double remain = startTime - PhotonNetwork.Time;
+            int sec = Mathf.CeilToInt((float)remain); // 항상 올림 처리
+
+            if (sec != prevSec && remain > 0)
+            {
+                InGameUI.GetInstance().CountDownUpdateText(sec);
+                Debug.Log(sec);
+                prevSec = sec;
+            }
+
+            if (remain <= 0)
+                break;
+
+            yield return null; // 매 프레임 검사
+        }
+
+        Debug.Log("게임 시작!");
+
+        InGameUI.GetInstance().CountDownText.gameObject.SetActive(false);
+        localPlayer.GetComponent<NetPlayer>().IsReadToMove = true;
+        ScoreManager.Instance.StartScore();
 
         StartCoroutine(GenerateBulletSpawner());
     }
@@ -73,8 +121,6 @@ public class PunIngameManager : Singleton<PunIngameManager>
             // Resources 파일 하위에 동일한 이름의 오브젝트가 있어야함 ! 
             GameObject temp = PhotonNetwork.Instantiate("Player_1", playerPosi, Quaternion.identity);
             temp.GetComponent<NetPlayer>().SetIndex(index);
-            // 리스트에 저장 
-            playerList.Add(localPlayer);
 
             // 내것만 저장
             if (temp.GetComponent<PhotonView>().IsMine)

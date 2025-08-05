@@ -19,8 +19,13 @@ public partial class InGameUI : MonoBehaviour
     const float highlightTime = 1f;
 
     [Header("===Panel===")]
-    [SerializeField] GameObject gamePanel;
-    [SerializeField] GameObject gameoverPanel;
+    [SerializeField] GameObject gamePanel;      // 게임 패널
+    [SerializeField] GameObject gameoverPanel;  // 게임오버 패널
+    [SerializeField] GameObject loadingPanel;   // 로딩패널
+    [SerializeField] TextMeshProUGUI countDownText;     // 카운트다운 텍스트 
+
+    public GameObject LoadingPanel { get => loadingPanel;}
+    public TextMeshProUGUI CountDownText { get => countDownText; set => countDownText = value; }
 
     void Awake()
     {
@@ -99,6 +104,11 @@ public partial class InGameUI : MonoBehaviour
             // 유저 정보 업데이트
             UserDataManager.Instance.UpdateUserData();
         }
+    }
+
+    public void CountDownUpdateText(int count) 
+    {
+        countDownText.text = count.ToString();
     }
 
 }

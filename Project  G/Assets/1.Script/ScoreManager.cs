@@ -20,7 +20,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
     }
 
-    private void Start()
+    public void StartScore()
     {
         StartCoroutine(InCreaseScore());
         StartCoroutine(InCreateTime());
