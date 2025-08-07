@@ -123,14 +123,10 @@ public class PunIngameManager : Singleton<PunIngameManager>
             GameObject temp = PhotonNetwork.Instantiate("Player_1", playerPosi, Quaternion.identity);
             temp.GetComponent<NetPlayer>().SetIndex(index);
 
-            // 내것만 저장
-            if (temp.GetComponent<PhotonView>().IsMine)
-            {
-                localPlayer = temp.GetComponent<PhotonView>();
-                localQuadrantType = quType;
-
-                UserDataRaiseEvent(index);
-            }
+            // 로컬 플레이어 저장 
+            localPlayer = temp.GetComponent<PhotonView>();
+            localQuadrantType = quType;
+            UserDataRaiseEvent(index);
         }
     }
     
