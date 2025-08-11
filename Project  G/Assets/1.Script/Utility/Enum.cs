@@ -32,6 +32,14 @@ public enum MapType
     None
 }
 
+public enum Difficulty 
+{
+    Upper,
+    Middle,
+    Lower,
+    None
+}
+
 public enum SceneType
 {
     Lobby,
