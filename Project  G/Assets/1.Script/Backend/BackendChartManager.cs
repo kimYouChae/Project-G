@@ -65,11 +65,12 @@ public class BackendChartManager : Singleton<BackendChartManager>
         chartIdByContenct = bro2.GetContentDictionarySortByChartId();
 
         // 내용 확인
-        
+        /*
         foreach (string keyName in chartIdByContenct.Keys) 
         {
             Debug.Log( "키 이름 : " + keyName + " \n "+ chartIdByContenct[keyName].ToString());
         }
+        */
 
         // ** 테이블에서 값 가져오기 !
         GetJsonByCharId(MAP_CHART_ID);
@@ -79,7 +80,7 @@ public class BackendChartManager : Singleton<BackendChartManager>
     {
         if (chartIdByContenct.ContainsKey(charID)) 
         {
-            Debug.Log("콘텐츠스트링:"+ chartIdByContenct[charID].contentString);
+            // Debug.Log("콘텐츠스트링:"+ chartIdByContenct[charID].contentString);
 
             LitJson.JsonData temp = chartIdByContenct[charID].contentJson;
 

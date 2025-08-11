@@ -33,6 +33,8 @@ public class MapDataManager : Singleton<MapDataManager>
     // 인스펙터 창에서 보기용
     [SerializeField] private List<MapData> mapDataList;
 
+    public int MapRate { get => nowMapData.Rate;  }
+
     protected override void Singleton_Awake()
     {
         SetUpDontDestroy();
