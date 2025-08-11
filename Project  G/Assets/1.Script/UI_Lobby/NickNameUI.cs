@@ -27,7 +27,8 @@ public partial class LobbyUIManager : MonoBehaviour
             Debug.Log("닉네임은 빈 칸이면 안됩니다");
             return;
         }
-
+        
+        // 닉네임 업데이트
         BackEndServerManager.Instance.UpdateNickName(nickName);
 
         // 포톤 닉네임 세팅 

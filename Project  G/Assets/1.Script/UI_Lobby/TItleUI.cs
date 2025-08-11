@@ -53,9 +53,11 @@ public partial class LobbyUIManager : MonoBehaviour
 
                     // 프로필 세팅
                     SettingProfile();
-
                     break;
             }
+
+            // 차트 불러오기 
+            BackendChartManager.Instance.InitBackendChart();
         });
 
 

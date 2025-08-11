@@ -70,7 +70,7 @@ public partial class LobbyUIManager : MonoBehaviour
         Array type = System.Enum.GetValues(typeof(CharacterType));
         if (userIndex < 0 || userIndex >= type.Length) return;
 
-        Debug.Log(userIndex);
+        Debug.Log("캐릭터 외형 번호" + userIndex);
 
         characterImage.sprite = characterSprite[userIndex];
 
