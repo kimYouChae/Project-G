@@ -86,12 +86,15 @@ public class BackendChartManager : Singleton<BackendChartManager>
             foreach (LitJson.JsonData row in temp) 
             {
                 // row는 각 원소(오브젝트)
-                string mapType = row["MapType"].ToString();
-                string difficulty = row["Difficulty"].ToString();
+                MapType mapType = Extension.StringToEnum<MapType>(row["MapType"].ToString());
+                Difficulty diffi = Extension.StringToEnum<Difficulty>(row["Difficulty"].ToString());
                 string contents = row["MapContents"].ToString();
-                int rate = int.TryParse(row["Rate"].ToString(), out var r) ? r : 0;
+                int rate = int.Parse(row["Rate"].ToString());
 
-                Debug.Log($"MapType={mapType}, Difficulty={difficulty}, Rate={rate}, Contents={contents}");
+                // Debug.Log($"MapType={mapType}, Difficulty={difficulty}, Rate={rate}, Contents={contents}");
+
+                MapData data = new MapData(mapType, diffi, contents, rate);
+                MapDataManager.Instance.AddtoMapDictionary(mapType, data);
             }
         }
     }
