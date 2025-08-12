@@ -14,7 +14,8 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
     [SerializeField] private Action moveNetSpawner;
 
     [Header("===Bullet===")]
-    [SerializeField] private Transform shootPosi;   //총알 쏠 위치 
+    [SerializeField] private Transform[] shootPosiList;   //총알 쏠 위치 - left,top,right,bottom 순
+    [SerializeField] private Transform shootPosi;   // 현재 총 쏠 위치 
     [SerializeField] private GameObject bulletPrefab;
 
     private void Awake()
@@ -75,24 +76,19 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
         {
             case DirType.Left:
                 moveNetSpawner += MoveFllowToUpDown;
-
-                // 회전 동기화 
-                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, new Vector3(0, 0, -90f));
+                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Left);
                 break;
             case DirType.Right:
                 moveNetSpawner += MoveFllowToUpDown;
-
-                // 회전 동기화
-                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, new Vector3(0, 0, 90f));
+                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Right);
                 break;
             case DirType.Top:
                 moveNetSpawner += MoveFllowToLeftRIght;
-
-                // 회전 동기화
-                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, new Vector3(0, 0, -180));
+                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Top);
                 break;
             case DirType.Bottom:
                 moveNetSpawner += MoveFllowToLeftRIght;
+                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Bottom);
                 break;
         }
     }
@@ -177,8 +173,8 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
     }
 
     [PunRPC]
-    public void RPC_SettingAngle(Vector3 enAle) 
+    public void RPC_SettingAngle(DirType type) 
     {
-        transform.eulerAngles = enAle;
+        shootPosi = shootPosiList[(int)type];
     }
 }
