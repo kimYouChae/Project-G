@@ -41,6 +41,8 @@ public class ScoreManager : Singleton<ScoreManager>
         { 
             nowLevel++;
             Debug.Log("현재 난이도 :" + nowLevel);
+
+            PunIngameManager.Instance.spawnerManager.BulletSpawn(nowLevel);
         }
 
         // UI 업데이트
