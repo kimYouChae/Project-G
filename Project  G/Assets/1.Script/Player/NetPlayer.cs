@@ -7,6 +7,7 @@ using Photon.Pun;
 public class NetPlayer : MonoBehaviourPun, IPunObservable
 {
     [Header("===Info===")]
+    [SerializeField] private QuadrantType playerQuadtype;
     [SerializeField] private int playerIndex;
 
     [Header("===Move===")]
@@ -25,6 +26,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
     public int PlayerIndex { get => playerIndex; }
     public bool IsReadToMove { get => isReadToMove; set => isReadToMove = value; }
+    public QuadrantType PlayerQuadtype { get => playerQuadtype; }
 
     private void Start()
     {
@@ -61,9 +63,10 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         rb.velocity = dir.normalized * speed;
     }
 
-    public void SetIndex(int idx) 
+    public void SetIndex(QuadrantType qType) 
     {
-        this.playerIndex = idx;
+        this.playerQuadtype = qType;
+        this.playerIndex = (int)qType;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

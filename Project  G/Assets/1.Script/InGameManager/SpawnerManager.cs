@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnerManager : MonoBehaviour
 {
     [SerializeField] private PhotonView localPlayer;
+    [SerializeField] private NetPlayer localNetPlayer;
     [SerializeField] private int localPlayerIndex;
 
     private Action<int> bulletSpawn;
@@ -32,9 +33,8 @@ public class SpawnerManager : MonoBehaviour
     {
         localPlayer = local;
 
-        // 로컬 플레이어에 저장되어 있는 (localPlayer) 인덱스
-        // 에 해당하는 스포너 기준으로 생성하면 될듯 ?
-        localPlayerIndex = localPlayer.GetComponent<NetPlayer>().PlayerIndex;
+        localNetPlayer = localPlayer.GetComponent<NetPlayer>();
+        localPlayerIndex = localNetPlayer.PlayerIndex;
     }
 
     public void Temp(int stage) 
@@ -42,21 +42,21 @@ public class SpawnerManager : MonoBehaviour
         switch (stage)
         {
             case 1:
-                SpawnBasicBullet(DirType.Left);
+                SpawnBasicBulleSpanwer(DirType.Left);
                 break;
             case 2:
-                SpawnBasicBullet(DirType.Right);
+                SpawnBasicBulleSpanwer(DirType.Right);
                 break;
             case 3:
-                SpawnBasicBullet(DirType.Top);
+                SpawnBasicBulleSpanwer(DirType.Top);
                 break;
             case 4:
-                SpawnBasicBullet(DirType.Bottom);
+                SpawnBasicBulleSpanwer(DirType.Bottom);
                 break;
         }
     }
 
-    private void SpawnBasicBullet(DirType dir) 
+    private void SpawnBasicBulleSpanwer(DirType dir) 
     {
         GameObject spawnerObj = PhotonNetwork.Instantiate(BASIC_BULLET_SPAWNER, new Vector3(0, 0, 0), Quaternion.identity);
         NetSpawner spawner = spawnerObj.GetComponent<NetSpawner>();
@@ -67,7 +67,24 @@ public class SpawnerManager : MonoBehaviour
             spawner.SettingOwner(localPlayer.ViewID, dir);
         }
         catch (Exception e) { Debug.LogError(e); }
-
     }
 
+    private void SpawnGuideSpanwer() 
+    {
+        // 만약 1사분면 플레이어면 -> 오른쪽에 생성
+        // 만약 2사분면 플레이어면 -> 왼쪽에 생성
+        if(localNetPlayer.PlayerQuadtype == QuadrantType.one) 
+        {
+            CreateGuiedSpanwer(DirType.Right);
+        }
+        else if(localNetPlayer.PlayerQuadtype == QuadrantType.two)
+        {
+            CreateGuiedSpanwer(DirType.Left);
+        }
+    }
+
+    private void CreateGuiedSpanwer(DirType type) 
+    {
+        GameObject spawnerObj = PhotonNetwork.Instantiate(GUIDED_MISSILE_SPAWNER, new Vector3(0, 0, 0), Quaternion.identity);
+    }
 }

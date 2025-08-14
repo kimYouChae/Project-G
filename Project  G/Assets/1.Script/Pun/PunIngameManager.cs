@@ -123,7 +123,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
             // Resources 파일 하위에 동일한 이름의 오브젝트가 있어야함 ! 
             GameObject temp = PhotonNetwork.Instantiate("Player_1", playerPosi, Quaternion.identity);
-            temp.GetComponent<NetPlayer>().SetIndex(index);
+            temp.GetComponent<NetPlayer>().SetIndex(quType);
 
             // 로컬 플레이어 저장 
             localPlayer = temp.GetComponent<PhotonView>();
