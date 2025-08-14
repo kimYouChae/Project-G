@@ -533,10 +533,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403c0cce6ff36d246ae180574ee7e4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currScore: 0
-  currTime: 0
-  rateInCrease: 0.7
-  rateTime: 0.1
+  startTime: 0
+  isReadyToCount: 0
+  nowLevel: 0
 --- !u!1 &180502502
 GameObject:
   m_ObjectHideFlags: 0
@@ -3484,6 +3483,7 @@ GameObject:
   - component: {fileID: 1250630756}
   - component: {fileID: 1250630755}
   - component: {fileID: 1250630757}
+  - component: {fileID: 1250630758}
   m_Layer: 0
   m_Name: Pun
   m_TagString: Untagged
@@ -3505,10 +3505,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localPlayer: {fileID: 0}
   localQuadrantType: 0
-  playerList: []
   playerField:
   - {fileID: 812049886}
   - {fileID: 2011809229}
+  spawnerManager: {fileID: 0}
 --- !u!4 &1250630756
 Transform:
   m_ObjectHideFlags: 0
@@ -3536,6 +3536,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0d336133de7b044afae109ff741b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1250630758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250630754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6691227fdb2a11f449b41953783f7d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localPlayer: {fileID: 0}
+  localPlayerIndex: 0
 --- !u!1 &1290080791
 GameObject:
   m_ObjectHideFlags: 0
