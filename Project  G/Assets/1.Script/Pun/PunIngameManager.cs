@@ -37,6 +37,8 @@ public class PunIngameManager : Singleton<PunIngameManager>
     [SerializeField] private QuadrantType localQuadrantType;
     [SerializeField] private Transform[] playerField;       // 사분면 순서대로 배치되어 있어야함 
 
+    [SerializeField] public SpawnerManager spawnerManager;
+
     [SerializeField]
     private Dictionary<int, InGamePlayer> ingamePlayer;
     
@@ -51,6 +53,8 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
     private void Start()
     {
+        spawnerManager = GetComponent<SpawnerManager>();
+
         ingamePlayer = new Dictionary<int, InGamePlayer>();
 
         MemberTwoCreatePlayer();
@@ -104,8 +108,6 @@ public class PunIngameManager : Singleton<PunIngameManager>
         InGameUI.GetInstance().GamePanel.SetActive(true);
         localPlayer.GetComponent<NetPlayer>().IsReadToMove = true;
         ScoreManager.Instance.ScoreBegin((float)PhotonNetwork.Time);
-
-        StartCoroutine(GenerateBulletSpawner());
     }
 
     private void MemberTwoCreatePlayer() 
@@ -127,6 +129,9 @@ public class PunIngameManager : Singleton<PunIngameManager>
             localPlayer = temp.GetComponent<PhotonView>();
             localQuadrantType = quType;
             UserDataRaiseEvent(index);
+
+            // 스포너 manager에 로컬 플레이어 저장
+            spawnerManager.SetLoacalPlayer(localPlayer);
         }
     }
     
@@ -163,29 +168,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
         InGameUI.GetInstance().UpdatePlayerInfoText(player);
     }
 
-    IEnumerator GenerateBulletSpawner() 
-    {
-        yield return new WaitForSeconds(0.02f);
-
-        // 로컬 플레이어에 저장되어 있는 (localPlayer) 인덱스
-        // 에 해당하는 스포너 기준으로 생성하면 될듯 ?
-
-        int index = localPlayer.GetComponent<NetPlayer>().PlayerIndex;
-
-        for (int dir = 0; dir < 4; dir++) 
-        {
-            GameObject spawnerObj = PhotonNetwork.Instantiate("BulletSpawner", new Vector3(0, 0, 0), Quaternion.identity);
-            NetSpawner spawner = spawnerObj.GetComponent<NetSpawner>();
-            spawner.SettingParent(index, (DirType)dir);
-
-            if (localPlayer != null)
-                spawner.SettingOwner(localPlayer.ViewID, (DirType)dir);
-            else
-                Debug.LogWarning("localPlayer가 NULL입니다 왜지/!??");
-
-            yield return new WaitForSeconds(10f);
-        }
-    }
+   
 
     #region Photon 관련 공통함수 
 
