@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1741762263468583962}
   - component: {fileID: 1336112660527105782}
   - component: {fileID: 1066161603235576315}
-  - component: {fileID: 2373758395449378187}
+  - component: {fileID: 1019209768884501527}
   m_Layer: 0
   m_Name: BulletSpawner
   m_TagString: Untagged
@@ -137,11 +137,11 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 2373758395449378187}
+  - {fileID: 1019209768884501527}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2373758395449378187
+--- !u!114 &1019209768884501527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3347493627486202808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa9ad16339a867848ac26136399e7312, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a565194e06040640b2697fdd7814d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   view: {fileID: 0}
@@ -158,10 +158,10 @@ MonoBehaviour:
   ownerTrs: {fileID: 0}
   directType: 0
   shootPosiList:
-  - {fileID: 5573067836892397948}
-  - {fileID: 2469526968439714767}
   - {fileID: 7330624872748881817}
   - {fileID: 1904922173858166326}
+  - {fileID: 5573067836892397948}
+  - {fileID: 2469526968439714767}
   shootPosi: {fileID: 0}
   bulletPrefab: {fileID: 1370118796857302250, guid: 00eeb6ae98823284daa27404372c5584, type: 3}
 --- !u!1 &4822016488066936702

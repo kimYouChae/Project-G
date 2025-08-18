@@ -5,7 +5,8 @@ using System.Reflection;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class NetSpawner : MonoBehaviourPun, IPunObservable
+
+public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] private PhotonView view;
     [SerializeField] private Rigidbody2D rb;
@@ -17,6 +18,11 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
     [SerializeField] private Transform[] shootPosiList;   //총알 쏠 위치 - left,top,right,bottom 순
     [SerializeField] private Transform shootPosi;   // 현재 총 쏠 위치 
     [SerializeField] private GameObject bulletPrefab;
+
+    // 하위 스포너에서 움직임 세팅 
+    public abstract void SettingMoving();
+    // 하위 스포너에서 총알 발사 위치 세팅
+    public abstract void SettingBulletShootPosi();
 
     private void Awake()
     {
@@ -68,27 +74,51 @@ public class NetSpawner : MonoBehaviourPun, IPunObservable
         // this.ownerTrs = trs;
         // owner 지정은 RPC : view아이디는 로컬의 플레이어 id
         view.RPC("RPC_SettingOwner", RpcTarget.AllBuffered , viewId);
+    }
 
+    public void SettingDir(DirType type) 
+    {
         this.directType = type;
+    }
 
+    protected void SettingOwnerFollowMoving() 
+    {
+        // dirType세팅 후
         // 방향에 따라 움직임 다르게 
         switch (directType)
         {
             case DirType.Left:
                 moveNetSpawner += MoveFllowToUpDown;
-                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Left);
                 break;
             case DirType.Right:
                 moveNetSpawner += MoveFllowToUpDown;
-                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Right);
                 break;
             case DirType.Top:
                 moveNetSpawner += MoveFllowToLeftRIght;
-                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Top);
                 break;
             case DirType.Bottom:
                 moveNetSpawner += MoveFllowToLeftRIght;
+                break;
+        }
+    }
+
+    protected void SettingBulletShotPosi() 
+    {
+        // dirType세팅 후
+        // 방향에 따라 움직임 다르게 
+        switch (directType)
+        {
+            case DirType.Left:
+                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Right);
+                break;
+            case DirType.Right:
+                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Left);
+                break;
+            case DirType.Top:
                 view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Bottom);
+                break;
+            case DirType.Bottom:
+                view.RPC("RPC_SettingAngle", RpcTarget.AllBuffered, DirType.Top);
                 break;
         }
     }

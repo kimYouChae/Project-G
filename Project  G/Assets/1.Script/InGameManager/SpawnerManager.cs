@@ -39,34 +39,28 @@ public class SpawnerManager : MonoBehaviour
 
     public void Temp(int stage) 
     {
+        // 기본 미사일 생성
         switch (stage)
         {
             case 1:
-                SpawnBasicBulleSpanwer(DirType.Left);
+                CreateSpanwer(DirType.Left, BASIC_BULLET_SPAWNER);
                 break;
             case 2:
-                SpawnBasicBulleSpanwer(DirType.Right);
+                CreateSpanwer(DirType.Right, BASIC_BULLET_SPAWNER);
                 break;
             case 3:
-                SpawnBasicBulleSpanwer(DirType.Top);
+                CreateSpanwer(DirType.Top, BASIC_BULLET_SPAWNER);
                 break;
             case 4:
-                SpawnBasicBulleSpanwer(DirType.Bottom);
+                CreateSpanwer(DirType.Bottom, BASIC_BULLET_SPAWNER);
                 break;
         }
-    }
 
-    private void SpawnBasicBulleSpanwer(DirType dir) 
-    {
-        GameObject spawnerObj = PhotonNetwork.Instantiate(BASIC_BULLET_SPAWNER, new Vector3(0, 0, 0), Quaternion.identity);
-        NetSpawner spawner = spawnerObj.GetComponent<NetSpawner>();
-
-        try 
+        // 따라가는 미사일 생성
+        if(stage == GUIDED_MISSILE_SPAWN_STAGE) 
         {
-            spawner.SettingParent(localPlayerIndex, dir);
-            spawner.SettingOwner(localPlayer.ViewID, dir);
+            SpawnGuideSpanwer();
         }
-        catch (Exception e) { Debug.LogError(e); }
     }
 
     private void SpawnGuideSpanwer() 
@@ -75,16 +69,36 @@ public class SpawnerManager : MonoBehaviour
         // 만약 2사분면 플레이어면 -> 왼쪽에 생성
         if(localNetPlayer.PlayerQuadtype == QuadrantType.one) 
         {
-            CreateGuiedSpanwer(DirType.Right);
+            CreateSpanwer(DirType.Right, GUIDED_MISSILE_SPAWNER);
         }
         else if(localNetPlayer.PlayerQuadtype == QuadrantType.two)
         {
-            CreateGuiedSpanwer(DirType.Left);
+            CreateSpanwer(DirType.Left, GUIDED_MISSILE_SPAWNER);
         }
     }
 
-    private void CreateGuiedSpanwer(DirType type) 
+    #region string에 따른 스포너 생성
+
+    private void CreateSpanwer(DirType dir, string spawnerName) 
     {
-        GameObject spawnerObj = PhotonNetwork.Instantiate(GUIDED_MISSILE_SPAWNER, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject spawnerObj = PhotonNetwork.Instantiate(spawnerName, new Vector3(0, 0, 0), Quaternion.identity);
+        NetSpawner spawner = spawnerObj.GetComponent<NetSpawner>();
+
+        try
+        {
+            // 1. 부모지정
+            spawner.SettingParent(localPlayerIndex, dir);
+            // 2. owner 지정
+            spawner.SettingOwner(localPlayer.ViewID, dir);
+            // 3. dir지정 후 
+            spawner.SettingDir(dir);
+            // 4. 움직임 지정 / 총알 스포너 위치 지정 
+            spawner.SettingMoving();
+            spawner.SettingBulletShootPosi();
+
+        }
+        catch (Exception e) { Debug.LogError(e); }
     }
+
+    #endregion
 }
