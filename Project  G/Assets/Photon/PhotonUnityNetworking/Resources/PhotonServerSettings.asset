@@ -50,6 +50,7 @@ MonoBehaviour:
   - RPC_StopAll
   - UpdatePlayerInfoText
   - RPC_UpdatePlayerInfoText
+  - RPC_ShootGuideMissile
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
