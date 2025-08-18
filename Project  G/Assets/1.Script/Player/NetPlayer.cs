@@ -51,19 +51,19 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
         if (dir.x < 0)  // 왼
             netAnimator.ChangeAnimation(CharaterAniState.left);
-        if(dir.x > 0 )  // 오
+        if (dir.x > 0)  // 오
             netAnimator.ChangeAnimation(CharaterAniState.right);
-        if(dir.y < 0)   // 아래
+        if (dir.y < 0)   // 아래
             netAnimator.ChangeAnimation(CharaterAniState.back);
-        if(dir.y > 0 )  // 위
+        if (dir.y > 0)  // 위
             netAnimator.ChangeAnimation(CharaterAniState.front);
-        if(dir.x == 0 && dir.y == 0)    // 가만히
-            netAnimator.ChangeAnimation(CharaterAniState.none); 
+        if (dir.x == 0 && dir.y == 0)    // 가만히
+            netAnimator.ChangeAnimation(CharaterAniState.none);
 
         rb.velocity = dir.normalized * speed;
     }
 
-    public void SetIndex(QuadrantType qType) 
+    public void SetIndex(QuadrantType qType)
     {
         this.playerQuadtype = qType;
         this.playerIndex = (int)qType;
@@ -73,7 +73,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     {
         // 스트림에 데이터 쓰기 
         // isMine이 true인것
-        if(stream.IsWriting) 
+        if (stream.IsWriting)
         {
             // 로컬 데이터 전송
             stream.SendNext(transform.position);
@@ -83,7 +83,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         // 데이터 읽기
         // isMine이 false인것
         // PhotonView의 오브젝트 고유ID로 매핑
-        if (stream.IsReading) 
+        if (stream.IsReading)
         {
             // 다른사람이 조종하는 객체 
             // 데이터 수신
@@ -125,8 +125,13 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         // 임시 총알 레이어 번호 설정 
         if (collision.gameObject.layer == 7)
         {
-            view.RPC("RPC_TriggerBullet", RpcTarget.AllBuffered, photonView.ViewID) ;
+            DiePlayer();
         }
+    }
+
+    public void DiePlayer() 
+    {
+        view.RPC("RPC_TriggerBullet", RpcTarget.AllBuffered, photonView.ViewID);
     }
 
     [PunRPC]

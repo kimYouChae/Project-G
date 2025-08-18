@@ -16,9 +16,9 @@ public class SpawnerManager : MonoBehaviour
     const string FOUR_DIRECET_SPAWNER = "FourDirectSpanwer";
 
     const int BASIC_SPAWN_STAGE = 0;
-    const int GUIDED_MISSILE_SPAWN_STAGE = 3;
-    const int LASER_SPAWN_STATE = 5;
-    const int FOUR_DIRECT_SPAWN_STATE = 7;
+    const int GUIDED_MISSILE_SPAWN_STAGE = 1;
+    const int LASER_SPAWN_STATE = 1;
+    const int FOUR_DIRECT_SPAWN_STATE = 1;
 
     const float BASIC_SPAWNER_INTERVEL = 1; // 기본 총알 생성 스테이지 간격 
 
@@ -61,6 +61,12 @@ public class SpawnerManager : MonoBehaviour
         {
             SpawnGuideSpanwer();
         }
+
+        // 레이저 생성
+        if (stage == LASER_SPAWN_STATE) 
+        {
+            SpawnLaserSpawner();
+        }
     }
 
     private void SpawnGuideSpanwer() 
@@ -74,6 +80,20 @@ public class SpawnerManager : MonoBehaviour
         else if(localNetPlayer.PlayerQuadtype == QuadrantType.two)
         {
             CreateSpanwer(DirType.Left, GUIDED_MISSILE_SPAWNER);
+        }
+    }
+
+    private void SpawnLaserSpawner() 
+    {
+        // 만약 1사분면 플레이어면 -> 오른쪽에 생성
+        // 만약 2사분면 플레이어면 -> 왼쪽에 생성
+        if (localNetPlayer.PlayerQuadtype == QuadrantType.one)
+        {
+            CreateSpanwer(DirType.Right, LASER_SPAWNER);
+        }
+        else if (localNetPlayer.PlayerQuadtype == QuadrantType.two)
+        {
+            CreateSpanwer(DirType.Left, LASER_SPAWNER);
         }
     }
 
