@@ -11,7 +11,7 @@ public class SpawnerManager : MonoBehaviour
     private Action<int> bulletSpawn;
 
     const string BASIC_BULLET_SPAWNER = "BulletSpawner";
-    const string GUIDED_MISSILE_SPAWNER = "GuidedMissile";
+    const string GUIDED_MISSILE_SPAWNER = "GuidedMissileSpanwer";
     const string LASER_SPAWNER = "LaserSpawner";
     const string FOUR_DIRECET_SPAWNER = "FourDirectSpanwer";
 

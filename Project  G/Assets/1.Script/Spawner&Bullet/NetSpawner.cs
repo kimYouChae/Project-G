@@ -8,16 +8,18 @@ using Random = UnityEngine.Random;
 
 public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
 {
-    [SerializeField] private PhotonView view;
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform ownerTrs;    // 따라다닐 기준이 되는 trs
-    [SerializeField] private DirType directType;    // 내가 위치한 방향 
-    [SerializeField] private Action moveNetSpawner;
+    [SerializeField] protected PhotonView view;
+    [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] protected Transform ownerTrs;    // 따라다닐 기준이 되는 trs
+    [SerializeField] protected DirType directType;    // 내가 위치한 방향 
+    [SerializeField] protected Action moveNetSpawner;
 
     [Header("===Bullet===")]
-    [SerializeField] private Transform[] shootPosiList;   //총알 쏠 위치 - left,top,right,bottom 순
-    [SerializeField] private Transform shootPosi;   // 현재 총 쏠 위치 
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] protected Transform[] shootPosiList;   //총알 쏠 위치 - left,top,right,bottom 순
+    [SerializeField] protected Transform shootPosi;   // 현재 총 쏠 위치 
+
+    // 총알 발사 시작
+    public abstract void StartShooting();
 
     // 하위 스포너에서 움직임 세팅 
     public abstract void SettingMoving();
@@ -32,7 +34,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
 
     private void Start()
     {
-        StartCoroutine(ShootBulletCicle());
+        StartShooting();
     }
 
     private void FixedUpdate()
@@ -153,21 +155,6 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
         rb.velocity = new Vector2(directionX, 0).normalized * 3f;
     }
 
-    private IEnumerator ShootBulletCicle() 
-    {
-        while (true) 
-        {
-            // ## 임시 쿨타임 Nf
-            float coolTime = Random.Range(3f, 5f);
-            
-            yield return new WaitForSeconds(coolTime);
-
-            // 총알생성 RPC 실행 
-            // 총알 두개 생성 방지 -> isMine 검사
-            if(photonView.IsMine)
-                view.RPC("RPC_ShootBullet", RpcTarget.AllBuffered);
-        }
-    }
 
     [PunRPC]
     public void RPC_SetParentTrasform(int playerIndex, DirType dir)
@@ -178,17 +165,6 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
 
         transform.SetParent(parent);
         transform.localPosition = Define.twoMemberSpawnerPoint[dir];
-    }
-
-    [PunRPC]
-    public void RPC_ShootBullet() 
-    {
-        GameObject temp = Instantiate(bulletPrefab, shootPosi );
-        Vector3 destination = ownerTrs.position;
-
-        // 총알에 방향벡터 지정해주기
-        Vector3 dir = destination - shootPosi.position;
-        temp.GetComponent<BasicBullet>().DirectVector = dir;
     }
 
     [PunRPC]
