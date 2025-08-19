@@ -17,10 +17,10 @@ public class FourDirBullet : MonoBehaviour
         // 4방향으로 총알 발사 
         if (view.IsMine) 
         {
-            view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.up);
-            view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.right);
-            view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.left);
-            view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.down);
+            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.up);
+            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.right);
+            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.left);
+            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.down);
         }
 
         // 0.5초후에 삭제
