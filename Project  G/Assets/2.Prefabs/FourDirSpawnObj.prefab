@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3719082086989194580}
   - component: {fileID: 6562452679244492039}
   m_Layer: 0
-  m_Name: FourDirBullet
+  m_Name: FourDirSpawnObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

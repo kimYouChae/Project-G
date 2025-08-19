@@ -163,6 +163,7 @@ MonoBehaviour:
   - {fileID: 5573067836892397948}
   - {fileID: 2469526968439714767}
   shootPosi: {fileID: 0}
+  fourBulletSpawnObj: {fileID: 2664263643526527474, guid: 23763e17f62a95845a0f2165fb3b03c4, type: 3}
 --- !u!1 &4822016488066936702
 GameObject:
   m_ObjectHideFlags: 0
