@@ -67,6 +67,12 @@ public class SpawnerManager : MonoBehaviour
         {
             SpawnLaserSpawner();
         }
+
+        // 십자 방향 폭탄 발사
+        if (stage == FOUR_DIRECT_SPAWN_STATE) 
+        {
+            SpawnFourDirSpawner();
+        }
     }
 
     private void SpawnGuideSpanwer() 
@@ -94,6 +100,20 @@ public class SpawnerManager : MonoBehaviour
         else if (localNetPlayer.PlayerQuadtype == QuadrantType.two)
         {
             CreateSpanwer(DirType.Left, LASER_SPAWNER);
+        }
+    }
+
+    private void SpawnFourDirSpawner() 
+    {
+        // 만약 1사분면 플레이어면 -> 왼쪽에 생성
+        // 만약 2사분면 플레이어면 -> 오른쪽에 생성
+        if (localNetPlayer.PlayerQuadtype == QuadrantType.one) 
+        {
+            CreateSpanwer(DirType.Left, FOUR_DIRECET_SPAWNER);
+        }
+        else if (localNetPlayer.PlayerQuadtype == QuadrantType.two)
+        {
+            CreateSpanwer(DirType.Right, FOUR_DIRECET_SPAWNER);
         }
     }
 

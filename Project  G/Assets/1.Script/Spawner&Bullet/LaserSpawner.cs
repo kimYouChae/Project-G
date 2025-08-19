@@ -7,10 +7,10 @@ using Random = UnityEngine.Random;
 
 public class LaserSpawner : NetSpawner
 {
+    [Header("===LaserSpawner===")]
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] bool isMoveLaser = false;
     [SerializeField] bool flag = true;
-    [SerializeField] bool isEffectPlaying = true;
 
     public override void StartShooting()
     {
@@ -123,6 +123,10 @@ public class LaserSpawner : NetSpawner
             }
             catch(Exception e) { Debug.Log(e);  }
         }
+
+        // 스탯 초기화
+        isMoveLaser = false;
+        flag = true;
     }
 
     [PunRPC]

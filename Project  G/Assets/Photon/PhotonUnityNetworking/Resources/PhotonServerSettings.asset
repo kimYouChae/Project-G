@@ -53,6 +53,8 @@ MonoBehaviour:
   - RPC_ShootGuideMissile
   - RPC_ShootLaser
   - RPC_LaserEffect
+  - RPC_ShootFourDirSpawn
+  - RPC_ShootBasciBullet
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

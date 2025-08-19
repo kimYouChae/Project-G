@@ -29,6 +29,18 @@ static public class Define
         { QuadrantType.two , new Vector2(-5.5f , 0 ) }
     };
 
+    public static readonly Dictionary<QuadrantType, Vector2> twoMemberFieldMin = new Dictionary<QuadrantType, Vector2>()
+    {
+        { QuadrantType.one , new Vector2(2,-4)},
+        { QuadrantType.two , new Vector2(-9,-4)}
+    };
+
+    public static readonly Dictionary<QuadrantType, Vector2> twoMemberFieldMax = new Dictionary<QuadrantType, Vector2>()
+    {
+        {QuadrantType.one , new Vector2(9,4)}, 
+        { QuadrantType.two , new Vector2(-2,4)}
+    };
+
     public static readonly Dictionary<QuadrantType, Vector2> fourMemberPoint = new Dictionary<QuadrantType, Vector2>()
     {
         { QuadrantType.one , new Vector2(10f,5f) },
@@ -44,4 +56,6 @@ static public class Define
         {DirType.Right ,new Vector2(0.57f,0)},
         {DirType.Bottom, new Vector2(0, -0.55f ) }
     };
+
+
 }
