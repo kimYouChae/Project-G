@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class FourDirBullet : MonoBehaviour
 {
@@ -14,10 +15,13 @@ public class FourDirBullet : MonoBehaviour
         view = gameObject.GetComponent<PhotonView>();
 
         // 4방향으로 총알 발사 
-        view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.up);
-        view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.right);
-        view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.left);
-        view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.down);
+        if (view.IsMine) 
+        {
+            view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.up);
+            view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.right);
+            view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.left);
+            view.RPC("RPC_ShootBasciBullet", RpcTarget.AllBuffered, Vector2.down);
+        }
 
         // 0.5초후에 삭제
         Destroy(gameObject, 0.5f);

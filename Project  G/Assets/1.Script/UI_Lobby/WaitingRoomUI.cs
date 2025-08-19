@@ -22,12 +22,12 @@ public partial class LobbyUIManager : MonoBehaviour
     {
         gameStartButton.onClick.AddListener(() => 
         {
+            // Mapdata 세팅
+            MapDataManager.Instance.SettingNowMapData(PhotonRoomInfo.MapTypeName);
+
             // 마스터클라이언트만 가능 
             if (PhotonNetwork.IsMasterClient)
             {
-                // Mapdata 세팅
-                MapDataManager.Instance.SettingNowMapData(PhotonRoomInfo.MapTypeName);
-
                 // 게임씬으로 전환
                 PhotonSceneManager.Instance.ChangeGameScene();
             }
