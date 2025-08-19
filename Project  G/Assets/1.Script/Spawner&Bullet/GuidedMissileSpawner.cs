@@ -42,7 +42,7 @@ public class GuidedMissileSpawner : NetSpawner
     [PunRPC]
     public void RPC_ShootGuideMissile()
     {
-        GameObject temp = Instantiate(bulletPrefab, shootPosi);
+        GameObject temp = Instantiate(bulletPrefab, shootPosi.position, Quaternion.identity);
 
         temp.GetComponent<GuideMissile>().OwnerPosition = ownerTrs;
     }

@@ -43,7 +43,7 @@ public class BasicSpawner : NetSpawner
     [PunRPC]
     public void RPC_ShootBullet()
     {
-        GameObject temp = Instantiate(bulletPrefab, shootPosi);
+        GameObject temp = Instantiate(bulletPrefab, shootPosi.position , Quaternion.identity);
         Vector3 destination = ownerTrs.position;
 
         // 총알에 방향벡터 지정해주기
