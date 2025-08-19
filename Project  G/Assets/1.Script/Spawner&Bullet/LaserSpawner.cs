@@ -12,6 +12,10 @@ public class LaserSpawner : NetSpawner
     [SerializeField] bool isMoveLaser = false;
     [SerializeField] bool flag = true;
 
+    Vector3 laserDistanceToLeft = new Vector3(-20,0,0);
+    Vector3 laserDistanceToRight = new Vector3(20,0,0);
+    Vector3 laserZDistance = new Vector3(0, 0, -0.01f);
+
     public override void StartShooting()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -34,35 +38,24 @@ public class LaserSpawner : NetSpawner
 
     private void Update()
     {
+        if (photonView.IsMine == false)
+            return;
+
         if (isMoveLaser) 
         {
-            LaserPlay();
+            Vector3 p0 = shootPosi.position;
+            Vector3 p1 = directType == DirType.Left ?
+                shootPosi.position + (laserDistanceToRight + laserZDistance) :
+                shootPosi.position + (laserDistanceToLeft + laserZDistance);
+
+            view.RPC(nameof(RPC_DrawLine), RpcTarget.AllBuffered, p0, p1);
 
             if (flag) 
             {
                 // 깜빡깜빡 효과
-                view.RPC("RPC_LaserEffect", RpcTarget.AllBuffered);
+                view.RPC(nameof(RPC_LaserEffect), RpcTarget.AllBuffered);
                 flag = false;
             }
-        }
-    }
-
-    private void LaserPlay() 
-    {
-        // 첫번째 점
-        lineRenderer.SetPosition(0, shootPosi.position);
-
-        // 왼쪽에 있을 때 
-        if (directType == DirType.Left) 
-        {
-            // 두번째 점 
-            lineRenderer.SetPosition(1, shootPosi.position + new Vector3(10f, 0, -0.1f));
-        }
-        // 오른쪽에 있을 때 
-        else if (directType == DirType.Right) 
-        {
-            // 두번째 점 
-            lineRenderer.SetPosition(1, shootPosi.position + new Vector3(-10f, 0, -0.1f));
         }
     }
 
@@ -75,29 +68,29 @@ public class LaserSpawner : NetSpawner
 
             yield return new WaitForSeconds(coolTime);
 
-            // 총알생성 RPC 실행 
-            // 총알 두개 생성 방지 -> isMine 검사
             if (photonView.IsMine)
-                view.RPC("RPC_ShootLaser", RpcTarget.AllBuffered);
+                view.RPC(nameof(RPC_ShootLaser), RpcTarget.AllBuffered);
         }
     }
 
     IEnumerator LaserEffect() 
     {
-
         Debug.Log("레이저 발사");
         for(float i = 1f; i >= -0.01f; i -= 0.2f) 
         {
-            lineRenderer.enabled = false;
+            view.RPC(nameof(RPC_OnOffLineRenderer), RpcTarget.AllBuffered, false);
             yield return new WaitForSeconds(i);
-            lineRenderer.enabled = true;
+            view.RPC(nameof(RPC_OnOffLineRenderer), RpcTarget.AllBuffered, true);
             yield return new WaitForSeconds(i);
         }
 
-        lineRenderer.enabled = false;
+        view.RPC(nameof(RPC_OnOffLineRenderer), RpcTarget.AllBuffered, false);
+        isMoveLaser = false;
+        flag = true;
 
         // 레이캐스트 후 플레이어 검사
         PlayerCheck();
+
     }
 
     private void PlayerCheck() 
@@ -113,20 +106,21 @@ public class LaserSpawner : NetSpawner
             hit = Physics2D.Raycast(transform.position, Vector2.left);
         }
 
+        if (hit == default)
+            return;
+
         // 플레이어와 충돌
         if (hit.collider.gameObject.layer == 6) 
         {
+#if !UNITY_EDITOR
             try 
             {
                 NetPlayer player = hit.collider.GetComponent<NetPlayer>();
                 player.DiePlayer();
             }
             catch(Exception e) { Debug.Log(e);  }
+#endif
         }
-
-        // 스탯 초기화
-        isMoveLaser = false;
-        flag = true;
     }
 
     [PunRPC]
@@ -141,6 +135,21 @@ public class LaserSpawner : NetSpawner
     public void RPC_LaserEffect() 
     {
         StartCoroutine(LaserEffect());
+    }
+
+    [PunRPC]
+    public void RPC_DrawLine(Vector3 p0, Vector3 p1) 
+    {
+        // 첫번째 점
+        lineRenderer.SetPosition(0, p0);
+        lineRenderer.SetPosition(1, p1);
+    }
+
+    [PunRPC]
+    public void RPC_OnOffLineRenderer(bool flag) 
+    {
+        if(lineRenderer != null)
+            lineRenderer.enabled = flag;
     }
 
 }

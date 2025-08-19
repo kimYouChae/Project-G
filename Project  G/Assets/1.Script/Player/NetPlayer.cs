@@ -116,11 +116,9 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         if (!photonView.IsMine)
             return;
 
-#if UNITY_EDITOR
         // 테스트용 -> 충돌 x 
         if (flag)
             return;
-#endif
 
         // 임시 총알 레이어 번호 설정 
         if (collision.gameObject.layer == 7)

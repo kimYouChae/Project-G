@@ -55,6 +55,8 @@ MonoBehaviour:
   - RPC_LaserEffect
   - RPC_ShootFourDirSpawn
   - RPC_ShootBasciBullet
+  - RPC_DrawLine
+  - RPC_OnOffLineRenderer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
