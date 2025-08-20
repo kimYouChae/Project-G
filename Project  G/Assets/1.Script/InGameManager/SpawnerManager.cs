@@ -16,9 +16,9 @@ public class SpawnerManager : MonoBehaviour
     const string FOUR_DIRECET_SPAWNER = "FourDirectSpanwer";
 
     const int BASIC_SPAWN_STAGE = 0;
-    const int GUIDED_MISSILE_SPAWN_STAGE = 0;
-    const int LASER_SPAWN_STATE = 0;
-    const int FOUR_DIRECT_SPAWN_STATE = 1;
+    const int GUIDED_MISSILE_SPAWN_STAGE = 3;
+    const int LASER_SPAWN_STATE = 5;
+    const int FOUR_DIRECT_SPAWN_STATE = 7;
 
     const float BASIC_SPAWNER_INTERVEL = 1; // 기본 총알 생성 스테이지 간격 
 
@@ -40,7 +40,6 @@ public class SpawnerManager : MonoBehaviour
     public void Temp(int stage) 
     {
         // 기본 미사일 생성
-        /*
         switch (stage)
         {
             case 1:
@@ -55,7 +54,7 @@ public class SpawnerManager : MonoBehaviour
             case 4:
                 CreateSpanwer(DirType.Bottom, BASIC_BULLET_SPAWNER);
                 break;
-        }*/
+        }
 
         // 따라가는 미사일 생성
         if (stage == GUIDED_MISSILE_SPAWN_STAGE) 
