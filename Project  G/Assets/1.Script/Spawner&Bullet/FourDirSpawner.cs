@@ -47,15 +47,14 @@ public class FourDirSpawner : NetSpawner
                 float ranX = Random.Range(Define.twoMemberFieldMin[type].x, Define.twoMemberFieldMax[type].x);
                 float ranY = Random.Range(Define.twoMemberFieldMin[type].y, Define.twoMemberFieldMax[type].y);
 
-                view.RPC(nameof(RPC_ShootFourDirSpawn), RpcTarget.AllBuffered, ranX, ranY);
+                CreateFourBulletObj(ranX, ranY);
             }
         }
     }
 
-    [PunRPC]
-    public void RPC_ShootFourDirSpawn(float ranX, float ranY)
+    private void CreateFourBulletObj(float ranX, float ranY) 
     {
-        // 네방향총알(스포너) : 네트워크 객체로 동기화
-        GameObject temp = Instantiate(fourBulletSpawnObj, new Vector3(ranX, ranY, 0), Quaternion.identity);
+        GameObject temp = PhotonNetwork.Instantiate("FourDirSpawnObj", new Vector3(ranX, ranY, 0), Quaternion.identity);
     }
+
 }
