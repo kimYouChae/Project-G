@@ -11,8 +11,12 @@ static public class Define
         "숲", "거대한 나무", "시장", "섬", "지옥", "얼음마을"
     };
 
+    public static float mapMinX = -13f;
+    public static float mapMinY = -8f;
+    public static float mapMaxX = 13;
+    public static float mapMaxY = 8;
     
-    public static readonly Dictionary<SceneType, string> SceneNames = new Dictionary<SceneType, string>()
+    public static readonly Dictionary<SceneType, string> sceneNames = new Dictionary<SceneType, string>()
     {
         { SceneType.Lobby, "01.LobbyScene"},
         { SceneType.Game_Forest , "02.Forest"},

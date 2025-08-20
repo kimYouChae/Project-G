@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GuideMissile : MonoBehaviour
+public class GuideMissile : BaseBullet
 {
     [SerializeField] Rigidbody2D rb;
 

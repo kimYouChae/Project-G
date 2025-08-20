@@ -52,7 +52,7 @@ public class PhotonSceneManager : Singleton<PhotonSceneManager>
 
     public void ChangeScene(SceneType type) 
     {
-        string nextSceneString = Define.SceneNames[type];
+        string nextSceneString = Define.sceneNames[type];
 
         if (nextSceneString == null)
             return;

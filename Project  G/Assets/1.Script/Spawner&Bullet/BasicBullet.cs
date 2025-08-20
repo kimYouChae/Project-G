@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicBullet : MonoBehaviour
+public class BasicBullet : BaseBullet
 {
     [SerializeField] Rigidbody2D rb;
 
