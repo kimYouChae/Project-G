@@ -59,3 +59,11 @@ public enum QuadrantType    // 맵 상 사분면
 {
     one, two, three, four
 }
+
+public enum SpawnerType 
+{
+    BasicSpanwer,
+    GuideMissileSpawner,
+    LaserSpawner,
+    FourDirSpanwer
+}
