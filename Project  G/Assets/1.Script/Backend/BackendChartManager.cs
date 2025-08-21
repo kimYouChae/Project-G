@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using LitJson;
+using System;
 
 
 public class BackendChartManager : Singleton<BackendChartManager>
@@ -15,12 +16,15 @@ public class BackendChartManager : Singleton<BackendChartManager>
     // *주의 :차트 파일 ID 아님*
     private Dictionary<string, BackEnd.Content.ContentItem> chartIdByContenct;
 
-    // 차트 아이디 *주의 :차트 파일 ID 아님*
-    const string MAP_CHART_ID = "34128";
+    // 차트 라우터
+    private ChartRouter chartRouter;
+    // name -> ICharHandler 리턴 펙토리
+    private ChartHandlerFactory chartHandlerFactory;
 
     protected override void Singleton_Awake()
     {
-
+        chartRouter = new ChartRouter();
+        chartHandlerFactory = new ChartHandlerFactory();    
     }
 
     public void InitBackendChart() 
@@ -40,10 +44,19 @@ public class BackendChartManager : Singleton<BackendChartManager>
             return;
         }
 
+        string str = "";
         foreach (BackEnd.Content.ContentTableItem item in chartListBro.GetContentTableItemList())
         {
-            Debug.Log(item.chartName);
-            Debug.Log(item);
+            str += item.chartName + '\n';
+            str += item;
+
+            Debug.Log(str);
+            str = "";
+
+            // 차트 이름에 해당하는 클래스 생성후 return
+            ICharHandler handler = chartHandlerFactory.ChartNameByChart(item.chartName);
+            // 라우터에 register
+            chartRouter.RegisterChartHanlder(item.chartId, handler);
         }
     }
 
@@ -61,43 +74,18 @@ public class BackendChartManager : Singleton<BackendChartManager>
         }
 
         // 성공 시 딕셔너리 형태로 변환
-        // 차트 Id별 content
+        // key : 차트 Id - value : content
         chartIdByContenct = bro2.GetContentDictionarySortByChartId();
 
         // 내용 확인
-        /*
         foreach (string keyName in chartIdByContenct.Keys) 
         {
             Debug.Log( "키 이름 : " + keyName + " \n "+ chartIdByContenct[keyName].ToString());
-        }
-        */
 
-        // ** 테이블에서 값 가져오기 !
-        GetJsonByCharId(MAP_CHART_ID);
-    }
-
-    private void GetJsonByCharId(string charID) 
-    {
-        if (chartIdByContenct.ContainsKey(charID)) 
-        {
-            // Debug.Log("콘텐츠스트링:"+ chartIdByContenct[charID].contentString);
-
-            LitJson.JsonData temp = chartIdByContenct[charID].contentJson;
-
-            foreach (LitJson.JsonData row in temp) 
-            {
-                // row는 각 원소(오브젝트)
-                MapType mapType = Extension.StringToEnum<MapType>(row["MapType"].ToString());
-                Difficulty diffi = Extension.StringToEnum<Difficulty>(row["Difficulty"].ToString());
-                string contents = row["MapContents"].ToString();
-                int rate = int.Parse(row["Rate"].ToString());
-
-                // Debug.Log($"MapType={mapType}, Difficulty={difficulty}, Rate={rate}, Contents={contents}");
-
-                MapData data = new MapData(mapType, diffi, contents, rate);
-                MapDataManager.Instance.AddtoMapDictionary(mapType, data);
-            }
+            // ChartHandle실행 
+            LitJson.JsonData jsonData = chartIdByContenct[keyName].contentJson;
+            chartRouter.ChartHandle(keyName, jsonData);
         }
     }
-    
+
 }
