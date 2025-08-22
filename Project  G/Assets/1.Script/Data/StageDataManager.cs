@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,8 @@ public class StageData
 public class StageDataManager : Singleton<StageDataManager>
 {
     [SerializeField] private List<StageData> data;
+
+    [SerializeField] private Dictionary<int, Tuple<SpawnerType, DirType>> oneQuderantSpanwer;
 
     protected override void Singleton_Awake()
     {

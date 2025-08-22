@@ -28,6 +28,15 @@ public class SpanwerDataManager : Singleton<SpanwerDataManager>
     // 인스펙터 창에서 보기용
     [SerializeField] private List<SpawnerData> spawnerDataList;
 
+    public SpawnerData spanwerData(SpawnerType type) 
+    {
+        if (typeBySpawnerData.ContainsKey(type)) 
+        {
+            return typeBySpawnerData[type];
+        }
+        return null;
+    }
+
     protected override void Singleton_Awake()
     {
         SetUpDontDestroy();

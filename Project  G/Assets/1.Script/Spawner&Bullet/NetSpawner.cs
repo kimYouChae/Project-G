@@ -2,6 +2,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,9 +15,16 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
     [SerializeField] protected DirType directType;    // 내가 위치한 방향 
     [SerializeField] protected Action moveNetSpawner;
 
+    [Header("===Data===")]
+    [SerializeField] SpawnerData spawnerData;
+
     [Header("===Bullet===")]
     [SerializeField] protected Transform[] shootPosiList;   //총알 쏠 위치 - left,top,right,bottom 순
     [SerializeField] protected Transform shootPosi;   // 현재 총 쏠 위치 
+
+    private Vector3 velRefX = Vector3.zero;     // SmoothDamp 내부 상태
+    private Vector3 velRefY = Vector3.zero;     // SmoothDamp 내부 상태
+    const float stopEps = 1f;                 // owner와 거리, N 이하이면 움직이지않음
 
     // 총알 발사 시작
     public abstract void StartShooting();
@@ -83,6 +91,15 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
         this.directType = type;
     }
 
+    public void SettingSpawnerData(SpawnerType type) 
+    {
+        var temp = SpanwerDataManager.Instance.spanwerData(type);
+        if (temp != null) 
+        {
+            spawnerData = temp;
+        }
+    }
+
     protected void SettingOwnerFollowMoving() 
     {
         // dirType세팅 후
@@ -131,13 +148,17 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
         float directionY = ownerTrs.position.y - transform.position.y;
 
         // 절댓값이 1 이하면 -> 작은떨림 방지 
-        if (Mathf.Abs(directionY) < 1f) 
+        if (Mathf.Abs(directionY) < stopEps) 
         {
-            rb.velocity = Vector3.zero;
+            velRefY = Vector3.zero;
             return;
         }
-        
-        rb.velocity = new Vector2(0, directionY).normalized * 3f;
+
+        Vector3 current = transform.position;
+        Vector3 target = new Vector3(current.x, ownerTrs.position.y, current.z);
+
+        transform.position = Vector3.SmoothDamp(
+            current, target, ref velRefY, spawnerData.Acceleration, spawnerData.Speed, Time.deltaTime);
     }
 
     private void MoveFllowToLeftRIght() 
@@ -146,13 +167,18 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
         float directionX = ownerTrs.position.x - transform.position.x;
 
         // 절댓값이 1 이하면 -> 작은떨림 방지 
-        if (Mathf.Abs(directionX) < 1f)
+        if (Mathf.Abs(directionX) < stopEps)
         {
-            rb.velocity = Vector3.zero;
+            velRefX = Vector3.zero;
             return;
         }
 
-        rb.velocity = new Vector2(directionX, 0).normalized * 3f;
+        Vector3 current = transform.position;
+        Vector3 target = new Vector3(ownerTrs.position.x, current.y, current.z);
+
+        transform.position = Vector3.SmoothDamp(
+            current, target, ref velRefX, spawnerData.Acceleration, spawnerData.Speed, Time.deltaTime);
+
     }
 
 

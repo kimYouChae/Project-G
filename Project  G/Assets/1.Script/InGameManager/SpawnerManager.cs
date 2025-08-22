@@ -43,16 +43,16 @@ public class SpawnerManager : MonoBehaviour
         switch (stage)
         {
             case 1:
-                CreateSpanwer(DirType.Left, BASIC_BULLET_SPAWNER);
+                CreateSpanwer( SpawnerType.BasicSpanwer, DirType.Left, BASIC_BULLET_SPAWNER);
                 break;
             case 2:
-                CreateSpanwer(DirType.Right, BASIC_BULLET_SPAWNER);
+                CreateSpanwer( SpawnerType.BasicSpanwer,  DirType.Right, BASIC_BULLET_SPAWNER);
                 break;
             case 3:
-                CreateSpanwer(DirType.Top, BASIC_BULLET_SPAWNER);
+                CreateSpanwer( SpawnerType.BasicSpanwer,  DirType.Top, BASIC_BULLET_SPAWNER);
                 break;
             case 4:
-                CreateSpanwer(DirType.Bottom, BASIC_BULLET_SPAWNER);
+                CreateSpanwer( SpawnerType.BasicSpanwer, DirType.Bottom, BASIC_BULLET_SPAWNER);
                 break;
         }
 
@@ -81,11 +81,11 @@ public class SpawnerManager : MonoBehaviour
         // 만약 2사분면 플레이어면 -> 왼쪽에 생성
         if(localNetPlayer.PlayerQuadtype == QuadrantType.one) 
         {
-            CreateSpanwer(DirType.Right, GUIDED_MISSILE_SPAWNER);
+            CreateSpanwer(SpawnerType.GuideMissileSpawner ,DirType.Right, GUIDED_MISSILE_SPAWNER);
         }
         else if(localNetPlayer.PlayerQuadtype == QuadrantType.two)
         {
-            CreateSpanwer(DirType.Left, GUIDED_MISSILE_SPAWNER);
+            CreateSpanwer(SpawnerType.GuideMissileSpawner, DirType.Left, GUIDED_MISSILE_SPAWNER);
         }
     }
 
@@ -95,11 +95,11 @@ public class SpawnerManager : MonoBehaviour
         // 만약 2사분면 플레이어면 -> 왼쪽에 생성
         if (localNetPlayer.PlayerQuadtype == QuadrantType.one)
         {
-            CreateSpanwer(DirType.Right, LASER_SPAWNER);
+            CreateSpanwer(SpawnerType.LaserSpawner,DirType.Right, LASER_SPAWNER);
         }
         else if (localNetPlayer.PlayerQuadtype == QuadrantType.two)
         {
-            CreateSpanwer(DirType.Left, LASER_SPAWNER);
+            CreateSpanwer(SpawnerType.LaserSpawner,DirType.Left, LASER_SPAWNER);
         }
     }
 
@@ -109,17 +109,17 @@ public class SpawnerManager : MonoBehaviour
         // 만약 2사분면 플레이어면 -> 오른쪽에 생성
         if (localNetPlayer.PlayerQuadtype == QuadrantType.one) 
         {
-            CreateSpanwer(DirType.Left, FOUR_DIRECET_SPAWNER);
+            CreateSpanwer(SpawnerType.FourDirSpanwer,DirType.Left, FOUR_DIRECET_SPAWNER);
         }
         else if (localNetPlayer.PlayerQuadtype == QuadrantType.two)
         {
-            CreateSpanwer(DirType.Right, FOUR_DIRECET_SPAWNER);
+            CreateSpanwer(SpawnerType.FourDirSpanwer,DirType.Right, FOUR_DIRECET_SPAWNER);
         }
     }
 
     #region string에 따른 스포너 생성
 
-    private void CreateSpanwer(DirType dir, string spawnerName) 
+    private void CreateSpanwer(SpawnerType type ,DirType dir, string spawnerName) 
     {
         GameObject spawnerObj = PhotonNetwork.Instantiate(spawnerName, new Vector3(0, 0, 0), Quaternion.identity);
         NetSpawner spawner = spawnerObj.GetComponent<NetSpawner>();
@@ -135,6 +135,8 @@ public class SpawnerManager : MonoBehaviour
             // 4. 움직임 지정 / 총알 스포너 위치 지정 
             spawner.SettingMoving();
             spawner.SettingBulletShootPosi();
+            // 5. data 지정해주기
+            spawner.SettingSpawnerData(type);
 
         }
         catch (Exception e) { Debug.LogError(e); }
