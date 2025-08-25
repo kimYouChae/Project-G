@@ -16,15 +16,16 @@ public class BackendChartManager : Singleton<BackendChartManager>
     // *주의 :차트 파일 ID 아님*
     private Dictionary<string, BackEnd.Content.ContentItem> chartIdByContenct;
 
-    // 차트 라우터
-    private ChartRouter chartRouter;
     // name -> ICharHandler 리턴 펙토리
     private ChartHandlerFactory chartHandlerFactory;
 
+    // key : 차트 ID - value : 차트에 해당하는 클래스 
+    private Dictionary<string, ICharHandler> keyValuePairs;
+
     protected override void Singleton_Awake()
     {
-        chartRouter = new ChartRouter();
-        chartHandlerFactory = new ChartHandlerFactory();    
+        chartHandlerFactory = new ChartHandlerFactory();
+        keyValuePairs = new Dictionary<string, ICharHandler>();
     }
 
     public void InitBackendChart() 
@@ -55,8 +56,8 @@ public class BackendChartManager : Singleton<BackendChartManager>
 
             // 차트 이름에 해당하는 클래스 생성후 return
             ICharHandler handler = chartHandlerFactory.ChartNameByChart(item.chartName);
-            // 라우터에 register
-            chartRouter.RegisterChartHanlder(item.chartId, handler);
+            // register
+            RegisterChartHanlder(item.chartId, handler);
         }
     }
 
@@ -84,7 +85,24 @@ public class BackendChartManager : Singleton<BackendChartManager>
 
             // ChartHandle실행 
             LitJson.JsonData jsonData = chartIdByContenct[keyName].contentJson;
-            chartRouter.ChartHandle(keyName, jsonData);
+            ChartHandle(keyName, jsonData);
+        }
+    }
+
+
+    public void RegisterChartHanlder(string key, ICharHandler value)
+    {
+        if (!keyValuePairs.ContainsKey(key))
+        {
+            keyValuePairs.Add(key, value);
+        }
+    }
+
+    public void ChartHandle(string key, LitJson.JsonData data)
+    {
+        if (keyValuePairs.TryGetValue(key, out ICharHandler value))
+        {
+            value.ParseAndStore(data);
         }
     }
 
