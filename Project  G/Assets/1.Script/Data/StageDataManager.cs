@@ -27,19 +27,43 @@ public class StageData
 
 public class StageDataManager : Singleton<StageDataManager>
 {
-    [SerializeField] private List<StageData> data;
+    [SerializeField] private List<StageData> quOneList; // (플레이어)1사분면 정보
+    [SerializeField] private List<StageData> quTwoList; // (플레이어)2사분면 정보
+    // 현재 스테이지 최대 번호
+    [SerializeField] private int stageDataMaxLength = -1;
 
-    [SerializeField] private Dictionary<int, Tuple<SpawnerType, DirType>> oneQuderantSpanwer;
+    public int StageDataMaxLength { get => stageDataMaxLength; }
 
     protected override void Singleton_Awake()
     {
-        data = new List<StageData>();
+        quOneList = new List<StageData>();
+        quTwoList = new List<StageData>();
     }
 
     public void AddToData(StageData d) 
     {
-        data.Add(d);
+        if(d.QuadrantType == QuadrantType.one)
+            quOneList.Add(d);
+        else if(d.QuadrantType== QuadrantType.two)
+            quTwoList.Add(d);
+
+        stageDataMaxLength = Math.Max(quOneList.Count, stageDataMaxLength);
     }
 
+    public StageData StageData(QuadrantType type, int stage) 
+    {
+        if (stage - 1 < 0)
+        {
+            Debug.Log("인덱스가 0 미만"); 
+            return null;
+        }
+
+        if (type == QuadrantType.one)
+            return quOneList[stage - 1];
+        else if (type == QuadrantType.two)
+            return quTwoList[stage-1];
+
+        return null;
+    }
 
 }

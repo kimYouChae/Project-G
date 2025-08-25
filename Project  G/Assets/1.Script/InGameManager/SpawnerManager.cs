@@ -15,13 +15,6 @@ public class SpawnerManager : MonoBehaviour
     const string LASER_SPAWNER = "LaserSpawner";
     const string FOUR_DIRECET_SPAWNER = "FourDirectSpanwer";
 
-    const int BASIC_SPAWN_STAGE = 0;
-    const int GUIDED_MISSILE_SPAWN_STAGE = 3;
-    const int LASER_SPAWN_STATE = 5;
-    const int FOUR_DIRECT_SPAWN_STATE = 7;
-
-    const float BASIC_SPAWNER_INTERVEL = 1; // 기본 총알 생성 스테이지 간격 
-
     public Action<int> BulletSpawn { get => bulletSpawn; }
 
     private void Start()
@@ -39,42 +32,58 @@ public class SpawnerManager : MonoBehaviour
 
     public void Temp(int stage) 
     {
-        // 기본 미사일 생성
-        switch (stage)
+        // 생성할 스포너와 위치
+        SpawnerType spawnerType;
+        DirType dirType;
+
+        // 스테이지데이터 길이와 stage가 넘어가면
+        if (stage > StageDataManager.Instance.StageDataMaxLength) 
+            return;
+
+        // 플레이어 위치(qu)와 스테이지에 따른
+        // 스테이지 데이터 가져오기
+        StageData data = StageDataManager.Instance.StageData(localNetPlayer.PlayerQuadtype, stage);
+        if (data == null)
         {
-            case 1:
-                CreateSpanwer( SpawnerType.BasicSpanwer, DirType.Left, BASIC_BULLET_SPAWNER);
-                break;
-            case 2:
-                CreateSpanwer( SpawnerType.BasicSpanwer,  DirType.Right, BASIC_BULLET_SPAWNER);
-                break;
-            case 3:
-                CreateSpanwer( SpawnerType.BasicSpanwer,  DirType.Top, BASIC_BULLET_SPAWNER);
-                break;
-            case 4:
-                CreateSpanwer( SpawnerType.BasicSpanwer, DirType.Bottom, BASIC_BULLET_SPAWNER);
-                break;
+            Debug.Log("스테이지Data가 NULL 입니다");
+            return;
         }
 
-        // 따라가는 미사일 생성
-        if (stage == GUIDED_MISSILE_SPAWN_STAGE) 
+        for (int i = 0; i < data.SpawnerType.Count; i++) 
         {
-            SpawnGuideSpanwer();
-        }
+            try 
+            {
+                spawnerType = data.SpawnerType[i];
+                dirType = data.DirType[i];
 
-        // 레이저 생성
-        if (stage == LASER_SPAWN_STATE) 
-        {
-            SpawnLaserSpawner();
-        }
+                // 스포너 생성
+                CreateSpanwer(spawnerType, dirType);
+            }
+            catch (Exception e) { Debug.Log(e); }
 
-        // 십자 방향 폭탄 발사
-        if (stage == FOUR_DIRECT_SPAWN_STATE) 
-        {
-            SpawnFourDirSpawner();
         }
     }
 
+    private void CreateSpanwer(SpawnerType sType, DirType dType) 
+    {
+        switch (sType) 
+        {
+            case SpawnerType.BasicSpanwer:
+                InstanceSpanwer(sType, dType, BASIC_BULLET_SPAWNER);
+                break;
+            case SpawnerType.GuideMissileSpawner: 
+                InstanceSpanwer(sType, dType, GUIDED_MISSILE_SPAWNER);
+                break;
+            case SpawnerType.LaserSpawner: 
+                InstanceSpanwer(sType, dType, LASER_SPAWNER);
+                break;
+            case SpawnerType.FourDirSpanwer: 
+                InstanceSpanwer(sType, dType, FOUR_DIRECET_SPAWNER);
+                break;
+        }
+    }
+
+    /*
     private void SpawnGuideSpanwer() 
     {
         // 만약 1사분면 플레이어면 -> 오른쪽에 생성
@@ -116,10 +125,10 @@ public class SpawnerManager : MonoBehaviour
             CreateSpanwer(SpawnerType.FourDirSpanwer,DirType.Right, FOUR_DIRECET_SPAWNER);
         }
     }
+    */
 
     #region string에 따른 스포너 생성
-
-    private void CreateSpanwer(SpawnerType type ,DirType dir, string spawnerName) 
+    private void InstanceSpanwer(SpawnerType type ,DirType dir, string spawnerName) 
     {
         GameObject spawnerObj = PhotonNetwork.Instantiate(spawnerName, new Vector3(0, 0, 0), Quaternion.identity);
         NetSpawner spawner = spawnerObj.GetComponent<NetSpawner>();
