@@ -189,6 +189,7 @@ MonoBehaviour:
   view: {fileID: 0}
   rb: {fileID: 0}
   ownerTrs: {fileID: 0}
+  spanwerAnimator: {fileID: 0}
   directType: 0
   spawnerData:
     type: 0
