@@ -128,27 +128,44 @@ public class SpawnerManager : MonoBehaviour
     */
 
     #region string에 따른 스포너 생성
-    private void InstanceSpanwer(SpawnerType type ,DirType dir, string spawnerName) 
+    private void InstanceSpanwer(SpawnerType type, DirType dir, string spawnerName)
     {
-        GameObject spawnerObj = PhotonNetwork.Instantiate(spawnerName, new Vector3(0, 0, 0), Quaternion.identity);
-        NetSpawner spawner = spawnerObj.GetComponent<NetSpawner>();
-
+        GameObject spawnerObj = null;
         try
         {
-            // 1. 부모지정
-            spawner.SettingParent(localPlayerIndex, dir);
-            // 2. owner 지정
-            spawner.SettingOwner(localPlayer.ViewID, dir);
-            // 3. dir지정 후 
-            spawner.SettingDir(dir);
-            // 4. 움직임 지정 / 총알 스포너 위치 지정 
-            spawner.SettingMoving();
-            spawner.SettingBulletShootPosi();
-            // 5. data 지정해주기
-            spawner.SettingSpawnerData(type);
-
+            // 스포너 이름 + 방향으로 가져오기 
+            spawnerObj = PhotonNetwork.Instantiate(spawnerName + dir.ToString(), new Vector3(0, 0, 0), Quaternion.identity);
         }
-        catch (Exception e) { Debug.LogError(e); }
+        catch (Exception e) { Debug.Log(e); }
+
+        if (spawnerObj == null)
+        { 
+            Debug.LogError(spawnerName + dir.ToString() + "을 못가져오고있음");
+            return;
+        }
+
+        if (spawnerObj != null)
+        {
+            NetSpawner spawner = spawnerObj.GetComponent<NetSpawner>();
+
+            try
+            {
+                // 1. 부모지정
+                spawner.SettingParent(localPlayerIndex, dir);
+                // 2. owner 지정
+                spawner.SettingOwner(localPlayer.ViewID, dir);
+                // 3. dir지정 후 
+                spawner.SettingDir(dir);
+                // 4. 움직임 지정 / 총알 스포너 위치 지정 
+                spawner.SettingMoving();
+                spawner.SettingBulletShootPosi();
+                // 5. data 지정해주기
+                spawner.SettingSpawnerData(type);
+
+            }
+            catch (Exception e) { Debug.LogError(e); }
+        }
+
     }
 
     #endregion
