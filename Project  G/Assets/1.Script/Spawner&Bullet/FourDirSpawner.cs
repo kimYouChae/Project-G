@@ -38,6 +38,8 @@ public class FourDirSpawner : NetSpawner
             // 총알 두개 생성 방지 -> isMine 검사
             if (photonView.IsMine)
             {
+                spanwerAnimator.ChangeAttackAnimation(SpanwerAnimState.Attack, true);
+
                 // 위치 : 필드내 랜덤 
                 // puninGameManager의 Quter값 바탕으로
                 QuadrantType type = ownerTrs.GetComponent<NetPlayer>().PlayerQuadtype;

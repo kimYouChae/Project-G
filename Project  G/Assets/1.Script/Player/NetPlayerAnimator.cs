@@ -3,11 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CharaterAniState
-{
-    none,front, back, left, right
-}
-
 public class NetPlayerAnimator : MonoBehaviour
 {
     [SerializeField]

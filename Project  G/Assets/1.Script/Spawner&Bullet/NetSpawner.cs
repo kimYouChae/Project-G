@@ -9,9 +9,13 @@ using Random = UnityEngine.Random;
 
 public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
 {
+    [Header("===Component===")]
     [SerializeField] protected PhotonView view;
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected Transform ownerTrs;    // 따라다닐 기준이 되는 trs
+    [SerializeField] protected SpanwerAnimator spanwerAnimator;
+    
+
     [SerializeField] protected DirType directType;    // 내가 위치한 방향 
     [SerializeField] protected Action moveNetSpawner;
 
@@ -31,6 +35,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
 
     // 하위 스포너에서 움직임 세팅 
     public abstract void SettingMoving();
+
     // 하위 스포너에서 총알 발사 위치 세팅
     public abstract void SettingBulletShootPosi();
 
@@ -38,6 +43,11 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
     {
         rb = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
+
+        // 애니메이터 초기화 
+        if(spanwerAnimator == null)
+            spanwerAnimator = gameObject.AddComponent<SpanwerAnimator>();
+        spanwerAnimator.SetAnimator(GetComponent<Animator>());
     }
 
     private void Start()

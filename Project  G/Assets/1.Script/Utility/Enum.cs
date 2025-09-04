@@ -67,3 +67,13 @@ public enum SpawnerType
     LaserSpawner,
     FourDirSpanwer
 }
+
+public enum CharaterAniState
+{
+    none, front, back, left, right
+}
+
+public enum SpanwerAnimState 
+{
+    none, Idle, Attack
+}
