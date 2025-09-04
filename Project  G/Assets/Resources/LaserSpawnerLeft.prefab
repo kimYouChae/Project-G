@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 552266636440265659}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 2583761306571829683}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -87,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 5421863658206479010}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 5504541994910151243}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 6136214498738213410}
   - component: {fileID: 6409440733250441794}
   - component: {fileID: 8523040538713130334}
+  - component: {fileID: 1429593198691435624}
   m_Layer: 0
   m_Name: LaserSpawnerLeft
   m_TagString: Untagged
@@ -264,6 +265,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6136214498738213410}
+  - {fileID: 1429593198691435624}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -284,6 +286,7 @@ MonoBehaviour:
   ownerTrs: {fileID: 0}
   spanwerAnimator: {fileID: 0}
   directType: 0
+  canMove: 1
   spawnerData:
     type: 0
     speed: 0
@@ -294,9 +297,6 @@ MonoBehaviour:
   - {fileID: 7532448221092987280}
   - {fileID: 2053140702082540361}
   shootPosi: {fileID: 0}
-  lineRenderer: {fileID: 0}
-  isMoveLaser: 0
-  flag: 1
   laserChargingObjPrefab: {fileID: 8690396998403472340, guid: 57a5339e3c5500f46b6e563b65eb00f4, type: 3}
   laserObjPreafab: {fileID: 3312376855434842743, guid: 63ed71b02d3007945b7aee1fa4bce8d9, type: 3}
   currLaserChargeObj: {fileID: 0}
@@ -426,3 +426,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1429593198691435624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7070837626054533339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: isAttack
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
