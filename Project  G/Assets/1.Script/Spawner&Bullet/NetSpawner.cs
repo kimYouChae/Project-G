@@ -18,6 +18,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
 
     [SerializeField] protected DirType directType;    // 내가 위치한 방향 
     [SerializeField] protected Action moveNetSpawner;
+    [SerializeField] protected bool canMove = true;
 
     [Header("===Data===")]
     [SerializeField] SpawnerData spawnerData;
@@ -60,7 +61,8 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine == false)
             return;
 
-        moveNetSpawner?.Invoke();
+        if(canMove)
+            moveNetSpawner?.Invoke();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

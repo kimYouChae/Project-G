@@ -13,8 +13,12 @@ public class SpanwerAnimator : MonoBehaviour
 
     const string AttackParameter = "isAttack";
 
-    // flag가 true이면 attack끝난후 바로 idle로 전환, 
-    // `` false이면 명시적으로 idle로 전환 필요 
+    /// <summary>
+    /// flag가 true이면 attack끝난후 바로 idle로 전환, 
+    ///  `` false이면 명시적으로 idle로 전환 필요 
+    /// </summary>
+    /// <param name="nextState">다음상태</param>
+    /// <param name="flag"> true이면 idle로 바로 상태전환 </param>
     public void ChangeAttackAnimation(SpanwerAnimState nextState , bool flag) 
     {
         Action action;

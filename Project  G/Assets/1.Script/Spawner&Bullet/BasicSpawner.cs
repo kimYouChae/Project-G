@@ -38,7 +38,7 @@ public class BasicSpawner : NetSpawner
             if (photonView.IsMine)
             {
                 spanwerAnimator.ChangeAttackAnimation(SpanwerAnimState.Attack, true);
-                view.RPC("RPC_ShootBullet", RpcTarget.AllBuffered);
+                view.RPC(nameof(RPC_ShootBullet), RpcTarget.AllBuffered);
             }
         }
     }
