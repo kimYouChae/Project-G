@@ -282,6 +282,7 @@ MonoBehaviour:
   view: {fileID: 0}
   rb: {fileID: 0}
   ownerTrs: {fileID: 0}
+  spanwerAnimator: {fileID: 0}
   directType: 0
   spawnerData:
     type: 0
@@ -296,6 +297,10 @@ MonoBehaviour:
   lineRenderer: {fileID: 0}
   isMoveLaser: 0
   flag: 1
+  laserChargingObjPrefab: {fileID: 8690396998403472340, guid: 57a5339e3c5500f46b6e563b65eb00f4, type: 3}
+  laserObjPreafab: {fileID: 3312376855434842743, guid: 63ed71b02d3007945b7aee1fa4bce8d9, type: 3}
+  currLaserChargeObj: {fileID: 0}
+  currLaserObj: {fileID: 0}
 --- !u!120 &6409440733250441794
 LineRenderer:
   serializedVersion: 2

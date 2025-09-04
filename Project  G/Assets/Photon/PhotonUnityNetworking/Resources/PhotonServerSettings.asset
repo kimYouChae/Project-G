@@ -57,6 +57,8 @@ MonoBehaviour:
   - RPC_ShootBasciBullet
   - RPC_DrawLine
   - RPC_OnOffLineRenderer
+  - RPC_ChargingObject
+  - RPC_LaserObject
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
