@@ -296,7 +296,7 @@ MonoBehaviour:
   - {fileID: 1765651863176286510}
   - {fileID: 3896975381956233723}
   shootPosi: {fileID: 0}
-  fourBulletSpawnObj: {fileID: 2664263643526527474, guid: 23763e17f62a95845a0f2165fb3b03c4, type: 3}
+  fourBulletSpawnObj: {fileID: 5540976154961557365, guid: 94d4a03fd3187a4438760bf6981f2724, type: 3}
 --- !u!95 &3319446283034669383
 Animator:
   serializedVersion: 5
