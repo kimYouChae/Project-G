@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class RoomInfoObject : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private int roomObjectIndex;
-    private RoomListView roomListView;
+    public RoomListView roomListView;
 
     public int RoomObjectIndex { set { roomObjectIndex = value; } }
 

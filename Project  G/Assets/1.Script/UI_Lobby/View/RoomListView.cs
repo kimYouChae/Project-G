@@ -81,7 +81,7 @@ public class RoomListView : MonoBehaviour
             if (infoObj != null)
             {
                 infoObj.RoomObjectIndex = i;
-                infoObj.
+                infoObj.roomListView = this;
             }
         }
 
