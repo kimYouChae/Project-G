@@ -6,11 +6,12 @@ using UnityEngine.EventSystems;
 public class RoomInfoObject : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private int roomObjectIndex;
+    private RoomListView roomListView;
 
     public int RoomObjectIndex { set { roomObjectIndex = value; } }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        LobbyUIManager.GetInstance().SettingRoomIndex(roomObjectIndex);
+        roomListView.NotifySelectRoomIndex(roomObjectIndex);
     }
 }

@@ -15,7 +15,7 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
     
     public List<RoomInfo> RoomInfoList { get { return roomInfoList; } }
     public Player[] PlayerList { get { return playerList; } }
-
+    public int RoomLength { get { return roomInfoList.Count; } }
 
     protected override void Singleton_Awake()
     {
@@ -149,6 +149,17 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
     {
         // 방에 접속하기 
         PhotonNetwork.JoinRoom(title);
+    }
+
+    // 인덱스에 해당하는 RoomInfo를 return
+    public RoomInfo RoomInfoByIndex(int index) 
+    { 
+        if(index < 0 || index >= roomInfoList.Count)
+        {
+            return null;
+        }
+
+        return roomInfoList[index];
     }
 
 }

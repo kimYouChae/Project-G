@@ -18,6 +18,11 @@ public partial class LobbyUIManager : MonoBehaviour
     [SerializeField] private Sprite[] characterSprite;
     [SerializeField] private Sprite[] mapSprite;
 
+    [Header("===Controller===")]
+    NickNameController nickNameController;
+    RoomListController roomListController;
+
+
     public static LobbyUIManager GetInstance()
     {
         if (instance == null)
@@ -40,13 +45,22 @@ public partial class LobbyUIManager : MonoBehaviour
     {
         // 다른 partial 클래스 초기화
         InitTitleUI();
-        InitNickNameUI();
         InitCharacterSelectUI();
         InitLobbyUI();
         InitCreateRoomInfo();
         InitRoomListUi();
         InitWaitinRoomUI();
         InitUnTitledUI();
+
+        // NickName MVC 
+        NickNameView nickNameview = GetComponent<NickNameView>();
+        NickNameModel nickNameModel = new NickNameModel();
+        nickNameController = new NickNameController(nickNameview, nickNameModel);
+
+        // RoomList MVC
+        RoomListView roomListView = GetComponent<RoomListView>();
+        RoomListModel roomListModel = new RoomListModel();
+        roomListController = new RoomListController(roomListView, roomListModel);
     }
 
 
