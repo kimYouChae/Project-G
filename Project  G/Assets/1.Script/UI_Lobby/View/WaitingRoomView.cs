@@ -1,0 +1,53 @@
+using Photon.Pun;
+using Photon.Realtime;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class WaitingRoomView : MonoBehaviour
+{
+    [Header("===WaitingUi===")]
+    [SerializeField] TextMeshProUGUI roomTitle;
+    [SerializeField] GameObject playeRefObject;
+    [SerializeField] GameObject scrollViewContent;
+
+    [SerializeField] List<GameObject> playerRefObj;
+
+    [SerializeField] Button gameStartButton;
+
+    private Action GameStartAction;
+
+    private void Awake()
+    {
+        gameStartButton.onClick.AddListener(()=>GameStartAction?.Invoke());
+    }
+
+    public void RegisterGameStart(Action action) { GameStartAction += action; }
+
+    public void UpdateWaitingRoomInfo(Player[] playerref)
+    {
+        // 현재 방 대한 정보를 가져옴
+        Room info = PhotonNetwork.CurrentRoom;
+
+        // 방제 업데이트
+        roomTitle.text = info.Name;
+
+        // 리스트 초기화
+        LobbyUIManager.GetInstance().DestoryListObject(playerRefObj);
+
+        for (int i = 0; i < playerref.Length; i++)
+        {
+            GameObject temp = Instantiate(playeRefObject);
+            TextMeshProUGUI text = temp.GetComponentInChildren<TextMeshProUGUI>();
+            text.text = playerref[i].NickName;
+
+            playerRefObj.Add(temp);
+
+            temp.transform.SetParent(scrollViewContent.transform);
+        }
+    }
+
+}
