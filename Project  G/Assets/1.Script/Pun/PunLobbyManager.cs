@@ -28,7 +28,7 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         this.roomInfoList = list;
 
         // UI 업데이트 
-        LobbyUIManager.GetInstance().UpdateRoomList();
+        LobbyUIManager.GetInstance().UpdateRoomListView();
 
         // 출력 
         string str = string.Empty;
@@ -45,7 +45,7 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
     public void UpdateRoomUser()
     {
         // LobbyUI : 유저 업데이트 필요 
-        LobbyUIManager.GetInstance().UpdateWaitingRoomInfo(PhotonNetwork.PlayerList);
+        LobbyUIManager.GetInstance().UpdateWaitinRoomView(PhotonNetwork.PlayerList);
     }
 
     // 닉네임 세팅

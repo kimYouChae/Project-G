@@ -15,9 +15,10 @@ public enum CharacterType
 }
 
 public enum LobbyPanelType
-{
-    UnTitled, Title, NickName, CharacterSelect, Lobby,
+{ 
+    Title, NickName, Lobby,
     RoomList, CreateRoom, WaitingRoom,
+    UnTitled,
     None
 }
 

@@ -30,20 +30,9 @@ public class RoomListView : MonoBehaviour
         joinRoomButton.onClick.AddListener(() => JoinRoomAction?.Invoke(passWordText.text));
     }
 
-    public void RegisterRefreshRoom(Action action)
-    {
-        RefreshRoomListAction += action;
-    }
-
-    public void RegisterJoinRoom(Action<string> action) 
-    {
-        JoinRoomAction += action;
-    }
-
-    public void RegisterSelectRoomIndex(Action<int> action) 
-    {
-        SelectRoomIndex += action;
-    }
+    public void RegisterRefreshRoom(Action action) { RefreshRoomListAction += action; }
+    public void RegisterJoinRoom(Action<string> action) { JoinRoomAction += action; }
+    public void RegisterSelectRoomIndex(Action<int> action) { SelectRoomIndex += action; }
 
     public void NotifySelectRoomIndex(int index) 
     {
