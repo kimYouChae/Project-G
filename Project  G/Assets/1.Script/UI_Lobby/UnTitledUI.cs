@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public partial class LobbyUIManager : MonoBehaviour
+public class UnTitledUI : MonoBehaviour
 {
     [Space]
     [Header("===TitleUI===")]

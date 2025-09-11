@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class LobbyUIManager : MonoBehaviour
+public class TitleUI : MonoBehaviour
 {
     [Space]
     [Header("===TitleUI===")]
     [SerializeField]
     private Button startButton;
+
+    private void Awake()
+    {
+        InitTitleUI();
+    }
 
     private void InitTitleUI() 
     {
@@ -38,7 +43,7 @@ public partial class LobbyUIManager : MonoBehaviour
                 case NickCheckResultType.NoNickname:
                     Debug.Log("닉네임이 없습니다. 닉네임을 설정하려 갑시다");
                     // 2-1. 닉네임 ui On
-                    ChangePanel(LobbyPanelType.Title, LobbyPanelType.NickName);
+                    LobbyUIManager.GetInstance().ChangePanel(LobbyPanelType.Title, LobbyPanelType.NickName);
                     break;
 
                 // 3. 닉네임 있으면 
@@ -49,10 +54,8 @@ public partial class LobbyUIManager : MonoBehaviour
                     UserDataManager.Instance.GetUserDataInTable();
 
                     // 3-1. lobby Ui On
-                    ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
+                    LobbyUIManager.GetInstance().ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
 
-                    // 프로필 세팅
-                    SettingProfile();
                     break;
             }
 

@@ -1,4 +1,5 @@
 
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public partial class LobbyUIManager : MonoBehaviour
+public class LobbyUIManager : MonoBehaviour
 {
     // 싱글톤 
     private static LobbyUIManager instance;
@@ -15,13 +16,20 @@ public partial class LobbyUIManager : MonoBehaviour
     [SerializeField] private GameObject[] panelList;
     [SerializeField] private LobbyPanelType prePanel;
     [SerializeField] private LobbyPanelType currPanel;
-    [SerializeField] private Sprite[] characterSprite;
-    [SerializeField] private Sprite[] mapSprite;
 
     [Header("===Controller===")]
-    NickNameController nickNameController;
-    RoomListController roomListController;
+    private NickNameController nickNameController;
+    private RoomListController roomListController;
+    private CreateRoomController createRoomController;
+    private WaitingRoomController waitingRoomController;
+    private LobbyController lobbyController;
 
+    [Header("===View===")]
+    private NickNameView nickNameView;
+    private RoomListView roomListView;
+    private CreateRoomView createRoomView;
+    private WaitingRoomView waitingRoomView;
+    private LobbyView lobbyView;
 
     public static LobbyUIManager GetInstance()
     {
@@ -43,29 +51,45 @@ public partial class LobbyUIManager : MonoBehaviour
 
     private void Start()
     {
-        // 다른 partial 클래스 초기화
-        InitTitleUI();
-        InitCharacterSelectUI();
-        InitLobbyUI();
-        InitCreateRoomInfo();
-        InitRoomListUi();
-        InitWaitinRoomUI();
-        InitUnTitledUI();
-
         // NickName MVC 
-        NickNameView nickNameview = GetComponent<NickNameView>();
+        nickNameView = GetComponent<NickNameView>();
         NickNameModel nickNameModel = new NickNameModel();
-        nickNameController = new NickNameController(nickNameview, nickNameModel);
+        nickNameController = new NickNameController(nickNameView, nickNameModel);
 
         // RoomList MVC
-        RoomListView roomListView = GetComponent<RoomListView>();
+        roomListView = GetComponent<RoomListView>();
         RoomListModel roomListModel = new RoomListModel();
         roomListController = new RoomListController(roomListView, roomListModel);
+
+        // Creat Room MVC
+        createRoomView = GetComponent<CreateRoomView>();
+        CreateRoomModel createRoomModel = new CreateRoomModel();
+        createRoomController = new CreateRoomController(createRoomView, createRoomModel);
+
+        // Waiting Room MVC
+        waitingRoomView = GetComponent<WaitingRoomView>();
+        waitingRoomController = new WaitingRoomController(waitingRoomView);
+
+        // Lobby MVC
+        lobbyView = GetComponent<LobbyView>();
+        lobbyController = new LobbyController(lobbyView);
     }
 
+    #region 외부에서 view를 수정
+    public void UpdateWaitinRoomView(Player[] playerref) 
+    {
+        waitingRoomView.UpdateWaitingRoomInfo(playerref);
+    }
+
+    public void UpdateRoomListView() 
+    {
+        roomListView.UpdateRoomList();
+    }
+
+    #endregion
 
     // 패널 변경 
-    public void ChangePanel(LobbyPanelType curr, LobbyPanelType next, Action action = null) 
+    public void ChangePanel(LobbyPanelType curr, LobbyPanelType next) 
     {
         prePanel = curr;
         currPanel = next;
@@ -85,12 +109,7 @@ public partial class LobbyUIManager : MonoBehaviour
         {
             // 패널 켜기 
             panelList[(int)currPanel].SetActive(true);
-
-            // 패널 켜졋을 때 액션
-            action?.Invoke();
         }  
-
-        
     }
 
     // 리스트 비우기
