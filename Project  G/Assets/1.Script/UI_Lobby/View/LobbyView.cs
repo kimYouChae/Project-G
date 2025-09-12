@@ -13,7 +13,6 @@ public class LobbyView : MonoBehaviour
     [SerializeField] Button exitButton;
     [SerializeField] Button settinButton;
     [SerializeField] Button scoreButton;
-    [SerializeField] Button scoreCloseButton;
 
     [SerializeField] GameObject scorePanel;
     [SerializeField] TextMeshProUGUI[] scoreText;

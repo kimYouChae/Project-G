@@ -38,7 +38,8 @@ public class LobbyController
         // Score 팝업 띄우기 
         Debug.Log("Score PopUp 띄울 예정입니다");
 
-        SetScoreText();
+        UserScorePopUP scorePopUp = UIManager.Instance.GetPopUP<UserScorePopUP>();
+
     }
 
     private void SetScoreText()
