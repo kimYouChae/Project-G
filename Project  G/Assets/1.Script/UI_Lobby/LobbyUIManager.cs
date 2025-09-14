@@ -17,6 +17,8 @@ public class LobbyUIManager : MonoBehaviour
     [SerializeField] private LobbyPanelType prePanel;
     [SerializeField] private LobbyPanelType currPanel;
 
+    [SerializeField] private GameObject popupPanel;
+
     [Header("===Controller===")]
     private NickNameController nickNameController;
     private RoomListController roomListController;
@@ -127,5 +129,10 @@ public class LobbyUIManager : MonoBehaviour
         {
             panelList[i].SetActive(false);
         }
+    }
+
+    public void OnOffPopUPPanel(bool flag) 
+    {
+        popupPanel.SetActive(flag);
     }
 }

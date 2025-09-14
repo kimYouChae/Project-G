@@ -44,6 +44,8 @@ public class UIManager : Singleton<UIManager>
         }
 
 
+        // 켜기
+        popup.gameObject.SetActive(true);
         // 리스트의 맨 앞에 두기
         popupList.Insert(0, popup);
 

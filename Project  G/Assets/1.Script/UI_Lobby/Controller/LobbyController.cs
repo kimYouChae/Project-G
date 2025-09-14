@@ -36,21 +36,20 @@ public class LobbyController
     private void ScorePopUp() 
     {
         // Score 팝업 띄우기 
-        Debug.Log("Score PopUp 띄울 예정입니다");
-
+        LobbyUIManager.GetInstance().OnOffPopUPPanel(true);
         UserScorePopUP scorePopUp = UIManager.Instance.GetPopUP<UserScorePopUP>();
 
-    }
-
-    private void SetScoreText()
-    {
         Array type = System.Enum.GetValues(typeof(MapType));
 
         for (int i = 0; i < type.Length; i++)
         {
             MapType mapType = (MapType)type.GetValue(i);
 
-            lobbyView.UpdateScoreText(i, UserDataManager.Instance.UserData.MapTypeToScore[mapType]);
+            if (mapType == MapType.None)
+                return;
+
+            float v = UserDataManager.Instance.UserData.MapTypeToScore[mapType];
+            scorePopUp.IniUserScore(mapType, v);
         }
     }
 }
