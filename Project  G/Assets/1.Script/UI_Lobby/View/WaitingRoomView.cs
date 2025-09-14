@@ -36,7 +36,7 @@ public class WaitingRoomView : MonoBehaviour
         roomTitle.text = info.Name;
 
         // 리스트 초기화
-        LobbyUIManager.GetInstance().DestoryListObject(playerRefObj);
+        LobbyUIManager.Instance.DestoryListObject(playerRefObj);
 
         for (int i = 0; i < playerref.Length; i++)
         {

@@ -107,7 +107,7 @@ public class RoomListController : ILobbyPanelInitionlize
             PunLobbyManager.Instance.JoinRoom(info.Name);
 
             // panel 변경 
-            LobbyUIManager.GetInstance().ChangePanel(LobbyPanelType.RoomList, LobbyPanelType.WaitingRoom);
+            LobbyUIManager.Instance.ChangePanel(LobbyPanelType.RoomList, LobbyPanelType.WaitingRoom);
         }
         else
         {

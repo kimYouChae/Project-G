@@ -56,6 +56,6 @@ public class NickNameController : ILobbyPanelInitionlize
         PunLobbyManager.Instance.SettingNickName(inputNickName);
 
         // 화면 전환
-        LobbyUIManager.GetInstance().ChangePanel(LobbyPanelType.NickName, LobbyPanelType.Lobby);
+        LobbyUIManager.Instance.ChangePanel(LobbyPanelType.NickName, LobbyPanelType.Lobby);
     }
 }

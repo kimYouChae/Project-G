@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class LobbyUIManager : MonoBehaviour
+public class LobbyUIManager : Singleton<LobbyUIManager>
 {
     // 싱글톤 
     private static LobbyUIManager instance;
@@ -33,25 +33,12 @@ public class LobbyUIManager : MonoBehaviour
     private WaitingRoomView waitingRoomView;
     private LobbyView lobbyView;
 
-    public static LobbyUIManager GetInstance()
+    protected override void Singleton_Awake()
     {
-        if (instance == null)
-        {
-            Debug.LogError("FusionManager 인스턴스가 존재하지 않습니다.");
-            return null;
-        }
-        return instance;
+        InitMVCController();
     }
 
-    private void Awake()
-    {
-        if (!instance)
-        {
-            instance = this;
-        }
-    }
-
-    private void Start()
+    private void InitMVCController() 
     {
         // NickName MVC 
         nickNameView = GetComponent<NickNameView>();
@@ -154,4 +141,6 @@ public class LobbyUIManager : MonoBehaviour
 
         return null;
     }
+
+
 }

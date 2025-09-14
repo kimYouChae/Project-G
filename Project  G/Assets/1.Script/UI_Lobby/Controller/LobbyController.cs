@@ -20,12 +20,12 @@ public class LobbyController : ILobbyPanelInitionlize
     private void CreateHostRoom() 
     {
         Debug.Log("CreateHostRoom");
-        LobbyUIManager.GetInstance().ChangePanel(LobbyPanelType.Lobby, LobbyPanelType.CreateRoom); 
+        LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Lobby, LobbyPanelType.CreateRoom); 
     }
 
     private void JoinClientRoom() 
     {
-        LobbyUIManager.GetInstance().ChangePanel(LobbyPanelType.Lobby, LobbyPanelType.RoomList);
+        LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Lobby, LobbyPanelType.RoomList);
     }
 
     private void ExitGame() 
@@ -36,7 +36,7 @@ public class LobbyController : ILobbyPanelInitionlize
     private void ScorePopUp() 
     {
         // Score 팝업 띄우기 
-        LobbyUIManager.GetInstance().OnOffPopUPPanel(true);
+        LobbyUIManager.Instance.OnOffPopUPPanel(true);
         UserScorePopUP scorePopUp = UIManager.Instance.GetPopUP<UserScorePopUP>();
         scorePopUp.InitUserScorePopup();
     }

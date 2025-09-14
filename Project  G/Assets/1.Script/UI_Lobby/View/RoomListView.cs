@@ -43,7 +43,7 @@ public class RoomListView : MonoBehaviour
     public void UpdateRoomList()
     {
         // 방은 몇개 없으니까 그냥 생성 + 파괴 해도될듯 ? 
-        LobbyUIManager.GetInstance().DestoryListObject(roomObjList);
+        LobbyUIManager.Instance.DestoryListObject(roomObjList);
 
         roomObjList.Clear();
 

@@ -58,7 +58,7 @@ public class TitleUI : MonoBehaviour
                 case NickCheckResultType.NoNickname:
                     Debug.Log("닉네임이 없습니다. 닉네임을 설정하려 갑시다");
                     // 2-1. 닉네임 ui On
-                    LobbyUIManager.GetInstance().ChangePanel(LobbyPanelType.Title, LobbyPanelType.NickName);
+                    LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.NickName);
                     break;
 
                 // 3. 닉네임 있으면 
@@ -69,7 +69,7 @@ public class TitleUI : MonoBehaviour
                     UserDataManager.Instance.GetUserDataInTable();
 
                     // 3-1. lobby Ui On
-                    LobbyUIManager.GetInstance().ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
+                    LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
 
                     break;
             }

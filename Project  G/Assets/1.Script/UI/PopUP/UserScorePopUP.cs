@@ -18,7 +18,7 @@ public class UserScorePopUP : UIPopUP
         closeButton.onClick.AddListener(() =>
         {
             gameObject.SetActive(false);
-            LobbyUIManager.GetInstance().OnOffPopUPPanel(false);
+            LobbyUIManager.Instance.OnOffPopUPPanel(false);
         });
     }
 
