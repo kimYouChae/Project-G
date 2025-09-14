@@ -111,6 +111,11 @@ public class LobbyUIManager : MonoBehaviour
         {
             // 패널 켜기 
             panelList[(int)currPanel].SetActive(true);
+
+            // 해당하는 controller의 Init실행하기
+            var init = TypeByController(currPanel);
+            if (init != null)
+                init.IInitPanel();
         }  
     }
 
@@ -134,5 +139,19 @@ public class LobbyUIManager : MonoBehaviour
     public void OnOffPopUPPanel(bool flag) 
     {
         popupPanel.SetActive(flag);
+    }
+
+    private ILobbyPanelInitionlize TypeByController(LobbyPanelType type)
+    { 
+        switch(type) 
+        {
+            case LobbyPanelType.NickName: return nickNameController;
+            case LobbyPanelType.Lobby: return lobbyController;
+            case LobbyPanelType.RoomList: return roomListController;
+            case LobbyPanelType.CreateRoom : return createRoomController;
+            case LobbyPanelType.WaitingRoom : return waitingRoomController;
+        }
+
+        return null;
     }
 }

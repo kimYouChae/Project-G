@@ -24,7 +24,7 @@ public class RoomListModel
     }
 }
 
-public class RoomListController 
+public class RoomListController : ILobbyPanelInitionlize
 {
     private RoomListView roomListView;
     private RoomListModel roomListModel;
@@ -116,5 +116,10 @@ public class RoomListController
             Debug.Log("비밀번호가 다릅니다! ");
         }
 
+    }
+
+    public void IInitPanel()
+    {
+        
     }
 }

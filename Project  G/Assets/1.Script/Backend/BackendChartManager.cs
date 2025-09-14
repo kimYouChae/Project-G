@@ -102,7 +102,7 @@ public class BackendChartManager : Singleton<BackendChartManager>
     {
         if (keyValuePairs.TryGetValue(key, out ICharHandler value))
         {
-            value.ParseAndStore(data);
+            value.IParseAndStore(data);
         }
     }
 

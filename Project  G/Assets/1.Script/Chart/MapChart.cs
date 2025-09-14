@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MapChart : ICharHandler
 {
-    public void ParseAndStore(LitJson.JsonData jsonData)
+    public void IParseAndStore(LitJson.JsonData jsonData)
     {
         foreach (LitJson.JsonData row in jsonData)
         {

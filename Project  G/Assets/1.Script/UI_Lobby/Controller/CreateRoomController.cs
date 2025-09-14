@@ -54,7 +54,7 @@ public static class PhotonRoomInfo
 }
 
 
-public class CreateRoomController 
+public class CreateRoomController : ILobbyPanelInitionlize
 {
     private CreateRoomView roomView;
     private CreateRoomModel roomModel;
@@ -134,5 +134,10 @@ public class CreateRoomController
 
         // view 메서드 호출
         roomView.ChangeMapImage(roomModel.currMapIndex);
+    }
+
+    public void IInitPanel()
+    {
+        throw new System.NotImplementedException();
     }
 }

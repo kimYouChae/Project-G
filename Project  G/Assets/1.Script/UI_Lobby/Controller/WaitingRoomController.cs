@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaitingRoomController
+public class WaitingRoomController : ILobbyPanelInitionlize
 {
     private WaitingRoomView waitingRoomView;
 
@@ -12,6 +12,11 @@ public class WaitingRoomController
         this.waitingRoomView = roomView;
 
         waitingRoomView.RegisterGameStart(GameStart);
+    }
+
+    public void IInitPanel()
+    {
+        
     }
 
     private void GameStart() 

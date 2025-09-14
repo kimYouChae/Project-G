@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SpawnerChart : ICharHandler
 {
-    public void ParseAndStore(LitJson.JsonData jsonData)
+    public void IParseAndStore(LitJson.JsonData jsonData)
     {
         foreach (LitJson.JsonData row in jsonData)
         {

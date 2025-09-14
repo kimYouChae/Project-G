@@ -18,7 +18,7 @@ public class NickNameModel
     }
 }
 
-public class NickNameController
+public class NickNameController : ILobbyPanelInitionlize
 {
     private NickNameView nicknameView;
     private NickNameModel nicknameModel;
@@ -29,6 +29,11 @@ public class NickNameController
         this.nicknameModel = nicknameModel;
 
         nicknameView.RegisterNickNameAction(OnSubMitNickName);
+    }
+
+    public void IInitPanel()
+    {
+        
     }
 
     public void OnSubMitNickName(string inputNickName) 

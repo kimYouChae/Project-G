@@ -4,5 +4,10 @@ using UnityEngine;
 
 public interface ICharHandler
 {
-    public void ParseAndStore(LitJson.JsonData data);
+    public void IParseAndStore(LitJson.JsonData data);
+}
+
+public interface ILobbyPanelInitionlize
+{
+    public void IInitPanel();
 }
