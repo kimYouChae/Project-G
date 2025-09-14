@@ -31,6 +31,8 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Pun : OnConnectedToMaster 콜백실행 | 연결이 성공적입니다");
+
+        PunLobbyManager.Instance.ServerConnectAction?.Invoke();
     }
     public override void OnDisconnected(DisconnectCause cause)
     {

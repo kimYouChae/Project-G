@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,18 +10,32 @@ public class TitleUI : MonoBehaviour
     [Space]
     [Header("===TitleUI===")]
     [SerializeField]
-    private Button startButton;
+    private TextMeshProUGUI titleText;
 
-    private void Awake()
+    const string isConnecting = "서버에 연결중....";
+    const string isReady = "시작하려면 아무키나 누르세요";
+
+    private void Start()
     {
-        InitTitleUI();
+        titleText.text = isConnecting;
+
+        // 서버 연결 시 액션 등록 
+        PunLobbyManager.Instance.RegisterServerConnectAction(()=> titleText.text = isReady);
+        PunLobbyManager.Instance.RegisterServerConnectAction(() => StartCoroutine(test()));
     }
 
-    private void InitTitleUI() 
+    IEnumerator test() 
     {
-        // 시작 버튼 
-        if (startButton != null)
-            startButton.onClick.AddListener(EnterByLocalData);
+        while(true) 
+        {
+            if (Input.anyKeyDown) 
+            {
+                EnterByLocalData();
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 
     private void EnterByLocalData() 
