@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LobbyController 
+public class LobbyController : ILobbyPanelInitionlize
 {
     private LobbyView lobbyView;
 
@@ -38,18 +38,11 @@ public class LobbyController
         // Score 팝업 띄우기 
         LobbyUIManager.GetInstance().OnOffPopUPPanel(true);
         UserScorePopUP scorePopUp = UIManager.Instance.GetPopUP<UserScorePopUP>();
+        scorePopUp.InitUserScorePopup();
+    }
 
-        Array type = System.Enum.GetValues(typeof(MapType));
-
-        for (int i = 0; i < type.Length; i++)
-        {
-            MapType mapType = (MapType)type.GetValue(i);
-
-            if (mapType == MapType.None)
-                return;
-
-            float v = UserDataManager.Instance.UserData.MapTypeToScore[mapType];
-            scorePopUp.IniUserScore(mapType, v);
-        }
+    public void IInitPanel()
+    {
+        
     }
 }
