@@ -18,7 +18,7 @@ public class CreateRoomView : MonoBehaviour
     [SerializeField] Button rightButton;
     [SerializeField] Button leftButton;
 
-    [SerializeField] private Sprite[] mapSprite;
+    [SerializeField] private Sprite[] mapSprite;            //  추후 Recources.load로 바꾸기
 
     private Action CopyPassWordAction;
     private Action<string> CreateRoomAction;

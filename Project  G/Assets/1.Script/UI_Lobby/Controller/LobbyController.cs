@@ -35,8 +35,6 @@ public class LobbyController : ILobbyPanelInitionlize
 
     private void ScorePopUp() 
     {
-        // Score 팝업 띄우기 
-        LobbyUIManager.Instance.OnOffPopUPPanel(true);
         UserScorePopUP scorePopUp = UIManager.Instance.GetPopUP<UserScorePopUP>();
         scorePopUp.InitUserScorePopup();
     }

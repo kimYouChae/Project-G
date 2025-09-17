@@ -17,7 +17,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     [SerializeField] private LobbyPanelType prePanel;
     [SerializeField] private LobbyPanelType currPanel;
 
-    [SerializeField] private GameObject popupPanel;
+    [SerializeField] private GameObject darkPanel;
 
     [Header("===Controller===")]
     private NickNameController nickNameController;
@@ -123,11 +123,6 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         }
     }
 
-    public void OnOffPopUPPanel(bool flag) 
-    {
-        popupPanel.SetActive(flag);
-    }
-
     private ILobbyPanelInitionlize TypeByController(LobbyPanelType type)
     { 
         switch(type) 
@@ -142,5 +137,8 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         return null;
     }
 
-
+    public void OnOffDarkPanel(bool flag) 
+    {
+        darkPanel.SetActive(true);
+    }
 }

@@ -123,7 +123,7 @@ public class CreateRoomController : ILobbyPanelInitionlize
         PunLobbyManager.Instance.CreateCusomRoom();
     }
 
-    private void ChangeMapIndex(int spriteLength,int idx)
+    private void ChangeMapIndex(int spriteLength, int idx)
     {
         if (idx < 0)
             idx = spriteLength - 1;
@@ -138,6 +138,6 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
     public void IInitPanel()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

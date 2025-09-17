@@ -30,6 +30,7 @@ public class TitleUI : MonoBehaviour
         {
             if (Input.anyKeyDown) 
             {
+                LobbyUIManager.Instance.OnOffDarkPanel(true);
                 EnterByLocalData();
                 yield break;
             }
