@@ -87,8 +87,6 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
         // 방 생성
         FusionCreateRoom();
-
-        LobbyUIManager.Instance.ChangePanel(LobbyPanelType.CreateRoom, LobbyPanelType.WaitingRoom);
     }
 
     private void RoominfoSetting(string nameTitle)
@@ -105,24 +103,28 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
         if (!roomModel.isCreatePassword)
         {
-            Debug.Log("비밀 번호를 복사 해야합니다!");
+            //Debug.Log("비밀 번호를 복사 해야합니다!");
 
-            // ##TODO : 팝업 띄우기 
+            //팝업 띄우기 
+            ErrorPasswordCopyPopUP scorePopUp = UIManager.Instance.GetPopUP<ErrorPasswordCopyPopUP>();
 
             return;
         }
 
         if (string.IsNullOrEmpty(PhotonRoomInfo.RoomName))
         {
-            Debug.LogError("방 이름이 비어 있습니다!");
+            //Debug.LogError("방 이름이 비어 있습니다!");
 
             // ##TODO : 팝업 띄우기 
+            ErrorRoomNameEmptyPopUP scorePopUp = UIManager.Instance.GetPopUP<ErrorRoomNameEmptyPopUP>();
 
             return;
         }
 
         // PunLobbyManager 매서드 실행
         PunLobbyManager.Instance.CreateCusomRoom();
+
+        LobbyUIManager.Instance.ChangePanel(LobbyPanelType.CreateRoom, LobbyPanelType.WaitingRoom);
     }
 
     private void ChangeMapIndex(int spriteLength, int idx)
