@@ -102,6 +102,8 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.Log($"Pun : OnJoinRoomFailed 콜백실행 | Room 접속에 실패 했습니다 {message} ");
+
+        ErrorJoinRoomPopUP scorePopUp = UIManager.Instance.GetPopUP<ErrorJoinRoomPopUP>();
     }
 
 }

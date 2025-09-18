@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ErrorPasswordCopyPopUP : UIPopUP
+public class ErrorJoinRoomPopUP : UIPopUP
 {
 
 }

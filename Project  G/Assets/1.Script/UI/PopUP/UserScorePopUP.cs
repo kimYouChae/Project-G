@@ -11,16 +11,6 @@ public class UserScorePopUP : UIPopUP
     [SerializeField] TextMeshProUGUI[] mapNameText;
     [SerializeField] TextMeshProUGUI[] mapScoreText;
 
-    [SerializeField] Button closeButton;
-
-    private void Start()
-    {
-        closeButton.onClick.AddListener(() =>
-        {
-            gameObject.SetActive(false);
-        });
-    }
-
     private void IniUserScore(MapType type, float score)
     {
         mapNameText[(int)type].text = Define.MapName[(int)type];

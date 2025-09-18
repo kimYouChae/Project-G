@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIPopUP : MonoBehaviour
 {
@@ -15,9 +16,12 @@ public class UIPopUP : MonoBehaviour
 
     [SerializeField] protected Ease popUpEase;      // 팝업 부드러운 이동 ( 기본 : Ease.OutBack )
 
+    [Header("===Button===")]
+    [SerializeField] protected Button closeButton;
+
 
     // Mono의 생명주기 함수 awake -> onEnable -> start
-    protected virtual void Awake()
+    void Awake()
     {
         onStartSize = 0.8f;
         oriSize = 1f;
@@ -29,9 +33,15 @@ public class UIPopUP : MonoBehaviour
 
         // 수치 조정 필요 시 하위에서 초기화 
         InitPopUpState();
+
+        closeButton.onClick.AddListener(() =>
+        {
+            Debug.Log("close버튼");
+            OffPanel();
+        });
     }
 
-    protected virtual void OnEnable()
+    void OnEnable()
     {
         // 켜질 때
         PlayShowAnimation(onStartSize, oriSize, startTime, popUpEase);
@@ -53,12 +63,12 @@ public class UIPopUP : MonoBehaviour
         transform.DOScale(Vector3.one * endSize, speed).SetEase(ease);
     }
 
-    protected void OffPanel()
+    public void OffPanel()
     {
         // 꺼질 때 
         PlayShowAnimation(oriSize, offEndSize, endTime, popUpEase);
 
-        Invoke("SetActiveFalsePanel", endTime / 2);
+        Invoke(nameof(SetActiveFalsePanel), endTime / 2);
     }
 
     private void SetActiveFalsePanel()
