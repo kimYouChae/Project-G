@@ -87,13 +87,15 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
         // 방 생성
         FusionCreateRoom();
+
+        LobbyUIManager.Instance.ChangePanel(LobbyPanelType.CreateRoom, LobbyPanelType.WaitingRoom);
     }
 
     private void RoominfoSetting(string nameTitle)
     {
         PhotonRoomInfo.RoomName = nameTitle;
         PhotonRoomInfo.MaxUser = roomModel.roomMaxUser;
-        PhotonRoomInfo.Password = roomModel.roomPassword; ;
+        PhotonRoomInfo.Password = roomModel.roomPassword; 
         PhotonRoomInfo.MapTypeName = ((MapType)roomModel.currMapIndex).ToString();
     }
 
