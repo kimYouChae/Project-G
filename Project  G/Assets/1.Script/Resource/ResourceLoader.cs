@@ -17,4 +17,8 @@ public class ResourceLoader
     // 스프라이트
     public Sprite RoadSprite(string path) => Resources.Load<Sprite>(path);  
     public Sprite[] RoadSpriteAll(string path) => Resources.LoadAll<Sprite>(path);
+
+    // 오디오 클립
+    public AudioClip RoadClip(string path) => Resources.Load<AudioClip>(path);
+    public AudioClip[] RoadClipAll(string path) => Resources.LoadAll<AudioClip>(path);
 }

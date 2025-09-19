@@ -27,5 +27,8 @@ public class ResourceManager : Singleton<ResourceManager>
         return mapSprite[idx];
     }
 
+    public AudioClip[] GetSFXClip => resourceLoader.RoadClipAll( resourcePath.SoundPath + "/" + resourcePath.SfxPath);
+    public AudioClip[] GetBGMClip => resourceLoader.RoadClipAll(resourcePath.SoundPath + "/" + resourcePath.BgmPath);
+
 
 }

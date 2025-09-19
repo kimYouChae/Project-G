@@ -11,4 +11,14 @@ public class ResourcePath : ScriptableObject
     [SerializeField] private string mapSpritePath;
     public string MapSpritePath => mapSpritePath;
 
+
+    [SerializeField] private string soundPath;
+    public string SoundPath => soundPath;
+
+    [SerializeField] private string sfxPath;
+    public string SfxPath => sfxPath;
+
+    [SerializeField] private string bgmPath;
+    public string BgmPath => bgmPath;
+
 }
