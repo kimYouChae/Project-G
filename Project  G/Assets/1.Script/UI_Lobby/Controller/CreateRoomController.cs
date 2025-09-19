@@ -127,14 +127,17 @@ public class CreateRoomController : ILobbyPanelInitionlize
         LobbyUIManager.Instance.ChangePanel(LobbyPanelType.CreateRoom, LobbyPanelType.WaitingRoom);
     }
 
-    private void ChangeMapIndex(int spriteLength, int idx)
+    private void ChangeMapIndex( int idx )
     {
-        if (idx < 0)
-            idx = spriteLength - 1;
-        if (idx >= spriteLength)
-            idx = 0;
+        int mapTypeLength = Extension.EnumCount<MapType>() - 1;
+        int currIndex = roomModel.currMapIndex + idx;
 
-        roomModel.currMapIndex = idx;
+        if (currIndex < 0)
+            currIndex = mapTypeLength - 1;
+        if (currIndex >= mapTypeLength)
+            currIndex = 0;
+
+        roomModel.currMapIndex = currIndex;
 
         // view 메서드 호출
         roomView.ChangeMapImage(roomModel.currMapIndex);
@@ -142,6 +145,7 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
     public void IInitPanel()
     {
-        
+        roomModel.currMapIndex = 0;
+        roomView.ChangeMapImage(roomModel.currMapIndex);
     }
 }

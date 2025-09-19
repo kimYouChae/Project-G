@@ -24,7 +24,7 @@ public class ResourceManager : Singleton<ResourceManager>
         if (idx < 0 || idx >= mapSprite.Length)
             return defaultSprite;
 
-        return mapSprite[idx] = defaultSprite;
+        return mapSprite[idx];
     }
 
 
