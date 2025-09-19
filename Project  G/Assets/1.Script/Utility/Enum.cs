@@ -78,3 +78,15 @@ public enum SpanwerAnimState
 {
     none, Idle, Attack
 }
+
+public enum SFXType 
+{
+    UIClick,
+    UIWarning,
+}
+
+public enum BGMType 
+{ 
+    LobbyBGM,
+    GameBGM
+}
