@@ -81,8 +81,7 @@ public enum SpanwerAnimState
 
 public enum SFXType 
 {
-    UIClick,
-    UIWarning,
+    UIClick
 }
 
 public enum BGMType 

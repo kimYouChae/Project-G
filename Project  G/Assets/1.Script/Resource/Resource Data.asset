@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSpritePath: DefaultSprite
   mapSpritePath: MapSprite
+  soundPath: Sound
+  sfxPath: SFX
+  bgmPath: BGM
