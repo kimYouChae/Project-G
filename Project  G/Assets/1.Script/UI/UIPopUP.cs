@@ -36,7 +36,7 @@ public class UIPopUP : MonoBehaviour
 
         closeButton.onClick.AddListener(() =>
         {
-            Debug.Log("close버튼");
+            // Debug.Log("close버튼");
             OffPanel();
         });
     }
