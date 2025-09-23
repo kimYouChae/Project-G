@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ResourceManager : Singleton<ResourceManager>
 {
@@ -11,7 +12,8 @@ public class ResourceManager : Singleton<ResourceManager>
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Sprite[] mapSprite;
 
-    [Header("===AudioClip===")]
+    [Header("===Audio===")]
+    [SerializeField] private AudioMixer mixer;
     [SerializeField] private AudioClip[] sfxClip;
     [SerializeField] private AudioClip[] bgmClip;
 
@@ -22,6 +24,7 @@ public class ResourceManager : Singleton<ResourceManager>
         defaultSprite = resourceLoader.RoadSprite(resourcePath.DefaultSpritePath + "/" + resourcePath.DefaultSpritePath);
         mapSprite = resourceLoader.RoadSpriteAll(resourcePath.MapSpritePath);
 
+        mixer = resourceLoader.RoadMixer(resourcePath.SoundPath + "/" + resourcePath.AudioMixerPath);
         sfxClip = resourceLoader.RoadClipAll(resourcePath.SoundPath + "/" + resourcePath.SfxPath);
         bgmClip = resourceLoader.RoadClipAll(resourcePath.SoundPath + "/" + resourcePath.BgmPath);
     }
@@ -34,8 +37,9 @@ public class ResourceManager : Singleton<ResourceManager>
         return mapSprite[idx];
     }
 
+    public AudioMixer GetAudioMixer => mixer;
     public AudioClip[] GetSFXClip => sfxClip;
     public AudioClip[] GetBGMClip => bgmClip;
-
+    
 
 }

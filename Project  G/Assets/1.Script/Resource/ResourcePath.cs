@@ -15,6 +15,9 @@ public class ResourcePath : ScriptableObject
     [SerializeField] private string soundPath;
     public string SoundPath => soundPath;
 
+    [SerializeField] private string audioMixerPath;
+    public string AudioMixerPath => audioMixerPath; 
+
     [SerializeField] private string sfxPath;
     public string SfxPath => sfxPath;
 

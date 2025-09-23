@@ -79,6 +79,11 @@ public enum SpanwerAnimState
     none, Idle, Attack
 }
 
+public enum SoundType 
+{
+    Master, SFX, BGM
+}
+
 public enum SFXType 
 {
     UIClick

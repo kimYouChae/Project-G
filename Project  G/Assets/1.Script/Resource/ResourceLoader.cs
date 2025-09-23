@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ResourceLoader
 {
@@ -18,7 +19,8 @@ public class ResourceLoader
     public Sprite RoadSprite(string path) => Resources.Load<Sprite>(path);  
     public Sprite[] RoadSpriteAll(string path) => Resources.LoadAll<Sprite>(path);
 
-    // 오디오 클립
+    // 오디오 
+    public AudioMixer RoadMixer(string path) => Resources.Load<AudioMixer>(path);
     public AudioClip RoadClip(string path) => Resources.Load<AudioClip>(path);
     public AudioClip[] RoadClipAll(string path) => Resources.LoadAll<AudioClip>(path);
 }

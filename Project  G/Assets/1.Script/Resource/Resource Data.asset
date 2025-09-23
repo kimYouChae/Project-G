@@ -15,5 +15,6 @@ MonoBehaviour:
   defaultSpritePath: DefaultSprite
   mapSpritePath: MapSprite
   soundPath: Sound
+  audioMixerPath: Mixer
   sfxPath: SFX
   bgmPath: BGM
