@@ -19198,6 +19198,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1637887130}
+  - component: {fileID: 1637887132}
+  - component: {fileID: 1637887131}
   m_Layer: 0
   m_Name: Sound
   m_TagString: Untagged
@@ -19220,6 +19222,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1637887131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637887129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d569702385e1040b201049d727ea3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceTransform: {fileID: 0}
+  mixerGroup: {fileID: 0}
+--- !u!114 &1637887132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637887129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dffb4f2194b768848b87577a9491a3a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceTransform: {fileID: 0}
+  mixerGroup: {fileID: 0}
+  nowAudioSource: {fileID: 0}
+  currBGMType: 0
 --- !u!1 &1670458438
 GameObject:
   m_ObjectHideFlags: 0
@@ -20619,6 +20651,9 @@ MonoBehaviour:
   resourcePath: {fileID: 11400000, guid: 40874f1644fcbb54fad7ae9381442e69, type: 2}
   defaultSprite: {fileID: 0}
   mapSprite: []
+  mixer: {fileID: 0}
+  sfxClip: []
+  bgmClip: []
 --- !u!1 &1752042143
 GameObject:
   m_ObjectHideFlags: 0
