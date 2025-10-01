@@ -1207,7 +1207,12 @@ MonoBehaviour:
   settinButton: {fileID: 1029469011}
   scoreButton: {fileID: 615171650}
   scorePanel: {fileID: 0}
-  scoreText: []
+  scoreTextList: []
+  createRoomText: {fileID: 1680172122}
+  joinRoomTex: {fileID: 0}
+  scoreText: {fileID: 0}
+  rankingText: {fileID: 0}
+  settingText: {fileID: 0}
 --- !u!114 &116153343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2938,7 +2943,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lanType: 0
-  values: []
 --- !u!4 &356265121
 Transform:
   m_ObjectHideFlags: 0
