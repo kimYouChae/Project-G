@@ -13,7 +13,8 @@ public class ChartHandlerFactory
         {
             { "Map" , new MapChart()},
             { "SpanwerData" , new SpawnerChart()},
-            { "Stage_Forest" , new StageChart()}
+            { "Stage_Forest" , new StageChart()},
+            { "Localization_Table", new LocalizationChart()}
         };
     }
 
