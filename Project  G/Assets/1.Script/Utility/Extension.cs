@@ -16,7 +16,7 @@ public static class Extension
     public static TEnum GetElement<TEnum>(int idx) where TEnum : Enum
     {
         // enum 범위를 넘으면
-        if (idx < 0 || idx >= EnumCount<Enum>())
+        if (idx < 0 || idx >= EnumCount<TEnum>())
         {
             throw new IndexOutOfRangeException($"Index {idx} is out of range for enum {typeof(TEnum).Name}");
         }

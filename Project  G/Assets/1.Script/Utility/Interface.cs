@@ -11,3 +11,8 @@ public interface ILobbyPanelInitionlize
 {
     public void IInitPanel();
 }
+
+public interface ILocalizable 
+{
+    public void IUpdateLocalization();
+}

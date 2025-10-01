@@ -94,3 +94,11 @@ public enum BGMType
     LobbyBGM,
     GameBGM
 }
+
+public enum LanguageType
+{
+    English,
+    Korean,
+    Japanese,
+    Chinese
+}

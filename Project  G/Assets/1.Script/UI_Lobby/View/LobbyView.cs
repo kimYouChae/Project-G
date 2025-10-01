@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LobbyView : MonoBehaviour
+public class LobbyView : MonoBehaviour, ILocalizable
 {
     [Header("===LobbyUi===")]
     [SerializeField] Button hostButton;
@@ -15,7 +15,14 @@ public class LobbyView : MonoBehaviour
     [SerializeField] Button scoreButton;
 
     [SerializeField] GameObject scorePanel;
-    [SerializeField] TextMeshProUGUI[] scoreText;
+    [SerializeField] TextMeshProUGUI[] scoreTextList;
+
+    [Header("Localize Text")]
+    [SerializeField] TextMeshProUGUI createRoomText;
+    [SerializeField] TextMeshProUGUI joinRoomTex;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI rankingText;
+    [SerializeField] TextMeshProUGUI settingText;
 
     private Action CreatHostRoomAction;
     private Action ClientJoinRoomAction;
@@ -38,6 +45,17 @@ public class LobbyView : MonoBehaviour
 
     public void UpdateScoreText(int idx, float score) 
     {
-        scoreText[idx].text = score.ToString();
+        scoreTextList[idx].text = score.ToString();
+    }
+
+    private void OnEnable()
+    {
+        LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
+    }
+
+    public void IUpdateLocalization()
+    {
+        Debug.Log("test");
+        createRoomText.text = LocalizationManager.Instance.ReturnLolicalization(LocalizationKey.Lobby_CreateRoom);
     }
 }
