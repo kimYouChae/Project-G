@@ -17,7 +17,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     [SerializeField] GameObject scorePanel;
     [SerializeField] TextMeshProUGUI[] scoreTextList;
 
-    [Header("Localize Text")]
+    [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI createRoomText;
     [SerializeField] TextMeshProUGUI joinRoomTex;
     [SerializeField] TextMeshProUGUI scoreText;
@@ -53,9 +53,12 @@ public class LobbyView : MonoBehaviour, ILocalizable
         LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
     }
 
-    public void IUpdateLocalization()
+    public void IUpdateLocalization(LanguageType type)
     {
-        Debug.Log("test");
-        createRoomText.text = LocalizationManager.Instance.ReturnLolicalization(LocalizationKey.Lobby_CreateRoom);
+        createRoomText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_CreateRoom);
+        joinRoomTex.text = LocalizationManager.Instance.ReturnLocalizationString(type,LocalizationKey.Lobby_EnterRoom);
+        scoreText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Score);
+        rankingText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Ranking);
+        settingText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Setting);
     }
 }

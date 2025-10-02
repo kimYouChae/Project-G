@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RoomListView : MonoBehaviour
+public class RoomListView : MonoBehaviour, ILocalizable
 {
     [Header("===RoomListUi===")]
     [SerializeField] Button refreshRoomListButton;
@@ -17,6 +17,11 @@ public class RoomListView : MonoBehaviour
     [SerializeField] List<GameObject> roomObjList;
 
     [SerializeField] GameObject content;    // 스크롤뷰의 콘텐츠
+
+    [Header("===Localize Text===")]
+    [SerializeField] TextMeshProUGUI refreshText;
+    [SerializeField] TextMeshProUGUI inputPasswordText;
+    [SerializeField] TextMeshProUGUI enterRoomText;
 
     private Action RefreshRoomListAction;
     private Action<string> JoinRoomAction;
@@ -34,7 +39,7 @@ public class RoomListView : MonoBehaviour
     public void RegisterJoinRoom(Action<string> action) { JoinRoomAction += action; }
     public void RegisterSelectRoomIndex(Action<int> action) { SelectRoomIndex += action; }
 
-    public void NotifySelectRoomIndex(int index) 
+    public void NotifySelectRoomIndex(int index)
     {
         // RoomInfoObject에서 선택한 index를 매개변수로, 연결된 메서드 실행 
         SelectRoomIndex?.Invoke(index);
@@ -74,5 +79,17 @@ public class RoomListView : MonoBehaviour
             }
         }
 
+    }
+
+    private void OnEnable()
+    {
+        LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
+    }
+
+    public void IUpdateLocalization(LanguageType type)
+    {
+        refreshText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.RoomList_Refresh);
+        inputPasswordText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.RoomList_InputPassword);
+        enterRoomText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.RoomList_EnterRoom);
     }
 }

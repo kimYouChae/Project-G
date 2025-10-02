@@ -13,7 +13,7 @@ public class UserScorePopUP : UIPopUP
 
     private void IniUserScore(MapType type, float score)
     {
-        mapNameText[(int)type].text = Define.MapName[(int)type];
+        mapNameText[(int)type].text = LocalizationManager.Instance.MapNameReturn(type);
         mapScoreText[(int)type].text = score.ToString();
     }
 

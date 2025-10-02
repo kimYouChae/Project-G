@@ -103,7 +103,8 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Pun : OnJoinRoomFailed 콜백실행 | Room 접속에 실패 했습니다 {message} ");
 
-        ErrorJoinRoomPopUP scorePopUp = UIManager.Instance.GetPopUP<ErrorJoinRoomPopUP>();
+        TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+        textPopUp.UpdateText(LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Popup_CreateRoomFailed));
     }
 
 }

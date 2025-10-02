@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CreateRoomView : MonoBehaviour
+public class CreateRoomView : MonoBehaviour, ILocalizable
 {
     [Header("===CreateUi===")]
     [SerializeField] TMP_InputField roomTitleField;
@@ -18,10 +18,16 @@ public class CreateRoomView : MonoBehaviour
     [SerializeField] Button rightButton;
     [SerializeField] Button leftButton;
 
+    [Header("===Localize Text===")]
+    [SerializeField] TextMeshProUGUI roomNameText;
+    [SerializeField] TextMeshProUGUI roomNameInputFieldText;
+    [SerializeField] TextMeshProUGUI passwordText;
+    [SerializeField] TextMeshProUGUI createText;
+
     private Action CopyPassWordAction;
     private Action<string> CreateRoomAction;
-    private Action<int> RightArrowAction;       // 스프라이트 list 길이, +1
-    private Action<int> LeftArrowAction;        // 스프라이트 list 길이, -1
+    private Action<int> RightArrowAction;       // +1
+    private Action<int> LeftArrowAction;        // -1
 
     private void Awake()
     {
@@ -40,6 +46,19 @@ public class CreateRoomView : MonoBehaviour
     public void ChangeMapImage(int index) 
     {
         mapImage.sprite = ResourceManager.Instance.MapSprite(index);
-        mapTitle.text = Define.MapName[index];
+        mapTitle.text = LocalizationManager.Instance.MapNameReturn(index);
+    }
+
+    private void OnEnable()
+    {
+        LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
+    }
+
+    public void IUpdateLocalization(LanguageType type)
+    {
+        roomNameText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.CreateRoom_RoomName);
+        roomNameInputFieldText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.CreateRoom_RoomName);
+        passwordText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.CreateRoom_Password);
+        createText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_CreateRoom);
     }
 }

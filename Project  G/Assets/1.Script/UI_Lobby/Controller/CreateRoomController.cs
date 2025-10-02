@@ -106,7 +106,8 @@ public class CreateRoomController : ILobbyPanelInitionlize
             //Debug.Log("비밀 번호를 복사 해야합니다!");
 
             //팝업 띄우기 
-            ErrorPasswordCopyPopUP scorePopUp = UIManager.Instance.GetPopUP<ErrorPasswordCopyPopUP>();
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText(LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Popup_PasswordCopyFailed));
 
             return;
         }
@@ -116,7 +117,8 @@ public class CreateRoomController : ILobbyPanelInitionlize
             //Debug.LogError("방 이름이 비어 있습니다!");
 
             // ##TODO : 팝업 띄우기 
-            ErrorRoomNameEmptyPopUP scorePopUp = UIManager.Instance.GetPopUP<ErrorRoomNameEmptyPopUP>();
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText(LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Popup_RoomNameEmpty));
 
             return;
         }

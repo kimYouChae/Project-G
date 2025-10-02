@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WaitingRoomView : MonoBehaviour
+public class WaitingRoomView : MonoBehaviour, ILocalizable
 {
     [Header("===WaitingUi===")]
     [SerializeField] TextMeshProUGUI roomTitle;
@@ -17,6 +17,9 @@ public class WaitingRoomView : MonoBehaviour
     [SerializeField] List<GameObject> playerRefObj;
 
     [SerializeField] Button gameStartButton;
+
+    [Header("===Localize Text===")]
+    [SerializeField] TextMeshProUGUI gameStartText;
 
     private Action GameStartAction;
 
@@ -50,4 +53,13 @@ public class WaitingRoomView : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
+    }
+
+    public void IUpdateLocalization(LanguageType type)
+    {
+        gameStartText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Waiting_StartGame);
+    }
 }

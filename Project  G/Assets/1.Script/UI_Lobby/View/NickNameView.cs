@@ -5,11 +5,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NickNameView : MonoBehaviour
+public class NickNameView : MonoBehaviour, ILocalizable
 {
     [Header("===NickNameUi===")]
     [SerializeField] TMP_InputField nickInputField;
     [SerializeField] Button enterNickNameButton;
+
+    [Header("===Localize Text===")]
+    [SerializeField] TextMeshProUGUI inputFieldText;
+    [SerializeField] TextMeshProUGUI inputButtonText;
 
     public Action<string> submitNickNameAction;
 
@@ -32,5 +36,16 @@ public class NickNameView : MonoBehaviour
     {
         // 닉네임 잘못된 팝업 띄우기
         Debug.Log("닉네임이 잘못되었음");
+    }
+
+    private void OnEnable()
+    {
+        LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
+    }
+
+    public void IUpdateLocalization(LanguageType type)
+    {
+        inputFieldText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.NickName_Input);
+        inputButtonText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Input);
     }
 }
