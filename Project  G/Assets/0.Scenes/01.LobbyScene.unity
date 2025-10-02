@@ -1157,6 +1157,7 @@ MonoBehaviour:
   scrollViewContent: {fileID: 1040050549}
   playerRefObj: []
   gameStartButton: {fileID: 902814394}
+  gameStartText: {fileID: 0}
 --- !u!114 &116153340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1175,6 +1176,9 @@ MonoBehaviour:
   roomInfoPrefab: {fileID: 6965123580311233989, guid: bdd5f147d4e043a4c8c53b7432ea0936, type: 3}
   roomObjList: []
   content: {fileID: 1721098904}
+  refreshText: {fileID: 0}
+  inputPasswordText: {fileID: 0}
+  enterRoomText: {fileID: 0}
 --- !u!114 &116153341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1189,6 +1193,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nickInputField: {fileID: 1682434757}
   enterNickNameButton: {fileID: 916322344}
+  inputFieldText: {fileID: 0}
+  inputButtonText: {fileID: 0}
 --- !u!114 &116153342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1232,6 +1238,10 @@ MonoBehaviour:
   createRoomButton: {fileID: 1137165514}
   rightButton: {fileID: 1784354376}
   leftButton: {fileID: 950321549}
+  roomNameText: {fileID: 0}
+  roomNameInputFieldText: {fileID: 0}
+  passwordText: {fileID: 0}
+  createText: {fileID: 0}
 --- !u!114 &116153344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7308,7 +7318,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916322342}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
