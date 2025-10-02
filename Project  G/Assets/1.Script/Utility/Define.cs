@@ -6,11 +6,6 @@ static public class Define
 {
     public static readonly string USERTABLE = "USER_DATA";
 
-    public static readonly string[] MapName = new string[6]
-    {
-        "숲", "거대한 나무", "시장", "섬", "지옥", "얼음마을"
-    };
-
     public static float mapMinX = -13f;
     public static float mapMinY = -8f;
     public static float mapMaxX = 13;

@@ -14,5 +14,5 @@ public interface ILobbyPanelInitionlize
 
 public interface ILocalizable 
 {
-    public void IUpdateLocalization();
+    public void IUpdateLocalization(LanguageType type);
 }

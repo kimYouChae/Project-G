@@ -35,17 +35,23 @@ public class Language
 public class LocalizationManager : Singleton<LocalizationManager>
 {
     [SerializeField]
-    private LanguageType lanType;
+    private LanguageType currLanguateType;
     [SerializeField]
     private Dictionary<LanguageType, Language> languages;
+    [SerializeField]
+    private string[] mapNameLocalization;
 
-    private Action ChangeLanguageAction;
+    private Action<LanguageType> ChangeLanguageAction;
 
     protected override void Singleton_Awake()
     {
         SetLanguageType();
 
         languages = new Dictionary<LanguageType, Language>();
+
+        // 맵 type 길이만큼 초기화
+        mapNameLocalization = new string[ Extension.EnumCount<MapType>()];
+        RegisterChangeLanguage(LocalizationMapNameList);
     }
 
     private void Update()
@@ -74,39 +80,74 @@ public class LocalizationManager : Singleton<LocalizationManager>
         switch(Application.systemLanguage) 
         {
             case SystemLanguage.English:
-                lanType = LanguageType.English; break;
+                currLanguateType = LanguageType.English; break;
             case SystemLanguage.Japanese:
-                lanType = LanguageType.Japanese; break;
+                currLanguateType = LanguageType.Japanese; break;
             case SystemLanguage.Korean:
-                lanType = LanguageType.Korean; break;
+                currLanguateType = LanguageType.Korean; break;
             case SystemLanguage.Chinese: 
-                lanType = LanguageType.Chinese; break;
+                currLanguateType = LanguageType.Chinese; break;
             default:
-                lanType = LanguageType.English; break;
+                currLanguateType = LanguageType.English; break;
         }
     }
 
-    // 현재 lang 타입 정하기
+    /// <summary>
+    /// 언어 변경 시 실행할 메서드
+    /// </summary>
+    /// <param name="type">바꿀 언어 타입</param>
     private void ChangeLanguageType(LanguageType type) 
     {
-        lanType = type;
+        currLanguateType = type;
 
-        ChangeLanguageAction?.Invoke();
+        ChangeLanguageAction?.Invoke(currLanguateType);
     }
 
     // key에 맞는 문자열 return
-    public string ReturnLolicalization(string key) 
+    public string ReturnLocalizationString(LanguageType type , string key) 
     { 
-        // language 타입은 현재 lang 타입
-        if(languages.ContainsKey(lanType))
-            return languages[lanType].Get(key);
+        if(languages.ContainsKey(type))
+            return languages[type].Get(key);
 
         return string.Empty;
     }
 
-    public void RegisterChangeLanguage(Action action) 
+    public string ReturnLocalizationString(string key) 
+    {
+        // language 타입은 현재 lang 타입
+        if (languages.ContainsKey(currLanguateType))
+            return languages[currLanguateType].Get(key);
+
+        return string.Empty;
+    }
+
+    public void RegisterChangeLanguage(Action<LanguageType> action) 
     {
         ChangeLanguageAction += action;
     }
+
+    #region Map Name Localizatin
+    // 현재 언어에 따라 mapName 배열의 값을 바꾸기
+    private void LocalizationMapNameList(LanguageType type)
+    {
+        mapNameLocalization[(int)MapType.Forest] = ReturnLocalizationString(LocalizationKey.Map_Forest);
+        mapNameLocalization[(int)MapType.GiganticTree] = ReturnLocalizationString(LocalizationKey.Map_GiganticTree);
+        mapNameLocalization[(int)MapType.Market] = ReturnLocalizationString(LocalizationKey.Map_Market);
+        mapNameLocalization[(int)MapType.Island] = ReturnLocalizationString(LocalizationKey.Map_Island);
+        mapNameLocalization[(int)MapType.Hell] = ReturnLocalizationString(LocalizationKey.Map_Hell);
+        mapNameLocalization[(int)MapType.IceVillage] = ReturnLocalizationString(LocalizationKey.Map_IceVillage);
+    }
+
+    public string MapNameReturn(MapType type) 
+    {
+        return mapNameLocalization[(int)type];
+    }
+
+    public string MapNameReturn(int index) 
+    {
+        return mapNameLocalization[index];
+    }
+
+    #endregion
 }
 
