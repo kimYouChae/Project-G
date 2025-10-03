@@ -15,9 +15,18 @@ public class SettingController
         this.settingPopup = settingPopup;
 
         settingPopup.RegisterSoundValue(ChangeVolume);
+        settingPopup.RegisterLanguageApply(ChangeLanguage);
     }
+
+    // 볼륨 변경 
     private void ChangeVolume(SoundType type, float volume) 
     {
         soundModel.AudioMixer.SetFloat(type.ToString(), Mathf.Log10(Mathf.Max(0.001f, volume)) * 20);
+    }
+
+    // 언어 변경 
+    private void ChangeLanguage(int index) 
+    {
+        LocalizationManager.Instance.ChangeLanguageType( (LanguageType)index );
     }
 }

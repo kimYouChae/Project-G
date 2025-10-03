@@ -54,15 +54,6 @@ public class LocalizationManager : Singleton<LocalizationManager>
         RegisterChangeLanguage(LocalizationMapNameList);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.V)) 
-        {
-            Debug.Log("v 눌림");
-            ChangeLanguageType(LanguageType.English);
-        }
-    }
-
     public void AddLanguageDictionary(LanguageType type, string key, string value) 
     {
         if (!languages.ContainsKey(type))
@@ -96,7 +87,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
     /// 언어 변경 시 실행할 메서드
     /// </summary>
     /// <param name="type">바꿀 언어 타입</param>
-    private void ChangeLanguageType(LanguageType type) 
+    public void ChangeLanguageType(LanguageType type) 
     {
         currLanguateType = type;
 
