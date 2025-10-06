@@ -415,6 +415,11 @@ MonoBehaviour:
   languageDropDown: {fileID: 5896585404588869226}
   selectLanguage: 0
   applyButton: {fileID: 5166916831232784555}
+  soundText: {fileID: 2001855519697991985}
+  masterText: {fileID: 5189987555674500478}
+  sfxText: {fileID: 5501938495627243165}
+  bgmText: {fileID: 6782496782007053164}
+  languageText: {fileID: 5238344560601536968}
 --- !u!1 &783459643623225689
 GameObject:
   m_ObjectHideFlags: 0

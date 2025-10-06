@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class SettingPopUP : UIPopUP
+public class SettingPopUP : UIPopUP , ILocalizable
 {
     [SerializeField] Slider MasterSlider;
     [SerializeField] Slider BGMSlier;
@@ -19,6 +18,13 @@ public class SettingPopUP : UIPopUP
 
     private Action<SoundType, float> soundValueChangedAction;
     private Action<int> applyLanguageAction;
+
+    [Header("===Localize Text===")]
+    [SerializeField] TextMeshProUGUI soundText;
+    [SerializeField] TextMeshProUGUI masterText;
+    [SerializeField] TextMeshProUGUI sfxText;
+    [SerializeField] TextMeshProUGUI bgmText;
+    [SerializeField] TextMeshProUGUI languageText;
 
     public void RegisterSoundValue(Action<SoundType, float> action) 
     {
@@ -42,6 +48,9 @@ public class SettingPopUP : UIPopUP
         // 드롭다운 관리
         languageDropDown.ClearOptions();
         InitDropDown();
+
+        // 로컬라이징 관리
+        LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
     }
 
     private void InitDropDown() 
@@ -57,4 +66,12 @@ public class SettingPopUP : UIPopUP
         languageDropDown.AddOptions(optionList);
     }
 
+    public void IUpdateLocalization(LanguageType type)
+    {
+        soundText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Setting_Sound);
+        masterText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Setting_Master);
+        sfxText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Setting_SFX);
+        bgmText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Setting_BGM);
+        languageText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Setting_Language);
+    }
 }

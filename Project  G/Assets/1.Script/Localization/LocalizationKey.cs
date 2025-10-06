@@ -47,5 +47,7 @@ public static class LocalizationKey
     public const string Setting_Master = "Setting_Master";
     public const string Setting_SFX = "Setting_SFX";
     public const string Setting_BGM = "Setting_BGM";
+    public const string Setting_Sound = "Setting_Sound";
+    public const string Setting_Language = "Setting_Language";
 }
 
