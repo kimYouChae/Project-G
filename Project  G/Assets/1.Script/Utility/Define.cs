@@ -15,8 +15,8 @@ static public class Define
     {
         { LanguageType.Korean, "ÇÑ±¹¾î" },
         { LanguageType.English, "English" },
-        { LanguageType.Japanese, "ñéÏĞåŞ" },
-        { LanguageType.Chinese, "ìíÜâåŞ" }
+        { LanguageType.Japanese, "ìíÜâåŞ" },
+        { LanguageType.Chinese, "ñéÏĞåŞ" }
     };
 
     public static readonly Dictionary<SceneType, string> sceneNames = new Dictionary<SceneType, string>()
