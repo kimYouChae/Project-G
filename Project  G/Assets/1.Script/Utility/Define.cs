@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-static public class Define 
+static public class Define
 {
     public static readonly string USERTABLE = "USER_DATA";
 
@@ -10,7 +10,15 @@ static public class Define
     public static float mapMinY = -8f;
     public static float mapMaxX = 13;
     public static float mapMaxY = 8;
-    
+
+    public static readonly Dictionary<LanguageType, string> languageNames = new Dictionary<LanguageType, string>()
+    {
+        { LanguageType.Korean, "«—±πæÓ" },
+        { LanguageType.English, "English" },
+        { LanguageType.Japanese, "ÒÈœ–Âﬁ" },
+        { LanguageType.Chinese, "ÏÌ‹‚Âﬁ" }
+    };
+
     public static readonly Dictionary<SceneType, string> sceneNames = new Dictionary<SceneType, string>()
     {
         { SceneType.Lobby, "01.LobbyScene"},

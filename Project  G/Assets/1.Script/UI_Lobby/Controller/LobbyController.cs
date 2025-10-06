@@ -15,6 +15,7 @@ public class LobbyController : ILobbyPanelInitionlize
         lobbyView.RegisterClientJoinRoom(JoinClientRoom);
         lobbyView.RegisterExitGame(ExitGame);
         lobbyView.RegisterScorePopUp(ScorePopUp);
+        lobbyView.RegisterSettingPopUp(SettingPopUp);
     }
 
     private void CreateHostRoom() 
@@ -37,6 +38,12 @@ public class LobbyController : ILobbyPanelInitionlize
     {
         UserScorePopUP scorePopUp = UIManager.Instance.GetPopUP<UserScorePopUP>();
         scorePopUp.InitUserScorePopup();
+    }
+
+    private void SettingPopUp() 
+    {
+        SettingPopUP settingpopup = UIManager.Instance.GetPopUP<SettingPopUP>();
+
     }
 
     public void IInitPanel()

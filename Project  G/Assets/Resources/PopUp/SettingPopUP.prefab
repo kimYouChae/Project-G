@@ -412,6 +412,9 @@ MonoBehaviour:
   MasterSlider: {fileID: 8075305366927961660}
   BGMSlier: {fileID: 8343092972203392779}
   SFXSlider: {fileID: 252672669420253303}
+  languageDropDown: {fileID: 5896585404588869226}
+  selectLanguage: 0
+  applyButton: {fileID: 5166916831232784555}
 --- !u!1 &783459643623225689
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,11 +23,13 @@ public class LobbyView : MonoBehaviour, ILocalizable
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI rankingText;
     [SerializeField] TextMeshProUGUI settingText;
+    [SerializeField] TextMeshProUGUI exitText;
 
     private Action CreatHostRoomAction;
     private Action ClientJoinRoomAction;
     private Action ExitGameAction;
     private Action ScorePopUpAction;
+    private Action SettingAction;
 
     private void Awake()
     {
@@ -35,6 +37,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
         clientButton.onClick.AddListener(() => ClientJoinRoomAction?.Invoke());
         exitButton.onClick.AddListener(() => ExitGameAction?.Invoke());
         scoreButton.onClick.AddListener(() => ScorePopUpAction?.Invoke());
+        settinButton.onClick.AddListener(() => SettingAction?.Invoke());
 
     }
 
@@ -42,6 +45,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     public void RegisterClientJoinRoom(Action action) { ClientJoinRoomAction += action;}
     public void RegisterExitGame(Action action) {  ExitGameAction += action; }
     public void RegisterScorePopUp(Action action) { ScorePopUpAction += action; }
+    public void RegisterSettingPopUp(Action action) { SettingAction += action;  }
 
     public void UpdateScoreText(int idx, float score) 
     {
@@ -60,5 +64,6 @@ public class LobbyView : MonoBehaviour, ILocalizable
         scoreText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Score);
         rankingText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Ranking);
         settingText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Setting);
+        exitText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Exit);
     }
 }
