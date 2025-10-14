@@ -1,0 +1,18 @@
+{
+  "rows": [
+    {
+      "key": "Server_Conneting",
+      "English": "Connecting to server",
+      "Korean": "서버에 연결 중",
+      "Japanese": "サーバーに接続中",
+      "Chinese": "连接到服务器"
+    },
+    {
+      "key": "Enter_AnyKey",
+      "English": "Press any key to start",
+      "Korean": "시작하려면 아무 키나 누르세요",
+      "Japanese": "開始するには任意のキーを押してください",
+      "Chinese": "请按任意键开始"
+    }
+  ]
+}
