@@ -75,6 +75,9 @@ public class TitleUI : MonoBehaviour
 
             // 차트 불러오기 
             BackendChartManager.Instance.InitBackendChart();
+
+            // 차트 불러온 후 로컬라이징
+            LocalizationManager.Instance.ChangeLanguageType();
         });
 
 

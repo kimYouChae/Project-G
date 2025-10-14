@@ -46,7 +46,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
 
     protected override void Singleton_Awake()
     {
-        // SetLanguageType();
+        SetLanguageType();
 
         languages = new Dictionary<LanguageType, Language>();
 
@@ -108,6 +108,11 @@ public class LocalizationManager : Singleton<LocalizationManager>
     {
         currLanguateType = type;
 
+        ChangeLanguageAction?.Invoke(currLanguateType);
+    }
+
+    public void ChangeLanguageType() 
+    {
         ChangeLanguageAction?.Invoke(currLanguateType);
     }
 
