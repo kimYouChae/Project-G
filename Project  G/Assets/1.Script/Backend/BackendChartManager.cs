@@ -6,10 +6,7 @@ using UnityEngine;
 using LitJson;
 using System;
 using System.IO;
-using static BackEnd.Quobject.SocketIoClientDotNet.Parser.Parser.Encoder;
 using BackEnd.Content;
-using static UnityEditor.Progress;
-using static UnityEngine.Rendering.DebugUI;
 
 public class BackendChartManager : Singleton<BackendChartManager>
 {
