@@ -12,15 +12,13 @@ public class TitleUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI titleText;
 
-    const string isConnecting = "서버에 연결중....";
-    const string isReady = "시작하려면 아무키나 누르세요";
-
     private void Start()
     {
-        titleText.text = isConnecting;
+        titleText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Server_Conneting);
 
         // 서버 연결 시 액션 등록 
-        PunLobbyManager.Instance.RegisterServerConnectAction(()=> titleText.text = isReady);
+        PunLobbyManager.Instance.RegisterServerConnectAction(()=> 
+            titleText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Enter_AnyKey));
         PunLobbyManager.Instance.RegisterServerConnectAction(() => StartCoroutine(test()));
     }
 

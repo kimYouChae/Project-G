@@ -1,3 +1,4 @@
+using LitJson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,25 +8,25 @@ using UnityEngine;
 [System.Serializable]
 public class Language 
 {
-    private Dictionary<string, string> lauguageContainer;
+    private Dictionary<string, string> languageContainer;
 
     public Language() 
     {
-        lauguageContainer = new Dictionary<string, string>();
+        languageContainer = new Dictionary<string, string>();
     }
 
-    public void Add(string key, string value) 
+    public void langAdd(string key, string value) 
     {
-        if(!lauguageContainer.ContainsKey(key)) 
-        {
-            lauguageContainer.Add(key, value);
-        }
+        if(languageContainer.ContainsKey(key))
+            languageContainer[key] = value;  
+        else 
+            languageContainer.Add(key, value);
     }
 
-    public string Get(string key) 
+    public string langGet(string key) 
     {
-        if(lauguageContainer.ContainsKey(key))
-        { return lauguageContainer[key]; }
+        if(languageContainer.ContainsKey(key))
+        { return languageContainer[key]; }
 
         return string.Empty;
     }
@@ -45,13 +46,29 @@ public class LocalizationManager : Singleton<LocalizationManager>
 
     protected override void Singleton_Awake()
     {
-        SetLanguageType();
+        // SetLanguageType();
 
         languages = new Dictionary<LanguageType, Language>();
 
         // 맵 type 길이만큼 초기화
         mapNameLocalization = new string[ Extension.EnumCount<MapType>()];
         RegisterChangeLanguage(LocalizationMapNameList);
+
+        // fallBack 로컬라이제이션 테이블 사용
+        FallBackLocalization();
+    }
+
+    private void FallBackLocalization() 
+    {
+        // 1. 텍스트파일 가져오기
+        TextAsset text = ResourceManager.Instance.FallBackLocalizationText;
+
+        // 2. LitJson 파싱
+        LitJson.JsonData jsonData = JsonMapper.ToObject(text.text);
+
+        // 3. 클래스 생성
+        LocalizationChart localChart = new LocalizationChart();
+        localChart.IParseAndStore(jsonData["rows"]);
     }
 
     public void AddLanguageDictionary(LanguageType type, string key, string value) 
@@ -62,7 +79,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
         }
 
         // type에 해당하는 language 클래스에 추가 
-        languages[type].Add(key, value);
+        languages[type].langAdd(key, value);
     }
 
     // 운영체제 언어 별로 Lang타입 정하기
@@ -98,7 +115,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
     public string ReturnLocalizationString(LanguageType type , string key) 
     { 
         if(languages.ContainsKey(type))
-            return languages[type].Get(key);
+            return languages[type].langGet(key);
 
         return string.Empty;
     }
@@ -107,7 +124,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
     {
         // language 타입은 현재 lang 타입
         if (languages.ContainsKey(currLanguateType))
-            return languages[currLanguateType].Get(key);
+            return languages[currLanguateType].langGet(key);
 
         return string.Empty;
     }
