@@ -18,3 +18,4 @@ MonoBehaviour:
   audioMixerPath: Mixer
   sfxPath: SFX
   bgmPath: BGM
+  fallBackLocalizationData: LocalizationChart

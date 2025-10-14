@@ -17,9 +17,12 @@ public class ResourceManager : Singleton<ResourceManager>
     [SerializeField] private AudioClip[] sfxClip;
     [SerializeField] private AudioClip[] bgmClip;
 
+    [Header("===Text Asset===")]
+    [SerializeField] private TextAsset fallBackLocalizionTextfile;
+
     protected override void Singleton_Awake()
     {
-        resourceLoader = new ResourceLoader(resourcePath);
+        resourceLoader = new ResourceLoader();
 
         defaultSprite = resourceLoader.RoadSprite(resourcePath.DefaultSpritePath + "/" + resourcePath.DefaultSpritePath);
         mapSprite = resourceLoader.RoadSpriteAll(resourcePath.MapSpritePath);
@@ -27,6 +30,8 @@ public class ResourceManager : Singleton<ResourceManager>
         mixer = resourceLoader.RoadMixer(resourcePath.SoundPath + "/" + resourcePath.AudioMixerPath);
         sfxClip = resourceLoader.RoadClipAll(resourcePath.SoundPath + "/" + resourcePath.SfxPath);
         bgmClip = resourceLoader.RoadClipAll(resourcePath.SoundPath + "/" + resourcePath.BgmPath);
+
+        fallBackLocalizionTextfile = resourceLoader.RoadFallBackLocalization(resourcePath.FallBackLocalizationData);
     }
 
     public Sprite MapSprite(int idx) 
@@ -40,6 +45,9 @@ public class ResourceManager : Singleton<ResourceManager>
     public AudioMixer GetAudioMixer => mixer;
     public AudioClip[] GetSFXClip => sfxClip;
     public AudioClip[] GetBGMClip => bgmClip;
-    
+
+    public TextAsset FallBackLocalizationText => fallBackLocalizionTextfile;
+
+
 
 }

@@ -5,13 +5,6 @@ using UnityEngine.Audio;
 
 public class ResourceLoader
 {
-    ResourcePath path;
-
-    public ResourceLoader(ResourcePath path)
-    {
-        this.path = path;
-    }
-
     // 게임 오브젝트
     public GameObject RoadPrefab(string path) => Resources.Load<GameObject>(path);
 
@@ -23,4 +16,7 @@ public class ResourceLoader
     public AudioMixer RoadMixer(string path) => Resources.Load<AudioMixer>(path);
     public AudioClip RoadClip(string path) => Resources.Load<AudioClip>(path);
     public AudioClip[] RoadClipAll(string path) => Resources.LoadAll<AudioClip>(path);
+
+    // 텍스트파일
+    public TextAsset RoadFallBackLocalization(string path) => Resources.Load<TextAsset>(path);  
 }
