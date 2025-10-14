@@ -2953,7 +2953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83be2d91513c7204580013b65a862909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currLanguateType: 2
+  currLanguateType: 3
   mapNameLocalization: []
 --- !u!4 &356265121
 Transform:
