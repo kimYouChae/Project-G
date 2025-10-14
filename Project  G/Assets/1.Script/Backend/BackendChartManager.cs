@@ -23,16 +23,12 @@ public class BackendChartManager : Singleton<BackendChartManager>
     // name -> ICharHandler 리턴 펙토리
     private ChartHandlerFactory chartHandlerFactory;
 
-    // key : 차트 ID - value : 차트에 해당하는 클래스 
-    private Dictionary<string, ICharHandler> keyValuePairs;
-
     // 차트 .dat 파일 명
     const string chartFileName = "backend_cdn.dat";
 
     protected override void Singleton_Awake()
     {
         chartHandlerFactory = new ChartHandlerFactory();
-        keyValuePairs = new Dictionary<string, ICharHandler>();
     }
 
     public void InitBackendChart() 
