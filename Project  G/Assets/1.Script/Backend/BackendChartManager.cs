@@ -5,12 +5,16 @@ using UnityEditor;
 using UnityEngine;
 using LitJson;
 using System;
-
+using System.IO;
+using static BackEnd.Quobject.SocketIoClientDotNet.Parser.Parser.Encoder;
+using BackEnd.Content;
+using static UnityEditor.Progress;
+using static UnityEngine.Rendering.DebugUI;
 
 public class BackendChartManager : Singleton<BackendChartManager>
 {
-    // 차트 목록 담겨져 있는 bro
-    private BackEnd.Content.BackendContentTableReturnObject chartListBro;
+    // 차트 목록 담겨져 있는 bro (서버에서 가져온)
+    private BackEnd.Content.BackendContentTableReturnObject chartListServerBro;
 
     // 차트 ID 별 Contenct 
     // *주의 :차트 파일 ID 아님*
@@ -22,6 +26,9 @@ public class BackendChartManager : Singleton<BackendChartManager>
     // key : 차트 ID - value : 차트에 해당하는 클래스 
     private Dictionary<string, ICharHandler> keyValuePairs;
 
+    // 차트 .dat 파일 명
+    const string chartFileName = "backend_cdn.dat";
+
     protected override void Singleton_Awake()
     {
         chartHandlerFactory = new ChartHandlerFactory();
@@ -31,79 +38,68 @@ public class BackendChartManager : Singleton<BackendChartManager>
     public void InitBackendChart() 
     {
         ChartTableCheck();
-        ChartContentCheck();
     }
 
     private void ChartTableCheck()
     {
-        // 로그인 후 차트 불러와야함 ! 
-        chartListBro = Backend.CDN.Content.Table.Get();
+        // 1. 서버에서 차트 불러오기
+        chartListServerBro = Backend.CDN.Content.Table.Get();
 
-        if (chartListBro.IsSuccess() == false)
+        if (chartListServerBro.IsSuccess() == false)
         {
-            Debug.LogError(chartListBro);
+            Debug.LogError(chartListServerBro);
             return;
         }
 
-        string str = "";
-        foreach (BackEnd.Content.ContentTableItem item in chartListBro.GetContentTableItemList())
+        // 2. Application persistentData 경로에 파일 있는지 확인 
+        string filePath = Path.Combine(Application.persistentDataPath, chartFileName);
+
+        if (File.Exists(filePath))
         {
+            // 파일 존재 -> 차트 업데이트
+            BackEnd.Content.BackendContentReturnObject localCallback = null;
+            localCallback = Backend.CDN.Content.Local.Update(chartListServerBro.GetContentTableItemList());
+        }
+        else
+        {
+            // 파일 x -> 로컬 저장
+
+            // 불러온 차트 내용 조회
+            BackEnd.Content.BackendContentReturnObject callback2 = Backend.CDN.Content.Get(chartListServerBro.GetContentTableItemList());
+
+            if (Backend.CDN.Content.Local.Save(callback2.GetContentList(), out Exception e) == false)
+            {
+                Debug.LogError("Save Error : " + e);
+                return;
+            }
+
+            Debug.Log("로컬 저장에 성공했습니다");
+        }
+
+        // 3. 로컬에 저장된거 가져오기 
+        BackEnd.Content.BackendContentReturnObject temp = Backend.CDN.Content.Local.Load();
+
+        // 성공 시 딕셔너리 형태로 변환
+        // key : 차트 Id - value : content
+        chartIdByContenct = temp.GetContentDictionarySortByChartId();
+
+        // 4. 로컬에 저장된 차트의 내용 조회
+        string str = "";
+        foreach (string keyName in chartIdByContenct.Keys)
+        {
+            ContentItem item = chartIdByContenct[keyName];
             str += item.chartName + '\n';
-            str += item;
+            str += item.chartId;
 
             Debug.Log(str);
             str = "";
 
             // 차트 이름에 해당하는 클래스 생성후 return
             ICharHandler handler = chartHandlerFactory.ChartNameByChart(item.chartName);
-            // register
-            RegisterChartHanlder(item.chartId, handler);
-        }
-    }
-
-    // 차트 내용 조회
-    private void ChartContentCheck() 
-    {
-        BackEnd.Content.BackendContentReturnObject bro2;
-
-        bro2 = Backend.CDN.Content.Get(chartListBro.GetContentTableItemList());
-
-        if (!bro2.IsSuccess())
-        {
-            Debug.LogError("GetContent Fail : " + bro2);
-            return;
-        }
-
-        // 성공 시 딕셔너리 형태로 변환
-        // key : 차트 Id - value : content
-        chartIdByContenct = bro2.GetContentDictionarySortByChartId();
-
-        // 내용 확인
-        foreach (string keyName in chartIdByContenct.Keys) 
-        {
-            Debug.Log( "키 이름 : " + keyName + " \n "+ chartIdByContenct[keyName].ToString());
 
             // ChartHandle실행 
-            LitJson.JsonData jsonData = chartIdByContenct[keyName].contentJson;
-            ChartHandle(keyName, jsonData);
+            LitJson.JsonData jsonData = item.contentJson;
+            handler.IParseAndStore(jsonData);
         }
     }
-
-
-    public void RegisterChartHanlder(string key, ICharHandler value)
-    {
-        if (!keyValuePairs.ContainsKey(key))
-        {
-            keyValuePairs.Add(key, value);
-        }
-    }
-
-    public void ChartHandle(string key, LitJson.JsonData data)
-    {
-        if (keyValuePairs.TryGetValue(key, out ICharHandler value))
-        {
-            value.IParseAndStore(data);
-        }
-    }
-
 }
