@@ -14,7 +14,7 @@ public class NickNameModel
 
     public bool isValid() 
     {
-        return !NickName.Equals(string.Empty);
+        return NickName.Equals(string.Empty);
     }
 }
 
@@ -44,8 +44,10 @@ public class NickNameController : ILobbyPanelInitionlize
         // 유효성 검사 
         if(nicknameModel.isValid()) 
         {
-            // view 실행
-            nicknameView.InValueNickNamePopUp();
+            Debug.Log("닉네임이 잘못되었음");
+            // 팝업 띄우기 
+
+
             return;
         }
 

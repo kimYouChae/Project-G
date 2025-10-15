@@ -71,6 +71,9 @@ public class BackEndServerManager : Singleton<BackEndServerManager>
             // 포톤 닉네임 세팅 
             PunLobbyManager.Instance.SettingNickName(ReturnNickName());
 
+            // 유저테이블에 정보 넣기 
+            UserDataManager.Instance.InsertToUserTable();
+
         });
     }
 

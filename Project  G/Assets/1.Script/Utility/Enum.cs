@@ -8,12 +8,6 @@ public enum NickCheckResultType
     HasNickname
 }
 
-public enum CharacterType
-{
-    Man, Woman, Girl, Warrior, 
-    None
-}
-
 public enum LobbyPanelType
 { 
     Title, NickName, Lobby,

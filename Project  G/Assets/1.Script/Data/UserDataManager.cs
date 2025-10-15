@@ -12,13 +12,19 @@ using UnityEngine.Android;
 public class UserData 
 {
     private string nickName;        // 닉네임
-    private CharacterType userAppearType;    // 외형 인덱스 
     private Dictionary<MapType, float> mapTypeToScore;  // 맵 타입별 점수 
+    private Dictionary<MapType, int> mapTypeToStage;    // 맵 타입별 스테이지 
 
     public string NickName { get => nickName; set => nickName = value; }
-    public CharacterType UserAppearType { get => userAppearType; set => userAppearType = value; }
     public Dictionary<MapType, float> MapTypeToScore { get => mapTypeToScore; set => mapTypeToScore = value; }
+    public Dictionary<MapType, int> MapTypeToStage { get => mapTypeToStage; set => mapTypeToStage = value; }
 
+    public UserData(Dictionary<MapType, float> scoreDic, Dictionary<MapType, int> stageDic) 
+    { 
+        this.mapTypeToScore = scoreDic;
+        this.mapTypeToStage = stageDic;
+    }
+    
     public void SettingTypeByScoreRound(MapType type, float score) 
     {
         if (mapTypeToScore.TryGetValue(type, out float value)) 
@@ -31,10 +37,14 @@ public class UserData
     public void PrintUser() 
     {
         StringBuilder sb    = new StringBuilder();
-        sb.Append( "**유저닉네임 : " + nickName + " / 유저번호 : " + userAppearType + "\n");
+        sb.Append( "**유저닉네임 : " + nickName +  "\n");
         foreach(var temp in mapTypeToScore) 
         {
-            sb.Append("맵 타입 : " +  temp.Key + " | 점수 : " + temp.Value );
+            sb.Append("맵 타입 : " + temp.Key + " | 점수 : " + temp.Value);
+        }
+        foreach(var temp in mapTypeToStage) 
+        {
+            sb.Append(" | 스테이지 : " + temp.Value);
         }
         Debug.Log(sb);
     }
@@ -58,9 +68,7 @@ public class UserDataManager : Singleton<UserDataManager>
 
     private void Start()
     {
-        userData = new UserData();
-        userData.UserAppearType = CharacterType.None;
-        Dictionary<MapType, float > dic = new Dictionary<MapType, float>()
+        Dictionary<MapType, float > typeScore = new Dictionary<MapType, float>()
         {
             { MapType.Forest , 0 },   
             { MapType.GiganticTree , 0 },   
@@ -69,17 +77,16 @@ public class UserDataManager : Singleton<UserDataManager>
             { MapType.Hell , 0 },  
             { MapType.IceVillage , 0 }  
         };
-        userData.MapTypeToScore = dic;
-    }
-
-
-    public void SetCharacterIndex(int index) 
-    {
-        // 아무것도 선택 안되면 제일 기본 캐릭터
-        if ((CharacterType)index == CharacterType.None)
-            index = 0;
-
-        userData.UserAppearType = (CharacterType)index;
+        Dictionary<MapType, int> typeStage = new Dictionary<MapType, int>()
+        {
+            { MapType.Forest , 0 },
+            { MapType.GiganticTree , 0 },
+            { MapType.Island , 0 },
+            { MapType.Market, 0 },
+            { MapType.Hell , 0 },
+            { MapType.IceVillage , 0 }
+        };
+        userData = new UserData(typeScore, typeStage);
     }
 
     private Param GetUserDataParam()
@@ -87,12 +94,12 @@ public class UserDataManager : Singleton<UserDataManager>
         Param param = new Param();
         //로컬에 저장된 닉네임 
         param.Add("UserNickName", BackEndServerManager.Instance.ReturnNickName());
-        param.Add("UserApreaIndex",userData.UserAppearType);
         param.Add("MapByScore" , userData.MapTypeToScore);
+        param.Add("MapByStage", userData.MapTypeToStage);
         return param;
     }
 
-    // 처음 들어온 유저 한정 -> 테이블에 데이터 넣기 
+    // user 테이블에 데이터 넣기 
     public void InsertToUserTable() 
     {
         Param param = GetUserDataParam();
@@ -143,9 +150,6 @@ public class UserDataManager : Singleton<UserDataManager>
                 // 0. 닉네임
                 string nickName = gamedataJson[0]["UserNickName"].ToString();
 
-                // 1. 외형 인덱스
-                string apreadIndex = gamedataJson[0]["UserApreaIndex"].ToString();
-
                 // 2. 맵 별 점수 
                 Dictionary<MapType, float> tempDic = new Dictionary<MapType, float>();
 
@@ -160,7 +164,6 @@ public class UserDataManager : Singleton<UserDataManager>
                 }
 
                 userData.NickName = nickName;
-                userData.UserAppearType = (CharacterType)(int.Parse(apreadIndex));
                 userData.MapTypeToScore = tempDic;
             }
 

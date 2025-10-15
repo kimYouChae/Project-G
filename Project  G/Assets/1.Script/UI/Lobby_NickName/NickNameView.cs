@@ -32,12 +32,6 @@ public class NickNameView : MonoBehaviour, ILocalizable
         submitNickNameAction?.Invoke( nickInputField.text );
     }
 
-    public void InValueNickNamePopUp() 
-    {
-        // 닉네임 잘못된 팝업 띄우기
-        Debug.Log("닉네임이 잘못되었음");
-    }
-
     private void OnEnable()
     {
         LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
