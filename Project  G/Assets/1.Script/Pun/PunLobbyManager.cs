@@ -163,6 +163,18 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         PhotonNetwork.JoinRoom(title);
     }
 
+    public void LeaveRoom()
+    {
+        // 방에서 나가기
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public void JoinLobby()
+    {
+        // 로비에 입장하기
+        PhotonNetwork.JoinLobby();
+    }
+
     // 인덱스에 해당하는 RoomInfo를 return
     public RoomInfo RoomInfoByIndex(int index) 
     { 

@@ -67,19 +67,27 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log($"Pun : OnPlayerEnteredRoom 콜백실행 | {newPlayer.NickName} 새로 들어왔습니다");
+        Debug.Log($"Pun : OnPlayerEnteredRoom 콜백실행 | {newPlayer.NickName} 방에 들어왔습니다");
 
         PunLobbyManager.Instance.UpdateRoomUser();
     }
 
     /// <summary>
-    /// 룸에 Exit할 때 
+    /// 로컬플레이어 제외, 다른 플레이어가 방에서 나갔을 때
     /// </summary>
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Debug.Log($"Pun : OnPlayerLeftRoom 콜백실행 | {otherPlayer.NickName} 새로 들어왔습니다");
+        Debug.Log($"Pun : OnPlayerLeftRoom 콜백실행 | {otherPlayer.NickName} 방을 나갔습니다");
 
         PunLobbyManager.Instance.UpdateRoomUser();
+    }
+
+    /// <summary>
+    /// 로컬플레이어가 방에서 나갔을 때 
+    /// </summary>
+    public override void OnLeftRoom()
+    {
+        Debug.Log($"Pun : OnLeftRoom 콜백실행 | {PhotonNetwork.NickName} 방을 나갔습니다");
     }
 
     /// <summary>
