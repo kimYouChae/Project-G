@@ -1007,7 +1007,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &99158365
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1278,6 +1278,7 @@ MonoBehaviour:
   scrollViewContent: {fileID: 1040050549}
   playerRefObj: []
   gameStartButton: {fileID: 902814394}
+  backButton: {fileID: 1826353436}
   gameStartText: {fileID: 1945588150}
 --- !u!114 &116153340
 MonoBehaviour:
@@ -1361,7 +1362,7 @@ MonoBehaviour:
   createRoomButton: {fileID: 1137165514}
   rightButton: {fileID: 1784354376}
   leftButton: {fileID: 950321549}
-  backButton: {fileID: 0}
+  backButton: {fileID: 1690995269}
   roomNameText: {fileID: 1975341161}
   roomNameInputFieldText: {fileID: 1670458440}
   passwordText: {fileID: 459412407}
@@ -22909,7 +22910,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -184}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 98.25, y: 81.67}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2139570071
 MonoBehaviour:
