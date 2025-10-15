@@ -2,6 +2,7 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ public class RoomListView : MonoBehaviour, ILocalizable
     [SerializeField] List<GameObject> roomObjList;
 
     [SerializeField] GameObject content;    // 스크롤뷰의 콘텐츠
+    [SerializeField] Button backButton;     // 뒤로가기 버튼 
 
     [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI refreshText;
@@ -26,10 +28,12 @@ public class RoomListView : MonoBehaviour, ILocalizable
     private Action RefreshRoomListAction;
     private Action<string> JoinRoomAction;
     private Action<int> SelectRoomIndex;
+    private Action backButtonAction;
 
     private void Awake()
     {
         refreshRoomListButton.onClick.AddListener(() => RefreshRoomListAction?.Invoke());
+        backButton.onClick.AddListener(() => backButtonAction?.Invoke());
 
         // 입력받은 passWord를 연결된 모든 메서드에게 넘겨주기
         joinRoomButton.onClick.AddListener(() => JoinRoomAction?.Invoke(passWordText.text));
@@ -38,6 +42,7 @@ public class RoomListView : MonoBehaviour, ILocalizable
     public void RegisterRefreshRoom(Action action) { RefreshRoomListAction += action; }
     public void RegisterJoinRoom(Action<string> action) { JoinRoomAction += action; }
     public void RegisterSelectRoomIndex(Action<int> action) { SelectRoomIndex += action; }
+    public void RegisterBackButton(Action action) { backButtonAction += action; }
 
     public void NotifySelectRoomIndex(int index)
     {

@@ -39,7 +39,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         InitMVCController();
     }
 
-    private void InitMVCController() 
+    private void InitMVCController()
     {
         // NickName MVC 
         nickNameView = GetComponent<NickNameView>();
@@ -75,12 +75,12 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     }
 
     #region 외부에서 view를 수정
-    public void UpdateWaitinRoomView(Player[] playerref) 
+    public void UpdateWaitinRoomView(Player[] playerref)
     {
         waitingRoomView.UpdateWaitingRoomInfo(playerref);
     }
 
-    public void UpdateRoomListView() 
+    public void UpdateRoomListView()
     {
         roomListView.UpdateRoomList();
     }
@@ -88,22 +88,16 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     #endregion
 
     // 패널 변경 
-    public void ChangePanel(LobbyPanelType curr, LobbyPanelType next) 
+    public void ChangePanel(LobbyPanelType curr, LobbyPanelType next)
     {
         prePanel = curr;
         currPanel = next;
 
-        if (curr == LobbyPanelType.None)
-        {
-            // 다 끄기
-            OffAllPanel();
-        }
-        else 
-        {
-            if (panelList[(int)prePanel].activeSelf)
-                panelList[(int)prePanel].SetActive(false);
-        }
+        // 이전 panel
+        if (panelList[(int)prePanel].activeSelf)
+            panelList[(int)prePanel].SetActive(false);
 
+        // 현재 panel
         if (!panelList[(int)currPanel].activeSelf)
         {
             // 패널 켜기 
@@ -113,7 +107,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
             var init = TypeByController(currPanel);
             if (init != null)
                 init.IInitPanel();
-        }  
+        }
     }
 
     // 리스트 비우기

@@ -1,6 +1,7 @@
 using Photon.Pun.Demo.Cockpit;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,6 +69,12 @@ public class CreateRoomController : ILobbyPanelInitionlize
         roomView.RegisterCreatRoom(CreateRoom);
         roomView.RegisterRightArrow(ChangeMapIndex);
         roomView.RegisterLeftArrow(ChangeMapIndex);
+        roomView.RegisterBackButton(BackAction);
+    }
+
+    private void BackAction()
+    {
+        LobbyUIManager.Instance.ChangePanel(LobbyPanelType.CreateRoom, LobbyPanelType.Lobby);
     }
 
     private void CopyPassWord() 

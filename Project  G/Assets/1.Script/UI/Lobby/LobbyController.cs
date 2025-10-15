@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +28,9 @@ public class LobbyController : ILobbyPanelInitionlize
     private void JoinClientRoom() 
     {
         LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Lobby, LobbyPanelType.RoomList);
+
+        // 로비에 입장
+        PunLobbyManager.Instance.JoinLobby();
     }
 
     private void ExitGame() 

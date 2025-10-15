@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class WaitingRoomController : ILobbyPanelInitionlize
@@ -12,6 +13,15 @@ public class WaitingRoomController : ILobbyPanelInitionlize
         this.waitingRoomView = roomView;
 
         waitingRoomView.RegisterGameStart(GameStart);
+        waitingRoomView.RegisterBackButton(BackAction);
+    }
+
+    private void BackAction()
+    {
+        LobbyUIManager.Instance.ChangePanel(LobbyPanelType.WaitingRoom, LobbyPanelType.RoomList);
+
+        // 현재 있는 photon 방에서 나가기 
+        PunLobbyManager.Instance.LeaveRoom();
     }
 
     public void IInitPanel()

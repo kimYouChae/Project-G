@@ -17,18 +17,22 @@ public class WaitingRoomView : MonoBehaviour, ILocalizable
     [SerializeField] List<GameObject> playerRefObj;
 
     [SerializeField] Button gameStartButton;
+    [SerializeField] Button backButton;     // 뒤로가기 버튼 
 
     [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI gameStartText;
 
     private Action GameStartAction;
+    private Action backButtonAction;
 
     private void Awake()
     {
         gameStartButton.onClick.AddListener(()=>GameStartAction?.Invoke());
+        backButton.onClick.AddListener(() => backButtonAction?.Invoke());
     }
 
     public void RegisterGameStart(Action action) { GameStartAction += action; }
+    public void RegisterBackButton(Action action) { backButtonAction += action; }
 
     public void UpdateWaitingRoomInfo(Player[] playerref)
     {

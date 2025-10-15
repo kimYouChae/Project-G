@@ -18,6 +18,8 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
     [SerializeField] Button rightButton;
     [SerializeField] Button leftButton;
 
+    [SerializeField] Button backButton;     // 뒤로가기 버튼 
+
     [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI roomNameText;
     [SerializeField] TextMeshProUGUI roomNameInputFieldText;
@@ -28,6 +30,7 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
     private Action<string> CreateRoomAction;
     private Action<int> RightArrowAction;       // +1
     private Action<int> LeftArrowAction;        // -1
+    private Action backButtonAction;
 
     private void Awake()
     {
@@ -35,12 +38,14 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
         createRoomButton.onClick.AddListener(() => CreateRoomAction?.Invoke(roomTitleField.text));
         rightButton.onClick.AddListener(() => RightArrowAction?.Invoke( 1));
         leftButton.onClick.AddListener(()=> LeftArrowAction?.Invoke( -1));
+        backButton.onClick.AddListener(() => backButtonAction?.Invoke());
     }
 
     public void RegisterCopyPassWord(Action action) { CopyPassWordAction += action; }
     public void RegisterCreatRoom(Action<string> action) { CreateRoomAction += action; }
     public void RegisterRightArrow(Action<int> action) { RightArrowAction += action; }
     public void RegisterLeftArrow(Action< int> action) { LeftArrowAction += action; }
+    public void RegisterBackButton(Action action) { backButtonAction += action; }
 
 
     public void ChangeMapImage(int index) 

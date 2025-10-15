@@ -1,6 +1,7 @@
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class RoomListModel 
@@ -29,7 +30,7 @@ public class RoomListController : ILobbyPanelInitionlize
     private RoomListView roomListView;
     private RoomListModel roomListModel;
 
-    public RoomListController (RoomListView roomListView, RoomListModel roomListMode)
+    public RoomListController(RoomListView roomListView, RoomListModel roomListMode)
     {
         this.roomListView = roomListView;
         this.roomListModel = roomListMode;
@@ -37,6 +38,12 @@ public class RoomListController : ILobbyPanelInitionlize
         roomListView.RegisterRefreshRoom(RefrechRoomList);
         roomListView.RegisterJoinRoom(JoinRoom);
         roomListView.RegisterSelectRoomIndex(UpdateRoomSelectIndex);
+        roomListView.RegisterBackButton(BackAction);
+    }
+
+    private void BackAction() 
+    {
+        LobbyUIManager.Instance.ChangePanel(LobbyPanelType.RoomList, LobbyPanelType.Lobby);
     }
 
     private void UpdateRoomSelectIndex(int idex) 
