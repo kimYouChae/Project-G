@@ -96,3 +96,10 @@ public enum LanguageType
     Japanese,
     Chinese
 }
+
+public enum AchiveType 
+{
+    Stage_Forest,
+    Stage_GiganticTree,
+    Stage_Island
+}
