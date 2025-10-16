@@ -71,9 +71,6 @@ public class BackEndServerManager : Singleton<BackEndServerManager>
             // 포톤 닉네임 세팅 
             PunLobbyManager.Instance.SettingNickName(ReturnNickName());
 
-            // 유저테이블에 정보 넣기 
-            UserDataManager.Instance.InsertToUserTable();
-
         });
     }
 
@@ -97,7 +94,6 @@ public class BackEndServerManager : Singleton<BackEndServerManager>
     #region 닉네임 불러오기
 
     // 닉네임 업데이트
-    // 닉네임이 없으면 매치 서버 접속이 안됨
     public void UpdateNickName(string nickname) 
     {
         Enqueue(Backend.BMember.UpdateNickname, nickname, callback =>

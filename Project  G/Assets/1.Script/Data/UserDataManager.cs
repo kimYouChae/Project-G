@@ -89,20 +89,19 @@ public class UserDataManager : Singleton<UserDataManager>
         userData = new UserData(typeScore, typeStage);
     }
 
-    private Param GetUserDataParam()
+    private Param GetUserDataParam(string nickName)
     {
         Param param = new Param();
-        //로컬에 저장된 닉네임 
-        param.Add("UserNickName", BackEndServerManager.Instance.ReturnNickName());
+        param.Add("UserNickName", nickName);
         param.Add("MapByScore" , userData.MapTypeToScore);
         param.Add("MapByStage", userData.MapTypeToStage);
         return param;
     }
 
-    // user 테이블에 데이터 넣기 
-    public void InsertToUserTable() 
+    // 1회 입력받은 닉네임으로 데이터테이블에 저장 
+    public void InsertToUserTable(string nickName) 
     {
-        Param param = GetUserDataParam();
+        Param param = GetUserDataParam(nickName);
         var bro = Backend.GameData.Insert(Define.USERTABLE, param);
 
         if (bro.IsSuccess())

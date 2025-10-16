@@ -51,6 +51,9 @@ public class NickNameController : ILobbyPanelInitionlize
             return;
         }
 
+        // 뒤끝 테이블에 유저 정보 저장하기 
+        UserDataManager.Instance.InsertToUserTable(inputNickName);
+
         // 닉네임 업데이트
         BackEndServerManager.Instance.UpdateNickName(inputNickName);
 
