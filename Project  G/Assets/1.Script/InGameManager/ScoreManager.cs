@@ -17,7 +17,8 @@ public class ScoreManager : Singleton<ScoreManager>
     // Mapdata의 난이도 증가 비율이 클 수록 작은 값으로 곱할 수있게 임시 비율설정 
     const int RATE_TEMP = 30;
 
-    public float CurrScore { get => currScore; }
+    public float AchiveScore { get => currScore; }
+    public int AchiveStage { get => nowLevel; }
     public float CurrTime { get => currTime;  }
     public bool IsReadyToCount { get => isReadyToCount; set => isReadyToCount = value; }
 

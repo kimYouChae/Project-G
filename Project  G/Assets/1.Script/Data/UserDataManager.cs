@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Android;
+using UnityEngine.SocialPlatforms.Impl;
 
 [System.Serializable]
 public class UserData 
@@ -24,12 +25,20 @@ public class UserData
         this.mapTypeToScore = scoreDic;
         this.mapTypeToStage = stageDic;
     }
-    
-    public void SettingTypeByScoreRound(MapType type, float score) 
+
+    public void SettingTypeByScoreRound(MapType type, float score)
     {
-        if (mapTypeToScore.TryGetValue(type, out float value)) 
+        if (mapTypeToScore.ContainsKey(type))
         {
             mapTypeToScore[type] = (float)Math.Round(score, 2);
+        }
+    }
+
+    public void SettingTypeByStage(MapType type, int stage) 
+    {
+        if (mapTypeToStage.ContainsKey(type)) 
+        {
+            mapTypeToStage[type] = stage;
         }
     }
 
@@ -155,20 +164,32 @@ public class UserDataManager : Singleton<UserDataManager>
                 string nickName = gamedataJson[0]["UserNickName"].ToString();
 
                 // 2. 맵 별 점수 
-                Dictionary<MapType, float> tempDic = new Dictionary<MapType, float>();
-
+                Dictionary<MapType, float> typeByScore = new Dictionary<MapType, float>();
                 foreach (string mapKey in gamedataJson[0]["MapByScore"].Keys) 
                 {
                     JsonData value = gamedataJson[0]["MapByScore"][mapKey];
 
                     if(System.Enum.TryParse(mapKey , out MapType keyType)) 
                     { 
-                        tempDic.Add(keyType, float.Parse(value.ToString()));
+                        typeByScore.Add(keyType, float.Parse(value.ToString()));
+                    }
+                }
+
+                // 3. 맵 별 스테이지 
+                Dictionary<MapType, int> typeByStage = new Dictionary<MapType, int>();
+                foreach (string mapKey in gamedataJson[0]["MapByStage"].Keys)
+                {
+                    JsonData value = gamedataJson[0]["MapByStage"][mapKey];
+
+                    if (System.Enum.TryParse(mapKey, out MapType keyType))
+                    {
+                        typeByStage.Add(keyType, int.Parse(value.ToString()));
                     }
                 }
 
                 userData.NickName = nickName;
-                userData.MapTypeToScore = tempDic;
+                userData.MapTypeToScore = typeByScore;
+                userData.MapTypeToStage = typeByStage;
             }
 
             // 유저 프린트
@@ -177,7 +198,8 @@ public class UserDataManager : Singleton<UserDataManager>
         }
     }
 
-    public void SettingScore(float score) 
+    // 점수 + 스테이지 달정 점수 저장
+    public void SettingAchiveData(float score, int stage) 
     {
         MapType type = PunIngameManager.Instance.GetMapType();
 
@@ -185,6 +207,7 @@ public class UserDataManager : Singleton<UserDataManager>
             return;
 
         userData.SettingTypeByScoreRound(type, score);
+        userData.SettingTypeByStage(type, stage);
     }
 
     // 유저테이블에 정보 업데이트
@@ -193,6 +216,7 @@ public class UserDataManager : Singleton<UserDataManager>
         // MapByScore 칼럼의 값을 수정
         Param param = new Param();
         param.Add("MapByScore", userData.MapTypeToScore);
+        param.Add("MapByStage", userData.MapTypeToStage);
 
         // 조건 세팅
         Where where = ConditionIsOwnerDataisLocal();

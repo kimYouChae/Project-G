@@ -93,14 +93,15 @@ public partial class InGameUI : MonoBehaviour
             preScore = UserDataManager.Instance.UserData.MapTypeToScore[type];
 
         // 게임오버 텍스트 설정
-        GameOverText(ScoreManager.Instance.CurrScore, ScoreManager.Instance.CurrTime,
-            preScore <= ScoreManager.Instance.CurrScore ? true : false);
+        GameOverText(ScoreManager.Instance.AchiveScore, ScoreManager.Instance.CurrTime,
+            preScore <= ScoreManager.Instance.AchiveScore ? true : false);
 
-        // 점수 세팅
-        UserDataManager.Instance.SettingScore(ScoreManager.Instance.CurrScore);
+        // 점수 + 스테이지 달성 저장
+        UserDataManager.Instance.SettingAchiveData
+            (ScoreManager.Instance.AchiveScore, ScoreManager.Instance.AchiveStage);
 
         // 최고점수일때만 업데이트
-        if (preScore <= ScoreManager.Instance.CurrScore) 
+        if (preScore <= ScoreManager.Instance.AchiveScore) 
         {
             // 유저 정보 업데이트
             UserDataManager.Instance.UpdateUserData();
