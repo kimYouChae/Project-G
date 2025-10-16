@@ -57,7 +57,7 @@ public class SpanwerAnimator : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Attack 끝남 -> Idle 전환");
+        // Debug.Log("Attack 끝남 -> Idle 전환");
         ChangeToIdle(SpanwerAnimState.Idle);
     }
 
