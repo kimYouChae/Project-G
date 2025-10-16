@@ -33,6 +33,11 @@ public class UserData
         }
     }
 
+    public int UserStageByType(MapType type) 
+    {
+        return mapTypeToStage[type];
+    }
+
     // 정보 출력
     public void PrintUser() 
     {
