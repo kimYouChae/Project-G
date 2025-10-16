@@ -13,6 +13,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     [SerializeField] Button exitButton;
     [SerializeField] Button settinButton;
     [SerializeField] Button scoreButton;
+    [SerializeField] Button achivementButton;
 
     [SerializeField] GameObject scorePanel;
     [SerializeField] TextMeshProUGUI[] scoreTextList;
@@ -30,6 +31,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     private Action ExitGameAction;
     private Action ScorePopUpAction;
     private Action SettingAction;
+    private Action AchiveAction;
 
     private void Awake()
     {
@@ -38,6 +40,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
         exitButton.onClick.AddListener(() => ExitGameAction?.Invoke());
         scoreButton.onClick.AddListener(() => ScorePopUpAction?.Invoke());
         settinButton.onClick.AddListener(() => SettingAction?.Invoke());
+        achivementButton.onClick.AddListener(() => AchiveAction?.Invoke());
 
     }
 
@@ -46,6 +49,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     public void RegisterExitGame(Action action) {  ExitGameAction += action; }
     public void RegisterScorePopUp(Action action) { ScorePopUpAction += action; }
     public void RegisterSettingPopUp(Action action) { SettingAction += action;  }
+    public void RegisterAchivePopup(Action action) {  AchiveAction += action;}
 
     public void UpdateScoreText(int idx, float score) 
     {

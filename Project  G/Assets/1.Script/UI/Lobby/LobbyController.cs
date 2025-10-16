@@ -17,6 +17,7 @@ public class LobbyController : ILobbyPanelInitionlize
         lobbyView.RegisterExitGame(ExitGame);
         lobbyView.RegisterScorePopUp(ScorePopUp);
         lobbyView.RegisterSettingPopUp(SettingPopUp);
+        lobbyView.RegisterAchivePopup(AchivePopup);
     }
 
     private void CreateHostRoom() 
@@ -29,7 +30,7 @@ public class LobbyController : ILobbyPanelInitionlize
     {
         LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Lobby, LobbyPanelType.RoomList);
 
-        // ∑Œ∫Òø° ¿‘¿Â
+        // Î°úÎπÑÏóê ÏûÖÏû•
         PunLobbyManager.Instance.JoinLobby();
     }
 
@@ -48,6 +49,12 @@ public class LobbyController : ILobbyPanelInitionlize
     {
         SettingPopUP settingpopup = UIManager.Instance.GetPopUP<SettingPopUP>();
 
+    }
+
+    private void AchivePopup() 
+    {
+        AchivePopUP achive = UIManager.Instance.GetPopUP<AchivePopUP>();
+        achive.InitAchivePopup();
     }
 
     public void IInitPanel()
