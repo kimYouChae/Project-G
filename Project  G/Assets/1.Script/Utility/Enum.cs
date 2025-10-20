@@ -101,5 +101,14 @@ public enum AchiveType
 {
     Stage_Forest,
     Stage_GiganticTree,
-    Stage_Island
+    Stage_Island,
+    None
+}
+
+public enum CharacterType 
+{
+    BasicCharacter,
+    ShieldCharacter,
+    ScoreCharacter,
+    InvincibleCharacter
 }
