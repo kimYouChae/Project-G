@@ -6,7 +6,7 @@ Sprite:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: chara_0_1
+  m_Name: 2.ScoreCharacter
   m_Rect:
     serializedVersion: 2
     x: 16
@@ -22,12 +22,12 @@ Sprite:
   m_AtlasName: 
   m_PackingTag: 
   m_RenderDataKey:
-    07890be799b2dc1478c29b75c4897160: -810502556
+    a0b5f2b1b7cd2184ba91ccdfcacdf294: 2132853872
   m_AtlasTags: []
   m_SpriteAtlas: {fileID: 0}
   m_RD:
     serializedVersion: 3
-    texture: {fileID: 2800000, guid: 07890be799b2dc1478c29b75c4897160, type: 3}
+    texture: {fileID: 2800000, guid: a0b5f2b1b7cd2184ba91ccdfcacdf294, type: 3}
     alphaTexture: {fileID: 0}
     secondaryTextures: []
     m_SubMeshes:
@@ -118,7 +118,7 @@ Sprite:
     downscaleMultiplier: 1
   m_AtlasRD:
     serializedVersion: 3
-    texture: {fileID: 2800000, guid: 07890be799b2dc1478c29b75c4897160, type: 3}
+    texture: {fileID: 2800000, guid: a0b5f2b1b7cd2184ba91ccdfcacdf294, type: 3}
     alphaTexture: {fileID: 0}
     secondaryTextures: []
     m_SubMeshes:
@@ -208,11 +208,13 @@ Sprite:
     uvTransform: {x: 16, y: 24, z: 16, w: 70}
     downscaleMultiplier: 1
   m_PhysicsShape:
-  - - {x: -0.4375, y: 0.625}
-    - {x: -0.5, y: 0.5625}
-    - {x: -0.5, y: -0.625}
-    - {x: 0.5, y: -0.625}
-    - {x: 0.5, y: 0.5625}
-    - {x: 0.125, y: 0.625}
+  - - {x: -0.25, y: 0.625}
+    - {x: -0.5, y: 0.5}
+    - {x: -0.5, y: -0.5}
+    - {x: -0.375, y: -0.625}
+    - {x: 0.4375, y: -0.625}
+    - {x: 0.5, y: -0.5625}
+    - {x: 0.5, y: 0.5}
+    - {x: 0.4375, y: 0.625}
   m_Bones: []
-  m_SpriteID: fc9f66dd9bd43a04d92796f97cd3a26f
+  m_SpriteID: 1baff90649eef094b86f74cf635fc7a3
