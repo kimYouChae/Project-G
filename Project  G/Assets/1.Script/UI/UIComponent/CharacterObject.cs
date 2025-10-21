@@ -8,19 +8,19 @@ using UnityEngine.EventSystems;
 public class CharacterObject : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] TextMeshProUGUI characterTitle;
-    [SerializeField] int index;
-    [SerializeField] Action<int> selectAction;       // 해당 오브젝트가 선택되었을 때 액션 
+    [SerializeField] CharacterType characterType;
+    [SerializeField] Action<CharacterType> selectAction;       // 해당 오브젝트가 선택되었을 때 액션 
 
-    public void Init(string name, int index, Action<int> action = null ) 
+    public void Init(string name, CharacterType type, Action<CharacterType> action = null ) 
     {
         characterTitle.text = name;
-        this.index = index;
+        this.characterType = type;
         selectAction = action;
 
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        selectAction?.Invoke(index);
+        selectAction?.Invoke(characterType);
     }
 }
