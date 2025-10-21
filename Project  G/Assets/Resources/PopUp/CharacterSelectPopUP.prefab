@@ -793,9 +793,10 @@ MonoBehaviour:
   characterPrefab: {fileID: 240605495923700425, guid: 2825723229277fa419a9690e6f4efc6a, type: 3}
   contenct: {fileID: 683628900368407467}
   characterObjs: []
-  characterSelectIndex: 0
+  selectCharacterType: 0
   characterTitle: {fileID: 4317022783566475198}
   characterToolTip: {fileID: 892988715137443535}
+  characterImage: {fileID: 4190690985885647872}
   cantSelectText: {fileID: 8655529485683122924}
   selectButton: {fileID: 523849752782160838}
 --- !u!1 &3280179426779372468

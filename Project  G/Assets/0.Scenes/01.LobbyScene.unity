@@ -15951,9 +15951,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievements:
-  - {fileID: 11400000, guid: ff7ab122d6ad7ff4791b4daf6ac781a2, type: 2}
-  - {fileID: 11400000, guid: 6bf490bfa6c5c2841a0f0bb460fe2e87, type: 2}
-  - {fileID: 11400000, guid: 566cc9fd11caf91448f529b3e99b238f, type: 2}
+  - {fileID: 11400000, guid: bb46e99bb2888a34d8af1818c4d4387e, type: 2}
+  - {fileID: 11400000, guid: 423ab797085d23f44be7ab5de6380f07, type: 2}
+  - {fileID: 11400000, guid: 3211d3df0b945c4409992d0edbd4ac4f, type: 2}
 --- !u!1 &1201675581
 GameObject:
   m_ObjectHideFlags: 0
@@ -21281,6 +21281,7 @@ MonoBehaviour:
   resourcePath: {fileID: 11400000, guid: 40874f1644fcbb54fad7ae9381442e69, type: 2}
   defaultSprite: {fileID: 0}
   mapSprite: []
+  characterSprite: []
   mixer: {fileID: 0}
   sfxClip: []
   bgmClip: []

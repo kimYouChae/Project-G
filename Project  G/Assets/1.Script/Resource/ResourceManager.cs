@@ -11,6 +11,7 @@ public class ResourceManager : Singleton<ResourceManager>
     [Header("===Sprite===")]
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Sprite[] mapSprite;
+    [SerializeField] private Sprite[] characterSprite;
 
     [Header("===Audio===")]
     [SerializeField] private AudioMixer mixer;
@@ -24,12 +25,13 @@ public class ResourceManager : Singleton<ResourceManager>
     {
         resourceLoader = new ResourceLoader();
 
-        defaultSprite = resourceLoader.RoadSprite(resourcePath.DefaultSpritePath + "/" + resourcePath.DefaultSpritePath);
-        mapSprite = resourceLoader.RoadSpriteAll(resourcePath.MapSpritePath);
+        defaultSprite           = resourceLoader.RoadSprite(resourcePath.DefaultSpritePath + "/" + resourcePath.DefaultSpritePath);
+        mapSprite               = resourceLoader.RoadSpriteAll(resourcePath.MapSpritePath);
+        characterSprite         = resourceLoader.RoadSpriteAll(resourcePath.CharacterSpritePath);
 
-        mixer = resourceLoader.RoadMixer(resourcePath.SoundPath + "/" + resourcePath.AudioMixerPath);
-        sfxClip = resourceLoader.RoadClipAll(resourcePath.SoundPath + "/" + resourcePath.SfxPath);
-        bgmClip = resourceLoader.RoadClipAll(resourcePath.SoundPath + "/" + resourcePath.BgmPath);
+        mixer                   = resourceLoader.RoadMixer(resourcePath.SoundPath + "/" + resourcePath.AudioMixerPath);
+        sfxClip                 = resourceLoader.RoadClipAll(resourcePath.SoundPath + "/" + resourcePath.SfxPath);
+        bgmClip                 = resourceLoader.RoadClipAll(resourcePath.SoundPath + "/" + resourcePath.BgmPath);
 
         fallBackLocalizionTextfile = resourceLoader.RoadFallBackLocalization(resourcePath.FallBackLocalizationData);
     }
@@ -40,6 +42,16 @@ public class ResourceManager : Singleton<ResourceManager>
             return defaultSprite;
 
         return mapSprite[idx];
+    }
+
+    public Sprite CharacterSprite(CharacterType type) 
+    {
+        int idx = (int)type;
+
+        if (idx < 0 || idx >= characterSprite.Length)
+            return defaultSprite;
+
+        return characterSprite[idx];
     }
 
     public AudioMixer GetAudioMixer => mixer;

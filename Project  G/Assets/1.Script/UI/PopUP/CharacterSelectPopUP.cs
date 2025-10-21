@@ -22,6 +22,7 @@ public class CharacterSelectPopUP : UIPopUP
     [Header("===Datail===")]
     [SerializeField] TextMeshProUGUI characterTitle;
     [SerializeField] TextMeshProUGUI characterToolTip;
+    [SerializeField] Image characterImage;
     [SerializeField] TextMeshProUGUI cantSelectText;    // 미션 수행 전 텍스트
     [SerializeField] Button selectButton;      // 미션 수행 후 선택 버튼
 
@@ -45,7 +46,9 @@ public class CharacterSelectPopUP : UIPopUP
 
             // 캐릭터 오브젝트 세팅 (데이터 순서대로)
             CharacterData characterData = CharacterManager.Instance.CharacterData[i];
-            ch.GetComponent<CharacterObject>().Init(characterData.CharaterName, characterData.CharacterType, SelectCharacterObj);
+            CharacterType characterType = characterData.CharacterType;
+            ch.GetComponent<CharacterObject>()
+                .Init(characterData.CharaterName, characterType, ResourceManager.Instance.CharacterSprite(characterType), SelectCharacterObj);
         }
     }
 
@@ -65,6 +68,7 @@ public class CharacterSelectPopUP : UIPopUP
 
         characterTitle.text = data.CharaterName;
         characterToolTip.text = data.CharacterToolTip;
+        characterImage.sprite = ResourceManager.Instance.CharacterSprite(data.CharacterType);
 
         // 달성여부
         bool isAchive = true;
