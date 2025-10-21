@@ -10,13 +10,11 @@ public class LobbyView : MonoBehaviour, ILocalizable
     [Header("===LobbyUi===")]
     [SerializeField] Button hostButton;
     [SerializeField] Button clientButton;
-    [SerializeField] Button exitButton;
+    [SerializeField] Button characterSelectButton;
     [SerializeField] Button settinButton;
     [SerializeField] Button scoreButton;
     [SerializeField] Button achivementButton;
-
-    [SerializeField] GameObject scorePanel;
-    [SerializeField] TextMeshProUGUI[] scoreTextList;
+    [SerializeField] Button exitButton;
 
     [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI createRoomText;
@@ -28,10 +26,11 @@ public class LobbyView : MonoBehaviour, ILocalizable
 
     private Action CreatHostRoomAction;
     private Action ClientJoinRoomAction;
-    private Action ExitGameAction;
+    private Action CharacterSelectAction;
     private Action ScorePopUpAction;
     private Action SettingAction;
     private Action AchiveAction;
+    private Action ExitGameAction;
 
     private void Awake()
     {
@@ -41,6 +40,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
         scoreButton.onClick.AddListener(() => ScorePopUpAction?.Invoke());
         settinButton.onClick.AddListener(() => SettingAction?.Invoke());
         achivementButton.onClick.AddListener(() => AchiveAction?.Invoke());
+        characterSelectButton.onClick.AddListener(() => CharacterSelectAction?.Invoke());
 
     }
 
@@ -50,11 +50,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     public void RegisterScorePopUp(Action action) { ScorePopUpAction += action; }
     public void RegisterSettingPopUp(Action action) { SettingAction += action;  }
     public void RegisterAchivePopup(Action action) {  AchiveAction += action;}
-
-    public void UpdateScoreText(int idx, float score) 
-    {
-        scoreTextList[idx].text = score.ToString();
-    }
+    public void RegisterCharacterSelectButton(Action action) { CharacterSelectAction += action;}
 
     private void OnEnable()
     {

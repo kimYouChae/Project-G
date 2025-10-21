@@ -18,6 +18,7 @@ public class LobbyController : ILobbyPanelInitionlize
         lobbyView.RegisterScorePopUp(ScorePopUp);
         lobbyView.RegisterSettingPopUp(SettingPopUp);
         lobbyView.RegisterAchivePopup(AchivePopup);
+        lobbyView.RegisterCharacterSelectButton(CharacterPopUp);
     }
 
     private void CreateHostRoom() 
@@ -55,6 +56,12 @@ public class LobbyController : ILobbyPanelInitionlize
     {
         AchivePopUP achive = UIManager.Instance.GetPopUP<AchivePopUP>();
         achive.InitAchivePopup();
+    }
+
+    private void CharacterPopUp() 
+    {
+        CharacterSelectPopUP chara = UIManager.Instance.GetPopUP<CharacterSelectPopUP>();
+        chara.InitCharacterView();
     }
 
     public void IInitPanel()
