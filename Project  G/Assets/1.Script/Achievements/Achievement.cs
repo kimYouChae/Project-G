@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using UnityEditor.Build;
 using UnityEngine;
 
 public interface IAchievement
@@ -9,14 +11,19 @@ public interface IAchievement
     public string IProgressText();
 }
 
-[System.Serializable]
-public abstract class Achievement : ScriptableObject, IAchievement
+public abstract class Achievement :  IAchievement
 {
     [Header("===도전과제===")]
     [SerializeField] private string title;
-    [SerializeField] AchiveType type;
+    [SerializeField] AchiveType achiveType;
 
-    public AchiveType AchiveType => type;
+    public AchiveType AchiveType => achiveType;
+
+    public Achievement(string title, AchiveType type) 
+    {
+        this.title = title;
+        this.achiveType = type;
+    }
 
     public abstract bool IIsComplete();
 
@@ -27,12 +34,18 @@ public abstract class Achievement : ScriptableObject, IAchievement
 }
 
 
-[CreateAssetMenu(fileName = "Achievement", menuName = "Achievement/Stage Achievement")]
+[System.Serializable]
 public class StageAchievement : Achievement
 {
     [Header("===스테이지===")]
     [SerializeField] private int achiveStage;
     [SerializeField] private MapType mapType;
+
+    public StageAchievement(string title, AchiveType achiveType,int achiveStage, MapType mapType) : base(title, achiveType)
+    {
+        this.achiveStage = achiveStage;
+        this.mapType = mapType;
+    }
 
     public override bool IIsComplete()
     {
@@ -44,7 +57,11 @@ public class StageAchievement : Achievement
 
     public override string IProgressText()
     {
-        return UserDataManager.Instance.UserData.UserStageByType(mapType) + " / " + achiveStage + "스테이지";
+        StringBuilder builder = new StringBuilder();
+        builder.Append( LocalizationManager.Instance.MapNameReturn(mapType) + " : ");
+        builder.Append('\n');
+        builder.Append(UserDataManager.Instance.UserData.UserStageByType(mapType) + " / " + achiveStage + "스테이지");
+        return builder.ToString();
     }
 
 }
