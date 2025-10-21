@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: 1
   m_EditorClassIdentifier: Assembly-CSharp::StageAchievement
-  title: 
+  title: "(\uC784\uC2DC)\uC232 \uB3C4\uC804\uACFC\uC81C"
   type: 0
-  achiveStage: 0
+  achiveStage: 10
   mapType: 0

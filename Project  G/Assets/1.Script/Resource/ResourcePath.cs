@@ -12,6 +12,9 @@ public class ResourcePath : ScriptableObject
     [SerializeField] private string mapSpritePath;
     public string MapSpritePath => mapSpritePath;
 
+    [SerializeField] private string characterSpritePath;
+    public string CharacterSpritePath => characterSpritePath;
+
     [Space]
     [Header("===Sound Asset===")]
     [SerializeField] private string soundPath;
