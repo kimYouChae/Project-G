@@ -49,12 +49,14 @@ public class BackendChartManager : Singleton<BackendChartManager>
 
         if (File.Exists(filePath))
         {
+            Debug.Log($"{chartFileName} 경로에 차트 파일이 존재합니다. 차트 파일을 업데이트합니다 ");
             // 파일 존재 -> 차트 업데이트
             BackEnd.Content.BackendContentReturnObject localCallback = null;
             localCallback = Backend.CDN.Content.Local.Update(chartListServerBro.GetContentTableItemList());
         }
         else
         {
+            Debug.Log($"{chartFileName} 경로에 차트파일이 없습니다. 차트파일을 로컬에 저장합니다");
             // 파일 x -> 로컬 저장
 
             // 불러온 차트 내용 조회
