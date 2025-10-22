@@ -54,7 +54,7 @@ public class CharacterSelectPopUP : UIPopUP
 
     private void SelectCharacterObj(CharacterType type)
     {
-        Debug.Log($"{type} 캐릭터 선택  ");
+        // Debug.Log($"{type} 캐릭터 선택  ");
 
         selectCharacterType = type;
 
