@@ -43,6 +43,7 @@ public class CharacterSelectPopUP : UIPopUP
         {
             GameObject ch = Instantiate(characterPrefab);
             ch.transform.SetParent(contenct.transform, false);
+            characterObjs.Add(ch);
 
             // 캐릭터 오브젝트 세팅 (데이터 순서대로)
             CharacterData characterData = CharacterManager.Instance.CharacterData[i];

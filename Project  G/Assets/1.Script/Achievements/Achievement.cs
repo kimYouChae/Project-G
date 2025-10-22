@@ -11,6 +11,7 @@ public interface IAchievement
     public string IProgressText();
 }
 
+[System.Serializable]
 public abstract class Achievement :  IAchievement
 {
     [Header("===도전과제===")]

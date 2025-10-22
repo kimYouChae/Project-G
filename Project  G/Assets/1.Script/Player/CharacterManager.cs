@@ -45,7 +45,10 @@ public class CharacterManager : Singleton<CharacterManager>
     public void AddtoCharacterContainer(CharacterData data) 
     {
         characterData.Add(data);
-        typeByCharacterData.Add(data.CharacterType, data);
+        if (!typeByCharacterData.ContainsKey(data.CharacterType)) 
+        {
+            typeByCharacterData.Add(data.CharacterType, data);
+        }
     }
 
     public void InitCharacterSelectIndex(CharacterType type) 
