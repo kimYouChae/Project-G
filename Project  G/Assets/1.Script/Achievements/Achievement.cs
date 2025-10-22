@@ -30,7 +30,7 @@ public abstract class Achievement :  IAchievement
 
     public abstract string IProgressText();
 
-    public string ITitle() => title;
+    public string ITitle() => LocalizationManager.Instance.ReturnLocalizationString(achiveType.ToString() + "_Title");
 
 }
 
@@ -61,7 +61,8 @@ public class StageAchievement : Achievement
         StringBuilder builder = new StringBuilder();
         builder.Append( LocalizationManager.Instance.MapNameReturn(mapType) + " : ");
         builder.Append('\n');
-        builder.Append(UserDataManager.Instance.UserData.UserStageByType(mapType) + " / " + achiveStage + "스테이지");
+        builder.Append(UserDataManager.Instance.UserData.UserStageByType(mapType) + " / " + achiveStage 
+            + LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Stage));
         return builder.ToString();
     }
 

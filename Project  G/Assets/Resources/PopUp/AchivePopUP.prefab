@@ -640,6 +640,7 @@ MonoBehaviour:
   achiveObj: {fileID: 3282036070050165544, guid: 279bb218e0c420548a898f33999e3007, type: 3}
   content: {fileID: 1112071903409731591}
   objList: []
+  achiveTitle: {fileID: 7436060711280937952}
 --- !u!1 &6229983968591773896
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,9 @@ public class LobbyView : MonoBehaviour, ILocalizable
     [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI createRoomText;
     [SerializeField] TextMeshProUGUI joinRoomTex;
+    [SerializeField] TextMeshProUGUI characterText;
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI achivementText;
     [SerializeField] TextMeshProUGUI rankingText;
     [SerializeField] TextMeshProUGUI settingText;
     [SerializeField] TextMeshProUGUI exitText;
@@ -65,5 +67,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
         rankingText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Ranking);
         settingText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Setting);
         exitText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Exit);
+        characterText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Character);
+        achivementText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Achievement);
     }
 }

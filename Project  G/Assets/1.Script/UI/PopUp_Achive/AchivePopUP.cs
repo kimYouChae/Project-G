@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class AchivePopUP : UIPopUP
@@ -7,6 +8,9 @@ public class AchivePopUP : UIPopUP
     [SerializeField] GameObject achiveObj;
     [SerializeField] Transform content;
     [SerializeField] List<AchiveObject> objList;
+
+    [Header("===Localization===")]
+    [SerializeField] TextMeshProUGUI achiveTitle;
 
     private void InstantiateAchiveObject() 
     {
@@ -22,15 +26,19 @@ public class AchivePopUP : UIPopUP
         }
     }
 
+    // On 될 때 마다 업데이트 
     public void InitAchivePopup() 
     {
+        // 타이틀 로컬라이징
+        achiveTitle.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Achievement);
+
         // 리스트에 없으면 -> 1회 오픈, 새로 생성
-        if(objList.Count <= 0) 
+        if (objList.Count <= 0) 
         {
             InstantiateAchiveObject();
         }
 
-        // 도전과제 내용 + 진행상황 오브젝트에 표시 
+        // 도전과제 내용 + 진행상황 오브젝트에 표시 + 로컬라이징 
         for (int i = 0; i < AchievementsManager.Instance.Achievements.Count; i++) 
         {
             Achievement achi = AchievementsManager.Instance.Achievements[i];
