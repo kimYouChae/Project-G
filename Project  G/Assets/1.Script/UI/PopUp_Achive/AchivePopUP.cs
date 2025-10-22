@@ -38,7 +38,7 @@ public class AchivePopUP : UIPopUP
             InstantiateAchiveObject();
         }
 
-        // 도전과제 내용 + 진행상황 오브젝트에 표시 + 로컬라이징 
+        // 도전과제 내용 + 진행상황 오브젝트에 표시 + 로컬라이징 업데이트 
         for (int i = 0; i < AchievementsManager.Instance.Achievements.Count; i++) 
         {
             Achievement achi = AchievementsManager.Instance.Achievements[i];

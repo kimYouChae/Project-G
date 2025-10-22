@@ -42,5 +42,6 @@ public static partial class LocalizationKey
     public const string Setting_Language = "Setting_Language";
     public const string Achievement = "Achievement";
     public const string Character = "Character";
+    public const string Select = "Select";
 }
 

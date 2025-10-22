@@ -14,7 +14,7 @@ public class CharacterSelectPopUP : UIPopUP
     [Header("===CharacterSelectPopUP===")]
     [SerializeField] GameObject characterPrefab;
     [SerializeField] GameObject contenct;   // 스크롤뷰 콘텐츠
-    [SerializeField] List<GameObject> characterObjs;
+    [SerializeField] List<CharacterObject> characterObjs;
 
     [Space]
     [SerializeField] CharacterType selectCharacterType;
@@ -25,10 +25,24 @@ public class CharacterSelectPopUP : UIPopUP
     [SerializeField] Image characterImage;
     [SerializeField] TextMeshProUGUI cantSelectText;    // 미션 수행 전 텍스트
     [SerializeField] Button selectButton;      // 미션 수행 후 선택 버튼
+    [SerializeField] TextMeshProUGUI selectButtonText;  // 선택 버튼 텍스트 
+
+    [Header("===Localization===")]
+    [SerializeField] TextMeshProUGUI characterPopUpTitle;
 
     private void Start()
     {
         selectButton.onClick.AddListener(() => SelectCharacterButton());
+    }
+
+    private void InstantiateCharacterObj() 
+    {
+        for (int i = 0; i < CharacterManager.Instance.CharacterData.Count; i++)
+        {
+            GameObject ch = Instantiate(characterPrefab);
+            ch.transform.SetParent(contenct.transform, false);
+            characterObjs.Add(ch.GetComponent<CharacterObject>());
+        }
     }
 
     // 켤 때 초기화
@@ -37,19 +51,25 @@ public class CharacterSelectPopUP : UIPopUP
         // 디테일 창 - 기본 캐릭터로 초기화
         UpdateDetailUi(CharacterType.BasicCharacter);
 
-        if (characterObjs.Count > 0) { return; }
+        // 타이틀 로컬라이징
+        characterPopUpTitle.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Character);
 
+        // 리스트에 없으면 -> 1회 오픈, 새로 생성
+        if (characterObjs.Count <= 0)
+        {
+            InstantiateCharacterObj();
+        }
+
+        // 로컬라이징 업데이트 
         for (int i = 0; i < CharacterManager.Instance.CharacterData.Count; i++)
         {
-            GameObject ch = Instantiate(characterPrefab);
-            ch.transform.SetParent(contenct.transform, false);
-            characterObjs.Add(ch);
-
             // 캐릭터 오브젝트 세팅 (데이터 순서대로)
             CharacterData characterData = CharacterManager.Instance.CharacterData[i];
             CharacterType characterType = characterData.CharacterType;
-            ch.GetComponent<CharacterObject>()
-                .Init(characterData.CharaterName, characterType, ResourceManager.Instance.CharacterSprite(characterType), SelectCharacterObj);
+            characterObjs[i].Init( LocalizationManager.Instance.ReturnLocalizationString(characterType.ToString() + "_Name"),
+                characterType, 
+                ResourceManager.Instance.CharacterSprite(characterType), 
+                SelectCharacterObj);
         }
     }
 
@@ -67,8 +87,8 @@ public class CharacterSelectPopUP : UIPopUP
     {
         CharacterData data = CharacterManager.Instance.TypeByCharacterData(type);
 
-        characterTitle.text = data.CharaterName;
-        characterToolTip.text = data.CharacterToolTip;
+        characterTitle.text = LocalizationManager.Instance.ReturnLocalizationString(type.ToString() + "_Name");
+        characterToolTip.text = LocalizationManager.Instance.ReturnLocalizationString(type.ToString() + "_ToolTip");
         characterImage.sprite = ResourceManager.Instance.CharacterSprite(data.CharacterType);
 
         // 달성여부
@@ -85,6 +105,7 @@ public class CharacterSelectPopUP : UIPopUP
             // 달성 시 -> 캐릭터 선택 버튼 ON
             cantSelectText.gameObject.SetActive(false);
             selectButton.gameObject.SetActive(true);
+            selectButtonText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Select);
         }
         else
         {

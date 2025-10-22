@@ -799,6 +799,8 @@ MonoBehaviour:
   characterImage: {fileID: 4190690985885647872}
   cantSelectText: {fileID: 8655529485683122924}
   selectButton: {fileID: 523849752782160838}
+  selectButtonText: {fileID: 3792890278099789589}
+  characterPopUpTitle: {fileID: 4277207084313486187}
 --- !u!1 &3280179426779372468
 GameObject:
   m_ObjectHideFlags: 0

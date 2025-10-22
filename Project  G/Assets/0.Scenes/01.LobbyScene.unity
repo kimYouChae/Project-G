@@ -1475,7 +1475,9 @@ MonoBehaviour:
   exitButton: {fileID: 1681804166}
   createRoomText: {fileID: 1680172122}
   joinRoomTex: {fileID: 387991012}
+  characterText: {fileID: 33058646}
   scoreText: {fileID: 1508261874}
+  achivementText: {fileID: 1857584689}
   rankingText: {fileID: 1830880935}
   settingText: {fileID: 1839736891}
   exitText: {fileID: 749383813}
@@ -15950,10 +15952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480085258ab22214386630502a2a1418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  achievements:
-  - {fileID: 11400000, guid: bb46e99bb2888a34d8af1818c4d4387e, type: 2}
-  - {fileID: 11400000, guid: 423ab797085d23f44be7ab5de6380f07, type: 2}
-  - {fileID: 11400000, guid: 3211d3df0b945c4409992d0edbd4ac4f, type: 2}
 --- !u!1 &1201675581
 GameObject:
   m_ObjectHideFlags: 0
