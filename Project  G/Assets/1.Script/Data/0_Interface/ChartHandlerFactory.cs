@@ -15,6 +15,7 @@ public class ChartHandlerFactory
             { "SpanwerData" , new SpawnerChart()},
             { "Stage_Forest" , new StageChart()},
             { "Localization_Table", new LocalizationChart()},
+            { "LocalizationTable_ver2", new LocalizationChart() },
             { "CharacterData", new CharacterChart()},
             { "Achievement_Stage", new StageAchievementChart()}
         };

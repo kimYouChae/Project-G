@@ -50,23 +50,23 @@ public class LocalizationManager : Singleton<LocalizationManager>
 
         languages = new Dictionary<LanguageType, Language>();
 
-        // ¸Ê type ±æÀÌ¸¸Å­ ÃÊ±âÈ­
+        // ë§µ type ê¸¸ì´ë§Œí¼ ì´ˆê¸°í™”
         mapNameLocalization = new string[ Extension.EnumCount<MapType>()];
         RegisterChangeLanguage(LocalizationMapNameList);
 
-        // fallBack ·ÎÄÃ¶óÀÌÁ¦ÀÌ¼Ç Å×ÀÌºí »ç¿ë
+        // fallBack ë¡œì»¬ë¼ì´ì œì´ì…˜ í…Œì´ë¸” ì‚¬ìš©
         FallBackLocalization();
     }
 
     private void FallBackLocalization() 
     {
-        // 1. ÅØ½ºÆ®ÆÄÀÏ °¡Á®¿À±â
+        // 1. í…ìŠ¤íŠ¸íŒŒì¼ ê°€ì ¸ì˜¤ê¸°
         TextAsset text = ResourceManager.Instance.FallBackLocalizationText;
 
-        // 2. LitJson ÆÄ½Ì
+        // 2. LitJson íŒŒì‹±
         LitJson.JsonData jsonData = JsonMapper.ToObject(text.text);
 
-        // 3. Å¬·¡½º »ı¼º
+        // 3. í´ë˜ìŠ¤ ìƒì„±
         LocalizationChart localChart = new LocalizationChart();
         localChart.IParseAndStore(jsonData["rows"]);
     }
@@ -78,11 +78,11 @@ public class LocalizationManager : Singleton<LocalizationManager>
             languages.Add(type, new Language());
         }
 
-        // type¿¡ ÇØ´çÇÏ´Â language Å¬·¡½º¿¡ Ãß°¡ 
+        // typeì— í•´ë‹¹í•˜ëŠ” language í´ë˜ìŠ¤ì— ì¶”ê°€ 
         languages[type].langAdd(key, value);
     }
 
-    // ¿î¿µÃ¼Á¦ ¾ğ¾î º°·Î LangÅ¸ÀÔ Á¤ÇÏ±â
+    // ìš´ì˜ì²´ì œ ì–¸ì–´ ë³„ë¡œ Langíƒ€ì… ì •í•˜ê¸°
     private void SetLanguageType() 
     {
         switch(Application.systemLanguage) 
@@ -101,9 +101,9 @@ public class LocalizationManager : Singleton<LocalizationManager>
     }
 
     /// <summary>
-    /// ¾ğ¾î º¯°æ ½Ã ½ÇÇàÇÒ ¸Ş¼­µå
+    /// ì–¸ì–´ ë³€ê²½ ì‹œ ì‹¤í–‰í•  ë©”ì„œë“œ
     /// </summary>
-    /// <param name="type">¹Ù²Ü ¾ğ¾î Å¸ÀÔ</param>
+    /// <param name="type">ë°”ê¿€ ì–¸ì–´ íƒ€ì…</param>
     public void ChangeLanguageType(LanguageType type) 
     {
         currLanguateType = type;
@@ -116,7 +116,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
         ChangeLanguageAction?.Invoke(currLanguateType);
     }
 
-    // key¿¡ ¸Â´Â ¹®ÀÚ¿­ return
+    // keyì— ë§ëŠ” ë¬¸ìì—´ return
     public string ReturnLocalizationString(LanguageType type , string key) 
     { 
         if(languages.ContainsKey(type))
@@ -127,7 +127,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
 
     public string ReturnLocalizationString(string key) 
     {
-        // language Å¸ÀÔÀº ÇöÀç lang Å¸ÀÔ
+        // language íƒ€ì…ì€ í˜„ì¬ lang íƒ€ì…
         if (languages.ContainsKey(currLanguateType))
             return languages[currLanguateType].langGet(key);
 
@@ -140,7 +140,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
     }
 
     #region Map Name Localizatin
-    // ÇöÀç ¾ğ¾î¿¡ µû¶ó mapName ¹è¿­ÀÇ °ªÀ» ¹Ù²Ù±â
+    // í˜„ì¬ ì–¸ì–´ì— ë”°ë¼ mapName ë°°ì—´ì˜ ê°’ì„ ë°”ê¾¸ê¸°
     private void LocalizationMapNameList(LanguageType type)
     {
         mapNameLocalization[(int)MapType.Forest] = ReturnLocalizationString(LocalizationKey.Map_Forest);
