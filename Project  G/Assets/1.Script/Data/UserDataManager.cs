@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using UnityEngine.Android;
-using UnityEngine.SocialPlatforms.Impl;
 
 [System.Serializable]
 public class UserData 
@@ -72,8 +70,10 @@ public class UserDataManager : Singleton<UserDataManager>
     // 테이블에 삽입한 게임 정보 고유값 
     [SerializeField]
     string gameDataRowIndate;
+    [SerializeField] private CharacterType characterType;
 
     public UserData UserData { get => userData;  }
+    public CharacterType CharacterType { get => characterType; set { characterType = value; } }
 
     protected override void Singleton_Awake()
     {

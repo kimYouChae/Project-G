@@ -41,7 +41,8 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
     [SerializeField]
     private Dictionary<int, InGamePlayer> ingamePlayer;
-    
+
+    const string DEFAULT_PLAYER = "Player"; // 플레이어 상위 폴더 명 
 
     public QuadrantType LocalQuadrantType { get => localQuadrantType;  }
     public Transform[] PlayerField { get => playerField; }
@@ -122,7 +123,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
             Vector2 playerPosi = Define.twoMemberPoint[quType];
 
             // Resources 파일 하위에 동일한 이름의 오브젝트가 있어야함 ! 
-            GameObject temp = PhotonNetwork.Instantiate("Player_1", playerPosi, Quaternion.identity);
+            GameObject temp = PhotonNetwork.Instantiate(PlayerPath(), playerPosi, Quaternion.identity);
             temp.GetComponent<NetPlayer>().SetIndex(quType);
 
             // 로컬 플레이어 저장 
@@ -134,7 +135,13 @@ public class PunIngameManager : Singleton<PunIngameManager>
             spawnerManager.SetLoacalPlayer(localPlayer);
         }
     }
-    
+
+    private string PlayerPath() 
+    {
+        CharacterType type = UserDataManager.Instance.CharacterType;
+        return DEFAULT_PLAYER + "/" + type.ToString();
+    }
+
     private void UserDataRaiseEvent(int actorNum) 
     {
         Debug.Log("유저데이터Raise이벤트");

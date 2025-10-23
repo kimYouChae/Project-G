@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 using Photon.Pun;
+using System.Security.Cryptography;
 
 public class NetPlayer : MonoBehaviourPun, IPunObservable
 {
@@ -18,8 +19,12 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [Header("===Component===")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private PhotonView view;
-    [SerializeField] NetPlayerAnimator netAnimator;
     [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Color originalColor;
+    [Header("===Script===")]
+    [SerializeField] NetPlayerAnimator netAnimator;
+    [SerializeField] IPlayerSkill playerSkill;
 
     [Header("===Test===")]
     [SerializeField] bool flag = true; // true : 테스트할 때 충돌 x 
@@ -27,14 +32,24 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     public int PlayerIndex { get => playerIndex; }
     public bool IsReadToMove { get => isReadToMove; set => isReadToMove = value; }
     public QuadrantType PlayerQuadtype { get => playerQuadtype; }
+    public Vector3 Dir { get => dir; }
+    public Color OriginalColor { get => originalColor; }
 
     private void Start()
     {
+        // 컴포넌트
         rb = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
-        netAnimator = GetComponent<NetPlayerAnimator>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
+        // 스크립트
+        netAnimator = GetComponent<NetPlayerAnimator>();
+        playerSkill = GetComponent<IPlayerSkill>();
         netAnimator.SetAnimator(animator);
+
+        // 스킬인터페이스 - start
+        playerSkill.IOnStart(this);
     }
 
     private void FixedUpdate()
@@ -123,7 +138,8 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         // 임시 총알 레이어 번호 설정 
         if (collision.gameObject.layer == 7)
         {
-            DiePlayer();
+            // 스킬인터페이스 - start
+            playerSkill.IOnCollision(this, collision);
         }
     }
 
@@ -147,5 +163,13 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         }
 
         TimeManager.Stop();
+    }
+
+    public void ChangeColor(Color color) 
+    {
+        var block = new MaterialPropertyBlock();
+        spriteRenderer.GetPropertyBlock(block);
+        block.SetColor("_Color", color);
+        spriteRenderer.SetPropertyBlock(block);
     }
 }

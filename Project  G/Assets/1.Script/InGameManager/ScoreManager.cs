@@ -57,4 +57,9 @@ public class ScoreManager : Singleton<ScoreManager>
 
         isReadyToCount = true;
     }
+
+    public void AddScore(int score) 
+    {
+        currScore += score;
+    }
 }

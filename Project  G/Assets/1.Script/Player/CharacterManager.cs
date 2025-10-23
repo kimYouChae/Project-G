@@ -31,9 +31,6 @@ public class CharacterManager : Singleton<CharacterManager>
 
     private Dictionary<CharacterType, CharacterData> typeByCharacterData;
 
-    [Header("===현재 선택 캐릭터 타입===")]
-    private CharacterType characterType;
-
     public List<CharacterData> CharacterData { get => characterData;}
 
     protected override void Singleton_Awake()
@@ -49,11 +46,6 @@ public class CharacterManager : Singleton<CharacterManager>
         {
             typeByCharacterData.Add(data.CharacterType, data);
         }
-    }
-
-    public void InitCharacterSelectIndex(CharacterType type) 
-    {
-        this.characterType = type;
     }
 
     public CharacterData TypeByCharacterData(CharacterType type) 
