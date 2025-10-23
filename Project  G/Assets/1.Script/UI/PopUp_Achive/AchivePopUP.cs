@@ -51,7 +51,7 @@ public class AchivePopUP : UIPopUP
             {
                 // 완료 아이콘 켜기 
                 obj.OnOffCompleteImage(true);
-                return;
+                continue;
             }
 
             obj.SetProgressText(achi.IProgressText());

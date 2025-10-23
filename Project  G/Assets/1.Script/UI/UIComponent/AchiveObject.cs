@@ -14,5 +14,9 @@ public class AchiveObject : MonoBehaviour
 
     public void SetProgressText(string str) {  progressText.text = str; }
 
-    public void OnOffCompleteImage(bool flag) {  completeImage.gameObject.SetActive(flag); }
+    public void OnOffCompleteImage(bool flag) 
+    {  
+        completeImage.gameObject.SetActive(flag);
+        progressText.gameObject.SetActive(!flag);
+    }
 }
