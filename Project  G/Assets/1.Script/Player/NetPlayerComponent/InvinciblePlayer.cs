@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class InvinciblePlayer : MonoBehaviour, IPlayerSkill
 {
-    [SerializeField] bool isHitted = false;
-    [SerializeField] List<Color> invincibleColors;
-    [SerializeField] Color originalColor;
+    [SerializeField] private bool isHitted = false;
+    [SerializeField] private float colorChangeTime = 0.1f;
+    [SerializeField] private List<Color> invincibleColors;
+    [SerializeField] private Color originalColor;
 
     Coroutine changeColorCoru;
 
@@ -51,7 +52,7 @@ public class InvinciblePlayer : MonoBehaviour, IPlayerSkill
             {
                 player.ChangeColor(invincibleColors[i]);
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(colorChangeTime);
             }
         }
     }

@@ -167,9 +167,12 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
     public void ChangeColor(Color color) 
     {
+        spriteRenderer.color = color;
+        /*
         var block = new MaterialPropertyBlock();
         spriteRenderer.GetPropertyBlock(block);
         block.SetColor("_Color", color);
         spriteRenderer.SetPropertyBlock(block);
+        */
     }
 }
