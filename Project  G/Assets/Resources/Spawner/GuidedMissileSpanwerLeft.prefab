@@ -36,9 +36,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 659785623578560542}
+  - {fileID: 1783194600148665994}
   - {fileID: 5350555986956140732}
   - {fileID: 1780589069514245721}
-  - {fileID: 1783194600148665994}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3809738114807542664
@@ -79,8 +79,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -448213619
+  m_SortingLayer: 2
   m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: 0c0aacf16f1329e4a91cf17f11774878, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
