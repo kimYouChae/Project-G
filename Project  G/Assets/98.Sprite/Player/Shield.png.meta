@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cebe4b8e3c6f83a4f96621391ae9dfde
+guid: 062abb178434aec489ed1b800d8a2bd2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -65,27 +65,14 @@ TextureImporter:
   ignorePngGamma: 0
   applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Standalone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -98,7 +85,20 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -111,7 +111,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chara_11_0
+      name: Shield_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f49b9ccfb0216ac47b9605730835b119
-      internalID: 594734803
+      spriteID: f1be081f86a05dd479586be6048d2d8b
+      internalID: -587737016
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_1
+      name: Shield_1
       rect:
         serializedVersion: 2
         x: 16
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5d0566042bdda24d80423ca921c23dd
-      internalID: 102707134
+      spriteID: 506c2503a555a4248a609ba374ac4f24
+      internalID: 1550317388
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_2
+      name: Shield_2
       rect:
         serializedVersion: 2
         x: 32
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6584cddbc31bd484f8acb419216b253c
-      internalID: 1622629475
+      spriteID: 0b37cc001cc8e514485372996b2a65ff
+      internalID: -1922900973
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_3
+      name: Shield_3
       rect:
         serializedVersion: 2
         x: 0
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3170044b09de20e4fb78def550a585d6
-      internalID: -1696979279
+      spriteID: c256a18fe402b8a41810b5ff813504d2
+      internalID: -1636649129
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_4
+      name: Shield_4
       rect:
         serializedVersion: 2
         x: 16
@@ -221,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f891f2a3c3778949a6387d3d7dde608
-      internalID: 1687058775
+      spriteID: f89a5a095e5ecf54294a696db7872c1e
+      internalID: 254539063
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_5
+      name: Shield_5
       rect:
         serializedVersion: 2
         x: 32
@@ -242,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69735c171492ad14ea7c8eb9396d62b8
-      internalID: 373091146
+      spriteID: c655b2cece4779448bd7fe6316153d78
+      internalID: -433986391
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_6
+      name: Shield_6
       rect:
         serializedVersion: 2
         x: 0
@@ -263,14 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a17b3dbd250b1948955055c6b85f493
-      internalID: 1816915000
+      spriteID: 23593eac4e2a7974ead98ada11283d03
+      internalID: 368265161
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_7
+      name: Shield_7
       rect:
         serializedVersion: 2
         x: 16
@@ -284,14 +284,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c7fabe35e29bba448f15b053c619679
-      internalID: 1194847
+      spriteID: deb0f5b572adea94988250c1d5a60873
+      internalID: 1589682702
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_8
+      name: Shield_8
       rect:
         serializedVersion: 2
         x: 32
@@ -305,14 +305,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8270195d57d9ee14c8c8eb4226db6aec
-      internalID: -909830733
+      spriteID: 3c99d1aba5d2ff644af8d3584ce08d9b
+      internalID: -624131235
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_9
+      name: Shield_9
       rect:
         serializedVersion: 2
         x: 0
@@ -326,14 +326,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 620f1f83acbdb954d957e005eaf5be40
-      internalID: 930537883
+      spriteID: 24a9dca8f6a94f943982634616015f28
+      internalID: 1249468251
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_10
+      name: Shield_10
       rect:
         serializedVersion: 2
         x: 16
@@ -347,14 +347,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b1c0c142567dce4eb522025172802d0
-      internalID: 1664592456
+      spriteID: 8ccd7556793e35b42b18a133e0781a40
+      internalID: 1821207299
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chara_11_11
+      name: Shield_11
       rect:
         serializedVersion: 2
         x: 32
@@ -368,8 +368,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2864d3a2755dbf0458215958ffc9fbb1
-      internalID: -909134717
+      spriteID: 939bc1622fd67c348a429fdcd306b63f
+      internalID: -898797286
       vertices: []
       indices: 
       edges: []
@@ -385,18 +385,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      chara_11_0: 594734803
-      chara_11_1: 102707134
-      chara_11_10: 1664592456
-      chara_11_11: -909134717
-      chara_11_2: 1622629475
-      chara_11_3: -1696979279
-      chara_11_4: 1687058775
-      chara_11_5: 373091146
-      chara_11_6: 1816915000
-      chara_11_7: 1194847
-      chara_11_8: -909830733
-      chara_11_9: 930537883
+      Shield_0: -587737016
+      Shield_1: 1550317388
+      Shield_10: 1821207299
+      Shield_11: -898797286
+      Shield_2: -1922900973
+      Shield_3: -1636649129
+      Shield_4: 254539063
+      Shield_5: -433986391
+      Shield_6: 368265161
+      Shield_7: 1589682702
+      Shield_8: -624131235
+      Shield_9: 1249468251
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

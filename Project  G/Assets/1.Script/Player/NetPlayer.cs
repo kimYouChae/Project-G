@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon;
 using Photon.Pun;
 using System.Security.Cryptography;
+using BackEnd.Tcp;
 
 public class NetPlayer : MonoBehaviourPun, IPunObservable
 {
@@ -15,6 +16,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [SerializeField] private bool isReadToMove = false;
     [SerializeField] private float speed = 3.0f;
     [SerializeField] private Vector3 dir;
+    private Vector3 lastMoveDir = Vector3.down; // 기본 정면 아래
 
     [Header("===Component===")]
     [SerializeField] private Rigidbody2D rb;

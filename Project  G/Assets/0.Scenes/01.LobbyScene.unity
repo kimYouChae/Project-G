@@ -5116,6 +5116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameDataRowIndate: 
+  characterType: 0
 --- !u!1 &647939095
 GameObject:
   m_ObjectHideFlags: 0
