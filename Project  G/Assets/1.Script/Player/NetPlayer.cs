@@ -152,6 +152,10 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         // 임시 총알 레이어 번호 설정 
         if (collision.gameObject.layer == 7)
         {
+            // 총알 삭제
+            // ##TODO : 추후 pooling 추가 예정
+            Destroy(collision.gameObject);
+
             // 스킬인터페이스 - start
             playerSkill.IOnCollision(this, collision);
         }
