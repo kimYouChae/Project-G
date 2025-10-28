@@ -27,10 +27,13 @@ public class ScorePlayer : MonoBehaviour, IPlayerSkill
             yield return null;
         }
 
-        yield return new WaitForSeconds(timeAmount);
+        while (true) 
+        {
+            yield return new WaitForSeconds(timeAmount);
 
-        // 점수 증가
-        ScoreManager.Instance.AddScore(scoreAddAmount);
-        
+            // 점수 증가
+            ScoreManager.Instance.AddScore(scoreAddAmount);
+        }
+
     }
 }

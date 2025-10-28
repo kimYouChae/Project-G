@@ -60,6 +60,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
     public void AddScore(int score) 
     {
+        Debug.Log($"점수증가 : {currScore} + {score} = {currScore + score}");
         currScore += score;
     }
 }

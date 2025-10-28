@@ -16,8 +16,8 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [SerializeField] private bool isReadToMove = false;
     [SerializeField] private float speed = 3.0f;
     [SerializeField] private Vector3 dir;
-    private Vector3 lastMoveDir = Vector3.down; // 기본 정면 아래
-
+    [SerializeField] private Vector3 lastMoveDir = Vector3.down; // 기본 정면 아래
+    
     [Header("===Component===")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private PhotonView view;
@@ -35,6 +35,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     public bool IsReadToMove { get => isReadToMove; set => isReadToMove = value; }
     public QuadrantType PlayerQuadtype { get => playerQuadtype; }
     public Vector3 Dir { get => dir; }
+    public Vector3 LastMoveDir => lastMoveDir;
     public Color OriginalColor { get => originalColor; }
 
     private void Start()
@@ -77,7 +78,18 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         if (dir.x == 0 && dir.y == 0)    // 가만히
             netAnimator.ChangeAnimation(CharaterAniState.none);
 
-        rb.velocity = dir.normalized * speed;
+        if (dir != Vector3.zero)
+        {
+            lastMoveDir = dir.normalized; 
+            rb.velocity = lastMoveDir * speed;
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+        }
+
+        // 앞 방향 시각화
+        Debug.DrawRay(transform.position, lastMoveDir * 2f, Color.red);
     }
 
     public void SetIndex(QuadrantType qType)
