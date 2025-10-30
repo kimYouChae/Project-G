@@ -100,6 +100,9 @@ public partial class InGameUI : MonoBehaviour
         UserDataManager.Instance.SettingAchiveData
             (ScoreManager.Instance.AchiveScore, ScoreManager.Instance.AchiveStage);
 
+        // (리더보드용) 점수저장
+        ScoreDataManager.Instance.InserToLeaderBoardTable(ScoreManager.Instance.AchiveScore);
+
         // 최고점수일때만 업데이트
         if (preScore <= ScoreManager.Instance.AchiveScore) 
         {

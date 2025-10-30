@@ -35,8 +35,9 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             int actorNum = (int)data[0];
             string nick = (string)data[1];
             float score = (float)data[2];
+            string indate = (string)data[3];
 
-            InGamePlayer player = new InGamePlayer(actorNum, nick, score);
+            InGamePlayer player = new InGamePlayer(actorNum, nick, score, indate);
 
             PunIngameManager.Instance.AddInGamePlayer(actorNum, player);
 

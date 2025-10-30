@@ -8,18 +8,18 @@ using BackEnd.Content;
 public class BackEndServerManager : Singleton<BackEndServerManager>
 {
     [Header("===INFO===")]
-    [SerializeField] private BackendReturnObject playerInfo;
+    [SerializeField] private BackendReturnObject playerBro;
 
-    public BackendReturnObject PlayerInfo { get => playerInfo; }
+    public BackendReturnObject PlayerInfo { get => playerBro; }
 
     protected override void Singleton_Awake()
     {
-        
+
     }
 
     public string ReturnNickName() 
     {
-        return playerInfo.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+        return playerBro.GetReturnValuetoJSON()["row"]["nickname"].ToString();
     }
 
     #region 게스트 로그인 / 로컬에 있는 게스트 정보 가져오기
@@ -58,9 +58,9 @@ public class BackEndServerManager : Singleton<BackEndServerManager>
 
             Debug.Log("로컬의 유저 데이터를 저장합니다");
             // 가져온 유저 정보 출력 
-            playerInfo = callback;
+            playerBro = callback;
 
-            string userJson = playerInfo.ReturnValue;
+            string userJson = playerBro.ReturnValue;
             // JsonData data = playerInfo.GetReturnValuetoJSON();    // Lit Json 데이터타입
 
             Debug.Log("로컬에 저장되어 있는 정보 :" + userJson);
@@ -71,16 +71,18 @@ public class BackEndServerManager : Singleton<BackEndServerManager>
             // 포톤 닉네임 세팅 
             PunLobbyManager.Instance.SettingNickName(ReturnNickName());
 
+            // UserDataManager에 Bro 추가
+            UserDataManager.Instance.LocalPlayerBro = playerBro;
         });
     }
 
     // 닉네임 있는지 없는지 검사
     public NickCheckResultType isHasNickName() 
     {
-        if (playerInfo == null)
+        if (playerBro == null)
             return NickCheckResultType.NoPlayerInfo;
 
-        JsonData data = playerInfo.GetReturnValuetoJSON();
+        JsonData data = playerBro.GetReturnValuetoJSON();
         JsonData info = data["row"];
 
         if (info["nickname"] == null)

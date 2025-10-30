@@ -6,26 +6,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class InGamePlayer 
 {
-    private int actorNum;
-    private string nickName;
-    private float score;
+    [SerializeField] private int actorNum;
+    [SerializeField] private string nickName;
+    [SerializeField] private float score;
+    [SerializeField] private string indate;
 
-    public InGamePlayer(int actorNum, string nickName, float score)
+    public InGamePlayer(int actorNum, string nickName, float score, string indate)
     {
         this.actorNum = actorNum;
         this.nickName = nickName;
         this.score = score;
+        this.indate = indate;
     }
 
     public int ActorNum { get => actorNum;}
     public string NickName { get => nickName; }
     public float Score { get => score;  }
+    public string Indate { get => indate;}
 
     public void PrintPlayer() 
     {
-        Debug.Log($"{actorNum} 에 해당하는 플레이어 정보 : {nickName} : {score}");
+        Debug.Log($"{actorNum} 에 해당하는 플레이어 정보 : {nickName} : {score} : {indate}");
     }
 }
 
@@ -41,11 +45,21 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
     [SerializeField]
     private Dictionary<int, InGamePlayer> ingamePlayer;
+    [SerializeField]
+    private List<InGamePlayer> ingamePlayerList;        // 인스펙터용 리스트 
 
     const string DEFAULT_PLAYER = "Player"; // 플레이어 상위 폴더 명 
 
     public QuadrantType LocalQuadrantType { get => localQuadrantType;  }
     public Transform[] PlayerField { get => playerField; }
+    public InGamePlayer inGamePlayer(int num) 
+    {
+        if(ingamePlayer.ContainsKey(num))
+            return ingamePlayer[num];
+
+        return null;
+    } 
+
 
     protected override void Singleton_Awake()
     {
@@ -156,6 +170,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
             actorNum,
             UserDataManager.Instance.UserData.NickName,
             UserDataManager.Instance.UserData.MapTypeToScore[currMapType],
+            UserDataManager.Instance.BroIndate
         };
 
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
@@ -171,11 +186,10 @@ public class PunIngameManager : Singleton<PunIngameManager>
     {
         Debug.Log("인게임Player딕셔너리에 추가");
         ingamePlayer.Add(actorNum, player);
+        ingamePlayerList.Add(player);
 
         InGameUI.GetInstance().UpdatePlayerInfoText(player);
     }
-
-   
 
     #region Photon 관련 공통함수 
 

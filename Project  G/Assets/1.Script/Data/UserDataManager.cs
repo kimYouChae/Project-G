@@ -67,13 +67,17 @@ public class UserDataManager : Singleton<UserDataManager>
     // 유저데이터
     [SerializeField]
     private UserData userData;
-    // 테이블에 삽입한 게임 정보 고유값 
     [SerializeField]
-    string gameDataRowIndate;
-    [SerializeField] private CharacterType characterType;
+    string gameDataRowIndate; // 테이블에 삽입한 게임 정보 고유값 
+    [SerializeField] 
+    private CharacterType characterType;
+    [SerializeField]
+    private BackendReturnObject localPlayerInfo;    // 로컬 유저 backend 오브젝트
 
     public UserData UserData { get => userData;  }
     public CharacterType CharacterType { get => characterType; set { characterType = value; } }
+    public BackendReturnObject LocalPlayerBro { get => localPlayerInfo; set { localPlayerInfo = value; } }
+    public string BroIndate { get => localPlayerInfo.GetInDate(); }
 
     protected override void Singleton_Awake()
     {
@@ -140,6 +144,8 @@ public class UserDataManager : Singleton<UserDataManager>
 
         // 테이블명, where절, 불러올 게임정보 row 갯수
         BackendReturnObject bro = Backend.GameData.GetMyData(Define.USERTABLE , where, 10);
+
+        Debug.Log("!!!!!!!!!!!!@@ indate" + bro.GetInDate());
 
         if(bro.IsSuccess()) 
         {
