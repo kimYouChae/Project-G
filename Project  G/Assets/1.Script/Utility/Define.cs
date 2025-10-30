@@ -6,6 +6,16 @@ static public class Define
 {
     public static readonly string USERTABLE = "USER_DATA";
 
+    public static readonly Dictionary<MapType, string> MAPTYPEBY_LEADERBOARD_TABLE = new Dictionary<MapType, string>() 
+    {
+        { MapType.Forest , "Leaderboard_map_forest"},
+        { MapType.GiganticTree , " "},
+        { MapType.Market, " "},
+        { MapType.Island , " "},
+        { MapType.Hell , " "},
+        { MapType.IceVillage , " "}
+    };
+
     public static float mapMinX = -13f;
     public static float mapMinY = -8f;
     public static float mapMaxX = 13;
@@ -13,10 +23,10 @@ static public class Define
 
     public static readonly Dictionary<LanguageType, string> languageNames = new Dictionary<LanguageType, string>()
     {
-        { LanguageType.Korean, "ÇÑ±¹¾î" },
+        { LanguageType.Korean, "í•œêµ­ì–´" },
         { LanguageType.English, "English" },
-        { LanguageType.Japanese, "ìíÜâåÞ" },
-        { LanguageType.Chinese, "ñéÏÐåÞ" }
+        { LanguageType.Japanese, "æ—¥æœ¬èªž" },
+        { LanguageType.Chinese, "ä¸­åœ‹èªž" }
     };
 
     public static readonly Dictionary<SceneType, string> sceneNames = new Dictionary<SceneType, string>()
