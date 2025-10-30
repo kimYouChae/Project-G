@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using TMPro;  // 두트윈 
+using TMPro;
+using Photon.Pun;  // 두트윈 
 
 public partial class InGameUI : MonoBehaviour
 {
@@ -92,19 +93,29 @@ public partial class InGameUI : MonoBehaviour
         if (type != MapType.None) 
             preScore = UserDataManager.Instance.UserData.MapTypeToScore[type];
 
+        // 방금 점수,스테이지
+        float currScore = ScoreManager.Instance.AchiveScore;
+        int currStage = ScoreManager.Instance.AchiveStage;
+
         // 게임오버 텍스트 설정
-        GameOverText(ScoreManager.Instance.AchiveScore, ScoreManager.Instance.CurrTime,
-            preScore <= ScoreManager.Instance.AchiveScore ? true : false);
+        GameOverText(currScore, ScoreManager.Instance.CurrTime,
+            preScore <= currScore ? true : false);
 
         // 점수 + 스테이지 달성 저장
-        UserDataManager.Instance.SettingAchiveData
-            (ScoreManager.Instance.AchiveScore, ScoreManager.Instance.AchiveStage);
+        UserDataManager.Instance.SettingAchiveData(currScore, currStage);
 
-        // (리더보드용) 점수저장
-        ScoreDataManager.Instance.InserToLeaderBoardTable(ScoreManager.Instance.AchiveScore);
+        // 리더보드 - 호스트만 저장해야함
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // (리더보드용) 점수저장
+            var indate = ScoreDataManager.Instance.InserToLeaderBoardTableAndReturnIndate(type, currScore);
+
+            // 리더보드 업데이트 
+            BackEndLeaderBoardManager.Instance.UpdateLeaderBoard(type, currScore, indate.Item1, indate.Item2);
+        }
 
         // 최고점수일때만 업데이트
-        if (preScore <= ScoreManager.Instance.AchiveScore) 
+        if (preScore <= currScore) 
         {
             // 유저 정보 업데이트
             UserDataManager.Instance.UpdateUserData();

@@ -8,11 +8,17 @@ public class ScoreDataManager : Singleton<ScoreDataManager>
 {
     const string VerticalBar = "|";
 
-    public void InserToLeaderBoardTable(float score) 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="score"></param>
+    /// <returns> item1 : insert한 행의 indate 값 |
+    /// item2 : 유저들의 indate값 (타입 : "유저1 Indate" + | + "유저2 Indate") </returns>
+    public Tuple<string,string> InserToLeaderBoardTableAndReturnIndate(MapType type, float score) 
     {
-        // 현재 맵 타입    
-        // 현재 방 정보의 커스텀 정보에 접근 (hashTable에서 matType검사)
-        MapType type = PunIngameManager.Instance.GetMapType();
+        // insert한 행의 indate
+        string rowIndate = string.Empty;
 
         // 유저들의 indate값
         // "유저1 Indate" + | + "유저2 Indate"
@@ -26,12 +32,15 @@ public class ScoreDataManager : Singleton<ScoreDataManager>
         var bro = Backend.GameData.Insert(Define.MAPTYPEBY_LEADERBOARD_TABLE[type], param);
         if (bro.IsSuccess())
         {
+            rowIndate = bro.GetInDate();
             Debug.Log($"{this.name} 데이터 삽입에 성공 했습니다 " + bro);
         }
         else
         {
             Debug.Log($"{this.name} 데이터 삽입에 실패 했습니다" + bro);
         }
+
+        return Tuple.Create(rowIndate, indates);
     }
 
     protected override void Singleton_Awake()

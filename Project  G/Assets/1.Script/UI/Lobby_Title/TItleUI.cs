@@ -78,6 +78,9 @@ public class TitleUI : MonoBehaviour
 
             // 차트 불러온 후 로컬라이징
             LocalizationManager.Instance.ChangeLanguageType();
+
+            // 리더보드 불러오기 
+            BackEndLeaderBoardManager.Instance.GetLeaderBoard();
         });
 
 
