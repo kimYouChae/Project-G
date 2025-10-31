@@ -58,16 +58,22 @@ public class BackEndLeaderBoardManager : Singleton<BackEndLeaderBoardManager>
     public void UpdateLeaderBoard(MapType mapType, float score, string rowIndate, string extraData) 
     {
         Param param = new Param();
-        param.Add("score", score);
-        param.Add("extraData", extraData);
+        param.Add("Score", score);
+        param.Add("UserIndates", extraData);
 
         // ##TODO : 일단 숲밖에 없으니까 0으로 해놓기 
         string leaderBoarduuid = leaderBoardItem[0].uuid;
         string tableName = Define.MAPTYPEBY_LEADERBOARD_TABLE[mapType];
 
-        Backend.Leaderboard.User.UpdateMyDataAndRefreshLeaderboard(leaderBoarduuid, tableName, rowIndate, param, callback =>
+        var rankBro = Backend.Leaderboard.User.UpdateMyDataAndRefreshLeaderboard(leaderBoarduuid, tableName, rowIndate, param);
+        if (rankBro.IsSuccess())
         {
             Debug.Log("리더보드 등록 성공");
-        });
+        }
+        else
+        {
+            Debug.Log("리더보드 등록 실패 : " + rankBro);
+        }
+
     }
 }
