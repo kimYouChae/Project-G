@@ -32,16 +32,24 @@ public class BackEndLeaderBoardManager : Singleton<BackEndLeaderBoardManager>
     }
 
     // 리더보드 내 전체 순위 조회 
-    public void GetRanking() 
+    public List<UserLeaderboardItem> GetRanking(MapType maptype, int rankCount, int rankStart) 
     {
         BackEnd.Leaderboard.BackendUserLeaderboardReturnObject bro = null;
 
-        // example 1. 1위부터 150위까지 조회.
-        // leaderboardUuid 랭킹에서 1 ~ 50등 랭커 조회
-        bro = Backend.Leaderboard.User.GetLeaderboard(leaderBoardItem[0].uuid, 50);
+        // ##TODO : 임시 MapType에 따른 차트번호 (int)mapType하면 젤 편한데 순서대로 들어오는지 모르겠음 
+        int chartIdx = 0;
+        switch (maptype) 
+        {
+            case MapType.Forest: chartIdx = 0; break;
+        }
+
+        // cnt 명 만큼, start에서 시작
+        bro = Backend.Leaderboard.User.GetLeaderboard(leaderBoardItem[chartIdx].uuid, rankCount, rankStart);
 
         List<UserLeaderboardItem> userItems = bro.GetUserLeaderboardList();
 
+        // 출력
+        /*
         StringBuilder builder = new StringBuilder();    
         for(int i = 0; i < userItems.Count; i++) 
         {
@@ -52,6 +60,9 @@ public class BackEndLeaderBoardManager : Singleton<BackEndLeaderBoardManager>
             Debug.Log(builder.ToString());
             builder.Clear();
         }
+        */
+
+        return userItems;
     }
 
     // 리더보드 업데이트 (테이블에 데이터 넣은 후 실행)
