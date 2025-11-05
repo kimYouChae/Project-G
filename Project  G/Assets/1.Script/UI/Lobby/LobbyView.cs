@@ -15,6 +15,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     [SerializeField] Button scoreButton;
     [SerializeField] Button achivementButton;
     [SerializeField] Button exitButton;
+    [SerializeField] Button rankButton;
 
     [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI createRoomText;
@@ -25,6 +26,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     [SerializeField] TextMeshProUGUI rankingText;
     [SerializeField] TextMeshProUGUI settingText;
     [SerializeField] TextMeshProUGUI exitText;
+    [SerializeField] TextMeshProUGUI rankText;
 
     private Action CreatHostRoomAction;
     private Action ClientJoinRoomAction;
@@ -33,6 +35,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     private Action SettingAction;
     private Action AchiveAction;
     private Action ExitGameAction;
+    private Action RankAction;
 
     private void Awake()
     {
@@ -43,7 +46,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
         settinButton.onClick.AddListener(() => SettingAction?.Invoke());
         achivementButton.onClick.AddListener(() => AchiveAction?.Invoke());
         characterSelectButton.onClick.AddListener(() => CharacterSelectAction?.Invoke());
-
+        rankButton.onClick.AddListener(() => RankAction?.Invoke());
     }
 
     public void RegisterCreateHostRoom(Action action) { CreatHostRoomAction += action;}
@@ -53,7 +56,8 @@ public class LobbyView : MonoBehaviour, ILocalizable
     public void RegisterSettingPopUp(Action action) { SettingAction += action;  }
     public void RegisterAchivePopup(Action action) {  AchiveAction += action;}
     public void RegisterCharacterSelectButton(Action action) { CharacterSelectAction += action;}
-
+    public void RegisterRankButton(Action action) { RankAction += action; }
+    
     private void OnEnable()
     {
         LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
@@ -69,5 +73,6 @@ public class LobbyView : MonoBehaviour, ILocalizable
         exitText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_Exit);
         characterText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Character);
         achivementText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Achievement);
+        // rankText
     }
 }

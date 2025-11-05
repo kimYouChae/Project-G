@@ -19,6 +19,13 @@ public class LobbyController : ILobbyPanelInitionlize
         lobbyView.RegisterSettingPopUp(SettingPopUp);
         lobbyView.RegisterAchivePopup(AchivePopup);
         lobbyView.RegisterCharacterSelectButton(CharacterPopUp);
+        lobbyView.RegisterRankButton(Rank);
+    }
+
+    private void Rank() 
+    {
+        LeaderBoardPopUp leaderPopup = UIManager.Instance.GetPopUP<LeaderBoardPopUp>();
+        leaderPopup.InitLeaderBoardPopUp();
     }
 
     private void CreateHostRoom() 

@@ -65,6 +65,14 @@ public class BackEndLeaderBoardManager : Singleton<BackEndLeaderBoardManager>
         return userItems;
     }
 
+    public long GetTotalCountCount(MapType type) 
+    {
+        BackEnd.Leaderboard.BackendUserLeaderboardReturnObject bro = null;
+        bro = Backend.Leaderboard.User.GetLeaderboard(leaderBoardItem[0].uuid);
+
+        return bro.GetTotalCount();
+    }
+
     // 리더보드 업데이트 (테이블에 데이터 넣은 후 실행)
     public void UpdateLeaderBoard(MapType mapType, float score, string rowIndate, string extraData) 
     {

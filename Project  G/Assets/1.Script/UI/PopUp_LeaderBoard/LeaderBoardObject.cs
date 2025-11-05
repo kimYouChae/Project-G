@@ -11,10 +11,10 @@ public class LeaderBoardObject : MonoBehaviour
     [SerializeField] TextMeshProUGUI playerNamesText;
     [SerializeField] TextMeshProUGUI scoreText;
 
-    public void UpdateLeaderBoard(Sprite image, int rank, string names, string score) 
+    public void UpdateLeaderBoard(Sprite image, string rText, string names, string score) 
     {
         rankIcon.sprite = image;
-        rankText.text = rank.ToString();
+        rankText.text = rText;
         playerNamesText.text = names;
         scoreText.text = score;
     }
