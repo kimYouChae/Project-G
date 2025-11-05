@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
-using Photon.Pun;  // 두트윈 
+using Photon.Pun;
+using BackEnd;  // 두트윈 
 
 public partial class InGameUI : MonoBehaviour
 {
@@ -104,14 +105,21 @@ public partial class InGameUI : MonoBehaviour
         // 점수 + 스테이지 달성 저장
         UserDataManager.Instance.SettingAchiveData(currScore, currStage);
 
-        // 리더보드 - 호스트만 저장해야함
-        if (PhotonNetwork.IsMasterClient)
+        // 토큰이 만료되면 패스
+        // = local에 유저 정보가 없으면 패스 ( 중복로그인안됨 )
+        BackendReturnObject bro = Backend.BMember.IsAccessTokenAlive();
+        if (bro.IsSuccess())
         {
+            Debug.Log("엑세스 토큰이 살아있습니다. 리더보드 저장을 시작합니다");
             // (리더보드용) 점수저장
             var indate = ScoreDataManager.Instance.InserToLeaderBoardTableAndReturnIndate(type, currScore);
 
             // 리더보드 업데이트 
             BackEndLeaderBoardManager.Instance.UpdateLeaderBoard(type, currScore, indate.Item1, indate.Item2);
+        }
+        else 
+        {
+            Debug.Log("엑세스 토큰이 죽었습니다. 리더보드 저장 x ");
         }
 
         // 최고점수일때만 업데이트

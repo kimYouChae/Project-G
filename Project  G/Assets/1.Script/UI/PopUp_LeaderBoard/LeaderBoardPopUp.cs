@@ -78,7 +78,9 @@ public class LeaderBoardPopUp : UIPopUP
             // ##TODO : extraData에 맞는 유저 닉네임을 return해야함.
 
             // 업데이트 
-            leaderboard.UpdateLeaderBoard(rankIcon, rankText, userItem.extraData, userItem.score);
+            // leaderboard.UpdateLeaderBoard(rankIcon, rankText, userItem.extraData, userItem.score);
+            // 임시 - 본인 닉네임만 표시 
+            leaderboard.UpdateLeaderBoard(rankIcon, rankText, userItem.nickname, userItem.score);
         }
     }
 
