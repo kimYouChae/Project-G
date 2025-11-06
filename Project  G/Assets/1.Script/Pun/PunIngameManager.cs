@@ -48,8 +48,13 @@ public class PunIngameManager : Singleton<PunIngameManager>
     [SerializeField]
     private List<InGamePlayer> ingamePlayerList;        // 인스펙터용 리스트 
 
+    [Header("===GAME ID===")]
+    private string gameIDGuid;
+
+
     const string DEFAULT_PLAYER = "Player"; // 플레이어 상위 폴더 명 
 
+    public string GameIdGuid { get => gameIDGuid; set { gameIDGuid = value; } }
     public QuadrantType LocalQuadrantType { get => localQuadrantType;  }
     public Transform[] PlayerField { get => playerField; }
     public InGamePlayer inGamePlayer(int num) 
@@ -75,6 +80,34 @@ public class PunIngameManager : Singleton<PunIngameManager>
         MemberTwoCreatePlayer();
 
         StartCoroutine(Test());
+
+        SycnGameId();
+    }
+
+    private void SycnGameId()
+    {
+        // 호스트만 - 게임 (고유) 아이디 동기화
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("게임 고유 ID Raise 이벤트");
+
+            string id = Guid.NewGuid().ToString();
+            object[] contcnt = new object[]
+            {
+            id
+            };
+
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+            SendOptions sendOption = new SendOptions { Reliability = true };
+
+            bool success =
+                PhotonNetwork.RaiseEvent((byte)PunEventType.GameIdSync,
+                    contcnt,
+                    raiseEventOptions,
+                    sendOption);
+
+            Debug.Log($"[Photon] RaiseEvent 보냄? {success}");
+        }
     }
 
     IEnumerator Test ()

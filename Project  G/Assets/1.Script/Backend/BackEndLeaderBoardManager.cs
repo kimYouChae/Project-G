@@ -78,7 +78,7 @@ public class BackEndLeaderBoardManager : Singleton<BackEndLeaderBoardManager>
     {
         Param param = new Param();
         param.Add("Score", score);
-        param.Add("UserIndates", extraData);
+        param.Add("ExtraData", extraData);
 
         // ##TODO : 일단 숲밖에 없으니까 0으로 해놓기 
         string leaderBoarduuid = leaderBoardItem[0].uuid;

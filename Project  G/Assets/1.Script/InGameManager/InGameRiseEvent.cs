@@ -7,7 +7,8 @@ using UnityEngine;
 
 public enum PunEventType 
 {
-    UserDataSync = 1
+    UserDataSync = 1,
+    GameIdSync = 2
 }
 
 public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
@@ -25,6 +26,7 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
+        Debug.Log($"[Photon] 수신된 eventCode = {eventCode}");
 
         // 유저 데이터 싱크 이벤트
         if (eventCode == (int)PunEventType.UserDataSync) 
@@ -42,6 +44,17 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             PunIngameManager.Instance.AddInGamePlayer(actorNum, player);
 
             player.PrintPlayer();
+        }
+
+        // 게임 ID 싱크 이벤트
+        if(eventCode == (int)PunEventType.GameIdSync) 
+        {
+            Debug.Log("게임 ID 싱크 이벤트 OnEvent실행");
+            object[] data = (object[])photonEvent.CustomData;
+
+            string id = (string)data[0];
+
+            PunIngameManager.Instance.GameIdGuid = id;
         }
     }
 

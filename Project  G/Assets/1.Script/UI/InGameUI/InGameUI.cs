@@ -110,6 +110,7 @@ public partial class InGameUI : MonoBehaviour
         BackendReturnObject bro = Backend.BMember.IsAccessTokenAlive();
         if (bro.IsSuccess())
         {
+
             Debug.Log("엑세스 토큰이 살아있습니다. 리더보드 저장을 시작합니다");
             // (리더보드용) 점수저장
             var indate = ScoreDataManager.Instance.InserToLeaderBoardTableAndReturnIndate(type, currScore);
