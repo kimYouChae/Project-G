@@ -14,11 +14,8 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
 
     // 생성된 방 정보
     private List<RoomInfo> roomInfoList;
-    // room에 참가한 플레이어 정보
-    private Player[] playerList;
     
     public List<RoomInfo> RoomInfoList { get { return roomInfoList; } }
-    public Player[] PlayerList { get { return playerList; } }
     public int RoomLength { get { return roomInfoList.Count; } }
 
     public Action ServerConnectAction { get => serverConnectAction;  }
