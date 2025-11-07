@@ -10,7 +10,6 @@ public class SpawnerManager : MonoBehaviour
 
     private Action<int> bulletSpawn;
 
-    const string DEFAULT_SPAWNER = "Spawner";
     const string BASIC_BULLET_SPAWNER = "BulletSpawner";
     const string GUIDED_MISSILE_SPAWNER = "GuidedMissileSpanwer";
     const string LASER_SPAWNER = "LaserSpawner";
@@ -70,16 +69,16 @@ public class SpawnerManager : MonoBehaviour
         switch (sType) 
         {
             case SpawnerType.BasicSpanwer:
-                InstanceSpanwer(sType, dType, DEFAULT_SPAWNER + "/" + BASIC_BULLET_SPAWNER);
+                InstanceSpanwer(sType, dType, Define.DEFAULT_SPAWNER + BASIC_BULLET_SPAWNER);
                 break;
             case SpawnerType.GuideMissileSpawner: 
-                InstanceSpanwer(sType, dType, DEFAULT_SPAWNER + "/" + GUIDED_MISSILE_SPAWNER);
+                InstanceSpanwer(sType, dType, Define.DEFAULT_SPAWNER + GUIDED_MISSILE_SPAWNER);
                 break;
             case SpawnerType.LaserSpawner: 
-                InstanceSpanwer(sType, dType, DEFAULT_SPAWNER + "/" + LASER_SPAWNER);
+                InstanceSpanwer(sType, dType, Define.DEFAULT_SPAWNER + LASER_SPAWNER);
                 break;
             case SpawnerType.FourDirSpanwer: 
-                InstanceSpanwer(sType, dType, DEFAULT_SPAWNER + "/" + FOUR_DIRECET_SPAWNER);
+                InstanceSpanwer(sType, dType, Define.DEFAULT_SPAWNER + FOUR_DIRECET_SPAWNER);
                 break;
         }
     }

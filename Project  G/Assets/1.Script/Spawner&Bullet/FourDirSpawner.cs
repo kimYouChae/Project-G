@@ -6,9 +6,7 @@ using Random = UnityEngine.Random;
 
 public class FourDirSpawner : NetSpawner
 {
-    [Header("===FourDirSpawner===")]
-    [SerializeField]
-    private GameObject fourBulletSpawnObj;
+    const string fourDirSpanwerName = "FourDirSpawnObj";
 
     public override void SettingBulletShootPosi()
     {
@@ -27,6 +25,10 @@ public class FourDirSpawner : NetSpawner
 
     private IEnumerator ShootBulletCicle()
     {
+        // 위치 : 필드내 랜덤 
+        // puninGameManager의 Quter값 바탕으로
+        QuadrantType type = ownerTrs.GetComponent<NetPlayer>().PlayerQuadtype;
+
         while (true)
         {
             // ## 임시 쿨타임 Nf
@@ -40,10 +42,6 @@ public class FourDirSpawner : NetSpawner
             {
                 spanwerAnimator.ChangeAttackAnimation(SpanwerAnimState.Attack, true);
 
-                // 위치 : 필드내 랜덤 
-                // puninGameManager의 Quter값 바탕으로
-                QuadrantType type = ownerTrs.GetComponent<NetPlayer>().PlayerQuadtype;
-
                 Debug.Log("현재 로컬의 사분면 타입 : " + type);
 
                 float ranX = Random.Range(Define.twoMemberFieldMin[type].x, Define.twoMemberFieldMax[type].x);
@@ -56,7 +54,7 @@ public class FourDirSpawner : NetSpawner
 
     private void CreateFourBulletObj(float ranX, float ranY) 
     {
-        GameObject temp = PhotonNetwork.Instantiate("FourDirSpawnObj", new Vector3(ranX, ranY, 0), Quaternion.identity);
+        GameObject temp = PhotonNetwork.Instantiate(Define.DEFAULT_SPAWNER + fourDirSpanwerName, new Vector3(ranX, ranY, 0), Quaternion.identity);
     }
 
 }

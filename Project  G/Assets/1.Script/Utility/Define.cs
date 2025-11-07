@@ -4,7 +4,11 @@ using UnityEngine;
 
 static public class Define
 {
+    [Header("테이블명")]
     public static readonly string USERTABLE = "USER_DATA";
+
+    [Header("폴더명")]
+    public static string DEFAULT_SPAWNER = "Spawner/";   // 스포너 상위 폴더 이름
 
     public static readonly Dictionary<MapType, string> MAPTYPEBY_LEADERBOARD_TABLE = new Dictionary<MapType, string>() 
     {
