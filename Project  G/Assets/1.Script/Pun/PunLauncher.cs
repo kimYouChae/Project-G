@@ -1,26 +1,66 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PunLauncher : MonoBehaviourPunCallbacks
 {
     // 게임 버젼
-    string gameVersion = "1";
+    private string gameVersion = "1";
+
+    private bool isReturningFromGame = false;       // 게임씬 -> 로비씬 돌아왔는지
 
     private void Awake()
     {
+        SceneManager.sceneLoaded += SceneLoaded;
+
         // LoadLevel() 사용가능 ? 
         // 씬 동기화 | 마스터 클라이언트가 씬을 바꾸면 다른 클라이언트들도 자동으로 같은 씬으로 이동하게 해 줌
         // PhotonNetwork.LoadLevel("GameScene");로 씬 전환 해야함
         PhotonNetwork.AutomaticallySyncScene = true;
 
-        if (!PhotonNetwork.IsConnected)
+        if (!PunConnected.isConnectedPhoton && !PhotonNetwork.IsConnected)
         {
             // *필수* 포톤 서버에 연결!
             PhotonNetwork.GameVersion = gameVersion;
             PhotonNetwork.ConnectUsingSettings();
+
+            PunConnected.isConnectedPhoton = true;
+
+            Debug.Log("[PunLauncher] Photon 서버 최초 연결 시도");
+
+            // 타이틀 화면 켜기
+            LobbyUIManager.Instance.ChangePanel(LobbyPanelType.None, LobbyPanelType.Title);
+        }
+        else 
+        {
+            Debug.Log("[PunLauncher] 이미 Photon 서버에 연결되어 있음");
+            isReturningFromGame = true;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= SceneLoaded;
+    }
+
+    private void SceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // awake 실행하고 -> 씬 로드 완료 되기 때문에 
+        // awake에서 isReturningFromGame가 true, 이후 if문 들어감 
+
+        // 1. 로비씬
+        // 2. 접속해 있는 상태일 때 
+        if (scene.name == Define.sceneNames[SceneType.Lobby]
+            && isReturningFromGame)
+        {
+            // waiting Room 화면 켜기 
+            LobbyUIManager.Instance.ChangePanel(LobbyPanelType.None, LobbyPanelType.WaitingRoom);
+            // 유저 업데이트 
+            LobbyUIManager.Instance.UpdateWaitinRoomView(PhotonNetwork.PlayerList);
         }
     }
 
@@ -30,8 +70,11 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnConnectedToMaster()
     {
+        // 최초 접속 , 재접속 , 룸 이동, 로비 이동 등의 과정에서 실행됨. 
+
         Debug.Log("Pun : OnConnectedToMaster 콜백실행 | 연결이 성공적입니다");
 
+        // ##TODO : 여기에 실행되면 시도떄도없이 마구마구실행됨
         PunLobbyManager.Instance.ServerConnectAction?.Invoke();
     }
     public override void OnDisconnected(DisconnectCause cause)

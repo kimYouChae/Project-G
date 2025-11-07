@@ -89,7 +89,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
         // 호스트만 - 게임 (고유) 아이디 동기화
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("게임 고유 ID Raise 이벤트");
+            Debug.Log("[GameIdSync]게임 고유 ID Raise 이벤트");
 
             string id = Guid.NewGuid().ToString();
             object[] contcnt = new object[]
@@ -106,7 +106,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
                     raiseEventOptions,
                     sendOption);
 
-            Debug.Log($"[Photon] RaiseEvent 보냄? {success}");
+            Debug.Log($"[GameIdSync] RaiseEvent 보냄? {success}");
         }
     }
 
@@ -191,7 +191,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
     private void UserDataRaiseEvent(int actorNum) 
     {
-        Debug.Log("유저데이터Raise이벤트");
+        Debug.Log("[UserDataSync] 유저데이터Raise이벤트");
 
         MapType currMapType = GetMapType();
 
@@ -209,10 +209,12 @@ public class PunIngameManager : Singleton<PunIngameManager>
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         SendOptions sendOption = new SendOptions { Reliability = true };
 
-        PhotonNetwork.RaiseEvent((byte)PunEventType.UserDataSync,
+        bool success = PhotonNetwork.RaiseEvent((byte)PunEventType.UserDataSync,
             contcnt,
             raiseEventOptions,
             sendOption);
+
+        Debug.Log($"[UserDataSync] RaiseEvent 보냄? {success}");
     }
 
     public void AddInGamePlayer(int actorNum, InGamePlayer player) 

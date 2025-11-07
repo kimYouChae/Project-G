@@ -31,7 +31,7 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
         // 유저 데이터 싱크 이벤트
         if (eventCode == (int)PunEventType.UserDataSync) 
         {
-            Debug.Log("유저 데이터 싱크 이벤트 OnEvent실행");
+            Debug.Log("[UserDataSync] 유저 데이터 싱크 이벤트 OnEvent실행");
             object[] data = (object[])photonEvent.CustomData;
 
             int actorNum = (int)data[0];
@@ -49,7 +49,7 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
         // 게임 ID 싱크 이벤트
         if(eventCode == (int)PunEventType.GameIdSync) 
         {
-            Debug.Log("게임 ID 싱크 이벤트 OnEvent실행");
+            Debug.Log("[GameIdSync] 게임 ID 싱크 이벤트 OnEvent실행");
             object[] data = (object[])photonEvent.CustomData;
 
             string id = (string)data[0];

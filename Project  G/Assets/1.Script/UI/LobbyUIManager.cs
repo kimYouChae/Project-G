@@ -77,6 +77,8 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     #region 외부에서 view를 수정
     public void UpdateWaitinRoomView(Player[] playerref)
     {
+        if (waitingRoomView == null)
+            Debug.Log("이게 NULL이고나");
         waitingRoomView.UpdateWaitingRoomInfo(playerref);
     }
 
@@ -94,8 +96,10 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         currPanel = next;
 
         // 이전 panel
-        if (panelList[(int)prePanel].activeSelf)
+        if (prePanel != LobbyPanelType.None && panelList[(int)prePanel].activeSelf) 
+        {
             panelList[(int)prePanel].SetActive(false);
+        }
 
         // 현재 panel
         if (!panelList[(int)currPanel].activeSelf)
