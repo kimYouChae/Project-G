@@ -78,6 +78,7 @@ public class UserDataManager : Singleton<UserDataManager>
     public CharacterType CharacterType { get => characterType; set { characterType = value; } }
     public BackendReturnObject LocalPlayerBro { get => localPlayerInfo; set { localPlayerInfo = value; } }
     public string BroIndate { get => localPlayerInfo.GetInDate(); }
+    public string NickName { get => userData.NickName; }
 
     protected override void Singleton_Awake()
     {

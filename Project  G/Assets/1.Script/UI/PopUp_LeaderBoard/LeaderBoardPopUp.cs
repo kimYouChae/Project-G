@@ -1,9 +1,9 @@
+using BackEnd;
 using BackEnd.Leaderboard;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LeaderBoardPopUp : UIPopUP
 {
@@ -18,17 +18,14 @@ public class LeaderBoardPopUp : UIPopUP
     [Header("===Localization===")]
     [SerializeField] TextMeshProUGUI leaderBoardText;
 
-    private void InstantiateLBObject(int cnt)
+    private LeaderBoardObject InstantiateLBObject()
     {
-        // 처음 1회 생성
-        for (int i = 0; i < cnt; i++) 
-        {
-            GameObject temp = Instantiate(leaderObject);
-            temp.transform.SetParent(content, false);
+        GameObject temp = Instantiate(leaderObject);
+        temp.transform.SetParent(content, false);
 
-            LeaderBoardObject lobj = temp.GetComponent<LeaderBoardObject>();
-            lbjList.Add(lobj);
-        }
+        LeaderBoardObject lobj = temp.GetComponent<LeaderBoardObject>();
+        lbjList.Add(lobj);
+        return lobj;
     }
 
     // On 될 때 마다 업데이트 
@@ -40,12 +37,6 @@ public class LeaderBoardPopUp : UIPopUP
         // 리더보드의 총 유저 등록 수 
         long maxPlayer = BackEndLeaderBoardManager.Instance.GetTotalCountCount(MapType.Forest);
         Debug.Log("리더보드의 총 유저 수 : " + (int)maxPlayer);
-        
-        // 리스트에 없으면 -> 1회 오픈, 새로 생성
-        if (lbjList.Count <= 0)
-        {
-            InstantiateLBObject((int)maxPlayer);
-        }
 
         UpdateLeadrBoard((int)maxPlayer);
     }
@@ -55,10 +46,35 @@ public class LeaderBoardPopUp : UIPopUP
         List<UserLeaderboardItem> userItems
             = BackEndLeaderBoardManager.Instance.GetRanking(MapType.Forest, rankCnt, 0);
 
-        for (int i = 0; i < lbjList.Count; i++)
+        // for문으로 하면 안되고 while문으로 해서 cnt + 1, hasSet에 걸리면 + 2 이렇게 해야할듯 ?? 
+
+        HashSet<string> gamdIdHash = new HashSet<string>();
+        int userIdx = 0;
+
+        while (true) 
         {
-            LeaderBoardObject leaderboard = lbjList[i];
-            UserLeaderboardItem userItem = userItems[i];
+            if (userIdx >= userItems.Count)
+                break;
+
+            UserLeaderboardItem userItem = userItems[userIdx];
+            string[] datas = userItem.extraData.Split("|");
+            string anotherUserIndate = datas[0];
+            string gamdId = datas[1];
+
+            bool flag = gamdIdHash.Add(gamdId);
+            // 중복이면
+            if (!flag) 
+            {
+                userIdx += 2;
+                continue;
+            }
+
+            LeaderBoardObject lobj;
+            // 중복이 아니면 
+            if (lbjList.Count <= userIdx)
+                lobj = InstantiateLBObject();
+            else 
+                lobj = lbjList[userIdx];
 
             // 랭킹에 따른 아이콘 설정
             int rank = int.Parse(userItem.rank);
@@ -73,15 +89,19 @@ public class LeaderBoardPopUp : UIPopUP
 
                 // 1,2,3위가 아닐 때 만 랭크 텍스트 설정 
                 rankText = userItem.rank;
-            } 
+            }
 
             // ##TODO : extraData에 맞는 유저 닉네임을 return해야함.
+            var bro = Backend.Social.GetUserInfoByInDate(anotherUserIndate);
+            string anotherUserNickName = bro.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+            string namefield = UserDataManager.Instance.NickName + "/" + anotherUserNickName;
 
-            // 업데이트 
-            // leaderboard.UpdateLeaderBoard(rankIcon, rankText, userItem.extraData, userItem.score);
-            // 임시 - 본인 닉네임만 표시 
-            leaderboard.UpdateLeaderBoard(rankIcon, rankText, userItem.nickname, userItem.score);
+            // 리더보드 오브젝트 업데이트 
+            lobj.UpdateLeaderBoard(rankIcon, rankText, namefield, userItem.score);
+
+            userIdx += 1;
         }
+
     }
 
 }
