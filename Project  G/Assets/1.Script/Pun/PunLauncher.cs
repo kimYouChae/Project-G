@@ -74,9 +74,14 @@ public class PunLauncher : MonoBehaviourPunCallbacks
 
         Debug.Log("Pun : OnConnectedToMaster 콜백실행 | 연결이 성공적입니다");
 
-        // ##TODO : 여기에 실행되면 시도떄도없이 마구마구실행됨
-        PunLobbyManager.Instance.ServerConnectAction?.Invoke();
+        // 처음 콜백 실행되었을 때만 실행 
+        if ( !PunConnected.isInitTitle) 
+        {
+            PunLobbyManager.Instance.ServerConnectAction?.Invoke();
+            PunConnected.isInitTitle = true;
+        }
     }
+
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarningFormat("Pun : OnDisconnected 콜백실행 | 연결안됨 :  {0}", cause);
