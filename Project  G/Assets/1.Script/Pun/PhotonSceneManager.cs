@@ -57,6 +57,10 @@ public class PhotonSceneManager : Singleton<PhotonSceneManager>
         if (nextSceneString == null)
             return;
 
+        // 만약 Time.scaleTime이 0이라면 다시 1로 돌리기
+        if (Time.timeScale == 0)
+            TimeManager.Play();
+
         PhotonNetwork.LoadLevel(nextSceneString);
     }
 

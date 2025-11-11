@@ -68,9 +68,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
     protected override void Singleton_Awake()
     {
-        // 만약 Time.scaleTime이 0이라면 다시 1로 돌리기
-        if (Time.timeScale == 0)
-            TimeManager.Play();
+
     }
 
     private void Start()
