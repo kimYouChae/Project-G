@@ -22,7 +22,7 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        Debug.Log($"[Photon] 수신된 eventCode = {eventCode}");
+        // Debug.Log($"[Photon] 수신된 eventCode = {eventCode}");
 
         // 유저 데이터 싱크 이벤트
         if (eventCode == (int)PunEventType.UserDataSync) 
