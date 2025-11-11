@@ -5,11 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PunEventType 
-{
-    UserDataSync = 1,
-    GameIdSync = 2
-}
+
 
 public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
 {

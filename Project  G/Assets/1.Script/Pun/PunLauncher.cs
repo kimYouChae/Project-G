@@ -118,6 +118,14 @@ public class PunLauncher : MonoBehaviourPunCallbacks
         Debug.Log($"Pun : OnPlayerEnteredRoom 콜백실행 | {newPlayer.NickName} 방에 들어왔습니다");
 
         PunLobbyManager.Instance.UpdateRoomUser();
+
+        // MapData 동기화
+        // 게임씬 -> 로비로 다시 돌아왔을 땐 해당 콜백이 실행이 안되니 또 실행안될듯 
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 다른 클라이언트는 PhotonRoomInfo의 플레이어프리팹에 아무것도 안들어가잇음
+            MapDataManager.Instance.SettingNowMapData(PhotonRoomInfo.MapTypeName);
+        }
     }
 
     /// <summary>
@@ -153,6 +161,14 @@ public class PunLauncher : MonoBehaviourPunCallbacks
 
         // 방에 들어왔을 때 방 정보 출력
         // PunLobbyManager.Instance.PrintRoomInfo(PhotonNetwork.CurrentRoom);
+
+        // MapData 동기화
+        // 게임씬 -> 로비로 다시 돌아왔을 땐 해당 콜백이 실행이 안되니 또 실행안될듯 
+        if (PhotonNetwork.IsMasterClient) 
+        {
+            // 다른 클라이언트는 PhotonRoomInfo의 플레이어프리팹에 아무것도 안들어가잇음
+            MapDataManager.Instance.SettingNowMapData(PhotonRoomInfo.MapTypeName);
+        }
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)

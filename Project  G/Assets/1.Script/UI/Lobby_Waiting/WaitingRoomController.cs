@@ -30,8 +30,6 @@ public class WaitingRoomController : ILobbyPanelInitionlize
 
     private void GameStart() 
     {
-        // Mapdata 세팅
-        MapDataManager.Instance.SettingNowMapData(PhotonRoomInfo.MapTypeName);
 
         // 마스터클라이언트만 가능 
         if (PhotonNetwork.IsMasterClient)
@@ -43,7 +41,8 @@ public class WaitingRoomController : ILobbyPanelInitionlize
         else
         {
             // PopUp 띄우기 
-            Debug.Log("마스터가 아닙니다!");
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText("(로컬라이징전) 마스터가아닙니다" );
         }
     }
 }

@@ -92,7 +92,7 @@ public class CreateRoomController : ILobbyPanelInitionlize
         RoominfoSetting(nameTitle);
 
         // 방 생성
-        FusionCreateRoom();
+        PhotonCreateRoom();
     }
 
     private void RoominfoSetting(string nameTitle)
@@ -103,7 +103,7 @@ public class CreateRoomController : ILobbyPanelInitionlize
         PhotonRoomInfo.MapTypeName = ((MapType)roomModel.currMapIndex).ToString();
     }
 
-    private void FusionCreateRoom()
+    private void PhotonCreateRoom()
     {
         Debug.Log($"방 생성 시도 - RoomName: {PhotonRoomInfo.RoomName}");
 
