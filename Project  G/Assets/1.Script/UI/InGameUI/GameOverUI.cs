@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,8 +14,10 @@ public partial class InGameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameOverTimeText;
     [SerializeField] private TextMeshProUGUI bestScoreText;
     [SerializeField] private Button backToRoom;
+    [SerializeField] private TextMeshProUGUI isnotMasterText;
 
     const string BestScoreText = "! 최고 기록 갱신 !";
+    const string isNotMatsterText = "호스트가 버튼을 누를 때 까지 기다려주세요!";
 
     private void InitGameOverUI() 
     {
@@ -31,6 +34,17 @@ public partial class InGameUI : MonoBehaviour
             bestScoreText.text = BestScoreText;
         }
 
+        // 마스터 클라이언트만 버튼 ON
+        if (PhotonNetwork.IsMasterClient)
+        {
+            backToRoom.gameObject.SetActive(true);
+            isnotMasterText.text = "";
+        }
+        else 
+        {
+            backToRoom.gameObject.SetActive(false);
+            isnotMasterText.text = isNotMatsterText;
+        }
     }
 
     public void BacktoLobbyRoom() 
