@@ -177,7 +177,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         PhotonView view = PhotonView.Find(viewId);
         if (view != null) 
         {
-            InGameUI.GetInstance().HighlightPlayer(view.transform);
+            InGameUI.Instance.HighlightPlayer(view.transform);
         }
 
         TimeManager.Stop();

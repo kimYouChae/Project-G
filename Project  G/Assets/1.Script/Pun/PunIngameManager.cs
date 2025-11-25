@@ -113,7 +113,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
     IEnumerator Test ()
     {
         // 로딩 UI ON
-        InGameUI.GetInstance().LoadingPanel.SetActive(true);
+        InGameUI.Instance.LoadingPanel.SetActive(true);
 
         // 딕셔너리에 들어온 count가 방의 입장인원과 같으면 -> 게임 시작 
         while (true) 
@@ -125,7 +125,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
         }
 
         // 로딩 UI OFF
-        InGameUI.GetInstance().LoadingPanel.SetActive(false);
+        InGameUI.Instance.LoadingPanel.SetActive(false);
 
         // 시작 시간 지정
         double startTime = PhotonNetwork.Time + 3.0;
@@ -139,7 +139,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
             if (sec != prevSec && remain > 0)
             {
-                InGameUI.GetInstance().CountDownUpdateText(sec);
+                InGameUI.Instance.CountDownUpdateText(sec);
                 Debug.Log(sec);
                 prevSec = sec;
             }
@@ -152,8 +152,8 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
         Debug.Log("게임 시작!");
 
-        InGameUI.GetInstance().CountDownText.gameObject.SetActive(false);
-        InGameUI.GetInstance().GamePanel.SetActive(true);
+        InGameUI.Instance.CountDownText.gameObject.SetActive(false);
+        InGameUI.Instance.GamePanel.SetActive(true);
         localPlayer.GetComponent<NetPlayer>().IsReadToMove = true;
         ScoreManager.Instance.ScoreBegin((float)PhotonNetwork.Time);
     }
@@ -223,7 +223,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
         ingamePlayer.Add(actorNum, player);
         ingamePlayerList.Add(player);
 
-        InGameUI.GetInstance().UpdatePlayerInfoText(player);
+        InGameUI.Instance.gameUI.UpdatePlayerInfoText(player);
     }
 
     #region Photon 관련 공통함수 
