@@ -47,8 +47,9 @@ public class ScoreManager : Singleton<ScoreManager>
         }
 
         // UI 업데이트
-        InGameUI.GetInstance().UpdateScoreText(currScore);
-        InGameUI.GetInstance().UpdateTimeText(currTime);
+        InGameUI.Instance.gameUI.UpdateScoreText(currScore);
+        InGameUI.Instance.gameUI.UpdateTimeText(currTime);
+        InGameUI.Instance.gameUI.UpdateLevelText(nowLevel);
     }
 
     public void ScoreBegin(float networkStartTime) 

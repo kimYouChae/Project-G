@@ -6,20 +6,23 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class InGameUI : MonoBehaviour
+public class GameOverUI : MonoBehaviour
 {
     [Space]
-    [Header("===GameOverUI===")]
-    [SerializeField] private TextMeshProUGUI gameOverScoreText;
-    [SerializeField] private TextMeshProUGUI gameOverTimeText;
+    [Header("===Header===")]
+    [SerializeField] private TextMeshProUGUI timeHeadling;  // "생존시간" 텍스트
+    [SerializeField] private TextMeshProUGUI scoreHeading;  // "점수" 텍스트
+
+    [Header("===numberText")]
+    [SerializeField] private TextMeshProUGUI gameOverScoreText; // 점수(숫자) 텍스트
+    [SerializeField] private TextMeshProUGUI gameOverTimeText;  // 시간(숫자) 텍스트
+
+    [Header("===other===")]
     [SerializeField] private TextMeshProUGUI bestScoreText;
     [SerializeField] private Button backToRoom;
     [SerializeField] private TextMeshProUGUI isnotMasterText;
 
-    const string BestScoreText = "! 최고 기록 갱신 !";
-    const string isNotMatsterText = "호스트가 버튼을 누를 때 까지 기다려주세요!";
-
-    private void InitGameOverUI() 
+    private void Awake()
     {
         backToRoom.onClick.AddListener(BacktoLobbyRoom);
     }
@@ -31,7 +34,7 @@ public partial class InGameUI : MonoBehaviour
 
         if (bestScore) 
         {
-            bestScoreText.text = BestScoreText;
+            bestScoreText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.InGame_Renewal);
         }
 
         // 마스터 클라이언트만 버튼 ON
@@ -43,7 +46,7 @@ public partial class InGameUI : MonoBehaviour
         else 
         {
             backToRoom.gameObject.SetActive(false);
-            isnotMasterText.text = isNotMatsterText;
+            isnotMasterText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.InGame_Waiting); ;
         }
     }
 

@@ -46,6 +46,8 @@ public class LocalizationManager : Singleton<LocalizationManager>
 
     protected override void Singleton_Awake()
     {
+        SetUpDontDestroy();
+        
         SetLanguageType();
 
         languages = new Dictionary<LanguageType, Language>();
