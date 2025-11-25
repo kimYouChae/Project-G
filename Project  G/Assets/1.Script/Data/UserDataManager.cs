@@ -11,8 +11,8 @@ using UnityEngine;
 public class UserData 
 {
     private string nickName;        // 닉네임
-    private Dictionary<MapType, float> mapTypeToScore;  // 맵 타입별 점수 
-    private Dictionary<MapType, int> mapTypeToStage;    // 맵 타입별 스테이지 
+    private Dictionary<MapType, float> mapTypeToScore;  // 맵 타입별 (최고) 점수 
+    private Dictionary<MapType, int> mapTypeToStage;    // 맵 타입별 (최고) 스테이지 
 
     public string NickName { get => nickName; set => nickName = value; }
     public Dictionary<MapType, float> MapTypeToScore { get => mapTypeToScore; set => mapTypeToScore = value; }
