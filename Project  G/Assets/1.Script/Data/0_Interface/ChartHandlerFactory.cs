@@ -16,6 +16,7 @@ public class ChartHandlerFactory
             { "Stage_Forest" , new StageChart()},
             { "Localization_Table", new LocalizationChart()},
             { "LocalizationTable_ver2", new LocalizationChart() },
+            { "Localization_InGame", new LocalizationChart() },
             { "CharacterData", new CharacterChart()},
             { "Achievement_Stage", new StageAchievementChart()}
         };

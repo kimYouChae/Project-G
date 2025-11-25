@@ -29,9 +29,6 @@ public static partial class LocalizationKey
     public const string RoomList_InputPassword = "RoomList_InputPassword";
     public const string RoomList_EnterRoom = "RoomList_EnterRoom";
     public const string Waiting_StartGame = "Waiting_StartGame";
-    public const string InGame_CurrTime = "InGame_CurrTime";
-    public const string InGame_CurrScore = "InGame_CurrScore";
-    public const string InGame_Loading = "InGame_Loading";
     public const string Popup_CreateRoomFailed = "Popup_CreateRoomFailed";
     public const string Popup_PasswordCopyFailed = "Popup_PasswordCopyFailed";
     public const string Popup_RoomNameEmpty = "Popup_RoomNameEmpty";
