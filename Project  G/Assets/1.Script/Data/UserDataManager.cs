@@ -236,7 +236,7 @@ public class UserDataManager : Singleton<UserDataManager>
     {
         // owner_inData 칼럼이 "로컬에 저장된 returnObject의 inData"
         Where where = new Where();
-        where.Equal("owner_inDate", BackEndServerManager.Instance.PlayerInfo.GetInDate());
+        // where.Equal("owner_inDate", BackEndServerManager.Instance.PlayerInfo.GetInDate());
         return where;
     }
 }

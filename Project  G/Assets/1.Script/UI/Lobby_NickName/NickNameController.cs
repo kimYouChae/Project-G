@@ -55,7 +55,7 @@ public class NickNameController : ILobbyPanelInitionlize
         UserDataManager.Instance.InsertToUserTable(inputNickName);
 
         // 닉네임 업데이트
-        BackEndServerManager.Instance.UpdateNickName(inputNickName);
+        GameServices.Instance.authService.UpdateNickName(inputNickName);
 
         // 포톤 닉네임 세팅 
         PunLobbyManager.Instance.SettingNickName(inputNickName);

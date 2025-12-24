@@ -43,6 +43,8 @@ public class TitleUI : MonoBehaviour
         // 콜백으로 하는 이유 : 해당 메서드는 SendQueue방식인데 
         // 무조건 GuestLogin메서드가 끝난 후 실행되야하기때문에 
         // 콜백으로 넘겨서 명시적으로 실행시켜주기
+
+        /*
         BackEndServerManager.Instance.GuestLogin( () => 
         {
             // 2. 닉네임 유무 결과
@@ -82,7 +84,7 @@ public class TitleUI : MonoBehaviour
             // 리더보드 불러오기 
             BackEndLeaderBoardManager.Instance.GetLeaderBoard();
         });
-
+        */
 
     }
 }
