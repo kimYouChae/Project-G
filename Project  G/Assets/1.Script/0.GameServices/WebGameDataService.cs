@@ -3,5 +3,15 @@ using System.Collections.Generic;
 
 public class WebGameDataService : IGameDataService
 {
-    // 게임 종료 시 저장 기능 
+    private string baseUrl;
+
+    public WebGameDataService(string url)
+    {
+        this.baseUrl = url;
+    }
+
+    public void UpdateGameDataService(string myId, string partnerId, float score, int mapType)
+    {
+        
+    }
 }

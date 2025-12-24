@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class WebAuthService : IAuthService
 {
-    public void AuthServies(string steamID, string nick, string country)
+    private string baseUrl;
+
+    public WebAuthService(string url) 
+    {
+        this.baseUrl = url;
+    }
+
+    public void AuthService(string steamID, string nick, string country)
     {
         
     }

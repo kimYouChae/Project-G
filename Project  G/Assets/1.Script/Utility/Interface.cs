@@ -6,27 +6,23 @@ using UnityEngine;
 #region GameServies
 public interface IAuthService
 {
-    public void AuthServies(string steamID, string nick, string country );
-}
-
-public interface IPlayerDataService
-{
-
+    public void AuthService(string id, string nick, string country );
 }
 
 public interface IRankingService
 {
-
+    public void GetMyRankingService(string myId, int mapType);
+    public void GetRankerService(int mapType);
 }
 
 public interface IGameDataService
 {
-
+    public void UpdateGameDataService(string myId, string partnerId, float score, int mapType);
 }
 
 public interface IChartService 
 {
-         
+    public void ChartService(DataType dataType);           
 }
 
 #endregion
