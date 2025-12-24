@@ -16,12 +16,13 @@ public enum DataType
 
 public sealed class GameServices 
 {
+    // 싱글톤
     public static GameServices Instance { get; private set; }
     
-    public IAuthService authService { get; private set; }
-    public IRankingService rankingService { get; private set; }
-    public IGameDataService gameDataService { get; private set; }
-    public IChartService chartDataService { get; private set; }
+    public IAuthService AuthService { get; private set; }
+    public IRankingService RankingService { get; private set; }
+    public IGameDataService GameDataService { get; private set; }
+    public IChartService ChartDataService { get; private set; }
 
     private static readonly string baseUrl = "http://" + "localhost/Project_G/api/";
 
@@ -29,9 +30,9 @@ public sealed class GameServices
     {
         Instance = new GameServices();
 
-        authService = new WebAuthService(baseUrl);
-        rankingService = new WebRankingService(baseUrl);   
-        gameDataService = new WebGameDataService(baseUrl);
-        chartDataService = new WebChartService(baseUrl);
+        AuthService = new WebAuthService(baseUrl);
+        RankingService = new WebRankingService(baseUrl);   
+        GameDataService = new WebGameDataService(baseUrl);
+        ChartDataService = new WebChartService(baseUrl);
     }
 }

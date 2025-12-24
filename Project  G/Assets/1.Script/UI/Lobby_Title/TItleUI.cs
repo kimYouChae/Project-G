@@ -29,7 +29,7 @@ public class TitleUI : MonoBehaviour
             if (Input.anyKeyDown) 
             {
                 LobbyUIManager.Instance.OnOffDarkPanel(true);
-                EnterByLocalData();
+                LoginUser();
                 yield break;
             }
 
@@ -37,54 +37,14 @@ public class TitleUI : MonoBehaviour
         }
     }
 
-    private void EnterByLocalData() 
+    private void LoginUser() 
     {
-        // 1. 게스트 로그인
-        // 콜백으로 하는 이유 : 해당 메서드는 SendQueue방식인데 
-        // 무조건 GuestLogin메서드가 끝난 후 실행되야하기때문에 
-        // 콜백으로 넘겨서 명시적으로 실행시켜주기
+        // 1. 스팀 로그인
+        string steamID = SteamAPI.instance.GetSteamID();
+        string nick = SteamAPI.instance.GetSteamNick();
+        string cnr = SteamAPI.instance.GetCountry();
 
-        /*
-        BackEndServerManager.Instance.GuestLogin( () => 
-        {
-            // 2. 닉네임 유무 결과
-            NickCheckResultType result = BackEndServerManager.Instance.isHasNickName();
-            switch (result)
-            {
-                case NickCheckResultType.NoPlayerInfo:
-                    Debug.Log("PlayerInfo데이터가 NUll입니다");
-                    return;
-
-                // 2. 닉네임이 없으면 ? 
-                case NickCheckResultType.NoNickname:
-                    Debug.Log("닉네임이 없습니다. 닉네임을 설정하려 갑시다");
-                    // 2-1. 닉네임 ui On
-                    LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.NickName);
-                    break;
-
-                // 3. 닉네임 있으면 
-                case NickCheckResultType.HasNickname:
-                    Debug.Log("닉네임이 있습니다. 로비 panel로 갑니다");
-
-                    // 뒤끝 테이블에 저장되어 있는 유저 정보 가져오기 
-                    UserDataManager.Instance.GetUserDataInTable();
-
-                    // 3-1. lobby Ui On
-                    LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
-
-                    break;
-            }
-
-            // 차트 불러오기 
-            BackendChartManager.Instance.InitBackendChart();
-
-            // 차트 불러온 후 로컬라이징
-            LocalizationManager.Instance.ChangeLanguageType();
-
-            // 리더보드 불러오기 
-            BackEndLeaderBoardManager.Instance.GetLeaderBoard();
-        });
-        */
-
+        // 2. 로그인 API
+        GameServices.Instance.AuthService.AuthService(steamID, nick, cnr);
     }
 }
