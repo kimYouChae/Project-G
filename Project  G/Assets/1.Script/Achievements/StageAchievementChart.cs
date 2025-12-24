@@ -1,12 +1,12 @@
-using LitJson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StageAchievementChart : ICharHandler
 {
-    public void IParseAndStore(LitJson.JsonData jsonData)
+    public void IParseAndStore(string jsonStr)
     {
+        /*
         foreach (LitJson.JsonData row in jsonData) 
         {
             string title = row["title"].ToString();
@@ -18,5 +18,6 @@ public class StageAchievementChart : ICharHandler
             AchievementsManager.Instance.AddtoAchiveContainer(stageAchievement);
 
         }
+        */
     }
 }

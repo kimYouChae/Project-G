@@ -1,4 +1,3 @@
-using LitJson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +12,9 @@ public class LocalizationChart : ICharHandler
     /// Chinese : 连接到服务器
     /// </summary>
 
-    public void IParseAndStore(LitJson.JsonData jsonData)
+    public void IParseAndStore(string jsonStr)
     {
+        /*
         foreach (LitJson.JsonData row in jsonData)
         {
             string key = row["key"].ToString();
@@ -29,8 +29,8 @@ public class LocalizationChart : ICharHandler
 
                 LocalizationManager.Instance.AddLanguageDictionary(currType, key, value);
             }
+        
         }
+        */
     }
-
-    
 }

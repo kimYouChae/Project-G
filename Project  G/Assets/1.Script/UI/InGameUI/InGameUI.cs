@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
-using Photon.Pun;
-using BackEnd;
-using Unity.VisualScripting;  // 두트윈 
+
 
 public class InGameUI : Singleton<InGameUI>
 {

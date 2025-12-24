@@ -1,13 +1,12 @@
-using BackEnd.BackndLitJson;
-using LitJson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnerChart : ICharHandler
 {
-    public void IParseAndStore(LitJson.JsonData jsonData)
+    public void IParseAndStore(string jsonStr)
     {
+        /*
         foreach (LitJson.JsonData row in jsonData)
         {
             // row는 각 원소(오브젝트)
@@ -18,5 +17,6 @@ public class SpawnerChart : ICharHandler
             SpawnerData data = new SpawnerData(type, speed,accerate);
             SpanwerDataManager.Instance.AddtoMapDictionary(type ,data);
         }
+        */
     }
 }

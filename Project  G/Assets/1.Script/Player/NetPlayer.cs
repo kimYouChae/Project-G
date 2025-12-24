@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 using Photon.Pun;
-using System.Security.Cryptography;
-using BackEnd.Tcp;
 
 public class NetPlayer : MonoBehaviourPun, IPunObservable
 {

@@ -1,12 +1,12 @@
-using LitJson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterChart : ICharHandler
 {
-    public void IParseAndStore(LitJson.JsonData jsonData)
+    public void IParseAndStore(string jsonStr)
     {
+        /*
         foreach (LitJson.JsonData row in jsonData) 
         {
             string characterName = row["charaterName"].ToString();
@@ -17,5 +17,6 @@ public class CharacterChart : ICharHandler
             CharacterData characterData = new CharacterData(characterName, cType, sToolTip, aType);
             CharacterManager.Instance.AddtoCharacterContainer(characterData);
         }
+        */
     }
 }

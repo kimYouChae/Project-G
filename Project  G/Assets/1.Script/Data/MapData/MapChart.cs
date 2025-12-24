@@ -1,12 +1,12 @@
-using LitJson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MapChart : ICharHandler
 {
-    public void IParseAndStore(LitJson.JsonData jsonData)
+    public void IParseAndStore(string jsonStr)
     {
+        /*
         foreach (LitJson.JsonData row in jsonData)
         {
             // row는 각 원소(오브젝트)
@@ -20,5 +20,6 @@ public class MapChart : ICharHandler
             MapData data = new MapData(mapType, diffi, contents, rate);
             MapDataManager.Instance.AddtoMapDictionary(mapType, data);
         }
+        */
     }
 }

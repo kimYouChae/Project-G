@@ -1,5 +1,3 @@
-using BackEnd;
-using BackEnd.Leaderboard;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;

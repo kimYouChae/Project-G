@@ -30,7 +30,7 @@ public interface IChartService
 
 public interface ICharHandler
 {
-    public void IParseAndStore(LitJson.JsonData data);
+    public void IParseAndStore(string jsonStr);
 }
 
 public interface ILobbyPanelInitionlize
