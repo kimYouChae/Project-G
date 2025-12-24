@@ -21,14 +21,12 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     [SerializeField] private GameObject darkPanel;
 
     [Header("===Controller===")]
-    private NickNameController nickNameController;
     private RoomListController roomListController;
     private CreateRoomController createRoomController;
     private WaitingRoomController waitingRoomController;
     private LobbyController lobbyController;
 
     [Header("===View===")]
-    private NickNameView nickNameView;
     private RoomListView roomListView;
     private CreateRoomView createRoomView;
     private WaitingRoomView waitingRoomView;
@@ -41,11 +39,6 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     private void InitMVCController()
     {
-        // NickName MVC 
-        nickNameView = GetComponent<NickNameView>();
-        NickNameModel nickNameModel = new NickNameModel();
-        nickNameController = new NickNameController(nickNameView, nickNameModel);
-
         // RoomList MVC
         roomListView = GetComponent<RoomListView>();
         RoomListModel roomListModel = new RoomListModel();
@@ -135,7 +128,6 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     { 
         switch(type) 
         {
-            case LobbyPanelType.NickName: return nickNameController;
             case LobbyPanelType.Lobby: return lobbyController;
             case LobbyPanelType.RoomList: return roomListController;
             case LobbyPanelType.CreateRoom : return createRoomController;

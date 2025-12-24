@@ -10,7 +10,7 @@ public enum NickCheckResultType
 
 public enum LobbyPanelType
 { 
-    Title, NickName, Lobby,
+    Title, Lobby,
     RoomList, CreateRoom, WaitingRoom,
     UnTitled,
     None
