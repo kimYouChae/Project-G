@@ -46,5 +46,8 @@ public class TitleUI : MonoBehaviour
 
         // 2. 로그인 API
         GameServices.Instance.AuthService.AuthService(steamID, nick, cnr);
+
+        // 3. 차트 불러오기 
+        GameServices.Instance.ChartLogic();
     }
 }

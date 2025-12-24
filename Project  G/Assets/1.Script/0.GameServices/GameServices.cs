@@ -1,18 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum DataType
-{
-    None,
-    Achievement,
-    Character,
-    Localization_basic,
-    Localization_Ingame,
-    Localization_Player,
-    Map,
-    Spawner,
-    Stage_Forest_SpawnerInfo
-}
 
 public sealed class GameServices 
 {
@@ -34,5 +23,15 @@ public sealed class GameServices
         RankingService = new WebRankingService(baseUrl);   
         GameDataService = new WebGameDataService(baseUrl);
         ChartDataService = new WebChartService(baseUrl);
+    }
+
+    public void ChartLogic() 
+    {
+        DataType[] array = (DataType[])Enum.GetValues(typeof(DataType));
+        for (int i = 0; i < array.Length; i++)
+        {
+            ChartDataService.ChartService(array[0]);
+        }
+
     }
 }

@@ -4,30 +4,34 @@ using UnityEngine;
 
 public class ChartHandlerFactory
 {
-    Dictionary<string, ICharHandler> keyValuePairs;
+    // 싱글톤 
+    public static ChartHandlerFactory instance;
+
+    Dictionary<DataType, ICharHandler> keyValuePairs;
 
     public ChartHandlerFactory() 
     {
+        instance = new ChartHandlerFactory();
+
         // 차트가 추가되면 이 부분에 차트 이름 - 해당 클래스 생성 필요! 
-        keyValuePairs = new Dictionary<string, ICharHandler>() 
+        keyValuePairs = new Dictionary<DataType, ICharHandler>() 
         {
-            { "Map" , new MapChart()},
-            { "SpanwerData" , new SpawnerChart()},
-            { "Stage_Forest" , new StageChart()},
-            { "Localization_Table", new LocalizationChart()},
-            { "LocalizationTable_ver2", new LocalizationChart() },
-            { "Localization_InGame", new LocalizationChart() },
-            { "CharacterData", new CharacterChart()},
-            { "Achievement_Stage", new StageAchievementChart()}
+            { DataType.Map , new MapChart()},
+            { DataType.Spawner , new SpawnerChart()},
+            { DataType.Stage_Forest_SpawnerInfo , new StageChart()},
+            { DataType.Localization_basic, new LocalizationChart()},
+            { DataType.Localization_Ingame, new LocalizationChart() },
+            { DataType.Localization_Player, new LocalizationChart() },
+            { DataType.Character, new CharacterChart()},
+            { DataType.Achievement, new StageAchievementChart()}
         };
     }
 
-    public ICharHandler ChartNameByChart(string name)
+    public ICharHandler DataTypeByChart(DataType type)
     {
-        if(keyValuePairs.ContainsKey(name))
-            return keyValuePairs[name];
+        if(keyValuePairs.ContainsKey(type))
+            return keyValuePairs[type];
 
         return null;
     }
-
 }

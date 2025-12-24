@@ -1,12 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum NickCheckResultType
+
+#region GameService
+public enum DataType
 {
-    NoPlayerInfo,
-    NoNickname,
-    HasNickname
+    None,
+    Achievement,
+    Character,
+    Localization_basic,
+    Localization_Ingame,
+    Localization_Player,
+    Map,
+    Spawner,
+    Stage_Forest_SpawnerInfo
 }
+
+#endregion
+
 
 public enum LobbyPanelType
 { 
