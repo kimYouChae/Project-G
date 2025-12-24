@@ -70,13 +70,13 @@ public class InGameUI : Singleton<InGameUI>
         gameoverPanel.SetActive(true);
 
         // 현재 저장되어있는 점수
-        MapType type = PunIngameManager.Instance.GetMapType();
+        MapType mapType = PunIngameManager.Instance.GetMapType();
         float preScore = 0f;    // 이전점수
         float currScore = ScoreManager.Instance.AchiveScore;    // 현재 점수
         int currStage = ScoreManager.Instance.AchiveStage;      // 현재 스테이지
 
-        if (type != MapType.None) 
-            preScore = UserDataManager.Instance.UserData.MapTypeToScore[type];
+        if (mapType != MapType.None) 
+            preScore = UserData.Instance.ReturUserScore(mapType);
 
         // 게임오버 텍스트 설정
         SetGameOverText(currScore, preScore);
@@ -85,7 +85,7 @@ public class InGameUI : Singleton<InGameUI>
         SetUserData(currScore, currStage, preScore);
 
         // 리더보드 저장
-        SetLeadBoard(type, currScore);
+        SetLeadBoard(mapType, currScore);
 
     }
 
@@ -103,6 +103,7 @@ public class InGameUI : Singleton<InGameUI>
 
     private void SetUserData(float currScore, int currStage, float preScore) 
     {
+        /*
         // 최고점수일때만 업데이트
         if (preScore <= currScore)
         {
@@ -112,10 +113,12 @@ public class InGameUI : Singleton<InGameUI>
             // 유저 정보 업데이트
             UserDataManager.Instance.UpdateUserData();
         }
+        */
     }
 
     private void SetLeadBoard(MapType type, float currScore) 
     {
+        /*
         // 토큰이 만료되면 패스
         // = local에 유저 정보가 없으면 패스 ( 중복로그인안됨 )
         BackendReturnObject bro = Backend.BMember.IsAccessTokenAlive();
@@ -133,6 +136,6 @@ public class InGameUI : Singleton<InGameUI>
         {
             Debug.Log("엑세스 토큰이 죽었습니다. 리더보드 저장 x ");
         }
-
+        */
     }
 }

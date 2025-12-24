@@ -64,11 +64,11 @@ public class LocalizationManager : Singleton<LocalizationManager>
         TextAsset text = ResourceManager.Instance.FallBackLocalizationText;
 
         // 2. LitJson 파싱
-        LitJson.JsonData jsonData = JsonMapper.ToObject(text.text);
+        string jsonData = JsonUtility.ToJson(text);
 
         // 3. 클래스 생성
         LocalizationChart localChart = new LocalizationChart();
-        localChart.IParseAndStore(jsonData["rows"]);
+        localChart.IParseAndStore(jsonData);
     }
 
     public void AddLanguageDictionary(LanguageType type, string key, string value) 

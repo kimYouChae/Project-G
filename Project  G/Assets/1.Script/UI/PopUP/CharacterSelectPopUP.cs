@@ -119,6 +119,6 @@ public class CharacterSelectPopUP : UIPopUP
     private void SelectCharacterButton() 
     {
         // UserDataManager에 저장하기 
-        UserDataManager.Instance.CharacterType = selectCharacterType;
+        UserData.Instance.CharacterType = selectCharacterType;
     }
 }

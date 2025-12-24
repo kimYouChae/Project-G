@@ -33,14 +33,17 @@ public class LeaderBoardPopUp : UIPopUP
         // leaderBoardText.text = LocalizationManager.Instance.ReturnLocalizationString();
 
         // 리더보드의 총 유저 등록 수 
+        /*
         long maxPlayer = BackEndLeaderBoardManager.Instance.GetTotalCountCount(MapType.Forest);
         Debug.Log("리더보드의 총 유저 수 : " + (int)maxPlayer);
 
         UpdateLeadrBoard((int)maxPlayer);
+        */
     }
 
     private void UpdateLeadrBoard(int rankCnt) 
     {
+        /*
         List<UserLeaderboardItem> userItems
             = BackEndLeaderBoardManager.Instance.GetRanking(MapType.Forest, rankCnt, 0);
 
@@ -99,7 +102,7 @@ public class LeaderBoardPopUp : UIPopUP
 
             userIdx += 1;
         }
-
+        */
     }
 
 }
