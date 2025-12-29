@@ -3,13 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 
+#region DTO
 public class LoginRequestDTO
 {
-    public string SteamID { get; set; }
-    public string NickName { get; set; }
-    public string Country { get; set; }
+    public string SteamID;
+    public string NickName;
+    public string Country;
 }
 
+public class LoginResponseDTO<T>
+{
+    public bool Success;
+    public bool IsNewUser;
+    public T Data;
+}
+
+public class UserMapTypeByScoreDTO
+{
+    public int MapType;
+    public float Score;
+}
+#endregion
 
 public class WebAuthService : IAuthService
 {
@@ -54,6 +68,43 @@ public class WebAuthService : IAuthService
         string responseText = request.downloadHandler.text;
         Debug.Log(responseText);
 
-        // ##TODO : 여기서 responseText를 Json으로 파싱해서 UserData에 담아줘야함.
+        Pasing(responseText);
+    }
+
+    private void Pasing(string json) 
+    {
+        LoginResponseDTO<List<UserMapTypeByScoreDTO>> loginResponseDTO
+            = JsonUtility.FromJson<LoginResponseDTO<List<UserMapTypeByScoreDTO>>>(json);
+
+        if (loginResponseDTO == null) 
+        {
+            Debug.Log($"WebAuthService : 유저 정보 파싱 중에 오류 발생 , Json으로 변환 불가 \n {json}");
+            return;
+        }
+
+        if (loginResponseDTO.Success == false) 
+        {
+            Debug.Log($"WebAuthService : 유저 로그인 실패 \n {json}");
+            return;
+        }
+
+        // 기존 유저이면 
+        if (!loginResponseDTO.IsNewUser) 
+        {
+            Debug.Log("WebAuthService : 기존 유저 로그인 성공 ");
+            // UserDataManager에 값 넣어주기
+            List<UserMapTypeByScoreDTO> typebyscore = loginResponseDTO.Data;
+            for(int i = 0; i < typebyscore.Count; i++) 
+            {
+                MapType type = (MapType)typebyscore[i].MapType;
+                float score = typebyscore[i].Score;
+
+                UserDataManager.Instance.SetScoreByMapType(type, score);
+            }
+            return;
+        }
+
+        // 새로운 유저이면
+        Debug.Log("WebAuthService : 새로운 유저 로그인 성공 ");
     }
 }

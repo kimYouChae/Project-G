@@ -49,7 +49,7 @@ public class StageAchievement : Achievement
 
     public override bool IIsComplete()
     {
-        int userStage = UserData.Instance.ReturnUserStage(mapType);
+        int userStage = UserDataManager.Instance.ReturnUserStage(mapType);
 
         // 유저가 달성한 스테이지가 achive 스테이지보다 많으면 true, 아니면 false
         return userStage >= achiveStage;
@@ -60,7 +60,7 @@ public class StageAchievement : Achievement
         StringBuilder builder = new StringBuilder();
         builder.Append( LocalizationManager.Instance.MapNameReturn(mapType) + " : ");
         builder.Append('\n');
-        builder.Append(UserData.Instance.ReturnUserStage(mapType) + " / " + achiveStage 
+        builder.Append(UserDataManager.Instance.ReturnUserStage(mapType) + " / " + achiveStage 
             + LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Stage));
         return builder.ToString();
     }

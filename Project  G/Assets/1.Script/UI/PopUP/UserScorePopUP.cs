@@ -28,7 +28,7 @@ public class UserScorePopUP : UIPopUP
             if (mapType == MapType.None)
                 return;
 
-            float v = UserData.Instance.ReturUserScore(mapType);
+            float v = UserDataManager.Instance.ReturUserScore(mapType);
             IniUserScore(mapType, v);
         }
     }

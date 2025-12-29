@@ -185,7 +185,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
     private string PlayerPath() 
     {
-        CharacterType type = UserData.Instance.CharacterType;
+        CharacterType type = UserDataManager.Instance.CharacterType;
         return DEFAULT_PLAYER + "/" + type.ToString();
     }
 
@@ -201,8 +201,8 @@ public class PunIngameManager : Singleton<PunIngameManager>
         object[] contcnt = new object[]
         {
             actorNum,
-            UserData.Instance.NickName,
-            UserData.Instance.ReturUserScore(currMapType)
+            UserDataManager.Instance.NickName,
+            UserDataManager.Instance.ReturUserScore(currMapType)
         };
 
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };

@@ -76,7 +76,7 @@ public class InGameUI : Singleton<InGameUI>
         int currStage = ScoreManager.Instance.AchiveStage;      // 현재 스테이지
 
         if (mapType != MapType.None) 
-            preScore = UserData.Instance.ReturUserScore(mapType);
+            preScore = UserDataManager.Instance.ReturUserScore(mapType);
 
         // 게임오버 텍스트 설정
         SetGameOverText(currScore, preScore);

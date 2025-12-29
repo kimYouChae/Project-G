@@ -29,6 +29,7 @@ public class TitleUI : MonoBehaviour
             if (Input.anyKeyDown) 
             {
                 LobbyUIManager.Instance.OnOffDarkPanel(true);
+                
                 LoginUser();
                 yield break;
             }
@@ -40,14 +41,17 @@ public class TitleUI : MonoBehaviour
     private void LoginUser() 
     {
         // 1. 스팀 로그인
-        string steamID = SteamAPI.instance.GetSteamID();
-        string nick = SteamAPI.instance.GetSteamNick();
-        string cnr = SteamAPI.instance.GetCountry();
+        string steamID = SteamAPI.Instance.GetSteamID();
+        string nick = SteamAPI.Instance.GetSteamNick();
+        string cnr = SteamAPI.Instance.GetCountry();
 
-        // 2. 로그인 API
+        // 2. 유저데이터 스크립트에 steam 관련 정보 저장
+        UserDataManager.Instance.InsertUserInfo(steamID, nick, cnr);
+        
+        // 3. 로그인 API
         GameServices.Instance.AuthService.AuthService(steamID, nick, cnr);
 
-        // 3. 차트 불러오기 
+        // 4. 차트 불러오기 
         GameServices.Instance.ChartLogic();
     }
 }

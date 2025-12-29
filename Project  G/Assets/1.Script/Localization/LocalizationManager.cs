@@ -64,7 +64,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
         TextAsset text = ResourceManager.Instance.FallBackLocalizationText;
 
         // 2. LitJson 파싱
-        string jsonData = JsonUtility.ToJson(text);
+        string jsonData = text.text;
 
         // 3. 클래스 생성
         LocalizationChart localChart = new LocalizationChart();

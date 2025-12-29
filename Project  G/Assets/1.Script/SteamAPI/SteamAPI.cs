@@ -1,16 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class SteamAPI 
 {
     // 싱글톤 
-    public static SteamAPI instance;
-
-    public SteamAPI() 
+    private static SteamAPI instance;
+    public static SteamAPI Instance
     {
-        instance = new SteamAPI();  
+        get 
+        {
+            if (instance == null)
+                instance = new SteamAPI();
+
+            return instance;
+        }
     }
+
+    // 외부에서 생성못하게
+    private SteamAPI() { }
 
     public string GetSteamID() 
     {

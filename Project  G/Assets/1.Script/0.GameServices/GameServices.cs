@@ -6,7 +6,16 @@ using System.Collections.Generic;
 public sealed class GameServices 
 {
     // 싱글톤
-    public static GameServices Instance { get; private set; }
+    private static GameServices instance;
+    public static GameServices Instance 
+    {
+        get 
+        {
+            if(instance == null)
+                instance = new GameServices();
+            return instance;
+        }
+    }
     
     public IAuthService AuthService { get; private set; }
     public IRankingService RankingService { get; private set; }
@@ -15,10 +24,8 @@ public sealed class GameServices
 
     private static readonly string baseUrl = "http://" + "localhost/Project_G/api/";
 
-    public GameServices() 
+    private GameServices() 
     {
-        Instance = new GameServices();
-
         AuthService = new WebAuthService(baseUrl);
         RankingService = new WebRankingService(baseUrl);   
         GameDataService = new WebGameDataService(baseUrl);
