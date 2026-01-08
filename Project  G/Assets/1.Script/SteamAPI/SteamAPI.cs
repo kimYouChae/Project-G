@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 public class SteamAPI 
 {
@@ -24,7 +21,9 @@ public class SteamAPI
     public string GetSteamID() 
     {
         // 일단 임시로 아무 문자열 return
-        string steamUid = "7656119" + Guid.NewGuid().ToString();
+        var rnd = new Random();
+        //string steamUid = "7656119" + rnd.Next(1, 50).ToString();
+        string steamUid = "7656119";
 
         return steamUid;
     }
