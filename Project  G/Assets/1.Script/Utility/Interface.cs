@@ -6,7 +6,7 @@ using UnityEngine;
 #region GameServies
 public interface IAuthService
 {
-    public void AuthService(string id, string nick, string country );
+    public IEnumerator AuthService(string id, string nick, string country );
 }
 
 public interface IRankingService

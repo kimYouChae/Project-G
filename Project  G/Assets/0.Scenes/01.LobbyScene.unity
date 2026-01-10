@@ -1151,12 +1151,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 68249580}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 710974541}
+  m_Father: {fileID: 196807098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &68249582
 MonoBehaviour:
@@ -1561,12 +1561,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelList:
   - {fileID: 759295400}
-  - {fileID: 0}
   - {fileID: 48784582}
   - {fileID: 674309456}
   - {fileID: 1570162270}
   - {fileID: 99158364}
-  - {fileID: 1708482188}
+  - {fileID: 1570162270}
   prePanel: 0
   currPanel: 0
   darkPanel: {fileID: 1907261436}
@@ -2081,6 +2080,7 @@ Transform:
   - {fileID: 356265121}
   - {fileID: 652674607}
   - {fileID: 817077265}
+  - {fileID: 68249581}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &213095798
@@ -6042,7 +6042,6 @@ Transform:
   - {fileID: 1144396767}
   - {fileID: 1751625162}
   - {fileID: 1637887130}
-  - {fileID: 68249581}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &715033596

@@ -12,7 +12,7 @@ public class UserDataManager : Singleton<UserDataManager>
 
     protected override void Singleton_Awake()
     {
-               
+        SetUpDontDestroy();          
     }
 
     public void InsertUserInfo(string id, string name, string cnt) 

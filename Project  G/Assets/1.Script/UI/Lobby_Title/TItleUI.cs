@@ -30,7 +30,10 @@ public class TitleUI : MonoBehaviour
             {
                 LobbyUIManager.Instance.OnOffDarkPanel(true);
                 
-                LoginUser();
+                StartCoroutine(LoginUser());
+
+                LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
+
                 yield break;
             }
 
@@ -38,7 +41,7 @@ public class TitleUI : MonoBehaviour
         }
     }
 
-    private void LoginUser() 
+    private IEnumerator LoginUser() 
     {
         // 1. 스팀 로그인
         string steamID = SteamAPI.Instance.GetSteamID();
@@ -47,9 +50,10 @@ public class TitleUI : MonoBehaviour
 
         // 2. 유저데이터 스크립트에 steam 관련 정보 저장
         UserDataManager.Instance.InsertUserInfo(steamID, nick, cnr);
-        
+
         // 3. 로그인 API
-        GameServices.Instance.AuthService.AuthService(steamID, nick, cnr);
+        yield return StartCoroutine(
+            GameServices.Instance.AuthService.AuthService(steamID, nick, cnr));
 
         // 4. 차트 불러오기 
         GameServices.Instance.ChartLogic();

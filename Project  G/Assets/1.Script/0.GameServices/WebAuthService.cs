@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using System;
 
 #region DTO
 public class LoginRequestDTO
@@ -11,6 +12,7 @@ public class LoginRequestDTO
     public string Country;
 }
 
+[Serializable]
 public class LoginResponseDTO
 {
     // 맵 타입별 점수 리스트 
@@ -19,10 +21,19 @@ public class LoginResponseDTO
     public bool isNewer;
 }
 
+[Serializable]
 public class UserMapTypeByScoreDTO
 {
     public int mapType;
     public float score;
+}
+
+[Serializable]
+public class LoginApiResponse
+{
+    public bool success;
+    public LoginResponseDTO data;
+    public ApiError error;
 }
 #endregion
 
@@ -36,7 +47,7 @@ public class WebAuthService : IAuthService
         this.baseUrl = url;
     }
 
-    public void AuthService(string steamID, string nick, string country)
+    public IEnumerator AuthService(string steamID, string nick, string country)
     {
         LoginRequestDTO loginRequestDTO = new LoginRequestDTO() 
         {
@@ -57,7 +68,7 @@ public class WebAuthService : IAuthService
         //request.timeout = 10;
         //request.useHttpContinue = false;
 
-        CoroutineHandler.Instance.Run(StartRequest(request));
+        yield return CoroutineHandler.Instance.Run(StartRequest(request));
     }
 
     IEnumerator StartRequest(UnityWebRequest request) 
@@ -83,7 +94,7 @@ public class WebAuthService : IAuthService
     private void Pasing(string json) 
     {
         // LoginAPi의 응답은 APi Response 타입의 Json임 
-        ApiResponse<LoginResponseDTO> apiResponse = JsonUtility.FromJson<ApiResponse<LoginResponseDTO>>(json);
+        LoginApiResponse apiResponse = JsonUtility.FromJson<LoginApiResponse>(json);
         Debug.Log(json);
 
         if (apiResponse == null) 
@@ -115,12 +126,12 @@ public class WebAuthService : IAuthService
             List<UserMapTypeByScoreDTO> typebyscore = loginResponse.userScoreData;
             for(int i = 0; i < typebyscore.Count; i++) 
             {
-                /*
-                MapType type = (MapType)typebyscore[i].MapType;
-                float score = typebyscore[i].Score;
+                
+                MapType type = (MapType)typebyscore[i].mapType;
+                float score = typebyscore[i].score;
 
                 UserDataManager.Instance.SetScoreByMapType(type, score);
-                */
+                
             }
             return;
         }
