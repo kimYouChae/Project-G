@@ -44,7 +44,7 @@ public class WebChartService : IChartService
 
     private void TypeByChartHandler( DataType dataType , string jsonStr ) 
     {
-        ICharHandler chartH = ChartHandlerFactory.instance.DataTypeByChart(dataType);
+        ICharHandler chartH = ChartHandlerFactory.Instance.DataTypeByChart(dataType);
 
         if (chartH != null) 
         {

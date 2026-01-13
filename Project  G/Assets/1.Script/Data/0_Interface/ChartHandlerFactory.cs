@@ -5,14 +5,22 @@ using UnityEngine;
 public class ChartHandlerFactory
 {
     // 싱글톤 
-    public static ChartHandlerFactory instance;
+    private static ChartHandlerFactory instance;
+    public static ChartHandlerFactory Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = new ChartHandlerFactory();
+
+            return instance;
+        }
+    }
 
     Dictionary<DataType, ICharHandler> keyValuePairs;
 
-    public ChartHandlerFactory() 
+    private ChartHandlerFactory() 
     {
-        instance = new ChartHandlerFactory();
-
         // 차트가 추가되면 이 부분에 차트 이름 - 해당 클래스 생성 필요! 
         keyValuePairs = new Dictionary<DataType, ICharHandler>() 
         {
