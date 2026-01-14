@@ -32,12 +32,12 @@ public sealed class GameServices
         ChartDataService = new WebChartService(baseUrl);
     }
 
-    public void ChartLogic() 
+    public IEnumerator ChartLogic() 
     {
         DataType[] array = (DataType[])Enum.GetValues(typeof(DataType));
         for (int i = 0; i < array.Length; i++)
         {
-            ChartDataService.ChartService(array[i]);
+            yield return ChartDataService.ChartService(array[i]);
         }
 
     }

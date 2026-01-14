@@ -56,6 +56,6 @@ public class TitleUI : MonoBehaviour
             GameServices.Instance.AuthService.AuthService(steamID, nick, cnr));
 
         // 4. 차트 불러오기 
-        GameServices.Instance.ChartLogic();
+        yield return GameServices.Instance.ChartLogic();
     }
 }

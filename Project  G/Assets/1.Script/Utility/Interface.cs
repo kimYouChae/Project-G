@@ -22,7 +22,7 @@ public interface IGameDataService
 
 public interface IChartService 
 {
-    public void ChartService(DataType dataType);           
+    public IEnumerator ChartService(DataType dataType);           
 }
 
 #endregion

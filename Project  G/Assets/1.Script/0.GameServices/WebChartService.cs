@@ -13,15 +13,15 @@ public class WebChartService : IChartService
         this.baseUrl = url;
     }
 
-    public void ChartService(DataType dataType)
+    public IEnumerator ChartService(DataType dataType)
     {
         if (dataType == DataType.None)
-            return;
+            yield break;
 
         // var request = new UnityWebRequest(baseUrl + dataType.ToString(), "GET");
         var request = UnityWebRequest.Get(baseUrl + dataType.ToString());
 
-        CoroutineHandler.Instance.Run(StartRequest(request, dataType));
+        yield return CoroutineHandler.Instance.Run(StartRequest(request, dataType));
     }
 
     IEnumerator StartRequest(UnityWebRequest request, DataType dataType)
