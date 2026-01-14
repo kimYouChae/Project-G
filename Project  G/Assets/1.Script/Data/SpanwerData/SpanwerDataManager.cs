@@ -1,13 +1,16 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class SpawnerData 
 {
-    [SerializeField] SpawnerType type;
-    [SerializeField] private float speed;
-    [SerializeField] private float acceleration;
+    [JsonProperty("spawnerType")]
+    private SpawnerType type;
+    [JsonProperty("speed")]
+    private float speed;
+    [JsonProperty("accerleraion")]
+    private float acceleration;
 
     public float Speed { get => speed; }
     public float Acceleration { get => acceleration; }

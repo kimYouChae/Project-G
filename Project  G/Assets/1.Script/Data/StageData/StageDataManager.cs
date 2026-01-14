@@ -1,15 +1,20 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+
 public class StageData 
 {
-    [SerializeField] QuadrantType quadrantType;
-    [SerializeField] int stage;
-    [SerializeField] List<SpawnerType> spawnerType;
-    [SerializeField] List<DirType> dirType;
+    [JsonProperty("auadrantType")]
+    private QuadrantType quadrantType;
+    [JsonProperty("stage")]
+    private int stage;
+    [JsonProperty("spawnerType")]
+    private List<SpawnerType> spawnerType;
+    [JsonProperty("dirType")]
+    private List<DirType> dirType;
 
     public StageData(QuadrantType q, int s, List<SpawnerType> sType, List<DirType> dType)
     {

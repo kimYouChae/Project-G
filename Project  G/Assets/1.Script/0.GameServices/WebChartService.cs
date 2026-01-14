@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 public class WebChartService : IChartService
 {
     private string baseUrl;
+    private static string chartUrl = "Chart/";
 
     public WebChartService(string url)
     {
@@ -19,7 +20,7 @@ public class WebChartService : IChartService
             yield break;
 
         // var request = new UnityWebRequest(baseUrl + dataType.ToString(), "GET");
-        var request = UnityWebRequest.Get(baseUrl + dataType.ToString());
+        var request = UnityWebRequest.Get(baseUrl + chartUrl + dataType.ToString());
 
         yield return CoroutineHandler.Instance.Run(StartRequest(request, dataType));
     }

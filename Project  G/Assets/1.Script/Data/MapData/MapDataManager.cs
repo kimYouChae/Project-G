@@ -1,17 +1,20 @@
 using ExitGames.Client.Photon;
+using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class MapData 
 {
-    [SerializeField] private MapType maptype;
-    [SerializeField] private Difficulty difficulty;
-    [SerializeField] private string content;
-    [SerializeField] private int rate;
+    [JsonProperty("type")]
+    private MapType maptype;
+    [JsonProperty("difficulty")] 
+    private Difficulty difficulty;
+    [JsonProperty("contents")] 
+    private string content;
+    [JsonProperty("rate")] 
+    private int rate;
 
     public MapType Maptype { get => maptype; }
     public Difficulty Difficulty { get => difficulty;  }
@@ -52,6 +55,12 @@ public class MapDataManager : Singleton<MapDataManager>
 
     public void AddtoMapDictionary(MapType type, MapData data)
     {
+        if (typeByMapData.ContainsKey(type))
+        {
+            Debug.Log($"해당 타입은 이미 딕셔너리에 있습니다 Type : {type}");
+            return;
+        }
+
         typeByMapData.Add(type, data);
 
         // 인스펙터 창에서 보기용
