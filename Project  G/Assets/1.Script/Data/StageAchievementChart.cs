@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,18 +7,26 @@ public class StageAchievementChart : ICharHandler
 {
     public void IParseAndStore(string jsonStr)
     {
-        /*
-        foreach (LitJson.JsonData row in jsonData) 
+        ApiResponse<List<StageAchievement>> obj = JsonConvert.DeserializeObject<ApiResponse<List<StageAchievement>>>(jsonStr);
+
+        if (obj == null)
         {
-            string title = row["title"].ToString();
-            AchiveType achType = Extension.StringToEnum<AchiveType>(row["achiveType"].ToString());
-            int cnt = int.Parse(row["achiveStage"].ToString());
-            MapType mapType = Extension.StringToEnum<MapType>(row["mapType"].ToString());
-
-            StageAchievement stageAchievement = new StageAchievement(title, achType, cnt, mapType);
-            AchievementsManager.Instance.AddtoAchiveContainer(stageAchievement);
-
+            Debug.LogError($"ApiResponse 파싱 실패 : {nameof(StageAchievementChart)}");
+            return;
         }
-        */
+
+        List<StageAchievement> datalist = obj.data;
+
+        if (datalist == null || datalist.Count == 0)
+        {
+            Debug.LogWarning($"Data 리스트가 비었거나 null : {nameof(StageAchievementChart)}");
+            return;
+        }
+
+        for (int i = 0; i < datalist.Count; i++)
+        {
+            StageAchievement data = datalist[i];
+            AchievementsManager.Instance.AddtoAchiveContainer(data);
+        }
     }
 }

@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class WebChartService : IChartService
 {
@@ -37,7 +37,19 @@ public class WebChartService : IChartService
 
         // 받은 요청을 string 타입으로
         string responseText = request.downloadHandler.text;
-        // Debug.Log(responseText);
+        
+        // Chart 관련 API의 응답은 API Response 타입의 Json임 . 
+        ApiResponse<object> apiResponse = JsonConvert.DeserializeObject<ApiResponse<object>>(responseText);
+        if (apiResponse == null)
+        {
+            Debug.Log($"WebChartService : 차트 파싱 중에 오류 발생 , Json으로 변환 불가 \n {responseText}");
+            yield break;
+        }
+        if (apiResponse.success == false)
+        {
+            Debug.Log($"차트 불러오기 실패. 타입 {dataType}");
+            yield break;
+        }
 
         TypeByChartHandler(dataType, responseText);
     }

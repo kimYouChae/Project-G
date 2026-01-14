@@ -11,7 +11,7 @@ public class SpawnerData
 
     public float Speed { get => speed; }
     public float Acceleration { get => acceleration; }
-    public SpawnerType Type { get => type;  }
+    public SpawnerType SpawnerType { get => type;  }
 
     public SpawnerData(SpawnerType t,float s, float ac) 
     {

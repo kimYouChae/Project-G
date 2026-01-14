@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,30 +8,26 @@ public class StageChart : ICharHandler
 {
     public void IParseAndStore(string jsonStr)
     {
-        /*
-        foreach (LitJson.JsonData row in jsonData)
+        ApiResponse<List<StageData>> obj = JsonConvert.DeserializeObject<ApiResponse<List<StageData>>>(jsonStr);
+
+        if (obj == null)
         {
-            // row는 각 원소(오브젝트)
-            QuadrantType quType = Extension.StringToEnum<QuadrantType>(row["quadrant"].ToString());
-            int sta = int.Parse(row["stage"].ToString());
-
-            List<SpawnerType> sTypes = new List<SpawnerType>();
-            string[] spawner = (row["spawner"].ToString()).Split('-', StringSplitOptions.RemoveEmptyEntries);
-            for(int i = 0; i < spawner.Length; i++) 
-            {
-                sTypes.Add(Extension.StringToEnum<SpawnerType>(spawner[i]));
-            }
-
-            List<DirType> dTypes = new List<DirType>();
-            string[] dir = (row["dir"].ToString()).Split('-', StringSplitOptions.RemoveEmptyEntries);
-            for(int i = 0; i < dir.Length; i++) 
-            {
-                dTypes.Add(Extension.StringToEnum<DirType>(dir[i]));
-            }
-
-            StageData sd = new StageData(quType, sta, sTypes, dTypes);
-            StageDataManager.Instance.AddToData(sd);
+            Debug.LogError($"ApiResponse 파싱 실패 : {nameof(StageChart)}");
+            return;
         }
-        */
+
+        List<StageData> datalist = obj.data;
+
+        if (datalist == null || datalist.Count == 0)
+        {
+            Debug.LogWarning($"Data 리스트가 비었거나 null : {nameof(StageChart)}");
+            return;
+        }
+
+        for (int i = 0; i < datalist.Count; i++)
+        {
+            StageData data = datalist[i];
+            StageDataManager.Instance.AddToData(data);
+        }
     }
 }

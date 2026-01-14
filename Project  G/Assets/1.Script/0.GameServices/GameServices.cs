@@ -37,7 +37,7 @@ public sealed class GameServices
         DataType[] array = (DataType[])Enum.GetValues(typeof(DataType));
         for (int i = 0; i < array.Length; i++)
         {
-            ChartDataService.ChartService(array[0]);
+            ChartDataService.ChartService(array[i]);
         }
 
     }
