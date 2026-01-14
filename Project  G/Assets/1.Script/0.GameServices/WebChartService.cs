@@ -21,6 +21,8 @@ public class WebChartService : IChartService
 
         // var request = new UnityWebRequest(baseUrl + dataType.ToString(), "GET");
         var request = UnityWebRequest.Get(baseUrl + chartUrl + dataType.ToString());
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용
 
         yield return CoroutineHandler.Instance.Run(StartRequest(request, dataType));
     }
@@ -29,6 +31,7 @@ public class WebChartService : IChartService
     {
         // 요청보내기 (비동기)
         yield return request.SendWebRequest();
+        Debug.Log($"[{nameof(WebChartService)}] : {dataType} / responseBody={request.downloadHandler?.text}");
 
         if (request.result != UnityWebRequest.Result.Success)
         {

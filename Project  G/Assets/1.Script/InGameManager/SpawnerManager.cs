@@ -49,19 +49,11 @@ public class SpawnerManager : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < data.SpawnerType.Count; i++) 
-        {
-            try 
-            {
-                spawnerType = data.SpawnerType[i];
-                dirType = data.DirType[i];
+        spawnerType = data.SpawnerType;
+        dirType = data.DirType;
 
-                // 스포너 생성
-                CreateSpanwer(spawnerType, dirType);
-            }
-            catch (Exception e) { Debug.Log(e); }
-
-        }
+        // 스포너 생성
+        CreateSpanwer(spawnerType, dirType);
     }
 
     private void CreateSpanwer(SpawnerType sType, DirType dType) 

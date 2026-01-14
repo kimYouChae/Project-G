@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class SpawnerData 
 {
+    [SerializeField]
     [JsonProperty("spawnerType")]
     private SpawnerType type;
+    [SerializeField]
     [JsonProperty("speed")]
     private float speed;
+    [SerializeField]
     [JsonProperty("accerleraion")]
     private float acceleration;
 

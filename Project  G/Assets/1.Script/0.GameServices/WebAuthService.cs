@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
+using static UnityEditor.LightingExplorerTableColumn;
 
 #region DTO
 public class LoginRequestDTO
@@ -77,7 +78,7 @@ public class WebAuthService : IAuthService
 
         // 요청보내기 (비동기)
         yield return request.SendWebRequest();
-        Debug.Log($"responseBody={request.downloadHandler?.text}");
+        Debug.Log($"[{nameof(WebAuthService)}] / responseBody={request.downloadHandler?.text}");
 
         if (request.result != UnityWebRequest.Result.Success)
         {
@@ -95,7 +96,6 @@ public class WebAuthService : IAuthService
     {
         // LoginAPi의 응답은 APi Response 타입의 Json임 
         LoginApiResponse apiResponse = JsonUtility.FromJson<LoginApiResponse>(json);
-        Debug.Log(json);
 
         if (apiResponse == null) 
         {

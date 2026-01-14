@@ -4,30 +4,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[System.Serializable]
 public class StageData 
 {
-    [JsonProperty("auadrantType")]
+    [SerializeField]
+    [JsonProperty("quadrantType")]
     private QuadrantType quadrantType;
+    [SerializeField]
     [JsonProperty("stage")]
     private int stage;
+    [SerializeField]
     [JsonProperty("spawnerType")]
-    private List<SpawnerType> spawnerType;
+    private SpawnerType spawnerType;
+    [SerializeField]
     [JsonProperty("dirType")]
-    private List<DirType> dirType;
-
-    public StageData(QuadrantType q, int s, List<SpawnerType> sType, List<DirType> dType)
-    {
-        this.quadrantType = q;
-        this.stage = s;
-        this.spawnerType = sType;
-        this.dirType = dType;
-    }
+    private DirType dirType;
 
     public QuadrantType QuadrantType { get => quadrantType; }
     public int Stage { get => stage;  }
-    public List<SpawnerType> SpawnerType { get => spawnerType;}
-    public List<DirType> DirType { get => dirType;  }
+    public SpawnerType SpawnerType { get => spawnerType;}
+    public DirType DirType { get => dirType;  }
 }
 
 public class StageDataManager : Singleton<StageDataManager>

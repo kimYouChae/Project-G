@@ -5,14 +5,19 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class MapData 
 {
+    [SerializeField]
     [JsonProperty("type")]
     private MapType maptype;
+    [SerializeField]
     [JsonProperty("difficulty")] 
     private Difficulty difficulty;
+    [SerializeField]
     [JsonProperty("contents")] 
     private string content;
+    [SerializeField]
     [JsonProperty("rate")] 
     private int rate;
 
