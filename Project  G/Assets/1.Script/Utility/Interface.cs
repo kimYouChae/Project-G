@@ -11,8 +11,8 @@ public interface IAuthService
 
 public interface IRankingService
 {
-    public void GetMyRankingService(string myId, int mapType);
-    public void GetRankerService(int mapType);
+    public IEnumerator GetMyRankingService(string myId, int mapType);
+    public IEnumerator GetRankerService(int mapType);
 }
 
 public interface IGameDataService
