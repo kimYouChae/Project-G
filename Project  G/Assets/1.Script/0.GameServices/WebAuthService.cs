@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using System;
-using static UnityEditor.LightingExplorerTableColumn;
+using Newtonsoft.Json;
 
 #region DTO
 public class LoginRequestDTO
@@ -27,15 +27,9 @@ public class UserMapTypeByScoreDTO
 {
     public int mapType;
     public float score;
+    public DateTime createdAt;
 }
 
-[Serializable]
-public class LoginApiResponse
-{
-    public bool success;
-    public LoginResponseDTO data;
-    public ApiError error;
-}
 #endregion
 
 public class WebAuthService : IAuthService
@@ -65,7 +59,6 @@ public class WebAuthService : IAuthService
         request.SetRequestHeader("Content-Type", "application/json");
         request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용
 
-        //request.downloadHandler = new DownloadHandlerBuffer();
         //request.timeout = 10;
         //request.useHttpContinue = false;
 
@@ -92,20 +85,21 @@ public class WebAuthService : IAuthService
         Pasing(responseText);
     }
 
-    private void Pasing(string json) 
+    private void Pasing(string responseText) 
     {
         // LoginAPi의 응답은 APi Response 타입의 Json임 
-        LoginApiResponse apiResponse = JsonUtility.FromJson<LoginApiResponse>(json);
+        ApiResponse<LoginResponseDTO> apiResponse 
+            = JsonConvert.DeserializeObject<ApiResponse<LoginResponseDTO>>(responseText);
 
         if (apiResponse == null) 
         {
-            Debug.Log($"WebAuthService : 유저 정보 파싱 중에 오류 발생 , Json으로 변환 불가 \n {json}");
+            Debug.Log($"WebAuthService : 유저 정보 파싱 중에 오류 발생 , Json으로 변환 불가 \n {responseText}");
             return;
         }
 
         if (apiResponse.success == false) 
         {
-            Debug.Log($"WebAuthService : 유저 로그인 실패 \n {json}");
+            Debug.Log($"WebAuthService : 유저 로그인 실패 \n {responseText}");
             return;
         }
 

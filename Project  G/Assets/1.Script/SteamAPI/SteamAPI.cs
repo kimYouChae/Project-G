@@ -23,14 +23,14 @@ public class SteamAPI
         // 일단 임시로 아무 문자열 return
         var rnd = new Random();
         //string steamUid = "7656119" + rnd.Next(1, 50).ToString();
-        string steamUid = "7656119";
+        string steamUid = "101";
 
         return steamUid;
     }
 
     public string GetSteamNick() 
     {
-        return Guid.NewGuid().ToString();
+        return "kebby";
     }
 
     public string GetCountry() 
