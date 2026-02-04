@@ -16,20 +16,28 @@ public sealed class GameServices
             return instance;
         }
     }
-    
-    public IAuthService AuthService { get; private set; }
-    public IRankingService RankingService { get; private set; }
-    public IGameDataService GameDataService { get; private set; }
-    public IChartService ChartDataService { get; private set; }
+
+    private IAuthService authService;
+    private IRankingService rankingService;
+    private IGameDataService gameDataService;
+    private IChartService chartDataService;
+    private IRankingModel rankingModel;
+
+    public IAuthService AuthService { get => authService; }
+    public IRankingService RankingService { get => rankingService; }
+    public IRankingModel RankingModel { get => rankingModel; }
+    public IGameDataService GameDataService { get => gameDataService; }
+    public IChartService ChartDataService { get => chartDataService; }
 
     private static readonly string baseUrl = "http://" + "localhost/Project_G/api/";
 
     private GameServices() 
     {
-        AuthService = new WebAuthService(baseUrl);
-        RankingService = new WebRankingService(baseUrl);   
-        GameDataService = new WebGameDataService(baseUrl);
-        ChartDataService = new WebChartService(baseUrl);
+        authService = new WebAuthService(baseUrl);
+        rankingModel = new RankingModel();
+        rankingService = new WebRankingService(baseUrl, rankingModel);
+        gameDataService = new WebGameDataService(baseUrl);
+        chartDataService = new WebChartService(baseUrl);
     }
 
     public IEnumerator ChartLogic() 

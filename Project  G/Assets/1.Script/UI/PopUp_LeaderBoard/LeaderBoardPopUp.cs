@@ -26,11 +26,27 @@ public class LeaderBoardPopUp : UIPopUP
         return lobj;
     }
 
-    // On 될 때 마다 업데이트 
     public void InitLeaderBoardPopUp() 
     {
         // 타이틀 로컬라이징
         // leaderBoardText.text = LocalizationManager.Instance.ReturnLocalizationString();
+
+        // 랭커 불러오기 
+        StartCoroutine(GetRank());
+    }
+
+    // On 될 때 마다 업데이트 
+    public IEnumerator GetRank()
+    {
+        // 내 랭크 정보 출력 
+        yield return GameServices.Instance.RankingService.
+            GetMyRankingService(UserDataManager.Instance.SteamID, 0);
+        // 랭커 정보 출력
+        yield return GameServices.Instance.RankingService.GetRankerService(0);
+
+        // 정보 바탕으로 출력하기 
+        GameServices.Instance.RankingModel.PrintUserRanker();
+        GameServices.Instance.RankingModel.PrintRankersList();
 
         // 리더보드의 총 유저 등록 수 
         /*

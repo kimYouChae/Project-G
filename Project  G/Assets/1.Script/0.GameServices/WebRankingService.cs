@@ -4,54 +4,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using static UnityEditor.LightingExplorerTableColumn;
 
 #region DTOs
 
 public class RequestUserRankDTO
 {
-    public string SteamId { get; set; }
-    public int MapType { get; set; }
+    public string SteamId;
+    public int MapType;
 }
 
 public class RequestRankerDTO
 {
-    public int MapType { get; set; }
+    public int MapType;
 }
 
 [Serializable]
 public class UserRankDTO
 {
-    public string myNickName;
-    public string otherNickName;
+    public string player1_nick;
+    public string player2_nick;
+    public int mapType;
     public float score;
-    public int rank;
+    public int stage;
+    public DateTime createdAt;
+    public int ranking;
 }
 #endregion
 
 public class WebRankingService : IRankingService
 {
     private string baseUrl;
-    private static string userRankUrl = "GetRank";
-    private static string rankerUrl = "GetRankers";
+    private static string userRankUrl = "Rank/GetRank";
+    private static string rankerUrl = "Rank/GetRankers";
 
-    private UserRankDTO myRankDto;
-    private List<UserRankDTO> rankersDto;
+    private IRankingModel rankingModel;
 
-    public UserRankDTO MyRankDto { get => myRankDto; }
-    public List<UserRankDTO> RankersDto { get => rankersDto; }
-
-    public WebRankingService(string url)
+    public WebRankingService(string url, IRankingModel rankingModel)
     {
         this.baseUrl = url;
+        this.rankingModel = rankingModel;
     }
 
     // 내 랭킹 보기
-    public IEnumerator GetMyRankingService(string myId, int mapType)
+    public IEnumerator GetMyRankingService(long myId, int mapType)
     {
         RequestUserRankDTO requestDTO = new RequestUserRankDTO()
         {
-            SteamId = myId,
+            SteamId = myId.ToString(),
             MapType = mapType
         };
 
@@ -147,7 +146,7 @@ public class WebRankingService : IRankingService
             return;
         }
 
-        this.myRankDto = obj.data;
+        rankingModel.SetUserRanker(obj.data);
     }
 
     private void RankersPasing(string json) 
@@ -160,6 +159,6 @@ public class WebRankingService : IRankingService
             return;
         }
 
-        this.rankersDto = obj.data;
+        rankingModel.SetRankers(obj.data);
     }
 }
