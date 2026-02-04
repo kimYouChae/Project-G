@@ -18,19 +18,14 @@ public class SteamAPI
     // 외부에서 생성못하게
     private SteamAPI() { }
 
-    public string GetSteamID() 
+    public long GetSteamID() 
     {
-        // 일단 임시로 아무 문자열 return
-        var rnd = new Random();
-        //string steamUid = "7656119" + rnd.Next(1, 50).ToString();
-        string steamUid = "101";
-
-        return steamUid;
+        return 101;
     }
 
     public string GetSteamNick() 
     {
-        return "kebby";
+        return "Alpha";
     }
 
     public string GetCountry() 

@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class UserData
 {
-    private string steamId;
+    private long steamId;
     private string nickName;
     private string country;
     private CharacterType characterType;
@@ -18,7 +18,7 @@ public class UserData
     private Dictionary<MapType, int> stageByMaptype
         = new Dictionary<MapType, int>();
 
-    public string SteamID { get => steamId; set { steamId = value; } }
+    public long SteamID { get => steamId; set { steamId = value; } }
     public string NickName { get => nickName; set { nickName = value; } }
     public string Country { get => country; set { country = value; } }
     public CharacterType CharacterType { get => characterType; set { characterType = value; } }

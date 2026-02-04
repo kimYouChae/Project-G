@@ -42,11 +42,11 @@ public class WebAuthService : IAuthService
         this.baseUrl = url;
     }
 
-    public IEnumerator AuthService(string steamID, string nick, string country)
+    public IEnumerator AuthService(long steamID, string nick, string country)
     {
         LoginRequestDTO loginRequestDTO = new LoginRequestDTO() 
         {
-            SteamID = steamID,
+            SteamID = steamID.ToString(),
             NickName = nick,
             Country = country
         };

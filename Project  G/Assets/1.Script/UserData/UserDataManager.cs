@@ -7,6 +7,7 @@ public class UserDataManager : Singleton<UserDataManager>
     [SerializeField] 
     private UserData userdata = new UserData();
 
+    public long SteamID { get => userdata.SteamID; }
     public string NickName { get => userdata.NickName; }
     public CharacterType CharacterType { get => userdata.CharacterType; set { userdata.CharacterType = value; } }
 
@@ -15,7 +16,7 @@ public class UserDataManager : Singleton<UserDataManager>
         SetUpDontDestroy();          
     }
 
-    public void InsertUserInfo(string id, string name, string cnt) 
+    public void InsertUserInfo(long id, string name, string cnt) 
     {
         userdata.SteamID = id;
         userdata.NickName = name;

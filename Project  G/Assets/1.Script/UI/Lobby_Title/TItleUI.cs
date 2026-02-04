@@ -44,7 +44,7 @@ public class TitleUI : MonoBehaviour
     private IEnumerator LoginUser() 
     {
         // 1. 스팀 로그인
-        string steamID = SteamAPI.Instance.GetSteamID();
+        long steamID = SteamAPI.Instance.GetSteamID();
         string nick = SteamAPI.Instance.GetSteamNick();
         string cnr = SteamAPI.Instance.GetCountry();
 
