@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class UpdateUserInfoDTO
+#region DTO
+
+public class UpdateUserRequestDTO
 {
-    public string MySteamId { get; set; }
-    public string PartnerId { get; set; }
-    public float Score { get; set; }
-    public int MapType { get; set; }
+    public string MatchId;
+    public ulong MySteamId;
+    public ulong PartnerId;
+    public int MapType;
+    public float Score;
+    public int Stage;
 }
+#endregion
 
 public class WebGameDataService : IGameDataService
 {
@@ -23,10 +28,10 @@ public class WebGameDataService : IGameDataService
 
     public void UpdateGameDataService(string myId, string partnerId, float score, int mapType)
     {
-        UpdateUserInfoDTO updateUserInfoDTO = new UpdateUserInfoDTO() 
+        UpdateUserRequestDTO updateUserInfoDTO = new UpdateUserRequestDTO() 
         {
-            MySteamId = myId,
-            PartnerId = partnerId,
+            //MySteamId = myId,
+            //PartnerId = partnerId,
             Score = score,
             MapType = mapType
         };

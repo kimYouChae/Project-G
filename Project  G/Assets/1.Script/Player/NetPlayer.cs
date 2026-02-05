@@ -161,7 +161,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
     public void DiePlayer() 
     {
-        view.RPC("RPC_TriggerBullet", RpcTarget.AllBuffered, photonView.ViewID);
+        view.RPC(nameof(RPC_TriggerBullet), RpcTarget.AllBuffered, photonView.ViewID);
     }
 
     [PunRPC]
