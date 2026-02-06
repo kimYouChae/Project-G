@@ -31,15 +31,14 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             object[] data = (object[])photonEvent.CustomData;
 
             int actorNum = (int)data[0];
-            string nick = (string)data[1];
-            float score = (float)data[2];
-            string indate = (string)data[3];
+            long steamId = (long)data[1];
+            string nick = (string)data[2];
+            float bestScore = (float)data[3];
 
-            InGamePlayer player = new InGamePlayer(actorNum, nick, score, indate);
+            InGamePlayer player = new InGamePlayer(actorNum, steamId, nick, bestScore);
+            player.PrintPlayer();
 
             PunIngameManager.Instance.AddInGamePlayer(actorNum, player);
-
-            player.PrintPlayer();
         }
 
         // 게임 ID 싱크 이벤트
@@ -48,9 +47,11 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             Debug.Log("[GameIdSync] 게임 ID 싱크 이벤트 OnEvent실행");
             object[] data = (object[])photonEvent.CustomData;
 
-            string id = (string)data[0];
+            string gameId = (string)data[0];
+            MapType mapType = (MapType)data[1];
 
-            PunIngameManager.Instance.GameIdGuid = id;
+            PunIngameManager.Instance.GameIdGuid = gameId;
+            PunIngameManager.Instance.GameMapType = mapType;
         }
     }
 

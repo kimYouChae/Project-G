@@ -9,27 +9,31 @@ using UnityEngine;
 [System.Serializable]
 public class InGamePlayer 
 {
+    // 같은 방 내에 플레이어가 공유해야할 데이터
     [SerializeField] private int actorNum;
+    [SerializeField] private long steamID;
     [SerializeField] private string nickName;
-    [SerializeField] private float score;
-    [SerializeField] private string indate;
+    [SerializeField] private float bestScore;
 
-    public InGamePlayer(int actorNum, string nickName, float score, string indate)
+    public InGamePlayer(int actorNum, long id , string nickName, float score)
     {
         this.actorNum = actorNum;
+        this.steamID = id;
         this.nickName = nickName;
-        this.score = score;
-        this.indate = indate;
+        this.bestScore = score;
     }
 
     public int ActorNum { get => actorNum;}
+    public long SteamID { get => steamID; }
     public string NickName { get => nickName; }
-    public float Score { get => score;  }
-    public string Indate { get => indate;}
+    public float Score { get => bestScore;  }
 
     public void PrintPlayer() 
     {
-        Debug.Log($"{actorNum} 에 해당하는 플레이어 정보 : {nickName} : {score} : {indate}");
+        Debug.Log($"{actorNum} 에 해당하는 플레이어 정보 \n" +
+            $": 닉네임 : {nickName} \n" +
+            $": 스팀 ID : {steamID}" +
+            $": 최고 점수 : {bestScore}");
     }
 }
 
@@ -50,11 +54,12 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
     [Header("===GAME ID===")]
     private string gameIDGuid;
-
+    private MapType gameMapType;
 
     const string DEFAULT_PLAYER = "Player"; // 플레이어 상위 폴더 명 
 
     public string GameIdGuid { get => gameIDGuid; set { gameIDGuid = value; } }
+    public MapType GameMapType { get => gameMapType; set { gameMapType = value; } }
     public QuadrantType LocalQuadrantType { get => localQuadrantType;  }
     public Transform[] PlayerField { get => playerField; }
     public InGamePlayer inGamePlayer(int num) 
@@ -77,11 +82,13 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
         ingamePlayer = new Dictionary<int, InGamePlayer>();
 
-        MemberTwoCreatePlayer();
+        // 게임 ID 동기화 
+        SycnGameId(); 
+        // 로컬 플레이어 생성, 동기화 
+        CreateAndSyncLocalPlayer(); 
 
+        // 게임 시작 
         StartCoroutine(Test());
-
-        SycnGameId();
     }
 
     private void SycnGameId()
@@ -91,10 +98,13 @@ public class PunIngameManager : Singleton<PunIngameManager>
         {
             Debug.Log("[GameIdSync]게임 고유 ID Raise 이벤트");
 
-            string id = Guid.NewGuid().ToString();
+            MapType maptype = GetMapType();
+            string gameID = GameID(maptype);
+            // 게임 ID, 맵 타입 동기화 
             object[] contcnt = new object[]
             {
-            id
+                gameID,
+                maptype
             };
 
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
@@ -158,7 +168,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
         ScoreManager.Instance.ScoreBegin((float)PhotonNetwork.Time);
     }
 
-    private void MemberTwoCreatePlayer() 
+    private void CreateAndSyncLocalPlayer() 
     {
         if (PhotonNetwork.InRoom)
         {
@@ -193,14 +203,14 @@ public class PunIngameManager : Singleton<PunIngameManager>
     {
         Debug.Log("[UserDataSync] 유저데이터Raise이벤트");
 
+        // 현재 방 정보의 커스텀 정보에 접근 (포톤 hashTable에서 matType검사)
         MapType currMapType = GetMapType();
 
-        // 현재 타입에 해당하는 맵 타입
-        // 현재 방 정보의 커스텀 정보에 접근 (hashTable에서 matType검사)
-
+        // actor number, 스팀 아이디 , 닉네임, 최고점수
         object[] contcnt = new object[]
         {
             actorNum,
+            UserDataManager.Instance.SteamID,
             UserDataManager.Instance.NickName,
             UserDataManager.Instance.ReturUserScore(currMapType)
         };
@@ -223,6 +233,15 @@ public class PunIngameManager : Singleton<PunIngameManager>
         ingamePlayerList.Add(player);
 
         InGameUI.Instance.gameUI.UpdatePlayerInfoText(player);
+    }
+
+    private string GameID(MapType maptype) 
+    {
+        string gameId =
+            $"{maptype}_{DateTime.UtcNow:yyMMddHHmmss}_{UnityEngine.Random.Range(1000, 9999)}";
+
+        // ex) FOREST_260206173522_4821 타입 
+        return gameId ;
     }
 
     #region Photon 관련 공통함수 
