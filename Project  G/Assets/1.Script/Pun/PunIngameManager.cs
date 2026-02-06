@@ -88,7 +88,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
         CreateAndSyncLocalPlayer(); 
 
         // 게임 시작 
-        StartCoroutine(Test());
+        StartCoroutine(GameStartCorutine());
     }
 
     private void SycnGameId()
@@ -120,7 +120,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
         }
     }
 
-    IEnumerator Test ()
+    IEnumerator GameStartCorutine ()
     {
         // 로딩 UI ON
         InGameUI.Instance.LoadingPanel.SetActive(true);
@@ -232,6 +232,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
         ingamePlayer.Add(actorNum, player);
         ingamePlayerList.Add(player);
 
+        // 인게임 UI 업데이트 
         InGameUI.Instance.gameUI.UpdatePlayerInfoText(player);
     }
 
