@@ -50,26 +50,13 @@ public class PunIngameManager : Singleton<PunIngameManager>
     [SerializeField]
     private Dictionary<int, InGamePlayer> ingamePlayer;
     [SerializeField]
-    private List<InGamePlayer> ingamePlayerList;        // 인스펙터용 리스트 
-
-    [Header("===GAME ID===")]
-    private string gameIDGuid;
-    private MapType gameMapType;
+    private List<InGamePlayer> ingamePlayerList;
 
     const string DEFAULT_PLAYER = "Player"; // 플레이어 상위 폴더 명 
 
-    public string GameIdGuid { get => gameIDGuid; set { gameIDGuid = value; } }
-    public MapType GameMapType { get => gameMapType; set { gameMapType = value; } }
     public QuadrantType LocalQuadrantType { get => localQuadrantType;  }
     public Transform[] PlayerField { get => playerField; }
-    public InGamePlayer inGamePlayer(int num) 
-    {
-        if(ingamePlayer.ContainsKey(num))
-            return ingamePlayer[num];
-
-        return null;
-    } 
-
+    public Dictionary<int, InGamePlayer> InGamePlayerDataDic { get => ingamePlayer; }
 
     protected override void Singleton_Awake()
     {

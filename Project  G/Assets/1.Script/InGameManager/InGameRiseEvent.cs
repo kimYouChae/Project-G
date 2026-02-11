@@ -50,8 +50,22 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             string gameId = (string)data[0];
             MapType mapType = (MapType)data[1];
 
-            PunIngameManager.Instance.GameIdGuid = gameId;
-            PunIngameManager.Instance.GameMapType = mapType;
+            PunGameoverManager.Instance.SynchedGameIDGuid = gameId;
+            PunGameoverManager.Instance.SynchedGameMapType = mapType;
+        }
+
+        // (게임종료시) 점수, 스테이지 싱크 이벤트
+        if (eventCode == (int)PunEventType.ScoreStageSync) 
+        {
+            Debug.Log("[ScoreStageSync] 점수,스테이지 싱크 이벤트 OnEvent실행");
+            object[] data = (object[])photonEvent.CustomData;
+
+            float score = (float)data[0];
+            int stage = (int)data[1];
+
+            PunGameoverManager.Instance.SynchedScore = score;
+            PunGameoverManager.Instance.SynchedStage = stage;
+
         }
     }
 

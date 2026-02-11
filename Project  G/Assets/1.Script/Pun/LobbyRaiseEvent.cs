@@ -9,7 +9,8 @@ public enum PunEventType
 {
     UserDataSync = 1,
     GameIdSync = 2,
-    MapDataSync = 3
+    MapDataSync = 3,
+    ScoreStageSync = 4
 }
 
 public class LobbyRaiseEvent : MonoBehaviour, IOnEventCallback
