@@ -23,6 +23,13 @@ public class UserDataManager : Singleton<UserDataManager>
         userdata.Country = cnt;
     }
 
+    public void UpdateUserData(MapType maptype, float score, int stage) 
+    {
+        // 점수,스테이지 업데이트 
+        userdata.ScoreByMaptype[maptype] = score;
+        userdata.StageByMaptype[maptype] = stage;
+    }
+
     public void SetScoreByMapType(MapType type, float score)
     {
         if (userdata.ScoreByMaptype.ContainsKey(type))

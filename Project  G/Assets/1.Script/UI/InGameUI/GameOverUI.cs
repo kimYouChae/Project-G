@@ -27,13 +27,15 @@ public class GameOverUI : MonoBehaviour
         backToRoom.onClick.AddListener(BacktoLobbyRoom);
     }
 
-    public void GameOverText(float score, float time, bool bestScore = false) 
+    public void GameOverText(float score, bool isUpdated, float time) 
     {
         gameOverScoreText.text = (Math.Round(score, 2)).ToString();
         gameOverTimeText.text = (Math.Round(time, 2)).ToString();
 
-        if (bestScore) 
+        if (isUpdated) 
         {
+            // 최고점수일때만 
+            // !최고점수입니다! 켜기 
             bestScoreText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.InGame_Renewal);
         }
 

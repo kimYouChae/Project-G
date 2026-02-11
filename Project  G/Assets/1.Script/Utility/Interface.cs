@@ -30,7 +30,7 @@ public interface IRankingModel
 
 public interface IGameDataService
 {
-    public void UpdateGameDataService(string myId, string partnerId, float score, int mapType);
+    public void UpdateGameDataService(string matchid, int mapType, long myId, long partnerId, float score, int stage);
 }
 
 public interface IChartService 

@@ -26,12 +26,11 @@ public class WebGameDataService : IGameDataService
         this.baseUrl = url;
     }
 
-    public void UpdateGameDataService(string myId, string partnerId, float score, int mapType)
+    public void UpdateGameDataService(string matchid, int mapType, long myId, long partnerId, float score, int stage)
     {
         UpdateUserRequestDTO updateUserInfoDTO = new UpdateUserRequestDTO() 
         {
-            //MySteamId = myId,
-            //PartnerId = partnerId,
+            
             Score = score,
             MapType = mapType
         };

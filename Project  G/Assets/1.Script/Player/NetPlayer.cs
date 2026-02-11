@@ -169,26 +169,11 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     {
         Debug.Log($"충돌했습니다");
 
-        // 점수-시간 변동 x 
-        ScoreManager.Instance.IsReadyToCount = false;
-
-        PhotonView view = PhotonView.Find(viewId);
-        if (view != null) 
-        {
-            InGameUI.Instance.HighlightPlayer(view.transform);
-        }
-
-        TimeManager.Stop();
+        PunGameoverManager.Instance.GameOver(viewId);
     }
 
     public void ChangeColor(Color color) 
     {
         spriteRenderer.color = color;
-        /*
-        var block = new MaterialPropertyBlock();
-        spriteRenderer.GetPropertyBlock(block);
-        block.SetColor("_Color", color);
-        spriteRenderer.SetPropertyBlock(block);
-        */
     }
 }
