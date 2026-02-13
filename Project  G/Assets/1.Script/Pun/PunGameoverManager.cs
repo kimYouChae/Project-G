@@ -67,6 +67,7 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
 
         // 저장된 점수 vs 방금 점수 비교하기 
         // (동기화된)점수가 더 크면 
+        /*
         if (matchContext.synchedScore > preScore)
         {
             // 게임오버 텍스트 설정
@@ -98,6 +99,7 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
             // 근데 매치 API는 따로 없어서 분리할필요가있을듯 ?
 
         }
+        */
     }
 
     private void ProcessData()
