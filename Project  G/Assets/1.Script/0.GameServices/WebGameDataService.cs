@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,12 +34,15 @@ public class WebGameDataService : IGameDataService
     private string baseUrl;
     private static string gamdDataUrl = "GameData/Update";
 
-    public WebGameDataService(string url)
+    private IGameDataModel gameDataModel;
+
+    public WebGameDataService(string url, IGameDataModel gameDataModel)
     {
         this.baseUrl = url;
+        this.gameDataModel = gameDataModel;
     }
 
-    public void UpdateGameDataService(string matchid, int mapType, long myId, long partnerId, float score, int stage)
+    public IEnumerator UpdateGameDataService(string matchid, int mapType, long myId, long partnerId, float score, int stage)
     {
         UpdateUserRequestDTO updateUserInfoDTO = new UpdateUserRequestDTO() 
         {
@@ -52,8 +56,10 @@ public class WebGameDataService : IGameDataService
 
         var request = new UnityWebRequest(baseUrl + gamdDataUrl, "POST");
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용
 
-        CoroutineHandler.Instance.Run(StartRequest(request));
+        yield return CoroutineHandler.Instance.Run(StartRequest(request));
     }
 
     IEnumerator StartRequest(UnityWebRequest request)
@@ -67,9 +73,30 @@ public class WebGameDataService : IGameDataService
             yield break;
         }
 
-        // 받은 요청을 string 타입으로
+        // API의 응답은 API Response 타입의 Json임 . 
         string responseText = request.downloadHandler.text;
-        Debug.Log(responseText);
 
+        // 응답은 APi Response 타입의 Json임
+        ApiResponse<BestScoreUpdateResponse> apiResponse
+            = JsonConvert.DeserializeObject<ApiResponse<BestScoreUpdateResponse>>(responseText);
+        if (apiResponse == null)
+        {
+            Debug.Log($"랭킹 API 오류 발생 , Json으로 변환 불가 \n {responseText}");
+            yield break;
+        }
+        if (apiResponse.success == false)
+        {
+            Debug.Log($"랭킹 API 오류 발생 , 실패 \n {responseText}");
+            yield break;
+        }
+
+        // 성공하면 
+        GameDataPasing(apiResponse.data);
+    }
+
+    private void GameDataPasing(BestScoreUpdateResponse response) 
+    {
+        // 모델에 값 넣기 
+        gameDataModel.SetGameData(response);
     }
 }

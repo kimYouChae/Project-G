@@ -28,9 +28,16 @@ public interface IRankingModel
     public void PrintRankersList();
 }
 
+public interface IGameDataModel 
+{
+    public void SetGameData(BestScoreUpdateResponse response);
+
+    public BestScoreUpdateResponse GetBestScoreInfo();
+}
+
 public interface IGameDataService
 {
-    public void UpdateGameDataService(string matchid, int mapType, long myId, long partnerId, float score, int stage);
+    public IEnumerator UpdateGameDataService(string matchid, int mapType, long myId, long partnerId, float score, int stage);
 }
 
 public interface IChartService 

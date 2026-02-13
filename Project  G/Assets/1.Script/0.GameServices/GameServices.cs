@@ -17,17 +17,23 @@ public sealed class GameServices
         }
     }
 
+    // 서비스 인터페이스 
     private IAuthService authService;
     private IRankingService rankingService;
     private IGameDataService gameDataService;
     private IChartService chartDataService;
+    
+    // 모델 인터페이스
     private IRankingModel rankingModel;
+    private IGameDataModel gameDataModel;
 
     public IAuthService AuthService { get => authService; }
     public IRankingService RankingService { get => rankingService; }
     public IRankingModel RankingModel { get => rankingModel; }
     public IGameDataService GameDataService { get => gameDataService; }
+    public IGameDataModel GameDataModel { get => gameDataModel; }
     public IChartService ChartDataService { get => chartDataService; }
+    
 
     private static readonly string baseUrl = "http://" + "localhost/Project_G/api/";
 
@@ -36,7 +42,8 @@ public sealed class GameServices
         authService = new WebAuthService(baseUrl);
         rankingModel = new RankingModel();
         rankingService = new WebRankingService(baseUrl, rankingModel);
-        gameDataService = new WebGameDataService(baseUrl);
+        gameDataModel = new GamdDataModel();
+        gameDataService = new WebGameDataService(baseUrl, gameDataModel);
         chartDataService = new WebChartService(baseUrl);
     }
 

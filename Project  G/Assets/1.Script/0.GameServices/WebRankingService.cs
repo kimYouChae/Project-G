@@ -118,7 +118,7 @@ public class WebRankingService : IRankingService
         // 받은 요청을 string 타입으로
         string responseText = request.downloadHandler.text;
 
-        // Chart 관련 API의 응답은 API Response 타입의 Json임 . 
+        // API의 응답은 API Response 타입의 Json임 . 
         ApiResponse<object> apiResponse = JsonConvert.DeserializeObject<ApiResponse<object>>(responseText);
         if (apiResponse == null)
         {
