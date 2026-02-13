@@ -14,6 +14,18 @@ public class UpdateUserRequestDTO
     public float Score;
     public int Stage;
 }
+
+public class BestScoreUpdateResponse
+{
+    public List<UserBestScoreResult> results;
+}
+
+public class UserBestScoreResult
+{
+    public ulong steamId;
+    public bool isUpdated;
+    public float score;
+}
 #endregion
 
 public class WebGameDataService : IGameDataService
