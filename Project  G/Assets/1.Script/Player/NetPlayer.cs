@@ -169,7 +169,24 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     {
         Debug.Log($"충돌했습니다");
 
-        PunGameoverManager.Instance.GameOver(viewId);
+        // 호스트,클라 공통 동작
+        // 1. 시간 멈추기
+        TimeManager.Stop();
+        // 2. 점수-시간 변동 x 
+        ScoreManager.Instance.IsReadyToCount = false;
+
+        // UI 표시
+        PhotonView view = PhotonView.Find(viewId);
+        if (view != null)
+        {
+            InGameUI.Instance.HighlightPlayer(view.transform);
+        }
+
+        // ONLY 호스트
+        if (PhotonNetwork.IsMasterClient) 
+        {
+            PunGameoverManager.Instance.GameOver();
+        }
     }
 
     public void ChangeColor(Color color) 

@@ -30,7 +30,6 @@ public class InGameUI : Singleton<InGameUI>
     public GameObject LoadingPanel { get => loadingPanel;}
     public TextMeshProUGUI CountDownText { get => countDownText; set => countDownText = value; }
     public GameObject GamePanel { get => gamePanel; set => gamePanel = value; }
-    public float HighlistTime { get => highlightTime; }
 
     protected override void Singleton_Awake()
     {
@@ -51,6 +50,8 @@ public class InGameUI : Singleton<InGameUI>
         
         // 크기를 min까지 줄이는 애니메이션 실행 
         RedueceAnimation();
+
+        StartCoroutine(GameOverUICoru());
     }
 
     private void RedueceAnimation() 
@@ -61,20 +62,25 @@ public class InGameUI : Singleton<InGameUI>
             .SetUpdate(true);   // timel.scale에 영향 받지 않는 
     }
 
-   
+    private IEnumerator GameOverUICoru() 
+    {
+        // (실제시간) 애니메이션 끝날 때 까지 대기 
+        yield return new WaitForSecondsRealtime(highlightTime * 1.5f);
+
+        // 게임 Over UI 켜기
+        gameoverPanel.SetActive(true);
+    }
+
 
     public void CountDownUpdateText(int count) 
     {
         countDownText.text = count.ToString();
     }
 
-    public void SetGameOverText(float score, bool isUpdated, float gameTime) 
+    public void SetGameOverText() 
     {
-        // UI 켜기 
-        gameoverPanel.SetActive(true);
-        
         // 게임오버 텍스트 설정
-        gameOverUI.GameOverText(score, isUpdated , gameTime);
+        // gameOverUI.GameOverText(score, isUpdated , gameTime);
     }
 
    
