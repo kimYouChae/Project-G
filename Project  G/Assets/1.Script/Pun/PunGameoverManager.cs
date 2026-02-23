@@ -3,10 +3,7 @@ using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class MatchContext 
 {

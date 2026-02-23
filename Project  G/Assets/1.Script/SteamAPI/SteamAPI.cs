@@ -20,12 +20,20 @@ public class SteamAPI
 
     public long GetSteamID() 
     {
-        return 101;
+#if UNITY_EDITOR
+        return 4560000012;
+#elif UNITY_STANDALONE
+        return 7890000012;
+#endif
     }
 
     public string GetSteamNick() 
     {
-        return "Alpha";
+#if UNITY_EDITOR
+        return "에디터환경의유저";
+#elif UNITY_STANDALONE
+        return "빌드환경의유저";
+#endif
     }
 
     public string GetCountry() 
