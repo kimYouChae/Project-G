@@ -1,4 +1,5 @@
 using ExitGames.Client.Photon;
+using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -33,35 +34,58 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
 
     public void GameOver() 
     {
-        // 1. 점수 / 시간 동기화
-        StageScoreRaiseEvent();
-
-        // 2. API등 실행 
-        AssembleInfo();
+        StartCoroutine(AssembleInfo());
     }
 
-    private void AssembleInfo() 
+    IEnumerator AssembleInfo()
     {
-        // API 호출 전 필요한 정보를 한곳에 모음
+        long nick1, nick2;
+
+        var ingamePlayer = PunIngameManager.Instance.IngamePlayerList;
+        nick1 = ingamePlayer[0].SteamID;
+        nick2 = ingamePlayer[1].SteamID;
 
         // API 실행 
+        yield return GameServices.Instance.GameDataService.UpdateGameDataService
+            (
+                matchContext.synchedGameIDGuid,
+                (int)matchContext.synchedGameMapType,
+                nick1, nick2,
+                matchContext.synchedScore,
+                matchContext.synchedStage
+            );
+
+        // 게임 Data API 실행 후 저장된 Model을 동기화
+        GameDataRaiseEvent();
     }
 
-
-    private void ProcessData()
+    private void GameDataRaiseEvent() 
     {
-        float insertScore, insertStage;
-        float preScore, preStage;
+        Debug.Log("[BestScoreSync] 점수, 스테이지 Raise이벤트");
 
-        // 현재 데이터 가져오기 
-        MapType mapType = matchContext.synchedGameMapType;
+        // Game Data Model
+        BestScoreUpdateResponse model = GameServices.Instance.GameDataModel.GetBestScoreInfo();
+        string json = JsonConvert.SerializeObject(model);
 
-        // 이전 점수, 스테이지 
-        preScore = UserDataManager.Instance.ReturUserScore(mapType);
-        preStage = UserDataManager.Instance.ReturnUserStage(mapType);
+        object[] contcnt = new object[]
+        {
+            json,
+            ScoreManager.Instance.CurrTime,
+            (int)matchContext.synchedGameMapType
+        };
 
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        SendOptions sendOption = new SendOptions { Reliability = true };
+
+        bool success = PhotonNetwork.RaiseEvent((byte)PunEventType.BestScoreSync,
+            contcnt,
+            raiseEventOptions,
+            sendOption);
+
+        Debug.Log($"[BestScoreSync] RaiseEvent 보냄? {success}");
     }
 
+    /*
     private void StageScoreRaiseEvent() 
     {
         Debug.Log("[ScoreStageSync] 점수, 스테이지 Raise이벤트");
@@ -83,4 +107,5 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
 
         Debug.Log($"[ScoreStageSync] RaiseEvent 보냄? {success}");
     }
+    */
 }

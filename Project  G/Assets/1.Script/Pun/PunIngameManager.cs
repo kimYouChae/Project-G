@@ -56,7 +56,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
     public QuadrantType LocalQuadrantType { get => localQuadrantType;  }
     public Transform[] PlayerField { get => playerField; }
-    public Dictionary<int, InGamePlayer> InGamePlayerDataDic { get => ingamePlayer; }
+    public List<InGamePlayer> IngamePlayerList { get => ingamePlayerList; }
 
     protected override void Singleton_Awake()
     {

@@ -11,8 +11,8 @@ public class ScoreManager : Singleton<ScoreManager>
 
     [SerializeField] private int nowLevel = 0;      // 현재 레벨 (난이도)
 
-    private float currScore = 0;
-    private float currTime = 0;
+    private float currScore = 0;        // 현재 점수 
+    private float currTime = 0;         // 현재 시간 (초)
 
     // Mapdata의 난이도 증가 비율이 클 수록 작은 값으로 곱할 수있게 임시 비율설정 
     const int RATE_TEMP = 30;

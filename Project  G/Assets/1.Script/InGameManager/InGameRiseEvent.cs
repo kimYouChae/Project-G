@@ -1,4 +1,5 @@
 using ExitGames.Client.Photon;
+using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -25,7 +26,7 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
         // Debug.Log($"[Photon] 수신된 eventCode = {eventCode}");
 
         // 유저 데이터 싱크 이벤트
-        if (eventCode == (int)PunEventType.UserDataSync) 
+        if (eventCode == (int)PunEventType.UserDataSync)
         {
             Debug.Log("[UserDataSync] 유저 데이터 싱크 이벤트 OnEvent실행");
             object[] data = (object[])photonEvent.CustomData;
@@ -42,7 +43,7 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
         }
 
         // 게임 ID 싱크 이벤트
-        if(eventCode == (int)PunEventType.GameIdSync) 
+        if (eventCode == (int)PunEventType.GameIdSync)
         {
             Debug.Log("[GameIdSync] 게임 ID 싱크 이벤트 OnEvent실행");
             object[] data = (object[])photonEvent.CustomData;
@@ -54,7 +55,39 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             PunGameoverManager.Instance.SynchedGameMapType = mapType;
         }
 
+        //  게임 종료 후 GameData API 데이터 이벤트
+        if (eventCode == (int)PunEventType.BestScoreSync) 
+        {
+            Debug.Log("[BestScoreSync] 게임 ID 싱크 이벤트 OnEvent실행");
+            object[] data = (object[])photonEvent.CustomData;
+
+            string json = (string)data[0];
+            float currTime = (float)data[1];
+            MapType maptype = (MapType)data[2];
+
+            BestScoreUpdateResponse bsResponse = JsonConvert.DeserializeObject<BestScoreUpdateResponse>(json);
+        
+            for(int i = 0; i < bsResponse.results.Count; i++) 
+            {
+                UserBestScoreResult result = bsResponse.results[i];
+
+                // 응답클래스의 id와 로컬에 있는 id가 같으면 
+                if(result.steamId == UserDataManager.Instance.SteamID) 
+                {
+                    // 1. gameOver UI에 텍스트 표시
+                    InGameUI.Instance.gameOverUI.GameOverText(result.score, currTime, result.isUpdated);
+
+                    // 2. 로컬의 유저 정보 업데이트 
+                    if(result.isUpdated) 
+                    {
+                        UserDataManager.Instance.UpdateUserData(maptype, result.score, result.stage);
+                    }
+                }
+            }
+        }
+
         // (게임종료시) 점수, 스테이지 싱크 이벤트
+        /*
         if (eventCode == (int)PunEventType.ScoreStageSync) 
         {
             Debug.Log("[ScoreStageSync] 점수,스테이지 싱크 이벤트 OnEvent실행");
@@ -67,7 +100,8 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             PunGameoverManager.Instance.SynchedStage = stage;
 
         }
+        */
     }
 
- 
+
 }

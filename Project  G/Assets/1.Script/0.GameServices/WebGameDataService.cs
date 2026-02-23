@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,23 +10,26 @@ using UnityEngine.Networking;
 public class UpdateUserRequestDTO
 {
     public string MatchId;
-    public ulong MySteamId;
-    public ulong PartnerId;
+    public long MySteamId;
+    public long PartnerId;
     public int MapType;
     public float Score;
     public int Stage;
 }
 
+[Serializable]
 public class BestScoreUpdateResponse
 {
     public List<UserBestScoreResult> results;
 }
 
+[Serializable]
 public class UserBestScoreResult
 {
-    public ulong steamId;
+    public long steamId;
     public bool isUpdated;
     public float score;
+    public int stage;
 }
 #endregion
 

@@ -42,7 +42,7 @@ public sealed class GameServices
         authService = new WebAuthService(baseUrl);
         rankingModel = new RankingModel();
         rankingService = new WebRankingService(baseUrl, rankingModel);
-        gameDataModel = new GamdDataModel();
+        gameDataModel = new GameDataModel();
         gameDataService = new WebGameDataService(baseUrl, gameDataModel);
         chartDataService = new WebChartService(baseUrl);
     }

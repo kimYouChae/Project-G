@@ -27,10 +27,10 @@ public class GameOverUI : MonoBehaviour
         backToRoom.onClick.AddListener(BacktoLobbyRoom);
     }
 
-    public void GameOverText(float score, bool isUpdated, float time) 
+    public void GameOverText(float score, float time, bool isUpdated) 
     {
-        gameOverScoreText.text = (Math.Round(score, 2)).ToString();
-        gameOverTimeText.text = (Math.Round(time, 2)).ToString();
+        gameOverScoreText.text = score.ToString();
+        gameOverTimeText.text = time.ToString();
 
         if (isUpdated) 
         {
