@@ -50,9 +50,12 @@ public class WebGameDataService : IGameDataService
     {
         UpdateUserRequestDTO updateUserInfoDTO = new UpdateUserRequestDTO() 
         {
-            
+            MatchId = matchid,
+            MySteamId = myId,
+            PartnerId = partnerId,
+            MapType = (int)mapType,
             Score = score,
-            MapType = mapType
+            Stage = stage
         };
 
         string requestJson = JsonUtility.ToJson(updateUserInfoDTO);
@@ -85,12 +88,12 @@ public class WebGameDataService : IGameDataService
             = JsonConvert.DeserializeObject<ApiResponse<BestScoreUpdateResponse>>(responseText);
         if (apiResponse == null)
         {
-            Debug.Log($"랭킹 API 오류 발생 , Json으로 변환 불가 \n {responseText}");
+            Debug.Log($"게임Data API 오류 발생 , Json으로 변환 불가 \n {responseText}");
             yield break;
         }
         if (apiResponse.success == false)
         {
-            Debug.Log($"랭킹 API 오류 발생 , 실패 \n {responseText}");
+            Debug.Log($"게임Data API 오류 발생 , 실패 \n {responseText}");
             yield break;
         }
 
