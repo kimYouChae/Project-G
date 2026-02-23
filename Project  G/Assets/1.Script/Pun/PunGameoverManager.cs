@@ -5,6 +5,7 @@ using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
 
+[System.Serializable]
 public class MatchContext 
 {
     // 게임 업데이트 API에 필요한 데이터 

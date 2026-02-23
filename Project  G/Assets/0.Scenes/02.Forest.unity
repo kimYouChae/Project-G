@@ -3758,6 +3758,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1250630756}
   - component: {fileID: 1250630755}
+  - component: {fileID: 1250630760}
   - component: {fileID: 1250630757}
   - component: {fileID: 1250630758}
   - component: {fileID: 1250630759}
@@ -3844,6 +3845,23 @@ MonoBehaviour:
   startTime: 0
   isReadyToCount: 0
   nowLevel: 0
+--- !u!114 &1250630760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250630754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6ab6eacbd3c5d408d0101082846832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matchContext:
+    synchedGameIDGuid: 
+    synchedGameMapType: 0
+    synchedScore: 0
+    synchedStage: 0
 --- !u!1 &1290080791
 GameObject:
   m_ObjectHideFlags: 0
