@@ -71,6 +71,9 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             {
                 UserBestScoreResult result = bsResponse.results[i];
 
+                // (임시)출력
+                Debug.Log($"{i}번째 유저 정보 \n {result.steamId} / 점수 : {result.score} / 스테이지 {result.stage}");
+
                 // 응답클래스의 id와 로컬에 있는 id가 같으면 
                 if(result.steamId == UserDataManager.Instance.SteamID) 
                 {

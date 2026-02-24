@@ -35,6 +35,15 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
         StartCoroutine(AssembleInfo());
     }
 
+    IEnumerator SettingMatchConx() 
+    {
+        // 사실 이 부분은 없어도됨, Assemble할 때 ScoreManger 바로 접근해도됨
+        // 근데 Context만든김에 값이 ctx 안에 있었으면 좋겠음 
+        yield return null;
+        matchContext.synchedScore = ScoreManager.Instance.AchiveScore;
+        matchContext.synchedStage = ScoreManager.Instance.AchiveStage;
+    }
+
     IEnumerator AssembleInfo()
     {
         long nick1, nick2;
@@ -42,6 +51,8 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
         var ingamePlayer = PunIngameManager.Instance.IngamePlayerList;
         nick1 = ingamePlayer[0].SteamID;
         nick2 = ingamePlayer[1].SteamID;
+
+        yield return StartCoroutine(SettingMatchConx());
 
         // API 실행 
         yield return GameServices.Instance.GameDataService.UpdateGameDataService
