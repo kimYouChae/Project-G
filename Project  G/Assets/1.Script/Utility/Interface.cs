@@ -62,3 +62,10 @@ public interface ILocalizable
 {
     public void IUpdateLocalization(LanguageType type);
 }
+
+public interface IAchievement
+{
+    public bool IIsComplete();
+    public string ITitle();
+    public string IProgressText();
+}

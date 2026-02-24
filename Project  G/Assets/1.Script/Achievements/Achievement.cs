@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public interface IAchievement
-{
-    public bool IIsComplete();
-    public string ITitle();
-    public string IProgressText();
-}
-
 [System.Serializable]
 public abstract class Achievement :  IAchievement
 {
