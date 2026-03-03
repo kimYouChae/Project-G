@@ -45,6 +45,18 @@ public interface IChartService
     public IEnumerator ChartService(DataType dataType);           
 }
 
+public interface IUserProgressService 
+{
+    public IEnumerator GetAchivementService(long uid);
+}
+
+public interface IAchiveProgressModel 
+{
+    public void SetGameData(List<AchiveProgressResponse> response);
+
+    public List<AchiveProgressResponse> GetBestScoreInfo();
+}
+
 #endregion
 
 
