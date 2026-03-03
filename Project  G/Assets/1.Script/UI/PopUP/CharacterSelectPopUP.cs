@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -46,7 +47,7 @@ public class CharacterSelectPopUP : UIPopUP
     }
 
     // 켤 때 초기화
-    public void InitCharacterView()
+    public void InitCharacterView(bool hasOpend)
     {
         // 디테일 창 - 기본 캐릭터로 초기화
         UpdateDetailUi(CharacterType.BasicCharacter);
@@ -54,7 +55,33 @@ public class CharacterSelectPopUP : UIPopUP
         // 타이틀 로컬라이징
         characterPopUpTitle.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Character);
 
+        // 도전과제 정보 가져오기
+        StartCoroutine(GetInfo(hasOpend));
+    }
+
+    private IEnumerator GetInfo(bool hasOpend)
+    {
+        List<AchiveProgressResponse> achivelist;
+
+        // 한번도 UI를 안켰을 때만 
+        if (!hasOpend)
+        {
+            // API 호출 필요 
+            yield return StartCoroutine(
+                GameServices.Instance.UserProgressService.GetAchivementService(UserDataManager.Instance.SteamID));
+        }
+
+        // GamdService의 도전과제모델에서 가져오기 
+        achivelist = GameServices.Instance.AchiveProgressModel.GetBestScoreInfo();
+
+        // UI 업데이트 
+        UpdateCharaterPopup(achivelist);
+    }
+
+    private void UpdateCharaterPopup(List<AchiveProgressResponse> achives) 
+    {
         // 리스트에 없으면 -> 1회 오픈, 새로 생성
+        /*
         if (characterObjs.Count <= 0)
         {
             InstantiateCharacterObj();
@@ -66,11 +93,12 @@ public class CharacterSelectPopUP : UIPopUP
             // 캐릭터 오브젝트 세팅 (데이터 순서대로)
             CharacterData characterData = CharacterManager.Instance.CharacterData[i];
             CharacterType characterType = characterData.CharacterType;
-            characterObjs[i].Init( LocalizationManager.Instance.ReturnLocalizationString(characterType.ToString() + "_Name"),
-                characterType, 
-                ResourceManager.Instance.CharacterSprite(characterType), 
+            characterObjs[i].Init(LocalizationManager.Instance.ReturnLocalizationString(characterType.ToString() + "_Name"),
+                characterType,
+                ResourceManager.Instance.CharacterSprite(characterType),
                 SelectCharacterObj);
         }
+        */
     }
 
     private void SelectCharacterObj(CharacterType type)
@@ -93,11 +121,11 @@ public class CharacterSelectPopUP : UIPopUP
 
         // 달성여부
         bool isAchive = true;
-        Achievement achiv = null;
+        // Achievement achiv = null;
         if (data.AchiveType != AchiveType.None) 
         {
-            achiv = AchievementsManager.Instance.GetAchiveByType(data.AchiveType);
-            isAchive = achiv.IIsComplete();
+            // achiv = AchievementsManager.Instance.GetAchiveByType(data.AchiveType);
+            // isAchive = achiv.IIsComplete();
         }
 
         if (isAchive)
@@ -112,7 +140,7 @@ public class CharacterSelectPopUP : UIPopUP
             // 미달성시 -> 캐릭터 선택 버튼 Off, progress 텍스트 띄우기
             cantSelectText.gameObject.SetActive(true);
             selectButton.gameObject.SetActive(false);
-            cantSelectText.text = achiv.IProgressText();
+            // cantSelectText.text = achiv.IProgressText();
         }
     }
 

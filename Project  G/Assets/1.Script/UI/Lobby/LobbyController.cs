@@ -8,6 +8,9 @@ public class LobbyController : ILobbyPanelInitionlize
 {
     private LobbyView lobbyView;
 
+    // 로비씬에서 도전과제 UI를 한 번이라도 열었는지 체크하는 플래그
+    private bool hasOpenedAchievementUI = false;
+
     public LobbyController(LobbyView lobbyView)
     {
         this.lobbyView = lobbyView;
@@ -61,14 +64,22 @@ public class LobbyController : ILobbyPanelInitionlize
 
     private void AchivePopup() 
     {
+        // 도전과제 팝업
+        if (!hasOpenedAchievementUI)
+            hasOpenedAchievementUI = true;
+
         AchivePopUP achive = UIManager.Instance.GetPopUP<AchivePopUP>();
-        achive.InitAchivePopup();
+        achive.InitAchivePopup(hasOpenedAchievementUI);
     }
 
     private void CharacterPopUp() 
     {
+        // 캐릭터 선택 팝업
+        if (!hasOpenedAchievementUI)
+            hasOpenedAchievementUI = true;
+
         CharacterSelectPopUP chara = UIManager.Instance.GetPopUP<CharacterSelectPopUP>();
-        chara.InitCharacterView();
+        chara.InitCharacterView(hasOpenedAchievementUI);
     }
 
     public void IInitPanel()

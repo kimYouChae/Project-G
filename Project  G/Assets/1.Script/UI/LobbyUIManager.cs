@@ -10,9 +10,6 @@ using UnityEngine.Audio;
 
 public class LobbyUIManager : Singleton<LobbyUIManager>
 {
-    // 싱글톤 
-    private static LobbyUIManager instance;
-
     [Header("---LobbyUIManager---")]
     [SerializeField] private GameObject[] panelList;
     [SerializeField] private LobbyPanelType prePanel;
