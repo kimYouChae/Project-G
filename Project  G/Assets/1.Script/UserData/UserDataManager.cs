@@ -30,16 +30,20 @@ public class UserDataManager : Singleton<UserDataManager>
         userdata.StageByMaptype[maptype] = stage;
     }
 
-    public void SetScoreByMapType(MapType type, float score)
+    public void SetScoreByMapType(MapType type, float bestScore, int bestStage)
     {
+        // 최고점수 저장 
         if (userdata.ScoreByMaptype.ContainsKey(type))
-        {
-            userdata.ScoreByMaptype[type] = score;
-        }
+            userdata.ScoreByMaptype[type] = bestScore;
         else 
-        {
-            Debug.Log($"UserData의 ScoreByMapType 딕셔너리에 값을 넣지 못함 {type} : {score}");
-        }
+            Debug.Log($"[UserData] 타입별 최고점수 딕셔너리에 값을 넣지 못함 / {type} : {bestStage}");
+
+        // 최고스테이지 저장
+        if (userdata.StageByMaptype.ContainsKey(type)) 
+            userdata.StageByMaptype[type] = bestStage;
+        else
+            Debug.Log($"[UserData] 타입별 최고 스테이지 딕셔너리에 값을 넣지 못함 {type} : {bestStage}");
+
     }
 
     public int ReturnUserStage(MapType type)

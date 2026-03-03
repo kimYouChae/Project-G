@@ -26,7 +26,8 @@ public class LoginResponseDTO
 public class UserMapTypeByScoreDTO
 {
     public int mapType;
-    public float score;
+    public float bestScore;
+    public int bestStage;
     public DateTime createdAt;
 }
 
@@ -120,12 +121,9 @@ public class WebAuthService : IAuthService
             List<UserMapTypeByScoreDTO> typebyscore = loginResponse.userScoreData;
             for(int i = 0; i < typebyscore.Count; i++) 
             {
-                
-                MapType type = (MapType)typebyscore[i].mapType;
-                float score = typebyscore[i].score;
+                var user = typebyscore[i];
 
-                UserDataManager.Instance.SetScoreByMapType(type, score);
-                
+                UserDataManager.Instance.SetScoreByMapType((MapType)user.mapType, user.bestScore, user.bestStage);
             }
             return;
         }
