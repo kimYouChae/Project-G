@@ -5182,6 +5182,7 @@ GameObject:
   - component: {fileID: 652674608}
   - component: {fileID: 652674609}
   - component: {fileID: 652674610}
+  - component: {fileID: 652674611}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -5250,6 +5251,19 @@ MonoBehaviour:
   quOneList: []
   quTwoList: []
   stageDataMaxLength: -1
+--- !u!114 &652674611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652674606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 308b813e256e3d3478a4d3b0f9c002d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievements: []
 --- !u!1 &663391688
 GameObject:
   m_ObjectHideFlags: 0
@@ -6039,7 +6053,6 @@ Transform:
   - {fileID: 2036309987}
   - {fileID: 1574258939}
   - {fileID: 1999035519}
-  - {fileID: 1144396767}
   - {fileID: 1751625162}
   - {fileID: 1637887130}
   m_Father: {fileID: 0}
@@ -15276,50 +15289,6 @@ MonoBehaviour:
   myImage: {fileID: 0}
   oriSprite: {fileID: 0}
   trigger: {fileID: 0}
---- !u!1 &1144396766
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1144396767}
-  - component: {fileID: 1144396768}
-  m_Layer: 0
-  m_Name: Achievement
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1144396767
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144396766}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 710974541}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1144396768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144396766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 480085258ab22214386630502a2a1418, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1201675581
 GameObject:
   m_ObjectHideFlags: 0

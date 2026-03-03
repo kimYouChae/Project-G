@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class AchievementsManager : Singleton<AchievementsManager>
+public class AchievDataManager : Singleton<AchievDataManager>
 {
-    [SerializeField] List<Achievement> achievements;
-    [SerializeField] Dictionary<AchiveType, Achievement> achievementsDict;
+    [SerializeField] List<StageAchive> achievements;
+    [SerializeField] Dictionary<AchiveType, StageAchive> achievementsDict;
 
-    public List<Achievement> Achievements => achievements;
+    public List<StageAchive> Achievements => achievements;
 
     protected override void Singleton_Awake()
     {
-        achievements = new List<Achievement>();
-        achievementsDict = new Dictionary<AchiveType, Achievement>();
+        achievements = new List<StageAchive>();
+        achievementsDict = new Dictionary<AchiveType, StageAchive>();
     }
 
-    public void AddtoAchiveContainer(Achievement achi) 
+    public void AddtoAchiveContainer(StageAchive achi) 
     {
         achievements.Add(achi);
         if ( ! achievementsDict.ContainsKey(achi.AchiveType)) 
@@ -26,7 +26,7 @@ public class AchievementsManager : Singleton<AchievementsManager>
     }
 
     // 타입에 해당하는 도전과제 return
-    public Achievement GetAchiveByType(AchiveType type)
+    public StageAchive GetAchiveByType(AchiveType type)
     {
         if(achievementsDict.ContainsKey(type))
             return achievementsDict[type];
