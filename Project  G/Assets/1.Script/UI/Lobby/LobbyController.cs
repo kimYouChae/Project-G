@@ -64,22 +64,22 @@ public class LobbyController : ILobbyPanelInitionlize
 
     private void AchivePopup() 
     {
+        AchivePopUP achive = UIManager.Instance.GetPopUP<AchivePopUP>();
+        achive.InitAchivePopup(hasOpenedAchievementUI);
+
         // 도전과제 팝업
         if (!hasOpenedAchievementUI)
             hasOpenedAchievementUI = true;
-
-        AchivePopUP achive = UIManager.Instance.GetPopUP<AchivePopUP>();
-        achive.InitAchivePopup(hasOpenedAchievementUI);
     }
 
     private void CharacterPopUp() 
     {
+        CharacterSelectPopUP chara = UIManager.Instance.GetPopUP<CharacterSelectPopUP>();
+        chara.InitCharacterView(hasOpenedAchievementUI);
+
         // 캐릭터 선택 팝업
         if (!hasOpenedAchievementUI)
             hasOpenedAchievementUI = true;
-
-        CharacterSelectPopUP chara = UIManager.Instance.GetPopUP<CharacterSelectPopUP>();
-        chara.InitCharacterView(hasOpenedAchievementUI);
     }
 
     public void IInitPanel()
