@@ -1416,7 +1416,6 @@ GameObject:
   - component: {fileID: 116153345}
   - component: {fileID: 116153343}
   - component: {fileID: 116153342}
-  - component: {fileID: 116153341}
   - component: {fileID: 116153340}
   - component: {fileID: 116153339}
   m_Layer: 0
@@ -1482,18 +1481,6 @@ MonoBehaviour:
   refreshText: {fileID: 1943537969}
   inputPasswordText: {fileID: 1071972145}
   enterRoomText: {fileID: 445224990}
---- !u!114 &116153341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 116153337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7ca6f38a42cc4347968e6500d2614cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &116153342
 MonoBehaviour:
   m_ObjectHideFlags: 0
