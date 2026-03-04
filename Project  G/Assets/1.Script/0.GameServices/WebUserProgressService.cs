@@ -7,12 +7,12 @@ using UnityEngine.Networking;
 #region DTO
 public class AchiveProgressRequest
 {
-    public long SteamID { get; set; }
+    public long SteamID;
 }
 public class AchiveProgressResponse
 {
-    public AchiveType AchiveType { get; set; }
-    public bool isClear { get; set; }
+    public AchiveType AchiveType;
+    public bool isClear;
 }
 #endregion
 

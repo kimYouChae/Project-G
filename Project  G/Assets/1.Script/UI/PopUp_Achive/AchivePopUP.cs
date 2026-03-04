@@ -7,24 +7,10 @@ public class AchivePopUP : UIPopUP
 {
     [SerializeField] GameObject achiveObj;
     [SerializeField] Transform content;
-    [SerializeField] List<AchiveObject> objList;
+    [SerializeField] List<AchiveObject> achiveObjList;
 
     [Header("===Localization===")]
     [SerializeField] TextMeshProUGUI achiveTitle;
-
-    private void InstantiateAchiveObject() 
-    {
-        // 처음 1회 생성
-        for (int i = 0; i < AchievDataManager.Instance.Achievements.Count; i++)
-        {
-            GameObject temp = Instantiate(achiveObj);
-            temp.transform.SetParent(content.transform, false);
-
-            AchiveObject achi = temp.GetComponent<AchiveObject>();
-            objList.Add(achi);
-            achi.OnOffCompleteImage(false);
-        }
-    }
 
     // On 될 때 마다 업데이트 
     public void InitAchivePopup(bool hasOpend) 
@@ -57,32 +43,54 @@ public class AchivePopUP : UIPopUP
 
     private void UpdateAchivePopup(List<AchiveProgressResponse> achives) 
     {
+        // 리스트에 없으면 -> 1회 오픈, 새로 생성
+        if (achiveObjList.Count <= 0)
+        {
+            InstantiateAchiveObject(achives.Count);
+        }
+
         // UI에 표시 
-        /*
-           // 리스트에 없으면 -> 1회 오픈, 새로 생성
-           if (objList.Count <= 0) 
-           {
-               InstantiateAchiveObject();
-           }
+        // 도전과제 내용 + 진행상황 오브젝트에 표시 + 로컬라이징 업데이트 
+        for (int i = 0; i < achives.Count; i++) 
+        {
+            AchiveObject achObj = achiveObjList[i];
 
-           // 도전과제 내용 + 진행상황 오브젝트에 표시 + 로컬라이징 업데이트 
-           for (int i = 0; i < AchievementsManager.Instance.Achievements.Count; i++) 
-           {
-               Achievement achi = AchievementsManager.Instance.Achievements[i];
-               AchiveObject obj = objList[i];
+            // 진행상황 데이터
+            AchiveProgressResponse progressData = achives[i];
 
-               // 도전과제 타이틀 텍스트
-               obj.SetAchiveTitle(achi.ITitle());
-               // 도전과제 완료 여부 체그
-               if (achi.IIsComplete()) 
-               {
-                   // 완료 아이콘 켜기 
-                   obj.OnOffCompleteImage(true);
-                   continue;
-               }
+            // 타입에 해당하는 도전과제 데이터 
+            StageAchive achive = AchievDataManager.Instance.GetAchiveByType(progressData.AchiveType);
 
-               obj.SetProgressText(achi.IProgressText());
-           }
-           */
+            // 도전과제 타이틀 텍스트
+            achObj.SetAchiveTitle(achive.Title);
+            // 도전과제 완료 여부 체그
+            // 성공했으면 
+            if (progressData.isClear) 
+            {
+                // 완료 아이콘 켜기 
+                achObj.OnOffCompleteImage(true);
+                continue;
+            }
+
+            // 아직 미성공이면 
+            string progressText = UserDataManager.Instance.ReturnUserStage(achive.MapType)
+                + "/" + achive.AchiveStage;
+            achObj.SetProgressText(progressText);
+        }
     }
+
+    private void InstantiateAchiveObject(int length)
+    {
+        // 처음 1회 생성
+        for (int i = 0; i < length; i++)
+        {
+            GameObject temp = Instantiate(achiveObj);
+            temp.transform.SetParent(content.transform, false);
+
+            AchiveObject achi = temp.GetComponent<AchiveObject>();
+            achiveObjList.Add(achi);
+            achi.OnOffCompleteImage(false);
+        }
+    }
+
 }
