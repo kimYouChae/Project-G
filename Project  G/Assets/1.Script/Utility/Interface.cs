@@ -55,6 +55,9 @@ public interface IAchiveProgressModel
     public void SetGameData(List<AchiveProgressResponse> response);
 
     public List<AchiveProgressResponse> GetBestScoreInfo();
+
+    // 추후 수정 할 예정!! 어우 지저분해
+    public AchiveProgressResponse GetAchiveProgress(AchiveType type);
 }
 
 #endregion

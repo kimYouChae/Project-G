@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.LightingExplorerTableColumn;
 
 public class CharacterSelectPopUP : UIPopUP
 {
@@ -36,22 +38,9 @@ public class CharacterSelectPopUP : UIPopUP
         selectButton.onClick.AddListener(() => SelectCharacterButton());
     }
 
-    private void InstantiateCharacterObj() 
-    {
-        for (int i = 0; i < CharacterManager.Instance.CharacterData.Count; i++)
-        {
-            GameObject ch = Instantiate(characterPrefab);
-            ch.transform.SetParent(contenct.transform, false);
-            characterObjs.Add(ch.GetComponent<CharacterObject>());
-        }
-    }
-
     // 켤 때 초기화
     public void InitCharacterView(bool hasOpend)
     {
-        // 디테일 창 - 기본 캐릭터로 초기화
-        UpdateDetailUi(CharacterType.BasicCharacter);
-
         // 타이틀 로컬라이징
         characterPopUpTitle.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Character);
 
@@ -61,8 +50,6 @@ public class CharacterSelectPopUP : UIPopUP
 
     private IEnumerator GetInfo(bool hasOpend)
     {
-        List<AchiveProgressResponse> achivelist;
-
         // 한번도 UI를 안켰을 때만 
         if (!hasOpend)
         {
@@ -71,40 +58,50 @@ public class CharacterSelectPopUP : UIPopUP
                 GameServices.Instance.UserProgressService.GetAchivementService(UserDataManager.Instance.SteamID));
         }
 
-        // GamdService의 도전과제모델에서 가져오기 
-        achivelist = GameServices.Instance.AchiveProgressModel.GetBestScoreInfo();
-
         // UI 업데이트 
-        UpdateCharaterPopup(achivelist);
+        UpdateCharaterPopup();
+
+        // 디테일 창 - 기본 캐릭터로 초기화
+        UpdateDetailUi(CharacterType.BasicCharacter);
     }
 
-    private void UpdateCharaterPopup(List<AchiveProgressResponse> achives) 
+    private void UpdateCharaterPopup() 
     {
+        var characterList = CharacterManager.Instance.CharacterData;
+
         // 리스트에 없으면 -> 1회 오픈, 새로 생성
-        /*
         if (characterObjs.Count <= 0)
         {
-            InstantiateCharacterObj();
+            InstantiateCharacterObj(characterList.Count);
         }
 
         // 로컬라이징 업데이트 
-        for (int i = 0; i < CharacterManager.Instance.CharacterData.Count; i++)
+        for (int i = 0; i < characterList.Count; i++)
         {
-            // 캐릭터 오브젝트 세팅 (데이터 순서대로)
-            CharacterData characterData = CharacterManager.Instance.CharacterData[i];
+            CharacterData characterData = characterList[i];
             CharacterType characterType = characterData.CharacterType;
+
             characterObjs[i].Init(LocalizationManager.Instance.ReturnLocalizationString(characterType.ToString() + "_Name"),
                 characterType,
                 ResourceManager.Instance.CharacterSprite(characterType),
                 SelectCharacterObj);
         }
-        */
+        
+    }
+
+    private void InstantiateCharacterObj(int characterCnt)
+    {
+        for (int i = 0; i < characterCnt; i++)
+        {
+            GameObject ch = Instantiate(characterPrefab);
+            ch.transform.SetParent(contenct.transform, false);
+            characterObjs.Add(ch.GetComponent<CharacterObject>());
+        }
     }
 
     private void SelectCharacterObj(CharacterType type)
     {
         // Debug.Log($"{type} 캐릭터 선택  ");
-
         selectCharacterType = type;
 
         // 디테일 창에 캐릭터 정보 표시
@@ -114,39 +111,64 @@ public class CharacterSelectPopUP : UIPopUP
     private void UpdateDetailUi(CharacterType type)
     {
         CharacterData data = CharacterManager.Instance.TypeByCharacterData(type);
+        UpdatBaseDetailUI(data);
 
-        characterTitle.text = LocalizationManager.Instance.ReturnLocalizationString(type.ToString() + "_Name");
-        characterToolTip.text = LocalizationManager.Instance.ReturnLocalizationString(type.ToString() + "_ToolTip");
-        characterImage.sprite = ResourceManager.Instance.CharacterSprite(data.CharacterType);
 
-        // 달성여부
-        bool isAchive = true;
-        // Achievement achiv = null;
-        if (data.AchiveType != AchiveType.None) 
+        // 기본 캐릭터는 도전과제 None
+        if (data.AchiveType == AchiveType.None) 
         {
-            // achiv = AchievementsManager.Instance.GetAchiveByType(data.AchiveType);
-            // isAchive = achiv.IIsComplete();
+            SetUnLockUi();
+            return;
         }
 
-        if (isAchive)
+        // 캐릭터타입에 해당하는 , 해금해야하는 도전과제 가져오기 
+        AchiveProgressResponse achiveResponse 
+            = GameServices.Instance.AchiveProgressModel.GetAchiveProgress(data.AchiveType);
+
+
+        // 클리어했으면 or 기본캐릭터이면 
+        if (achiveResponse.isClear)
         {
-            // 달성 시 -> 캐릭터 선택 버튼 ON
-            cantSelectText.gameObject.SetActive(false);
-            selectButton.gameObject.SetActive(true);
+            SetUnLockUi();
             selectButtonText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Select);
+
+            return;
         }
-        else
-        {
-            // 미달성시 -> 캐릭터 선택 버튼 Off, progress 텍스트 띄우기
-            cantSelectText.gameObject.SetActive(true);
-            selectButton.gameObject.SetActive(false);
-            // cantSelectText.text = achiv.IProgressText();
-        }
+
+        // 미달성시
+        // 타입에 해당하는 도전과제 데이터 가져오기
+        StageAchive achiveData = AchievDataManager.Instance.GetAchiveByType(achiveResponse.AchiveType);
+
+        SetLockUi();
+        cantSelectText.text = achiveData.Title + "\n" + UserDataManager.Instance.ReturnUserStage(achiveData.MapType)
+            + " / " + achiveData.AchiveStage;
     }
 
     private void SelectCharacterButton() 
     {
         // UserDataManager에 저장하기 
         UserDataManager.Instance.CharacterType = selectCharacterType;
+
+    }
+
+    private void UpdatBaseDetailUI(CharacterData data) 
+    {
+        characterTitle.text = LocalizationManager.Instance.ReturnLocalizationString(data.CharacterType.ToString() + "_Name");
+        characterToolTip.text = LocalizationManager.Instance.ReturnLocalizationString(data.CharacterType.ToString() + "_ToolTip");
+        characterImage.sprite = ResourceManager.Instance.CharacterSprite(data.CharacterType);
+    }
+
+    private void SetLockUi() 
+    {
+        // 캐릭터 선택 버튼 Off, progress 텍스트 띄우기
+        cantSelectText.gameObject.SetActive(true);
+        selectButton.gameObject.SetActive(false);
+    }
+
+    private void SetUnLockUi() 
+    {
+        // 달성 시 -> 캐릭터 선택 버튼 ON
+        cantSelectText.gameObject.SetActive(false);
+        selectButton.gameObject.SetActive(true);
     }
 }
