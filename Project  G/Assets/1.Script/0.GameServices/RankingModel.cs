@@ -20,12 +20,12 @@ public class RankingModel : IRankingModel
     }
 
     // Get
-    public List<UserRankDTO> RankersList()
+    public List<UserRankDTO> GetRankersList()
     {
         return rankersDto;
     }
 
-    public UserRankDTO UserRanker()
+    public UserRankDTO GetUserRanker()
     {
         return myRankDto;
     }

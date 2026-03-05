@@ -42,13 +42,16 @@ public sealed class GameServices
 
     private GameServices() 
     {
-        authService = new WebAuthService(baseUrl);
+        // 모델
         rankingModel = new RankingModel();
-        rankingService = new WebRankingService(baseUrl, rankingModel);
         gameDataModel = new GameDataModel();
+        achiveModel = new AchiveProgressModel();
+
+        // 서비스 
+        authService = new WebAuthService(baseUrl);
+        rankingService = new WebRankingService(baseUrl, rankingModel);
         gameDataService = new WebGameDataService(baseUrl, gameDataModel);
         chartDataService = new WebChartService(baseUrl);
-        achiveModel = new AchiveProgressModel();
         userProgressService = new WebUserProgressService(baseUrl , achiveModel);
     }
 

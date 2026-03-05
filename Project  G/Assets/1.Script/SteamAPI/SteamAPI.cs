@@ -21,8 +21,8 @@ public class SteamAPI
     public long GetSteamID() 
     {
 #if UNITY_EDITOR
-        // return 4560000012;
-        return 9988776655;
+        return 4560000012;
+        // return 9988776655;
 #elif UNITY_STANDALONE
         return 7890000012;
 #endif

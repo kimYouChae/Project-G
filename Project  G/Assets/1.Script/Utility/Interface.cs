@@ -20,8 +20,8 @@ public interface IRankingModel
     public void SetUserRanker(UserRankDTO dto);
     public void SetRankers(List<UserRankDTO> list);
 
-    public UserRankDTO UserRanker();
-    public List<UserRankDTO> RankersList();
+    public UserRankDTO GetUserRanker();
+    public List<UserRankDTO> GetRankersList();
 
     // 디버깅용 
     public void PrintUserRanker();
