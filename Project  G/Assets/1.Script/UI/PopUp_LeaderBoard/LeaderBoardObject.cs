@@ -6,16 +6,18 @@ using UnityEngine.UI;
 
 public class LeaderBoardObject : MonoBehaviour
 {
-    [SerializeField] Image rankIcon;
-    [SerializeField] TextMeshProUGUI rankText;
-    [SerializeField] TextMeshProUGUI playerNamesText;
-    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] Image rankIcon;            // 1,2,3등 아이콘 , 이외는 x
+    [SerializeField] TextMeshProUGUI rankText;  // 랭크
+    [SerializeField] TextMeshProUGUI playerNamesText;   // 유저 1 닉네임 | 유저 2 닉네임 
+    [SerializeField] TextMeshProUGUI scoreText; // 점수 | 스테이지 
 
-    public void UpdateLeaderBoard(Sprite image, string rText, string names, string score) 
+    public void UpdateLeaderBoard(Sprite image, string rText, string names, string scoreAndStage) 
     {
-        rankIcon.sprite = image;
-        rankText.text = rText;
+        if(image != null)
+            rankIcon.sprite = image;    
+        if(rText != string.Empty) 
+            rankText.text = rText;
         playerNamesText.text = names;
-        scoreText.text = score;
+        scoreText.text = scoreAndStage;
     }
 }
