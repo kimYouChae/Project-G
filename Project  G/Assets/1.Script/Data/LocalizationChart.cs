@@ -3,6 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class LocalizationClass
+{
+    public string key;
+    public string english;
+    public string korean;
+    public string japanese;
+    public string chinese;
+
+    public string TypeByString(LanguageType type)
+    {
+        switch (type)
+        {
+            case LanguageType.English: return english;
+            case LanguageType.Korean: return korean;
+            case LanguageType.Japanese: return japanese;
+            case LanguageType.Chinese: return chinese;
+            default: return string.Empty;
+        }
+    }
+}
+
 public class LocalizationChart : ICharHandler
 {
     /// <summary>
@@ -14,26 +36,6 @@ public class LocalizationChart : ICharHandler
     /// </summary>
     /// 
 
-    private class LocalizationClass
-    {
-        public string key { get; set; }
-        public string english { get; set; }
-        public string korean { get; set; }
-        public string japanese { get; set; }
-        public string chinese { get; set; }
-
-        public string TypeByString(LanguageType type) 
-        {
-            switch(type) 
-            {
-                case LanguageType.English: return english;
-                case LanguageType.Korean: return korean;
-                case LanguageType.Japanese: return japanese;
-                case LanguageType.Chinese: return chinese;
-                default: return string.Empty;
-            }
-        }
-    }
 
 
     public void IParseAndStore(string jsonStr)

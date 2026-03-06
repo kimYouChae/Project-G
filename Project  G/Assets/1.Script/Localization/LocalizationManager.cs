@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +29,12 @@ public class Language
 
         return string.Empty;
     }
+}
+
+[Serializable]
+public class LocalizationWrapper
+{
+    public List<LocalizationClass> rows;
 }
 
 
@@ -67,8 +74,27 @@ public class LocalizationManager : Singleton<LocalizationManager>
         string jsonData = text.text;
 
         // 3. 클래스 생성
-        LocalizationChart localChart = new LocalizationChart();
-        localChart.IParseAndStore(jsonData);
+        FallbackJsonParse(jsonData);
+    }
+
+    // fallback json 바탕 클래스 생성
+    private void FallbackJsonParse(string json) 
+    {
+        LocalizationWrapper list = JsonConvert.DeserializeObject<LocalizationWrapper>(json);
+
+        for (int i = 0; i < list.rows.Count; i++) 
+        {
+            LocalizationClass temp = list.rows[i];
+            string key = temp.key;
+
+            // 언어만큼 for 돌기 
+            for (int j = 0; j < Extension.EnumCount<LanguageType>(); j++)
+            {
+                LanguageType currType = Extension.GetElement<LanguageType>(j);
+
+                LocalizationManager.Instance.AddLanguageDictionary(currType, key, temp.TypeByString(currType));
+            }
+        }
     }
 
     public void AddLanguageDictionary(LanguageType type, string key, string value) 
