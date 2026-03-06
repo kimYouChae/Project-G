@@ -1,12 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.LightingExplorerTableColumn;
 
 public class CharacterSelectPopUP : UIPopUP
 {
