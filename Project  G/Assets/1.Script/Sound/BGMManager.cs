@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class BGMManager : SoundBase<BGMType>
+public class BGMManager : MonoBehaviour
 {
     [Header("===BGM Setting===")]
     [SerializeField] private AudioSource nowAudioSource;    // 현재 오디오소스
     [SerializeField] BGMType currBGMType;                   // 현재 bgm 타입
+
+    [Header("===Container===")]
+    protected Dictionary<BGMType, AudioSource> typeBySource;
+    protected Dictionary<BGMType, AudioClip> typeByClip;
 
     // 페이드인 , 아웃 코루틴
     private Coroutine fadeInCorutine;
@@ -17,10 +21,8 @@ public class BGMManager : SoundBase<BGMType>
     private const float DEFAULT_FADE_TIME = 0.5f;
     private const bool DEFAULT_LOOP = true;
 
-    protected override async Task InitAudioClip()
+    protected async Task InitAudioClip()
     {
-        await base.InitAudioClip();
-
         try
         {
             // 리소스manager에서 클립 가져오기 

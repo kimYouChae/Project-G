@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class SFXManager : SoundBase<SFXType>
+public class SFXManager : MonoBehaviour
 {
     private const float SFX_RETURN_DELAY = 0.15f;
 
-    protected override async Task InitAudioClip()
-    {
-        await base.InitAudioClip();
+    [Header("===Container===")]
+    protected Dictionary<SFXType, AudioSource> typeBySource;
+    protected Dictionary<SFXType, AudioClip> typeByClip;
 
+    protected async Task InitAudioClip()
+    {
         try 
         {
             // 리소스manager에서 클립 가져오기 
@@ -35,7 +37,7 @@ public class SFXManager : SoundBase<SFXType>
     public void PlaySFX(SFXType type) 
     {
         // 1. 타입에 해당하는 오디오소스 받기
-        AudioSource source = base.GetAudioSource(type);
+        AudioSource source = GetAudioSource(type);
         if (source == null)
         {
             Debug.LogError($"Failed to Get Audio Source by type {type}");
@@ -55,5 +57,14 @@ public class SFXManager : SoundBase<SFXType>
 
         // 3. 실행 
         source.Play();
+    }
+
+    // type에 해당하는 오디오소스 return
+    protected AudioSource GetAudioSource(SFXType type)
+    {
+        if (typeBySource.ContainsKey(type))
+            return typeBySource[type];
+
+        return null;
     }
 }
