@@ -64,7 +64,7 @@ public class RoomListView : MonoBehaviour, ILocalizable
 
             // 오브젝트 생성
             GameObject temp = Instantiate(roomInfoPrefab);
-            temp.transform.SetParent(content.transform);
+            temp.transform.SetParent(content.transform, false);
 
             roomObjList.Add(temp);
 

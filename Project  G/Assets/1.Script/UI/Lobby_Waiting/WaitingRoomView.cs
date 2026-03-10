@@ -53,7 +53,7 @@ public class WaitingRoomView : MonoBehaviour, ILocalizable
 
             playerRefObj.Add(temp);
 
-            temp.transform.SetParent(scrollViewContent.transform);
+            temp.transform.SetParent(scrollViewContent.transform, false);
         }
     }
 
