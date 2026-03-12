@@ -73,6 +73,12 @@ public class SFXManager : MonoBehaviour
             // 정책가져오기
             PlayPolicy policy = sfxPolicy.GetPolicy(sType);
 
+            if (policy == null) 
+            {
+                Debug.Log($"{sType} 타입의 SFX 정책이 NULL 입니다");
+                continue;
+            }
+
             // 개인 오디오소스가 필요하면
             if (policy.isIndividualSoundSource)
             {
@@ -101,11 +107,66 @@ public class SFXManager : MonoBehaviour
         SoundManager.Instance.SettingAudioMixerOutput(source, SoundType.SFX);
     }
 
-    public void PlaySFX(SFXType type) 
+    public void PlaySFX(SFXType sType) 
     {
-        //##TODO : 실행할 때 타입에 맞는 정책을 바탕으로 실행해야됨 
+        // 실행할 때 타입에 맞는 정책을 바탕으로 실행해야됨 
+        // 정책가져오기
+        PlayPolicy policy = sfxPolicy.GetPolicy(sType);
 
-        // 1. 타입에 해당하는 오디오소스 받기
+        if (policy == null)
+        {
+            Debug.Log($"{sType} 타입의 SFX 정책이 NULL 입니다");
+            return;
+        }
+
+        AudioClip audioClip = GetAudioClip(sType);
+        if (audioClip == null) 
+        {
+            Debug.Log($"{sType} 타입에 해당하는 Audio Clip이 NULL 입니다");
+            return;
+        }
+
+        // 개인 오디오 오스가 없는 
+        if (!policy.isIndividualSoundSource) 
+        {
+            PlaySFXCommonSource(audioClip);
+            return;
+        }
+
+        // 개인 오디오 소스가 있는 
+        PlaySFXIndiviaulSource(sType);
+    }
+
+    // type에 해당하는 오디오소스 return
+    private AudioSource GetAudioSource(SFXType type)
+    {
+        if (typeBySource.ContainsKey(type))
+            return typeBySource[type];
+
+        return null;
+    }
+
+    private AudioClip GetAudioClip(SFXType type) 
+    {
+        if(typeByClip.ContainsKey(type))
+            return typeByClip[type];
+
+        return null;
+    }
+
+    private void PlaySFXCommonSource(AudioClip audioClip) 
+    {
+        if (commmonAudioSource == null)
+        {
+            Debug.LogError($"Failed to Play SFX Using Commont Audio Source");
+            return;
+        }
+
+        commmonAudioSource.PlayOneShot(audioClip);
+    }
+
+    private void PlaySFXIndiviaulSource(SFXType type)
+    {
         AudioSource source = GetAudioSource(type);
         if (source == null)
         {
@@ -126,14 +187,5 @@ public class SFXManager : MonoBehaviour
 
         // 3. 실행 
         source.Play();
-    }
-
-    // type에 해당하는 오디오소스 return
-    private AudioSource GetAudioSource(SFXType type)
-    {
-        if (typeBySource.ContainsKey(type))
-            return typeBySource[type];
-
-        return null;
     }
 }
