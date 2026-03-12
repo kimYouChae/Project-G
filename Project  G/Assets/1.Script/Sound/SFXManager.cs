@@ -22,6 +22,9 @@ public class SFXManager : MonoBehaviour
 
     private void Awake()
     {
+        typeByClip = new Dictionary<SFXType, AudioClip>();
+        typeBySource = new Dictionary<SFXType, AudioSource>();
+
         // 정책 생성 
         sfxPolicy = new SFXPolicy();
 
@@ -64,6 +67,10 @@ public class SFXManager : MonoBehaviour
         for(int i = 0; i < length; i++) 
         {
             SFXType sType = (SFXType)i;
+            if (sType == SFXType.None)
+                continue;
+            
+            // 정책가져오기
             PlayPolicy policy = sfxPolicy.GetPolicy(sType);
 
             // 개인 오디오소스가 필요하면

@@ -6,29 +6,20 @@ using UnityEngine;
 
 public class SoundManager : Singleton<SoundManager>
 {
+    [SerializeField]
+    private Transform soundTrs; // 사운드오브젝트, 하위에 SFX / BGM 오브젝트 추가 예정
+
     protected override void Singleton_Awake()
     {
 
     }
 
-    /*
-    private async Task InitAudioSource()
+    public Transform InstanceSoundObject(string trsName) 
     {
-        Transform trs = new GameObject(GetType().Name).GetComponent<Transform>();
-        trs.parent = this.transform;
+        GameObject obj = new GameObject(trsName);
+        obj.name = trsName;
+        obj.transform.SetParent(soundTrs);
 
-        //Debug.Log($"2. {GetType().Name}오디오소스 초기화중");
-        // clip만큼 오디오 소스 추가하기 
-        foreach (var temp in typeByClip)
-        {
-            AudioSource source = trs.AddComponent<AudioSource>();
-
-            source.clip = temp.Value;
-
-            T type = Extension.StringToEnum<T>(temp.Value.name);
-            typeBySource.Add(type, source);
-        }
+        return obj.transform;
     }
-    */
-
 }

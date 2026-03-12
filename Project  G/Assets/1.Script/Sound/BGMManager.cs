@@ -2,10 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BGMManager : MonoBehaviour
 {
+    [Header("===Transform===")]
+    private Transform bgmTrs;       // 오디오 소스 담아둘 trs
+
     [Header("===BGM Setting===")]
     [SerializeField] private AudioSource nowAudioSource;    // 현재 오디오소스
     [SerializeField] BGMType currBGMType;                   // 현재 bgm 타입
@@ -21,7 +25,40 @@ public class BGMManager : MonoBehaviour
     private const float DEFAULT_FADE_TIME = 0.5f;
     private const bool DEFAULT_LOOP = true;
 
-    protected async Task InitAudioClip()
+    private void Awake()
+    {
+        typeBySource = new Dictionary<BGMType, AudioSource>();
+        typeByClip = new Dictionary<BGMType, AudioClip>();
+
+        // 오디오 클립 세팅
+        InitAudioClip();
+
+        // 오디오 소스 세팅 
+        InitAudioSource();
+    }
+
+    private void InitAudioSource() 
+    {
+        // SFX 오브젝트 하나 만들기 (여기에 오디오소스 추가예정)
+        bgmTrs = SoundManager.Instance.InstanceSoundObject(nameof(BGMManager));
+
+        int length = Extension.EnumCount<BGMType>();
+        for(int i = 0; i < length; i++) 
+        {
+            BGMType bType = (BGMType)i;
+            if (bType == BGMType.None)
+                continue;
+
+            // 오디오소스 생성
+            AudioSource source = bgmTrs.AddComponent<AudioSource>();
+            typeBySource.Add(bType, source);
+
+            // ##TODO : 오디오 믹서 세팅 
+
+        }
+    }
+
+    private void InitAudioClip()
     {
         try
         {
