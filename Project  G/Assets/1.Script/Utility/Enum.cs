@@ -84,6 +84,8 @@ public enum SpanwerAnimState
     none, Idle, Attack
 }
 
+#region 사운드 
+
 public enum SoundType 
 {
     Master, SFX, BGM
@@ -91,14 +93,45 @@ public enum SoundType
 
 public enum SFXType 
 {
-    UIClick
+    None = 0,
+
+    // UI
+    UIClick,
+    UIBack,
+    UIPopup,
+
+    // InGame
+    Countdown,
+    GameStart,
+
+    // Character
+    CharacterFootstep,
+    CharacterDeath,
+    ShieldBlock,
+    ScoreCoin,
+    InvincibleSkill,
+
+    // Spawner
+    BulletSpawnerShot,
+    MissileSpawnerShot,
+    MissileFly,
+    MissileExplosion,
+    LaserCharge,
+    LaserFire
 }
 
 public enum BGMType 
-{ 
-    LobbyBGM,
-    GameBGM
+{
+    None = 0,
+
+    Title,
+    Lobby,
+    GameOver,
+
+    MapForest
 }
+
+#endregion
 
 public enum LanguageType
 {
