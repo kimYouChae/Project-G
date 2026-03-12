@@ -98,7 +98,7 @@ public class SFXManager : MonoBehaviour
     private void SettingAudioMixer(AudioSource source) 
     {
         // 믹서 세팅 
-
+        SoundManager.Instance.SettingAudioMixerOutput(source, SoundType.SFX);
     }
 
     public void PlaySFX(SFXType type) 

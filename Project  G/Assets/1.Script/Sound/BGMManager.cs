@@ -53,7 +53,8 @@ public class BGMManager : MonoBehaviour
             AudioSource source = bgmTrs.AddComponent<AudioSource>();
             typeBySource.Add(bType, source);
 
-            // ##TODO : 오디오 믹서 세팅 
+            // 오디오 믹서 세팅
+            SoundManager.Instance.SettingAudioMixerOutput(source, SoundType.BGM);
 
         }
     }
