@@ -2,6 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#region
+public enum PunEventType
+{
+    UserDataSync = 1,
+    GameIdSync = 2,
+    MapDataSync = 3,
+    BestScoreSync = 4,
+    SFXSync = 5
+}
+
+#endregion
+
 #region GameService
 public enum DataType
 {

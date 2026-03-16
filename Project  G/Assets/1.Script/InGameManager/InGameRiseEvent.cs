@@ -89,22 +89,33 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             }
         }
 
-        // (게임종료시) 점수, 스테이지 싱크 이벤트
-        /*
-        if (eventCode == (int)PunEventType.ScoreStageSync) 
+        // 인게임내 SFX 사운드 이벤트
+        if (eventCode == (int)PunEventType.SFXSync)
         {
-            Debug.Log("[ScoreStageSync] 점수,스테이지 싱크 이벤트 OnEvent실행");
+            Debug.Log("[SFXSync] SFX 실행 OnEvent실행");
             object[] data = (object[])photonEvent.CustomData;
 
-            float score = (float)data[0];
-            int stage = (int)data[1];
+            int sfxType = (int)data[0];
 
-            PunGameoverManager.Instance.SynchedScore = score;
-            PunGameoverManager.Instance.SynchedStage = stage;
-
+            SFXManager.Instance.LocalPlaySFX((SFXType)sfxType);
         }
-        */
-    }
+
+            // (게임종료시) 점수, 스테이지 싱크 이벤트
+            /*
+            if (eventCode == (int)PunEventType.ScoreStageSync) 
+            {
+                Debug.Log("[ScoreStageSync] 점수,스테이지 싱크 이벤트 OnEvent실행");
+                object[] data = (object[])photonEvent.CustomData;
+
+                float score = (float)data[0];
+                int stage = (int)data[1];
+
+                PunGameoverManager.Instance.SynchedScore = score;
+                PunGameoverManager.Instance.SynchedStage = stage;
+
+            }
+            */
+        }
 
 
 }

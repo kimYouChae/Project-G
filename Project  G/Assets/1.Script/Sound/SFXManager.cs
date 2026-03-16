@@ -1,3 +1,6 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +8,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SFXManager : MonoBehaviour
+public class SFXManager : Singleton<SFXManager>
 {
     private const float SFX_RETURN_DELAY = 0.15f;
 
@@ -20,7 +23,7 @@ public class SFXManager : MonoBehaviour
     [Header("===SFX Policy===")]
     private SFXPolicy sfxPolicy;    // sfx 타입별 실행정책
 
-    private void Awake()
+    protected override void Singleton_Awake()
     {
         typeByClip = new Dictionary<SFXType, AudioClip>();
         typeBySource = new Dictionary<SFXType, AudioSource>();
@@ -113,6 +116,27 @@ public class SFXManager : MonoBehaviour
         // 정책가져오기
         PlayPolicy policy = sfxPolicy.GetPolicy(sType);
 
+        // 만약 동기화 사운드면 
+        if (policy.isSync) 
+        {
+            // 로컬에서 실행
+            LocalPlaySFX(sType);
+
+            // raise Event 전달 ( 대상 : other )
+            SycnSFX(sType);
+            return;
+        }
+
+        // 로컬 플레이
+        LocalPlaySFX(sType);
+    }
+
+    public void LocalPlaySFX(SFXType sType) 
+    {
+        // 실행할 때 타입에 맞는 정책을 바탕으로 실행해야됨 
+        // 정책가져오기
+        PlayPolicy policy = sfxPolicy.GetPolicy(sType);
+
         if (policy == null)
         {
             Debug.Log($"{sType} 타입의 SFX 정책이 NULL 입니다");
@@ -135,6 +159,28 @@ public class SFXManager : MonoBehaviour
 
         // 개인 오디오 소스가 있는 
         PlaySFXIndiviaulSource(sType);
+    }
+
+    private void SycnSFX(SFXType sType) 
+    {
+        // 게임 ID, 맵 타입 동기화 
+        object[] contcnt = new object[]
+        {
+            (int)sType
+        };
+
+        // Other : 나 제외 다른 클라이언트한테 전송 
+        // 나는 동기화 하기전에 local 실행한다 
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        SendOptions sendOption = new SendOptions { Reliability = true };
+
+        bool success =
+            PhotonNetwork.RaiseEvent((byte)PunEventType.SFXSync,
+                contcnt,
+                raiseEventOptions,
+                sendOption);
+
+        Debug.Log($"[SFXSync] RaiseEvent 보냄? {success}");
     }
 
     // type에 해당하는 오디오소스 return
@@ -162,6 +208,7 @@ public class SFXManager : MonoBehaviour
             return;
         }
 
+        commmonAudioSource.clip = audioClip;
         commmonAudioSource.PlayOneShot(audioClip);
     }
 
@@ -188,4 +235,5 @@ public class SFXManager : MonoBehaviour
         // 3. 실행 
         source.Play();
     }
+
 }

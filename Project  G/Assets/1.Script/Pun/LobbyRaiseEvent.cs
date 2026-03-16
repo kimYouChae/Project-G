@@ -5,14 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PunEventType
-{
-    UserDataSync = 1,
-    GameIdSync = 2,
-    MapDataSync = 3,
-    BestScoreSync = 4
-}
-
 public class LobbyRaiseEvent : MonoBehaviour, IOnEventCallback
 {
     private void OnEnable()
