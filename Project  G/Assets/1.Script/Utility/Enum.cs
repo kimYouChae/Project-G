@@ -111,6 +111,7 @@ public enum SFXType
     UIClick,
     UIBack,
     UIPopup,
+    UIWarning,
 
     // InGame
     Countdown,
