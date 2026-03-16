@@ -18853,6 +18853,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1637887130}
+  - component: {fileID: 1637887133}
   - component: {fileID: 1637887132}
   - component: {fileID: 1637887131}
   m_Layer: 0
@@ -18889,8 +18890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d569702385e1040b201049d727ea3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceTransform: {fileID: 0}
-  mixerGroup: {fileID: 0}
 --- !u!114 &1637887132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18903,10 +18902,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dffb4f2194b768848b87577a9491a3a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceTransform: {fileID: 0}
-  mixerGroup: {fileID: 0}
   nowAudioSource: {fileID: 0}
   currBGMType: 0
+--- !u!114 &1637887133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637887129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd62f467a17eb44ebc77d8078809340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundTrs: {fileID: 0}
+  audioMixer: {fileID: 0}
 --- !u!1 &1665376838
 GameObject:
   m_ObjectHideFlags: 0
