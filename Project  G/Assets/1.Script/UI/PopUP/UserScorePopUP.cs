@@ -17,8 +17,11 @@ public class UserScorePopUP : UIPopUP
         mapScoreText[(int)type].text = score.ToString();
     }
 
-    public void InitUserScorePopup() 
+    public void OpenUserScorePopup() 
     {
+        // UI ON, 팝업 사운드 실행
+        base.OpenPopUP();
+
         Array type = System.Enum.GetValues(typeof(MapType));
 
         for (int i = 0; i < type.Length; i++)

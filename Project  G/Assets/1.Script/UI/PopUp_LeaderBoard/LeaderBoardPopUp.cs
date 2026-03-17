@@ -22,8 +22,11 @@ public class LeaderBoardPopUp : UIPopUP
     // 텍스트 사이에 구분선 ex) 감자|고구마
     private const string Divider = "|";
 
-    public void InitLeaderBoardPopUp() 
+    public void OpenLeaderBoardPopUp() 
     {
+        // UI ON, 팝업 사운드 실행
+        base.OpenPopUP();
+
         // 타이틀 로컬라이징
         // leaderBoardText.text = LocalizationManager.Instance.ReturnLocalizationString();
 

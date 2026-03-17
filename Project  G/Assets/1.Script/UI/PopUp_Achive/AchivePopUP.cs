@@ -13,8 +13,11 @@ public class AchivePopUP : UIPopUP
     [SerializeField] TextMeshProUGUI achiveTitle;
 
     // On 될 때 마다 업데이트 
-    public void InitAchivePopup(bool hasOpend) 
+    public void OpenAchivePopup(bool hasOpend) 
     {
+        // UI ON, 팝업 사운드 실행
+        base.OpenPopUP();
+
         // 타이틀 로컬라이징
         achiveTitle.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Achievement);
 

@@ -19,6 +19,10 @@ public class UIPopUP : MonoBehaviour
     [Header("===Button===")]
     [SerializeField] protected Button closeButton;
 
+    [Header("===SFX Type===")]
+    [SerializeField] private bool isOpend = false;      // 최초생성이면 SFX 실행 x 
+    [SerializeField] protected SFXType openSFXType = SFXType.UIPopup;    
+    [SerializeField] protected SFXType closeSFXType = SFXType.UIBack;
 
     // Mono의 생명주기 함수 awake -> onEnable -> start
     void Awake()
@@ -41,16 +45,25 @@ public class UIPopUP : MonoBehaviour
         });
     }
 
-    void OnEnable()
-    {
-        // 켜질 때
-        PlayShowAnimation(onStartSize, oriSize, startTime, popUpEase);
-    }
-
     #region 필요하면 하위에서 override
 
     // popup 수치 조정 필요할 때 
     protected virtual void InitPopUpState() { }
+
+    // open SFX를 조정하고 싶을 때 (text 전용 팝업 : warning 사운드)
+    protected virtual SFXType GetOpenSFXType()
+    {
+        return openSFXType;
+    }
+
+    protected void OpenPopUP() 
+    {
+        // 켜질 때
+        PlayShowAnimation(onStartSize, oriSize, startTime, popUpEase);
+
+        // 사운드 실행
+        SFXManager.Instance.PlaySFX(GetOpenSFXType());
+    }
 
     #endregion
 
@@ -69,6 +82,9 @@ public class UIPopUP : MonoBehaviour
         PlayShowAnimation(oriSize, offEndSize, endTime, popUpEase);
 
         Invoke(nameof(SetActiveFalsePanel), endTime / 2);
+
+        // 사운드 실행
+        SFXManager.Instance.PlaySFX(closeSFXType);
     }
 
     private void SetActiveFalsePanel()

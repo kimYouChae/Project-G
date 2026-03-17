@@ -28,18 +28,25 @@ public class LobbyController : ILobbyPanelInitionlize
     private void Rank() 
     {
         LeaderBoardPopUp leaderPopup = UIManager.Instance.GetPopUP<LeaderBoardPopUp>();
-        leaderPopup.InitLeaderBoardPopUp();
+        leaderPopup.OpenLeaderBoardPopUp();
     }
 
     private void CreateHostRoom() 
     {
         Debug.Log("CreateHostRoom");
+
+        // sfx 실행 
+        SFXManager.Instance.PlaySFX(SFXType.UIClick);
+
         LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Lobby, LobbyPanelType.CreateRoom); 
     }
 
     private void JoinClientRoom() 
     {
         LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Lobby, LobbyPanelType.RoomList);
+
+        // sfx 실행 
+        SFXManager.Instance.PlaySFX(SFXType.UIClick);
 
         // 로비에 입장
         PunLobbyManager.Instance.JoinLobby();
@@ -53,19 +60,19 @@ public class LobbyController : ILobbyPanelInitionlize
     private void ScorePopUp() 
     {
         UserScorePopUP scorePopUp = UIManager.Instance.GetPopUP<UserScorePopUP>();
-        scorePopUp.InitUserScorePopup();
+        scorePopUp.OpenUserScorePopup();
     }
 
     private void SettingPopUp() 
     {
         SettingPopUP settingpopup = UIManager.Instance.GetPopUP<SettingPopUP>();
-
+        settingpopup.OpenSetting();
     }
 
     private void AchivePopup() 
     {
         AchivePopUP achive = UIManager.Instance.GetPopUP<AchivePopUP>();
-        achive.InitAchivePopup(hasOpenedAchievementUI);
+        achive.OpenAchivePopup(hasOpenedAchievementUI);
 
         // 도전과제 팝업
         if (!hasOpenedAchievementUI)
@@ -75,7 +82,7 @@ public class LobbyController : ILobbyPanelInitionlize
     private void CharacterPopUp() 
     {
         CharacterSelectPopUP chara = UIManager.Instance.GetPopUP<CharacterSelectPopUP>();
-        chara.InitCharacterView(hasOpenedAchievementUI);
+        chara.OpenCharacterView(hasOpenedAchievementUI);
 
         // 캐릭터 선택 팝업
         if (!hasOpenedAchievementUI)

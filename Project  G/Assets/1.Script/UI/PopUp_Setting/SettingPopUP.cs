@@ -26,6 +26,12 @@ public class SettingPopUP : UIPopUP , ILocalizable
     [SerializeField] TextMeshProUGUI bgmText;
     [SerializeField] TextMeshProUGUI languageText;
 
+    public void OpenSetting() 
+    {
+        // UI ON, íŒì—… ì‚¬ìš´ë“œ ì‹¤í–‰
+        base.OpenPopUP();
+    }
+
     public void RegisterSoundValue(Action<SoundType, float> action) 
     {
         soundValueChangedAction += action;
@@ -45,11 +51,11 @@ public class SettingPopUP : UIPopUP , ILocalizable
         languageDropDown.onValueChanged.AddListener( value => selectLanguage = value);
         applyButton.onClick.AddListener( () => applyLanguageAction?.Invoke(selectLanguage) );
 
-        // µå·Ó´Ù¿î °ü¸®
+        // ë“œë¡­ë‹¤ìš´ ê´€ë¦¬
         languageDropDown.ClearOptions();
         InitDropDown();
 
-        // ·ÎÄÃ¶óÀÌÂ¡ °ü¸®
+        // ë¡œì»¬ë¼ì´ì§• ê´€ë¦¬
         LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
     }
 

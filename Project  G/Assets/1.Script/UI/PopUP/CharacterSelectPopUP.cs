@@ -35,8 +35,11 @@ public class CharacterSelectPopUP : UIPopUP
     }
 
     // 켤 때 초기화
-    public void InitCharacterView(bool hasOpend)
+    public void OpenCharacterView(bool hasOpend)
     {
+        // UI ON, 팝업 사운드 실행
+        base.OpenPopUP();
+
         // 타이틀 로컬라이징
         characterPopUpTitle.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Character);
 
