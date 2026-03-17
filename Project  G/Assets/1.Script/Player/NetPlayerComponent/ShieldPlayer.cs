@@ -19,6 +19,10 @@ public class ShieldPlayer : MonoBehaviour, IPlayerSkill
         if (dot >= ShieldDotThreshold)
         {
             Debug.Log("정면(±45도) 방패로 막음");
+
+            // sfx 실행
+            SFXManager.Instance.PlaySFX(SFXType.ShieldBlock);
+
             return; // 막기 성공
         }
         else

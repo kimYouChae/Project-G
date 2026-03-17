@@ -33,6 +33,9 @@ public class ScorePlayer : MonoBehaviour, IPlayerSkill
 
             // 점수 증가
             ScoreManager.Instance.AddScore(scoreAddAmount);
+
+            // sfx 실행
+            SFXManager.Instance.PlaySFX(SFXType.ScoreCoin);
         }
 
     }

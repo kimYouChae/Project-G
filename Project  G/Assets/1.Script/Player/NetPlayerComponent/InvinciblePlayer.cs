@@ -50,7 +50,11 @@ public class InvinciblePlayer : MonoBehaviour, IPlayerSkill
         {
             for(int i = 0; i < invincibleColors.Count; i++) 
             {
+                // 색 변경 
                 player.ChangeColor(invincibleColors[i]);
+
+                // sfx 실행
+                SFXManager.Instance.PlaySFX(SFXType.InvincibleSkill);
 
                 yield return new WaitForSeconds(colorChangeTime);
             }

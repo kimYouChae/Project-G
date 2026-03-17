@@ -22,6 +22,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Color originalColor;
+
     [Header("===Script===")]
     [SerializeField] NetPlayerAnimator netAnimator;
     [SerializeField] IPlayerSkill playerSkill;
@@ -161,7 +162,11 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
     public void DiePlayer() 
     {
+        // 사망 로직 동기화 
         view.RPC(nameof(RPC_TriggerBullet), RpcTarget.AllBuffered, photonView.ViewID);
+
+        // 사망 사운드
+        SFXManager.Instance.PlaySFX(SFXType.CharacterDeath);
     }
 
     [PunRPC]
