@@ -115,7 +115,6 @@ public enum SFXType
 
     // InGame
     Countdown,
-    GameStart,
 
     // Character
     CharacterFootstep,

@@ -38,10 +38,10 @@ public class SFXPolicy
         sfxPolicyDic.Add(SFXType.UIClick, new PlayPolicy(false, false));
         sfxPolicyDic.Add(SFXType.UIBack, new PlayPolicy(false, false));
         sfxPolicyDic.Add(SFXType.UIPopup, new PlayPolicy(false, false));
+        sfxPolicyDic.Add(SFXType.UIWarning, new PlayPolicy(false, false));
 
         // InGame
         sfxPolicyDic.Add(SFXType.Countdown, new PlayPolicy(false, true));
-        sfxPolicyDic.Add(SFXType.GameStart, new PlayPolicy(false, true));
 
         // Character
         sfxPolicyDic.Add(SFXType.CharacterFootstep, new PlayPolicy(true, false));

@@ -51,6 +51,8 @@ public class BGMManager : MonoBehaviour
 
             // 오디오소스 생성
             AudioSource source = bgmTrs.AddComponent<AudioSource>();
+            // 클립 할당 
+            source.clip = GetAudioClip(bType);
             typeBySource.Add(bType, source);
 
             // 오디오 믹서 세팅
@@ -176,4 +178,11 @@ public class BGMManager : MonoBehaviour
         fadeOutCorutine = null;
     }
 
+    private AudioClip GetAudioClip(BGMType type)
+    {
+        if (typeByClip.ContainsKey(type))
+            return typeByClip[type];
+
+        return null;
+    }
 }

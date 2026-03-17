@@ -2,9 +2,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -72,7 +70,7 @@ public class SFXManager : Singleton<SFXManager>
             SFXType sType = (SFXType)i;
             if (sType == SFXType.None)
                 continue;
-            
+
             // 정책가져오기
             PlayPolicy policy = sfxPolicy.GetPolicy(sType);
 
@@ -87,6 +85,8 @@ public class SFXManager : Singleton<SFXManager>
             {
                 // 오디오소스 생성후 딕셔너리에 넣기
                 AudioSource indiSource = sfxTrs.AddComponent<AudioSource>();
+                // 클립할당
+                indiSource.clip = GetAudioClip(sType);
                 typeBySource.Add(sType, indiSource);
 
                 // 오디오 믹서 세팅 

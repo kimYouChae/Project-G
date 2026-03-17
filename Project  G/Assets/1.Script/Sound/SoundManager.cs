@@ -9,9 +9,12 @@ public class SoundManager : Singleton<SoundManager>
     
     [SerializeField]
     private Transform soundTrs; // 사운드오브젝트, 하위에 SFX / BGM 오브젝트 추가 예정
-    [SerializeField]
+
+    [SerializeField] 
     private AudioMixer audioMixer;  // 오디오믹스
+    [SerializeField]
     private AudioMixerGroup sfxMixerGroup;  // 오디오 믹서 안 sfx 그룹
+    [SerializeField] 
     private AudioMixerGroup bgmMixerGroup;  // 오디오 믹서 안 bgm 그룹
 
     const string SFX_MIXER_GROUP = "SFX";
