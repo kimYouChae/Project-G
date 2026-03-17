@@ -30,9 +30,14 @@ public class TitleUI : MonoBehaviour
             {
                 LobbyUIManager.Instance.OnOffDarkPanel(true);
                 
+                // 로그인 로직 시작 
                 StartCoroutine(LoginUser());
 
+                // panel 변경 
                 LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
+
+                // SFX 실행
+                SFXManager.Instance.PlaySFX(SFXType.UIClick);
 
                 yield break;
             }

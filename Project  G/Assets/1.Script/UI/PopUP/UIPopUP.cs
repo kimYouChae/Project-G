@@ -21,8 +21,8 @@ public class UIPopUP : MonoBehaviour
 
     [Header("===SFX Type===")]
     [SerializeField] private bool isOpend = false;      // 최초생성이면 SFX 실행 x 
-    [SerializeField] protected SFXType openSFXType = SFXType.UIPopup;    
-    [SerializeField] protected SFXType closeSFXType = SFXType.UIBack;
+    protected SFXType openSFXType = SFXType.UIPopup;    
+    protected SFXType closeSFXType = SFXType.UIBack;
 
     // Mono의 생명주기 함수 awake -> onEnable -> start
     void Awake()

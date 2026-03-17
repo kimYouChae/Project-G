@@ -17,6 +17,9 @@ public class WaitingRoomController : ILobbyPanelInitionlize
 
     private void BackAction()
     {
+        // SFX 실행
+        SFXManager.Instance.PlaySFX(SFXType.UIBack);
+
         LobbyUIManager.Instance.ChangePanel(LobbyPanelType.WaitingRoom, LobbyPanelType.RoomList);
 
         // 현재 있는 photon 방에서 나가기 
@@ -30,10 +33,12 @@ public class WaitingRoomController : ILobbyPanelInitionlize
 
     private void GameStart() 
     {
-
         // 마스터클라이언트만 가능 
         if (PhotonNetwork.IsMasterClient)
         {
+            // SFX 실행
+            SFXManager.Instance.PlaySFX(SFXType.UIClick);
+
             // 게임씬으로 전환
             PhotonSceneManager.Instance.ChangeGameScene();
         }

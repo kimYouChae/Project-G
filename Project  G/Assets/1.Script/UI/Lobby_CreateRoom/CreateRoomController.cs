@@ -73,13 +73,17 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
     private void BackAction()
     {
-        // 
+        // SFX 실행
+        SFXManager.Instance.PlaySFX(SFXType.UIBack);
 
         LobbyUIManager.Instance.ChangePanel(LobbyPanelType.CreateRoom, LobbyPanelType.Lobby);
     }
 
     private void CopyPassWord() 
     {
+        // SFX 실행
+        SFXManager.Instance.PlaySFX(SFXType.UIClick);
+
         roomModel.roomPassword = roomModel.GetRandomNPassword();
 
         // 복사하기
@@ -131,9 +135,13 @@ public class CreateRoomController : ILobbyPanelInitionlize
             return;
         }
 
+        // SFX 실행
+        SFXManager.Instance.PlaySFX(SFXType.UIClick);
+
         // PunLobbyManager 매서드 실행
         PunLobbyManager.Instance.CreateCusomRoom();
 
+        // panel 전환 
         LobbyUIManager.Instance.ChangePanel(LobbyPanelType.CreateRoom, LobbyPanelType.WaitingRoom);
     }
 

@@ -43,16 +43,25 @@ public class RoomListController : ILobbyPanelInitionlize
 
     private void BackAction() 
     {
+        // SFX 실행
+        SFXManager.Instance.PlaySFX(SFXType.UIBack);
+
         LobbyUIManager.Instance.ChangePanel(LobbyPanelType.RoomList, LobbyPanelType.Lobby);
     }
 
     private void UpdateRoomSelectIndex(int idex) 
     {
+        // SFX 실행
+        SFXManager.Instance.PlaySFX(SFXType.UIClick);
+
         roomListModel.SetRoomIndex(idex);
     }
 
     private void RefrechRoomList() 
     {
+        // SFX 실행
+        SFXManager.Instance.PlaySFX(SFXType.UIClick);
+
         // 포톤 - 룸 정보 업데이트 
         PunLobbyManager.Instance.RefreshRoomList();
 
@@ -62,12 +71,13 @@ public class RoomListController : ILobbyPanelInitionlize
 
     private void JoinRoom(string password) 
     {
+        // SFX 실행
+        SFXManager.Instance.PlaySFX(SFXType.UIClick);
+
         if (!roomListModel.isValue()) 
         {
-            // ## POPUP : view의 UI 띄우기 
-
-
-            Debug.Log("유효하지 않는 방 번호");
+            TextPopUp textPopup = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopup.UpdateText("(로컬라이징전) 유효하지 않은 방번호");
             return;
         }
 

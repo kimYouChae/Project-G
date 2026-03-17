@@ -15,6 +15,8 @@ public class TextPopUp : UIPopUP
 
     public void UpdateText(string text) 
     {
+        base.OpenPopUP();
+
         popupText.text = text;
     }
 }
