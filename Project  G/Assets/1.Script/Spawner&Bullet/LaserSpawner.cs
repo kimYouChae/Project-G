@@ -18,7 +18,7 @@ public class LaserSpawner : NetSpawner
 
     public override void StartShooting()
     {
-        StartCoroutine(Test());
+        StartCoroutine(ShootLaserCicle());
     }
 
     public override void SettingBulletShootPosi()
@@ -38,7 +38,7 @@ public class LaserSpawner : NetSpawner
             return;
     }
 
-    IEnumerator Test() 
+    IEnumerator ShootLaserCicle() 
     {
         while (true)
         {
@@ -54,6 +54,9 @@ public class LaserSpawner : NetSpawner
             {
                 // 차징 오브젝트 생성
                 view.RPC(nameof(RPC_ChargingObject), RpcTarget.AllBuffered);
+                // sfx 차징 사운드 실행
+                SFXManager.Instance.PlaySFX(SFXType.LaserCharge);
+
                 // N초후 삭제
                 yield return new WaitForSeconds(1f);
                 if (currLaserChargeObj != null)
@@ -64,6 +67,8 @@ public class LaserSpawner : NetSpawner
 
                 // 레이저 오브젝트 생성 
                 view.RPC(nameof(RPC_LaserObject), RpcTarget.AllBuffered);
+                // sfx 레이저 발사 실행
+                SFXManager.Instance.PlaySFX(SFXType.LaserFire);
 
                 // N초후 삭제
                 yield return new WaitForSeconds(1f);

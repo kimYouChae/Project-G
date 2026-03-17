@@ -125,12 +125,13 @@ public enum SFXType
     InvincibleSkill,
 
     // Spawner
-    BulletSpawnerShot,
-    MissileSpawnerShot,
-    MissileFly,
-    MissileExplosion,
-    LaserCharge,
-    LaserFire
+    BulletSpawnerShot,  // 기본 스포너 : 발사
+    FourBulletObjPut,   // 4방향 스포너가 생성될 때
+    MissileSpawnerShot, // 미사일 스포너 : 발사
+    MissileFly,         // 미사일 날라갈때
+    MissileExplosion,   // 미사일 터질때
+    LaserCharge,        // 레이저 차징
+    LaserFire           // 레이저 슛
 }
 
 public enum BGMType 

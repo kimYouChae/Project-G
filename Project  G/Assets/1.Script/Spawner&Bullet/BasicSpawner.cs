@@ -37,8 +37,14 @@ public class BasicSpawner : NetSpawner
             // 총알 두개 생성 방지 -> isMine 검사
             if (photonView.IsMine)
             {
+                // 스포너 애니메이션 실행 
                 spanwerAnimator.ChangeAttackAnimation(SpanwerAnimState.Attack, true);
+
+                // 총알발사 
                 view.RPC(nameof(RPC_ShootBullet), RpcTarget.AllBuffered);
+
+                // sfx 실행
+                SFXManager.Instance.PlaySFX(SFXType.BulletSpawnerShot);
             }
         }
     }

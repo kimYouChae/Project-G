@@ -36,8 +36,14 @@ public class GuidedMissileSpawner : NetSpawner
             // 총알 두개 생성 방지 -> isMine 검사
             if (photonView.IsMine)
             {
+                // 스포너 애니메이션 실행 
                 spanwerAnimator.ChangeAttackAnimation(SpanwerAnimState.Attack, true);
-                view.RPC("RPC_ShootGuideMissile", RpcTarget.AllBuffered);
+
+                // 총알발사 
+                view.RPC(nameof(RPC_ShootGuideMissile), RpcTarget.AllBuffered);
+
+                // sfx 실행
+                SFXManager.Instance.PlaySFX(SFXType.MissileSpawnerShot);
             }
         }
     }
@@ -45,8 +51,8 @@ public class GuidedMissileSpawner : NetSpawner
     [PunRPC]
     public void RPC_ShootGuideMissile()
     {
+        // 총알생성
         GameObject temp = Instantiate(bulletPrefab, shootPosi.position, Quaternion.identity);
-
         temp.GetComponent<GuideMissile>().OwnerPosition = ownerTrs;
     }
 

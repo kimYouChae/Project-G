@@ -25,10 +25,14 @@ public class FourDirBullet : MonoBehaviour
         // 총알 발사는 RPC 여야함 -> Photonview있어야함 -> 네트워크 객체여야함
         if (view.IsMine)
         {
+            // 총알생성 
             view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.up);
             view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.right);
             view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.left);
             view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.down);
+
+            // sfx 실행 
+            SFXManager.Instance.PlaySFX(SFXType.BulletSpawnerShot);
         }
 
         // 0.5초후에 삭제

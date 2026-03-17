@@ -53,6 +53,7 @@ public class SFXPolicy
 
         // Spawner
         sfxPolicyDic.Add(SFXType.BulletSpawnerShot, new PlayPolicy(false, false));
+        sfxPolicyDic.Add(SFXType.FourBulletObjPut, new PlayPolicy(false, false));
         sfxPolicyDic.Add(SFXType.MissileSpawnerShot, new PlayPolicy(false, false));
         sfxPolicyDic.Add(SFXType.MissileFly, new PlayPolicy(true, false));
         sfxPolicyDic.Add(SFXType.MissileExplosion, new PlayPolicy(false, false));

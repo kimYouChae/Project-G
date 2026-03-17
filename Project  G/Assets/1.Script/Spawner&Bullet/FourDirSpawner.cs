@@ -54,7 +54,11 @@ public class FourDirSpawner : NetSpawner
 
     private void CreateFourBulletObj(float ranX, float ranY) 
     {
-        GameObject temp = PhotonNetwork.Instantiate(Define.DEFAULT_SPAWNER + fourDirSpanwerName, new Vector3(ranX, ranY, 0), Quaternion.identity);
+        // 네트워크 오브젝트 생성
+        PhotonNetwork.Instantiate(Define.DEFAULT_SPAWNER + fourDirSpanwerName, new Vector3(ranX, ranY, 0), Quaternion.identity);
+
+        // sfx 실행 
+        SFXManager.Instance.PlaySFX(SFXType.FourBulletObjPut);
     }
 
 }

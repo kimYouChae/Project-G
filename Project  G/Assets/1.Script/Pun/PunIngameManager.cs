@@ -136,7 +136,11 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
             if (sec != prevSec && remain > 0)
             {
+                // UI 표시 
                 InGameUI.Instance.CountDownUpdateText(sec);
+                // 카운트다운 사운드
+                SFXManager.Instance.PlaySFX(SFXType.Countdown);
+
                 Debug.Log(sec);
                 prevSec = sec;
             }
@@ -149,8 +153,14 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
         Debug.Log("게임 시작!");
 
+        // 게임시작 사운드
+        SFXManager.Instance.PlaySFX(SFXType.GameStart);
+
+        // UI 업데이트
         InGameUI.Instance.CountDownText.gameObject.SetActive(false);
         InGameUI.Instance.GamePanel.SetActive(true);
+
+        // 로직실행
         localPlayer.GetComponent<NetPlayer>().IsReadToMove = true;
         ScoreManager.Instance.ScoreBegin((float)PhotonNetwork.Time);
     }
