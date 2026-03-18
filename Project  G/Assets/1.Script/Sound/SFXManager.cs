@@ -126,7 +126,7 @@ public class SFXManager : Singleton<SFXManager>
         if (policy.isSync) 
         {
             // 로컬에서 실행
-            LocalPlaySFX(sType);
+            // LocalPlaySFX(sType);
 
             // raise Event 전달 ( 대상 : other )
             SycnSFX(sType);
