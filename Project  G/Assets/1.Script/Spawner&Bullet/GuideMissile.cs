@@ -49,7 +49,7 @@ public class GuideMissile : BaseBullet
             rb.velocity = dir.normalized * 3f;
 
             // sfx 실행 
-            SFXManager.Instance.PlaySFX(SFXType.MissileFly);
+            // SFXManager.Instance.PlaySFX(SFXType.MissileFly);
 
             yield return new WaitForSeconds(0.5f);
         }
