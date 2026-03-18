@@ -197,7 +197,7 @@ MonoBehaviour:
   spawnerData:
     type: 0
     speed: 0
-    acceleration: 0
+    smoothTime: 0
   shootPosiList:
   - {fileID: 1966707121300717887}
   - {fileID: 4782600261846094164}
