@@ -2,7 +2,9 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,6 +22,10 @@ public class SFXManager : Singleton<SFXManager>
 
     [Header("===SFX Policy===")]
     private SFXPolicy sfxPolicy;    // sfx 타입별 실행정책
+
+    [Header("===(임시)Foop Step===")]
+    private Coroutine footStepCoroutine;
+    private bool isFootStepPlaying = false;
 
     protected override void Singleton_Awake()
     {
@@ -236,4 +242,50 @@ public class SFXManager : Singleton<SFXManager>
         source.Play();
     }
 
+    #region 캐릭터 걷는 SFX 실행
+    public void PlayCharacterFootStep(SFXType sType) 
+    {
+        if (isFootStepPlaying) return;
+
+        AudioSource source = GetAudioSource(sType);
+        AudioClip clip = GetAudioClip(sType);
+
+        if (source == null || clip == null) return;
+
+        isFootStepPlaying = true;
+        footStepCoroutine = StartCoroutine(FootStepLoop(source, clip));
+    }
+
+    public void StopCharacterFootStep(SFXType sType) 
+    {
+        if (!isFootStepPlaying) return;
+
+        isFootStepPlaying = false;
+
+        if (footStepCoroutine != null)
+        {
+            Debug.Log("발소리 루프(코루틴) 멈추기");
+            StopCoroutine(footStepCoroutine);
+            footStepCoroutine = null;
+
+            // 클립이 길어서 여기서 바로 멈춰야할듯
+            AudioSource source = GetAudioSource(sType);
+            source.Stop();
+        }
+    }
+
+    private IEnumerator FootStepLoop(AudioSource source, AudioClip clip)
+    {
+        Debug.Log("발소리 루프(코루틴) 실행");
+
+        while (isFootStepPlaying)
+        {
+            source.PlayOneShot(clip);
+
+            // 클립 길이만큼 대기
+            yield return new WaitForSeconds(clip.length);
+        }
+    }
+
+    #endregion 
 }

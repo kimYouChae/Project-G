@@ -77,14 +77,22 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         if (dir.x == 0 && dir.y == 0)    // 가만히
             netAnimator.ChangeAnimation(CharaterAniState.none);
 
+        // 입력이 있을 때 (이동할 때)
         if (dir != Vector3.zero)
         {
             lastMoveDir = dir.normalized; 
             rb.velocity = lastMoveDir * speed;
+
+            // 걷는 사운드 실행
+            SFXManager.Instance.PlayCharacterFootStep(SFXType.CharacterFootstep);
         }
+        // 입력이 없을 때 (멈출때)
         else
         {
             rb.velocity = Vector2.zero;
+
+            // 걷는 사운드 멈추기
+            SFXManager.Instance.StopCharacterFootStep(SFXType.CharacterFootstep);
         }
 
         // 앞 방향 시각화
