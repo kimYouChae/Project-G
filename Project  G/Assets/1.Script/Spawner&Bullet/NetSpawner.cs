@@ -61,8 +61,10 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine == false)
             return;
 
-        if(canMove)
+        if (canMove)
+        {
             moveNetSpawner?.Invoke();
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -114,6 +116,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
 
     protected void SettingOwnerFollowMoving() 
     {
+
         // dirType세팅 후
         // 방향에 따라 움직임 다르게 
         switch (directType)
@@ -170,7 +173,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
         Vector3 target = new Vector3(current.x, ownerTrs.position.y, current.z);
 
         transform.position = Vector3.SmoothDamp(
-            current, target, ref velRefY, spawnerData.Acceleration, spawnerData.Speed, Time.deltaTime);
+            current, target, ref velRefY, spawnerData.SmoothTime, spawnerData.Speed, Time.deltaTime);
     }
 
     private void MoveFllowToLeftRIght() 
@@ -189,7 +192,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
         Vector3 target = new Vector3(ownerTrs.position.x, current.y, current.z);
 
         transform.position = Vector3.SmoothDamp(
-            current, target, ref velRefX, spawnerData.Acceleration, spawnerData.Speed, Time.deltaTime);
+            current, target, ref velRefX, spawnerData.SmoothTime, spawnerData.Speed, Time.deltaTime);
 
     }
 

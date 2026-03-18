@@ -32,12 +32,6 @@ public class LaserSpawner : NetSpawner
         SettingOwnerFollowMoving();
     }
 
-    private void Update()
-    {
-        if (photonView.IsMine == false)
-            return;
-    }
-
     IEnumerator ShootLaserCicle() 
     {
         while (true)

@@ -14,17 +14,17 @@ public class SpawnerData
     private float speed;
     [SerializeField]
     [JsonProperty("accerleraion")]
-    private float acceleration;
+    private float smoothTime;
 
     public float Speed { get => speed; }
-    public float Acceleration { get => acceleration; }
+    public float SmoothTime { get => smoothTime; }
     public SpawnerType SpawnerType { get => type;  }
 
     public SpawnerData(SpawnerType t,float s, float ac) 
     {
         this.type = t;
         this.speed = s;
-        this.acceleration = ac;
+        this.smoothTime = ac;
     }
 }
 

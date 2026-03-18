@@ -142,6 +142,8 @@ public class SpawnerManager : MonoBehaviour
 
             try
             {
+                // 0. data 지정해주기
+                spawner.SettingSpawnerData(type);
                 // 1. 부모지정
                 spawner.SettingParent(localPlayerIndex, dir);
                 // 2. owner 지정
@@ -151,8 +153,6 @@ public class SpawnerManager : MonoBehaviour
                 // 4. 움직임 지정 / 총알 스포너 위치 지정 
                 spawner.SettingMoving();
                 spawner.SettingBulletShootPosi();
-                // 5. data 지정해주기
-                spawner.SettingSpawnerData(type);
 
             }
             catch (Exception e) { Debug.LogError(e); }
