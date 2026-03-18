@@ -196,14 +196,13 @@ MonoBehaviour:
   spawnerData:
     type: 0
     speed: 0
-    acceleration: 0
+    smoothTime: 0
   shootPosiList:
   - {fileID: 2882715382621649232}
   - {fileID: 8928480878437932313}
   - {fileID: 5692592798143753169}
   - {fileID: 4178045122276676010}
   shootPosi: {fileID: 0}
-  fourBulletSpawnObj: {fileID: 5540976154961557365, guid: 94d4a03fd3187a4438760bf6981f2724, type: 3}
 --- !u!95 &2730528157918924123
 Animator:
   serializedVersion: 5
