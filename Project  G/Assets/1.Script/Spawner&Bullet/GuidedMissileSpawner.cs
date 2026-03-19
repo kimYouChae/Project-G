@@ -39,8 +39,11 @@ public class GuidedMissileSpawner : NetSpawner
                 // 스포너 애니메이션 실행 
                 spanwerAnimator.ChangeAttackAnimation(SpanwerAnimState.Attack, true);
 
-                // 총알발사 
-                view.RPC(nameof(RPC_ShootGuideMissile), RpcTarget.AllBuffered);
+                // 총알발사 ( 나 )
+                InstsanceBullet(true);
+
+                // 총알발사 ( 나 제외 다른 클라이언트 )
+                view.RPC(nameof(RPC_ShootGuideMissile), RpcTarget.Others);
 
                 // sfx 실행
                 SFXManager.Instance.PlaySFX(SFXType.MissileSpawnerShot);
@@ -51,9 +54,20 @@ public class GuidedMissileSpawner : NetSpawner
     [PunRPC]
     public void RPC_ShootGuideMissile()
     {
+        InstsanceBullet(false);
+    }
+
+    private void InstsanceBullet(bool isLocalOwner) 
+    {
         // 총알생성
         GameObject temp = Instantiate(bulletPrefab, shootPosi.position, Quaternion.identity);
-        temp.GetComponent<GuideMissile>().OwnerPosition = ownerTrs;
+        GuideMissile missile = temp.GetComponent<GuideMissile>();
+        if (missile != null) 
+        {
+            missile.OwnerPosition = ownerTrs;
+            missile.IsLocalOwner = isLocalOwner;
+        }
+
     }
 
 }

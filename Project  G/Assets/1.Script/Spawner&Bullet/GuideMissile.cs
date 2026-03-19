@@ -11,7 +11,11 @@ public class GuideMissile : BaseBullet
     [SerializeField] float maxLifeTime = 3f;
     [SerializeField] float currTime = 0;
 
+    [SerializeField] bool isLocalOwner;
+
     public Transform OwnerPosition { get => ownerPosition; set => ownerPosition = value; }
+    public bool IsLocalOwner { set => isLocalOwner = value; }
+
 
     void Start()
     {
@@ -25,9 +29,11 @@ public class GuideMissile : BaseBullet
         currTime += Time.deltaTime;
         if (currTime > maxLifeTime)
         {
-            // sfx 실행 
-            SFXManager.Instance.PlaySFX(SFXType.MissileExplosion);
-
+            if(isLocalOwner) 
+            {
+                // sfx 실행 
+                SFXManager.Instance.PlaySFX(SFXType.MissileExplosion);    
+            }
             // 파괴
             Destroy(gameObject);
         }
