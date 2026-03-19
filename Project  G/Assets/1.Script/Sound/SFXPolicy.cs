@@ -41,8 +41,8 @@ public class SFXPolicy
         sfxPolicyDic.Add(SFXType.UIWarning, new PlayPolicy(false, false));
 
         // InGame
-        sfxPolicyDic.Add(SFXType.Countdown, new PlayPolicy(false, true));
-        sfxPolicyDic.Add(SFXType.GameStart, new PlayPolicy(false, true));
+        sfxPolicyDic.Add(SFXType.Countdown, new PlayPolicy(false, false));
+        sfxPolicyDic.Add(SFXType.GameStart, new PlayPolicy(false, false));
 
         // Character
         sfxPolicyDic.Add(SFXType.CharacterFootstep, new PlayPolicy(true, false));

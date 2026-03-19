@@ -69,8 +69,12 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
         ingamePlayer = new Dictionary<int, InGamePlayer>();
 
-        // 게임 ID 동기화 
-        SycnGameId(); 
+        // 호스트만 - 게임 (고유) 아이디 동기화
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 게임 ID 동기화 
+            SycnGameId(); 
+        }
         // 로컬 플레이어 생성, 동기화 
         CreateAndSyncLocalPlayer(); 
 
@@ -80,31 +84,27 @@ public class PunIngameManager : Singleton<PunIngameManager>
 
     private void SycnGameId()
     {
-        // 호스트만 - 게임 (고유) 아이디 동기화
-        if (PhotonNetwork.IsMasterClient)
+        Debug.Log("[GameIdSync]게임 고유 ID Raise 이벤트");
+
+        MapType maptype = GetMapType();
+        string gameID = GameID(maptype);
+        // 게임 ID, 맵 타입 동기화 
+        object[] contcnt = new object[]
         {
-            Debug.Log("[GameIdSync]게임 고유 ID Raise 이벤트");
+            gameID,
+            maptype
+        };
 
-            MapType maptype = GetMapType();
-            string gameID = GameID(maptype);
-            // 게임 ID, 맵 타입 동기화 
-            object[] contcnt = new object[]
-            {
-                gameID,
-                maptype
-            };
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        SendOptions sendOption = new SendOptions { Reliability = true };
 
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-            SendOptions sendOption = new SendOptions { Reliability = true };
+        bool success =
+            PhotonNetwork.RaiseEvent((byte)PunEventType.GameIdSync,
+                contcnt,
+                raiseEventOptions,
+                sendOption);
 
-            bool success =
-                PhotonNetwork.RaiseEvent((byte)PunEventType.GameIdSync,
-                    contcnt,
-                    raiseEventOptions,
-                    sendOption);
-
-            Debug.Log($"[GameIdSync] RaiseEvent 보냄? {success}");
-        }
+        Debug.Log($"[GameIdSync] RaiseEvent 보냄? {success}");
     }
 
     IEnumerator GameStartCorutine ()
