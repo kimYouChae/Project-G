@@ -59,6 +59,8 @@ MonoBehaviour:
   - RPC_OnOffLineRenderer
   - RPC_ChargingObject
   - RPC_LaserObject
+  - RPC_DestroyLaser
+  - RPC_DestoryChargingObj
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

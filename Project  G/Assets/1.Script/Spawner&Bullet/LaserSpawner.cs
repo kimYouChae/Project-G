@@ -2,6 +2,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -54,8 +55,8 @@ public class LaserSpawner : NetSpawner
                 // N초후 삭제
                 yield return new WaitForSeconds(1f);
                 if (currLaserChargeObj != null)
-                { 
-                    Destroy(currLaserChargeObj);
+                {
+                    RPC_DestoryChargingObj();
                     currLaserChargeObj = null;
                 }
 
@@ -68,7 +69,7 @@ public class LaserSpawner : NetSpawner
                 yield return new WaitForSeconds(1f);
                 if (currLaserObj != null) 
                 {
-                    Destroy(currLaserObj);
+                    view.RPC(nameof(RPC_DestroyLaser), RpcTarget.AllBuffered);
                     currLaserObj = null;
                 }
             }
@@ -104,5 +105,16 @@ public class LaserSpawner : NetSpawner
         }
     }
 
+    [PunRPC]
+    public void RPC_DestroyLaser() 
+    {
+        Destroy(currLaserObj);
+    }
+
+    [PunRPC]
+    public void RPC_DestoryChargingObj() 
+    {
+        Destroy(currLaserChargeObj);
+    }
 
 }
