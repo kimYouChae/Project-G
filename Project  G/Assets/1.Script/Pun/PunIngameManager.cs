@@ -156,6 +156,9 @@ public class PunIngameManager : Singleton<PunIngameManager>
         // 게임시작 사운드
         SFXManager.Instance.PlaySFX(SFXType.GameStart);
 
+        // 게임 BGM 실행 ( 현재는 Forest 
+        BGMManager.Instance.PlayBGM(BGMType.MapForest);
+
         // UI 업데이트
         InGameUI.Instance.CountDownText.gameObject.SetActive(false);
         InGameUI.Instance.GamePanel.SetActive(true);

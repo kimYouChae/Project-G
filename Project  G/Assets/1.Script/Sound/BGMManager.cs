@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BGMManager : MonoBehaviour
+public class BGMManager : Singleton<BGMManager>
 {
     [Header("===Transform===")]
     private Transform bgmTrs;       // 오디오 소스 담아둘 trs
@@ -25,7 +25,8 @@ public class BGMManager : MonoBehaviour
     private const float DEFAULT_FADE_TIME = 0.5f;
     private const bool DEFAULT_LOOP = true;
 
-    private void Awake()
+
+    protected override void Singleton_Awake()
     {
         typeBySource = new Dictionary<BGMType, AudioSource>();
         typeByClip = new Dictionary<BGMType, AudioClip>();

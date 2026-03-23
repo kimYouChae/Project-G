@@ -140,8 +140,8 @@ public enum BGMType
 
     Title,
     Lobby,
-    GameOver,
 
+    GameOver,
     MapForest
 }
 
