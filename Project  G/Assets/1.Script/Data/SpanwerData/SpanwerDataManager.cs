@@ -20,11 +20,11 @@ public class SpawnerData
     public float SmoothTime { get => smoothTime; }
     public SpawnerType SpawnerType { get => type;  }
 
-    public SpawnerData(SpawnerType t,float s, float ac) 
+    public SpawnerData(SpawnerType t,float speed, float smooth) 
     {
         this.type = t;
-        this.speed = s;
-        this.smoothTime = ac;
+        this.speed = speed;
+        this.smoothTime = smooth;
     }
 }
 

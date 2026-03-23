@@ -7,7 +7,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
+public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstantiateMagicCallback
 {
     [Header("===Component===")]
     [SerializeField] protected PhotonView view;
@@ -67,6 +67,24 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
         }
     }
 
+    // IPunInstantiateMagicCallback < 에서 구현
+    // PhotonNetwork.Instantiate로 생성할 떄 object[] 넘김 값이 들어옴 
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        // 순서는 생성할 때 object 순서와 맞춰야함
+        var data = info.photonView.InstantiationData;
+
+        // 파싱 
+        SpawnerType sType = (SpawnerType)(int)data[0];
+        float speed = (float)data[1];
+        float smooth = (float)data[2];
+        DirType dType = (DirType)(int)data[3];
+
+        // 로컬에 세팅
+        this.spawnerData = new SpawnerData(sType, speed, smooth);
+        this.directType = dType;
+    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         // 스트림에 데이터 쓰기
@@ -98,20 +116,6 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
         // this.ownerTrs = trs;
         // owner 지정은 RPC : view아이디는 로컬의 플레이어 id
         view.RPC(nameof(RPC_SettingOwner), RpcTarget.AllBuffered , viewId);
-    }
-
-    public void SettingDir(DirType type) 
-    {
-        this.directType = type;
-    }
-
-    public void SettingSpawnerData(SpawnerType type) 
-    {
-        var temp = SpanwerDataManager.Instance.spanwerData(type);
-        if (temp != null) 
-        {
-            spawnerData = temp;
-        }
     }
 
     protected void SettingOwnerFollowMoving() 
@@ -224,4 +228,5 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable
     {
         shootPosi = shootPosiList[(int)type];
     }
+
 }

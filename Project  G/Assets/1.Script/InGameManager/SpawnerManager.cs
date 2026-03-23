@@ -125,8 +125,18 @@ public class SpawnerManager : MonoBehaviour
         GameObject spawnerObj = null;
         try
         {
-            // 스포너 이름 + 방향으로 가져오기 
-            spawnerObj = PhotonNetwork.Instantiate(spawnerName + dir.ToString(), new Vector3(0, 0, 0), Quaternion.identity);
+            // 스포너 네트워크 오브젝트 생성 
+            // 스포너 데이터를 넘길 수 있음 -> object[] 배열로
+            SpawnerData spanerData = SpanwerDataManager.Instance.spanwerData(type);
+            object[] data = new object[4]
+            {
+                (int)spanerData.SpawnerType,
+                spanerData.Speed,
+                spanerData.SmoothTime,
+                dir
+            };
+            
+            spawnerObj = PhotonNetwork.Instantiate(spawnerName + dir.ToString(), new Vector3(0, 0, 0), Quaternion.identity, 0 , data);
         }
         catch (Exception e) { Debug.Log(e); }
 
@@ -142,15 +152,11 @@ public class SpawnerManager : MonoBehaviour
 
             try
             {
-                // 0. data 지정해주기
-                spawner.SettingSpawnerData(type);
-                // 1. 부모지정
+                // 1. 부모지정 (내부에서 동기화)
                 spawner.SettingParent(localPlayerIndex, dir);
-                // 2. owner 지정
+                // 2. owner 지정 (내부에서 동기화)
                 spawner.SettingOwner(localPlayer.ViewID, dir);
-                // 3. dir지정 후 
-                spawner.SettingDir(dir);
-                // 4. 움직임 지정 / 총알 스포너 위치 지정 
+                // 3. 움직임 지정 / 총알 스포너 위치 지정 
                 spawner.SettingMoving();
                 spawner.SettingBulletShootPosi();
 
