@@ -32,9 +32,6 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
 
     public void GameOver() 
     {
-        // 게임 BGM 실행 ( 현재는 Forest 
-        BGMManager.Instance.PlayBGM(BGMType.GameOver);
-
         StartCoroutine(AssembleInfo());
     }
 

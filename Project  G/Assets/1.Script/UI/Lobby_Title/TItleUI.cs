@@ -39,6 +39,9 @@ public class TitleUI : MonoBehaviour
                 // SFX 실행
                 SFXManager.Instance.PlaySFX(SFXType.UIClick);
 
+                // BGM 교체
+                BGMManager.Instance.PlayBGM(BGMType.Lobby);
+
                 yield break;
             }
 

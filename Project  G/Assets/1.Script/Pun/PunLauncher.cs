@@ -35,7 +35,7 @@ public class PunLauncher : MonoBehaviourPunCallbacks
             // 타이틀 화면 켜기
             LobbyUIManager.Instance.ChangePanel(LobbyPanelType.None, LobbyPanelType.Title);
 
-            // 게임 BGM 실행 ( 현재는 Forest 
+            // 게임 BGM 실행 ( Title
             BGMManager.Instance.PlayBGM(BGMType.Title);
         }
         else 
@@ -43,7 +43,7 @@ public class PunLauncher : MonoBehaviourPunCallbacks
             Debug.Log("[PunLauncher] 이미 Photon 서버에 연결되어 있음");
             isReturningFromGame = true;
 
-            // 게임 BGM 실행 ( 현재는 Forest 
+            // 게임 BGM 실행 ( Lobby
             BGMManager.Instance.PlayBGM(BGMType.Lobby);
         }
     }

@@ -76,7 +76,10 @@ public class PunIngameManager : Singleton<PunIngameManager>
             SycnGameId(); 
         }
         // 로컬 플레이어 생성, 동기화 
-        CreateAndSyncLocalPlayer(); 
+        CreateAndSyncLocalPlayer();
+
+        // BGM 끄기
+        BGMManager.Instance.StopBGM();
 
         // 게임 시작 
         StartCoroutine(GameStartCorutine());
