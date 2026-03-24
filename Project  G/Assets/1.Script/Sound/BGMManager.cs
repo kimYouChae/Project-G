@@ -83,9 +83,8 @@ public class BGMManager : Singleton<BGMManager>
         catch (Exception e) { Debug.LogError(e); }
     }
 
-    public void PlayBGM(BGMType bgmType)
+    public void StopBGM() 
     {
-
         // 0. 현재 실행하고 있는 사운드가 있으면 페이드아웃
         if (nowAudioSource != null && nowAudioSource.clip != null)
         {
@@ -93,6 +92,22 @@ public class BGMManager : Singleton<BGMManager>
                 StopCoroutine(fadeOutCorutine);
 
             fadeOutCorutine = StartCoroutine(FadeOut(nowAudioSource, DEFAULT_FADE_TIME));
+        }
+    }
+
+    public void PlayBGM(BGMType bgmType)
+    {
+        Debug.Log($"[{nameof(BGMManager)}] BGM실행 : type {bgmType}");
+
+        // 실행되고 있으면 중지 
+        StopBGM();
+
+        // 현재 오디오소스를 할당 해야함
+        nowAudioSource = GetAudioSource(bgmType);
+        if (nowAudioSource == null)
+        {
+            Debug.LogWarning($"[{nameof(BGMManager)}] 오디오 소스 할당 실패");
+            return;
         }
 
         // 1-1. 세팅
@@ -111,7 +126,7 @@ public class BGMManager : Singleton<BGMManager>
     {
         // 일정시간 대기 (전 브금이 완전히 꺼질때까지 대기)
         if (fadeTime > 0)
-            yield return new WaitForSeconds(fadeTime * 0.5f);
+            yield return new WaitForSecondsRealtime(fadeTime * 0.5f);
 
         // 페이드인 
         // 소리 : 0부터 1까지
@@ -130,7 +145,7 @@ public class BGMManager : Singleton<BGMManager>
                 break;
 
             // 진행시간 +
-            currTime += Time.deltaTime;
+            currTime += Time.unscaledDeltaTime;
 
             // 소리조정 
             audioSource.volume = Mathf.Lerp(startVolume, targetVolume, currTime / fadeTime);
@@ -163,7 +178,7 @@ public class BGMManager : Singleton<BGMManager>
                 break;
 
             // 진행시간 +
-            currTime += Time.deltaTime;
+            currTime += Time.unscaledDeltaTime;
 
             // 소리조정 
             audioSource.volume = Mathf.Lerp(startVolume, targetVolume, currTime / fadeTime);
@@ -183,6 +198,20 @@ public class BGMManager : Singleton<BGMManager>
     {
         if (typeByClip.ContainsKey(type))
             return typeByClip[type];
+
+        return null;
+    }
+
+    private AudioSource GetAudioSource(BGMType type) 
+    {
+        if (typeBySource == null)
+        {
+            Debug.Log("BGM 타입별 오디오 소스 컨테이너가 NULL");
+            return null;
+        }
+
+        if(typeBySource.ContainsKey(type))
+            return typeBySource[type];
 
         return null;
     }

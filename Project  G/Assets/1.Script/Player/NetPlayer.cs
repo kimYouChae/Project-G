@@ -173,7 +173,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         // 사망 로직 동기화 
         view.RPC(nameof(RPC_TriggerBullet), RpcTarget.AllBuffered, photonView.ViewID);
 
-        // 사망 사운드
+        // 사망 사운드 ( 동기화 
         SFXManager.Instance.PlaySFX(SFXType.CharacterDeath);
     }
 
@@ -181,6 +181,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     public void RPC_TriggerBullet(int viewId) 
     {
         Debug.Log($"충돌했습니다");
+        BGMManager.Instance.StopBGM();
 
         // 호스트,클라 공통 동작
         // 1. 시간 멈추기
@@ -194,6 +195,8 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         {
             InGameUI.Instance.HighlightPlayer(view.transform);
         }
+
+        BGMManager.Instance.PlayBGM(BGMType.GameOver);
 
         // ONLY 호스트
         if (PhotonNetwork.IsMasterClient) 
