@@ -1,22 +1,22 @@
 using System;
 
-public class SteamAPI 
+public class SteamAPITest 
 {
     // 싱글톤 
-    private static SteamAPI instance;
-    public static SteamAPI Instance
+    private static SteamAPITest instance;
+    public static SteamAPITest Instance
     {
         get 
         {
             if (instance == null)
-                instance = new SteamAPI();
+                instance = new SteamAPITest();
 
             return instance;
         }
     }
 
     // 외부에서 생성못하게
-    private SteamAPI() { }
+    private SteamAPITest() { }
 
     public long GetSteamID() 
     {
