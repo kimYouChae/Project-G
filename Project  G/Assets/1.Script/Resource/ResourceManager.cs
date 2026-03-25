@@ -36,6 +36,8 @@ public class ResourceManager : Singleton<ResourceManager>
         fallBackLocalizionTextfile = resourceLoader.RoadFallBackLocalization(resourcePath.FallBackLocalizationData);
     }
 
+    public Sprite GetDefaultSprite() => defaultSprite;
+
     public Sprite MapSprite(int idx) 
     {
         if (idx < 0 || idx >= mapSprite.Length)
