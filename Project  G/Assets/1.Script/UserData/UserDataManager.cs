@@ -6,6 +6,8 @@ public class UserDataManager : Singleton<UserDataManager>
 {
     [SerializeField] 
     private UserData userdata = new UserData();
+    [SerializeField]
+    private Texture2D userProfile;
 
     public long SteamID { get => userdata.SteamID; }
     public string NickName { get => userdata.NickName; }
@@ -14,6 +16,11 @@ public class UserDataManager : Singleton<UserDataManager>
     protected override void Singleton_Awake()
     {
         SetUpDontDestroy();          
+    }
+
+    public void UpdateUserProfileImage(Texture2D texure) 
+    {
+        this.userProfile = texure;
     }
 
     public void InsertUserInfo(long id, string name, string cnt) 
