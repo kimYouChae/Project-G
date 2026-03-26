@@ -16,54 +16,38 @@ public class TitleUI : MonoBehaviour
     {
         titleText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Server_Conneting);
 
-        // 서버 연결 시 액션 등록 
-        PunLobbyManager.Instance.RegisterServerConnectAction(()=> 
-            titleText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Enter_AnyKey));
-        PunLobbyManager.Instance.RegisterServerConnectAction(() => StartCoroutine(test()));
+        StartCoroutine(StartTitleLogic());
     }
 
-    IEnumerator test() 
+    IEnumerator StartTitleLogic() 
     {
         while(true) 
         {
-            if (Input.anyKeyDown) 
+            if (SteamConnected.isSteamReady &&
+                PunConnected.hasHandledInitialPhotonConnect)
             {
-                LobbyUIManager.Instance.OnOffDarkPanel(true);
-                
-                // 로그인 로직 시작 
-                StartCoroutine(LoginUser());
+                // "클릭 시 실행" 텍스트로 변경 
+                titleText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Enter_AnyKey);
 
-                // panel 변경 
-                LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
+                if (Input.anyKeyDown)
+                {
+                    LobbyUIManager.Instance.OnOffDarkPanel(true);
 
-                // SFX 실행
-                SFXManager.Instance.PlaySFX(SFXType.UIClick);
+                    // panel 변경 
+                    LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
 
-                // BGM 교체
-                BGMManager.Instance.PlayBGM(BGMType.Lobby);
+                    // SFX 실행
+                    SFXManager.Instance.PlaySFX(SFXType.UIClick);
 
-                yield break;
+                    // BGM 교체
+                    BGMManager.Instance.PlayBGM(BGMType.Lobby);
+
+                    yield break;
+                }
             }
 
             yield return null;
         }
     }
 
-    private IEnumerator LoginUser() 
-    {
-        // 1. 스팀 로그인
-        long steamID = SteamAPITest.Instance.GetSteamID();
-        string nick = SteamAPITest.Instance.GetSteamNick();
-        string cnr = SteamAPITest.Instance.GetCountry();
-
-        // 2. 유저데이터 스크립트에 steam 관련 정보 저장
-        UserDataManager.Instance.InsertUserInfo(steamID, nick, cnr);
-
-        // 3. 로그인 API
-        yield return StartCoroutine(
-            GameServices.Instance.AuthService.AuthService(steamID, nick, cnr));
-
-        // 4. 차트 불러오기 
-        yield return GameServices.Instance.ChartLogic();
-    }
 }

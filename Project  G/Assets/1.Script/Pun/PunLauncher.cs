@@ -22,13 +22,13 @@ public class PunLauncher : MonoBehaviourPunCallbacks
         // PhotonNetwork.LoadLevel("GameScene");로 씬 전환 해야함
         PhotonNetwork.AutomaticallySyncScene = true;
 
-        if (!PunConnected.isConnectedPhoton && !PhotonNetwork.IsConnected)
+        if (!PunConnected.hasStartedPhotonConnect && !PhotonNetwork.IsConnected)
         {
             // *필수* 포톤 서버에 연결!
             PhotonNetwork.GameVersion = gameVersion;
             PhotonNetwork.ConnectUsingSettings();
 
-            PunConnected.isConnectedPhoton = true;
+            PunConnected.hasStartedPhotonConnect = true;
 
             Debug.Log("[PunLauncher] Photon 서버 최초 연결 시도");
 
@@ -81,10 +81,9 @@ public class PunLauncher : MonoBehaviourPunCallbacks
         Debug.Log("Pun : OnConnectedToMaster 콜백실행 | 연결이 성공적입니다");
 
         // 처음 콜백 실행되었을 때만 실행 
-        if ( !PunConnected.isInitTitle) 
+        if ( !PunConnected.hasHandledInitialPhotonConnect) 
         {
-            PunLobbyManager.Instance.ServerConnectAction?.Invoke();
-            PunConnected.isInitTitle = true;
+            PunConnected.hasHandledInitialPhotonConnect = true;
         }
     }
 

@@ -9,27 +9,16 @@ using UnityEngine.UIElements;
 
 public class PunLobbyManager : Singleton<PunLobbyManager>
 {
-    // 서버가 연결되었을 때 실행될 액션
-    private Action serverConnectAction;
-
     // 생성된 방 정보
     private List<RoomInfo> roomInfoList;
     
     public List<RoomInfo> RoomInfoList { get { return roomInfoList; } }
     public int RoomLength { get { return roomInfoList.Count; } }
 
-    public Action ServerConnectAction { get => serverConnectAction;  }
-
     protected override void Singleton_Awake()
     {
 
     }
-
-    public void RegisterServerConnectAction(Action action) 
-    {
-        serverConnectAction += action;
-    }
-
 
     // 세션 세팅
     public void SettingSession(List<RoomInfo> list) 
