@@ -1,13 +1,41 @@
 using Steamworks;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class SteamScript : MonoBehaviour
+public static class SteamConnected 
+{
+    // 스팀API에서 호출한 정보를 바탕으로 
+    // 로그인, 차트 API까지 끝냈는가 
+    public static bool isSteamReady = false;
+}
+
+public class SteamScript : Singleton<SteamScript>
 {
     protected Callback<GameOverlayActivated_t> m_GameOverlayActivated;
-    private CSteamID steamStruct;
+    private CSteamID steamStruct;   // 스팀 유저 정보 구조체 
+
+    // 아이디별 유저 프로필 텍스쳐
+    // 나를 제외한 다른 유저 프로필텍스쳐를 저장하는 용도
+    private Dictionary<ulong, Texture2D> steamIdByProfileTexture;  
+
+    // 스팀 유저 데이터 가져온 뒤 실행할 액션
+    private Action afterGetSteamUserAction;
+
+    protected override void Singleton_Awake()
+    {
+        steamIdByProfileTexture = new Dictionary<ulong, Texture2D>();
+    }
 
     private void OnEnable()
     {
+        // 프로필 가져오는건 나중에
+        afterGetSteamUserAction += SetProfileImage;
+        afterGetSteamUserAction += LoginStart;
+
+        // 초기화 
+        // ( 이미 연결되어 있으면 연결안함 )
         if (SteamManager.Initialized)
         {
             m_GameOverlayActivated = Callback<GameOverlayActivated_t>.Create(OnGameOverlayActivated);
@@ -18,6 +46,7 @@ public class SteamScript : MonoBehaviour
             GetUserSteamID();
 
             // 이후 유저 로그인 로직 실행해야함. 
+            afterGetSteamUserAction?.Invoke();
         }
     }
 
@@ -37,14 +66,25 @@ public class SteamScript : MonoBehaviour
     // 내 스팀 정보 가져오기 
     private void GetUserSteamID() 
     {
+        // 이미 1회 저장했으면 다시 불러올 필요가 없음
+        // CSteamID는 구조체라 NULL 체크가 안됨 
+        if (SteamUserData.Instance.SteamID != 0)
+        {
+            Debug.Log($"[{nameof(SteamScript)}] 이미 로컬에 저장된 스팀 유저 정보 구조체가 있습니다" );
+            return;
+        }
+
         steamStruct = SteamUser.GetSteamID();
         ulong id = steamStruct.m_SteamID;
         string nickName = SteamFriends.GetPersonaName();
+        string country = SteamUtils.GetIPCountry();
 
+        Debug.Log($"스팀에서 가져온 유저 정보 = {id} / {nickName} / {country} ");
 
-        Debug.Log($"스팀에서 가져온 유저 정보 = {id} / {nickName}");
-
-
+        // SteamUserData에 추가 
+        SteamUserData.Instance.SteamID = id;
+        SteamUserData.Instance.NickName = nickName;
+        SteamUserData.Instance.Country = country;
     }
 
     private void SetProfileImage() 
@@ -112,5 +152,32 @@ public class SteamScript : MonoBehaviour
         }
 
         return flipped;
+    }
+
+    private void LoginStart() 
+    {
+        StartCoroutine(LoginUser());
+    }
+
+    private IEnumerator LoginUser()
+    {
+        // 1. 스팀 로그인
+        long steamID = SteamUserData.Instance.GetSteamID();
+        string nick = SteamUserData.Instance.GetSteamNick();
+        string cnr = SteamUserData.Instance.GetCountry();
+
+        // 2. 유저데이터 스크립트에 steam 관련 정보 저장
+        UserDataManager.Instance.InsertUserInfo(steamID, nick, cnr);
+
+        // 3. 로그인 API
+        yield return StartCoroutine(
+            GameServices.Instance.AuthService.AuthService(steamID, nick, cnr));
+
+        // 4. 차트 불러오기 
+        yield return GameServices.Instance.ChartLogic();
+
+        // API 호출까지 끝 
+        SteamConnected.isSteamReady = true;
+        Debug.Log($"스팀 API 호출이 끝났습니다 상태 : {SteamConnected.isSteamReady}");
     }
 }
