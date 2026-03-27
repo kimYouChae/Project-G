@@ -38,10 +38,8 @@ public class SteamScript : Singleton<SteamScript>
         // ( 이미 연결되어 있으면 연결안함 )
         if (SteamManager.Initialized)
         {
-            m_GameOverlayActivated = Callback<GameOverlayActivated_t>.Create(OnGameOverlayActivated);
-
-            // 테스트 - 강제로 친구창 띄우기 
-            // SteamFriends.ActivateGameOverlay("Friends");
+            // 테스트 - 오버레이 콜백 
+            // m_GameOverlayActivated = Callback<GameOverlayActivated_t>.Create(OnGameOverlayActivated);
 
             GetUserSteamID();
 
@@ -49,6 +47,8 @@ public class SteamScript : Singleton<SteamScript>
             afterGetSteamUserAction?.Invoke();
         }
     }
+
+    #region (테스트용) 스팀 오버레이 콜백
 
     // 스팀 오버레이 켜고 끄기 
     private void OnGameOverlayActivated(GameOverlayActivated_t pCallback)
@@ -62,6 +62,7 @@ public class SteamScript : Singleton<SteamScript>
             Debug.Log("Steam Overlay has been closed");
         }
     }
+    #endregion
 
     // 내 스팀 정보 가져오기 
     private void GetUserSteamID() 
