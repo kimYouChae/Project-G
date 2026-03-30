@@ -18,7 +18,12 @@ public class SteamScript : Singleton<SteamScript>
 
     // 아이디별 유저 프로필 텍스쳐
     // 나를 제외한 다른 유저 프로필텍스쳐를 저장하는 용도
-    private Dictionary<ulong, Texture2D> steamIdByProfileTexture;  
+    private Dictionary<ulong, Texture2D> steamIdByProfileTexture;
+
+    // 친구창에 있는 친구 정보 담아놓은 배열
+    private List<CSteamID> friendCSteamIDs;
+    // 친구의 스팀아이디별 CSteamID 담아두는 컨테이너
+    private Dictionary<ulong, CSteamID> friendIdByStruct;
 
     // 스팀 유저 데이터 가져온 뒤 실행할 액션
     private Action afterGetSteamUserAction;
@@ -26,6 +31,8 @@ public class SteamScript : Singleton<SteamScript>
     protected override void Singleton_Awake()
     {
         steamIdByProfileTexture = new Dictionary<ulong, Texture2D>();
+        friendCSteamIDs = new List<CSteamID>();
+        friendIdByStruct = new Dictionary<ulong, CSteamID>();   
     }
 
     private void OnEnable()
@@ -181,4 +188,30 @@ public class SteamScript : Singleton<SteamScript>
         SteamConnected.isSteamReady = true;
         Debug.Log($"스팀 API 호출이 끝났습니다 상태 : {SteamConnected.isSteamReady}");
     }
+
+    #region 친구관련
+
+    public void GetSteamFriend() 
+    {
+        // 컨테이너 초기화
+        friendCSteamIDs.Clear();
+        friendIdByStruct.Clear();
+
+        // 기본친구 타입
+        EFriendFlags basicFriendType = EFriendFlags.k_EFriendFlagImmediate;
+        // 기본 친구타입에 해당하는 친구의 count가져오기
+        int length = SteamFriends.GetFriendCount(basicFriendType);
+
+        for(int i =0 ; i < length; i++) 
+        {
+            // 인덱스 바탕으로 친구 CSteam 구조체 가져오기
+            CSteamID friend = SteamFriends.GetFriendByIndex(i, basicFriendType);
+
+            // 컨테이너에 저장 
+            friendCSteamIDs.Add(friend);
+            friendIdByStruct.Add(friend.m_SteamID, friend);
+        }
+    }
+
+    #endregion 
 }
