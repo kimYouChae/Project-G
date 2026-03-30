@@ -28,6 +28,8 @@ public class SteamScript : Singleton<SteamScript>
     // 스팀 유저 데이터 가져온 뒤 실행할 액션
     private Action afterGetSteamUserAction;
 
+    public List<CSteamID> FriendCSteamIDs { get => friendCSteamIDs; }
+
     protected override void Singleton_Awake()
     {
         steamIdByProfileTexture = new Dictionary<ulong, Texture2D>();
