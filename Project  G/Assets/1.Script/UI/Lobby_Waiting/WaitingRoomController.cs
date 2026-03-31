@@ -13,6 +13,14 @@ public class WaitingRoomController : ILobbyPanelInitionlize
 
         waitingRoomView.RegisterGameStart(GameStart);
         waitingRoomView.RegisterBackButton(BackAction);
+        waitingRoomView.RegisterGetFriend(GetFriend);
+    }
+
+    private void GetFriend() 
+    {
+        // 친구 팝업 띄우기 
+        FriendPopUP popup = UIManager.Instance.GetPopUP<FriendPopUP>();
+        popup.OpenFriendPopUP();
     }
 
     private void BackAction()

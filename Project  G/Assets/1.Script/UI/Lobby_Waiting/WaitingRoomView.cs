@@ -16,12 +16,14 @@ public class WaitingRoomView : MonoBehaviour, ILocalizable
 
     [SerializeField] List<GameObject> playerRefObj;
 
-    [SerializeField] Button gameStartButton;
-    [SerializeField] Button backButton;     // 뒤로가기 버튼 
+    [SerializeField] Button openFriendButton;   // 친구 팝업 버튼
+    [SerializeField] Button gameStartButton;    // 게임시작 버튼
+    [SerializeField] Button backButton;         // 뒤로가기 버튼 
 
     [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI gameStartText;
 
+    private Action GetFriendAction;
     private Action GameStartAction;
     private Action backButtonAction;
 
@@ -29,8 +31,10 @@ public class WaitingRoomView : MonoBehaviour, ILocalizable
     {
         gameStartButton.onClick.AddListener(()=>GameStartAction?.Invoke());
         backButton.onClick.AddListener(() => backButtonAction?.Invoke());
+        openFriendButton.onClick.AddListener(() => GetFriendAction?.Invoke());
     }
 
+    public void RegisterGetFriend(Action action) { GetFriendAction += action; }
     public void RegisterGameStart(Action action) { GameStartAction += action; }
     public void RegisterBackButton(Action action) { backButtonAction += action; }
 
