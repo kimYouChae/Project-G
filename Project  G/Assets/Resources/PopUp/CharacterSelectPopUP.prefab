@@ -790,6 +790,7 @@ MonoBehaviour:
   endTime: 0
   popUpEase: 0
   closeButton: {fileID: 6624455300057954981}
+  isOpend: 0
   characterPrefab: {fileID: 240605495923700425, guid: 2825723229277fa419a9690e6f4efc6a, type: 3}
   contenct: {fileID: 683628900368407467}
   characterObjs: []
@@ -1450,7 +1451,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 8344659367681744310}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 4118666917751608397}

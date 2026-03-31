@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 220798760215003366}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 169011860179474385}
@@ -637,9 +637,10 @@ MonoBehaviour:
   endTime: 0
   popUpEase: 0
   closeButton: {fileID: 8800511981475122189}
+  isOpend: 0
   achiveObj: {fileID: 3282036070050165544, guid: 279bb218e0c420548a898f33999e3007, type: 3}
   content: {fileID: 1112071903409731591}
-  objList: []
+  achiveObjList: []
   achiveTitle: {fileID: 7436060711280937952}
 --- !u!1 &6229983968591773896
 GameObject:

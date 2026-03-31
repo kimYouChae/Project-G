@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 8737493889918334387}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 669878382417543830}
@@ -1023,6 +1023,7 @@ MonoBehaviour:
   endTime: 0
   popUpEase: 0
   closeButton: {fileID: 5021925745804059052}
+  isOpend: 0
   rankingIcon:
   - {fileID: 21300000, guid: 4e8f370c54ad7e046941f7fad528efd1, type: 3}
   - {fileID: 21300000, guid: 3fc70ff552c99d349a0d41d439ac93d8, type: 3}
