@@ -1,7 +1,9 @@
+using JetBrains.Annotations;
 using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public static class SteamConnected 
@@ -106,6 +108,7 @@ public class SteamScript : Singleton<SteamScript>
         UserDataManager.Instance.UpdateUserProfileImage(profileImage);
     }
 
+    #region CSteamID 바탕으로 Texture 2D 리턴
     private Texture2D GetProfileImage(CSteamID steamID) 
     {
         //128*128px
@@ -163,7 +166,8 @@ public class SteamScript : Singleton<SteamScript>
 
         return flipped;
     }
-
+    #endregion
+    
     private void LoginStart() 
     {
         StartCoroutine(LoginUser());
@@ -215,5 +219,77 @@ public class SteamScript : Singleton<SteamScript>
         }
     }
 
+
+    // CSteam 기준으로 닉네임 리턴
+    public string ReturnNickNameByCSteamID(CSteamID id) 
+    {
+        return SteamFriends.GetFriendPersonaName(id);
+    }
+
+    // CSteam 기준으로 텍스쳐 리턴
+    public Texture2D ReturnProfileTexureByCSteamID(CSteamID id) 
+    {
+        // 딕셔너리에 일단 검사
+        if(steamIdByProfileTexture.ContainsKey(id.m_SteamID)) 
+        {
+            // 있으면 저장된 프로필 리턴하기
+            return steamIdByProfileTexture[id.m_SteamID];
+        }
+
+        // 없으면 프로필 이미지 생성
+        Texture2D profileImage = GetProfileImage(id);
+        // 딕셔너리에 저장
+        steamIdByProfileTexture.Add(id.m_SteamID, profileImage);
+
+        // 리턴
+        if (profileImage != null) 
+            return profileImage;
+
+        return default(Texture2D);
+    }
+
+    public void InviteFriendByIndex(int index) 
+    {
+        CSteamID friend = GetCSteamId(index);
+        if (friend.m_SteamID != 0)
+        {
+            Debug.Log("친구 초대를 합니다");
+
+            // 친구의 CSteam, 보낼 문자열
+            // 접속하면 콜백에서 해당 문자열을 사용할 수 있음 
+            bool isSuccessInviteFriend 
+                = SteamFriends.InviteUserToGame(friend , PhotonRoomInfo.RoomName);
+        }
+        else
+        { 
+            Debug.Log("친구의 CSteam이 NULL 입니다");
+
+            // 친구 CSteam데이터를 출력해보기
+            PrintFriendCSteamData();
+        }
+    }
+
+    private void PrintFriendCSteamData() 
+    {
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < friendCSteamIDs.Count; i++) 
+        {
+            CSteamID friend = friendCSteamIDs[i];
+            builder.Append(i + "번째 : ");
+            builder.Append(friend.m_SteamID);
+            builder.Append("/ \n");
+        }
+
+        Debug.Log(builder.ToString());
+    }
+
     #endregion 
+
+    private CSteamID GetCSteamId(int index)
+    {
+        if(friendCSteamIDs.Count > index && index >= 0)
+            return friendCSteamIDs[index];
+
+        return new CSteamID{ };
+    }
 }

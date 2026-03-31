@@ -16,7 +16,10 @@ public class SteamFriend : MonoBehaviour
     // 초대된 플레이어가 game에 참가할 때 실행되는 콜백
     private void FriendIsJoinedRoom(GameRichPresenceJoinRequested_t callback) 
     {
-        Debug.Log($"[SteamFriend] {callback.m_steamIDFriend} - 친구가 게임에 접속");
+        Debug.Log($"[SteamFriend] - 친구가 게임에 접속");
+
+        CSteamID friend = callback.m_steamIDFriend;
+        string temp = callback.m_rgchConnect;
     }
 
     // 친구 창 오버레이 열기 
