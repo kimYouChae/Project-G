@@ -5,7 +5,46 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+
+// room을 만들 때 설정하는 데이터를 담아놓는 용도
+public static class PhotonRoomInfo
+{
+    // 방 고유 번호
+    public static string RoomCode 
+    {
+        get => PlayerPrefs.GetString("RoomCode");
+        set => PlayerPrefs.SetString("RoomCode", value);
+    }
+
+    // 방 이름
+    public static string RoomName
+    {
+        get => PlayerPrefs.GetString("RoomName");
+        set => PlayerPrefs.SetString("RoomName", value);
+    }
+
+    // 비밀번호 
+    public static int Password
+    {
+        get => PlayerPrefs.GetInt("Password");
+        set => PlayerPrefs.SetInt("Password", value);
+    }
+
+    // 최대 유저
+    public static int MaxUser
+    {
+        get => PlayerPrefs.GetInt("MaxUser");
+        set => PlayerPrefs.SetInt("MaxUser", value);
+    }
+
+    // 맵 타입
+    public static string MapTypeName
+    {
+        get => PlayerPrefs.GetString("MapType");
+        set => PlayerPrefs.SetString("MapType", value);
+    }
+}
 
 public class PunLobbyManager : Singleton<PunLobbyManager>
 {
@@ -63,6 +102,8 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
     {
         ExitGames.Client.Photon.Hashtable hashtable = new ExitGames.Client.Photon.Hashtable() 
         {
+            // 방 코드
+            { "RoomCode", PhotonRoomInfo.RoomCode}, 
             // 방 이름
             { "RoomName" , PhotonRoomInfo.RoomName },
             // 비밀번호
@@ -96,9 +137,15 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         );
 
         if (isSuccess)
+        {
             Debug.Log("방 생성에 성공 했습니다");
+        }
         else
+        { 
             Debug.Log("방 생성에 실패 했습니다 ");
+                
+            // PopUP : 방생성에 실패
+        }
 
     }
     
@@ -143,10 +190,16 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         PhotonNetwork.JoinLobby();
     }
 
-    public void JoinRoom(string title) 
+    public void JoinRoom(string roomId) 
     {
-        // 방에 접속하기 
-        PhotonNetwork.JoinRoom(title);
+        // 이미 방에 있으면 떠나기
+        if (PhotonNetwork.InRoom)
+        {
+            LeaveRoom();
+        }
+
+        // LeaveRoom 끝난 후 JoinRoom 해야 함
+        PhotonNetwork.JoinRoom(roomId);
     }
 
     public void LeaveRoom()
