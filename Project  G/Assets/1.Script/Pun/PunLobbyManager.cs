@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -78,23 +79,16 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         Debug.Log(str);
     }
 
-    // 플레이어 세팅 (입장)
-    public void UpdateRoomUser()
+    public void SettingPhotonLocalPlayer() 
     {
-        // LobbyUI : 유저 업데이트 필요 
-        LobbyUIManager.Instance.UpdateWaitinRoomView(PhotonNetwork.PlayerList);
-    }
+        // 포톤 로컬 닉네임 
+        PhotonNetwork.NickName = SteamUserData.Instance.NickName;
 
-    // 닉네임 세팅
-    public void SettingNickName(string nickname)
-    {
-        // #Important
-        if (string.IsNullOrEmpty(nickname))
-        {
-            Debug.LogError("Player Name is null or empty");
-            return;
-        }
-        PhotonNetwork.NickName = nickname;
+        // 포톤 커스텀 프로퍼티 설정 
+        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
+        props["SteamId"] = SteamUserData.Instance.SteamID;
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 
     // 방 커스텀 생성
