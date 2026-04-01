@@ -96,13 +96,14 @@ public class RoomListController : ILobbyPanelInitionlize
         }
 
         ExitGames.Client.Photon.Hashtable hashtable = info.CustomProperties;
-        object value;
+        object passwordValue;
+        object roomCodeValue;
 
         // 비번이 없으면 return
-        if (!hashtable.TryGetValue("Password", out value))
+        if (!hashtable.TryGetValue("Password", out passwordValue))
         {
             // POPUP : 알수없는오류
-            Debug.Log("해당 Room에 비밀번호가 존재하지 않습니다!");
+            
             return;
         }
         if (inputPassword.Equals(string.Empty))
@@ -111,9 +112,15 @@ public class RoomListController : ILobbyPanelInitionlize
 
             return;
         }
+        if (!hashtable.TryGetValue("RoomCode", out roomCodeValue)) 
+        {
+            // POPUP : 방 코드가 존재하지 않습니다. 
+
+            return;           
+        }
 
         // 방의 비밀번호 
-        int roomPassword = (int)value;
+        int roomPassword = (int)passwordValue;
 
         // 방 비번 = 비번 입력이 같으면 
         if (int.Parse(inputPassword) == roomPassword)
@@ -121,7 +128,7 @@ public class RoomListController : ILobbyPanelInitionlize
             Debug.Log("올바른 비밀번호를 입력 했습니다! 방에 입장 합니다");
 
             // 방 참가 시도 
-            PunLobbyManager.Instance.JoinRoom(info.Name);
+            PunLobbyManager.Instance.JoinRoom((string)roomCodeValue);
 
             // panel 변경 
             LobbyUIManager.Instance.ChangePanel(LobbyPanelType.RoomList, LobbyPanelType.WaitingRoom);

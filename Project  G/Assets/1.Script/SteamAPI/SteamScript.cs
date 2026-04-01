@@ -258,7 +258,7 @@ public class SteamScript : Singleton<SteamScript>
             // 친구의 CSteam, 보낼 문자열
             // 접속하면 콜백에서 해당 문자열을 사용할 수 있음 
             bool isSuccessInviteFriend 
-                = SteamFriends.InviteUserToGame(friend , PhotonRoomInfo.RoomName);
+                = SteamFriends.InviteUserToGame(friend , PhotonRoomInfo.RoomCode);
         }
         else
         { 

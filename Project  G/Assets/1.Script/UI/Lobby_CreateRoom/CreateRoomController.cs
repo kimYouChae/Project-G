@@ -1,8 +1,9 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CreateRoomModel 
 {
@@ -20,39 +21,6 @@ public class CreateRoomModel
         return Random.Range(min, max + 1); // max는 포함되지 않으므로 +1
     }
 }
-
-// room을 만들 때 설정하는 데이터를 담아놓는 용도
-public static class PhotonRoomInfo
-{
-    // 방 이름
-    public static string RoomName
-    {
-        get => PlayerPrefs.GetString("RoomName");
-        set => PlayerPrefs.SetString("RoomName", value);
-    }
-
-    // 비밀번호 
-    public static int Password
-    {
-        get => PlayerPrefs.GetInt("Password");
-        set => PlayerPrefs.SetInt("Password", value);
-    }
-
-    // 최대 유저
-    public static int MaxUser
-    {
-        get => PlayerPrefs.GetInt("MaxUser");
-        set => PlayerPrefs.SetInt("MaxUser", value);
-    }
-
-    // 맵 타입
-    public static string MapTypeName
-    {
-        get => PlayerPrefs.GetString("MapType");
-        set => PlayerPrefs.SetString("MapType", value);
-    }
-}
-
 
 public class CreateRoomController : ILobbyPanelInitionlize
 {
@@ -103,9 +71,10 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
     private void RoominfoSetting(string nameTitle)
     {
+        PhotonRoomInfo.RoomCode = Guid.NewGuid().ToString().Substring(0, 8);
         PhotonRoomInfo.RoomName = nameTitle;
-        PhotonRoomInfo.MaxUser = roomModel.roomMaxUser;
         PhotonRoomInfo.Password = roomModel.roomPassword; 
+        PhotonRoomInfo.MaxUser = roomModel.roomMaxUser;
         PhotonRoomInfo.MapTypeName = ((MapType)roomModel.currMapIndex).ToString();
     }
 
