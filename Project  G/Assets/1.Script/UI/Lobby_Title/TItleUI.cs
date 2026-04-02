@@ -21,17 +21,27 @@ public class TitleUI : MonoBehaviour
 
     IEnumerator StartTitleLogic() 
     {
+        bool flag = false;
+
         while(true) 
         {
             if (SteamConnected.isSteamReady &&
                 PunConnected.hasHandledInitialPhotonConnect)
             {
-                // "클릭 시 실행" 텍스트로 변경 
-                titleText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Enter_AnyKey);
+                // 한번만 실행될 수 있도록
+                if (!flag) 
+                {
+                    // "클릭 시 실행" 텍스트로 변경 
+                    titleText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Enter_AnyKey);
+                    flag = true;
+                }
 
                 if (Input.anyKeyDown)
                 {
                     LobbyUIManager.Instance.OnOffDarkPanel(true);
+
+                    // 포톤의 로컬 player 데이터 세팅 
+                    PunLobbyManager.Instance.SettingPhotonLocalPlayer();
 
                     // panel 변경 
                     LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);

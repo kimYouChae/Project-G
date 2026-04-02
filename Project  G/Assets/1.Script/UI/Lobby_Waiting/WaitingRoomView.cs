@@ -1,7 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
+using Steamworks;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -51,13 +51,29 @@ public class WaitingRoomView : MonoBehaviour, ILocalizable
 
         for (int i = 0; i < playerref.Length; i++)
         {
-            GameObject temp = Instantiate(playeRefObject);
-            TextMeshProUGUI text = temp.GetComponentInChildren<TextMeshProUGUI>();
-            text.text = playerref[i].NickName;
-
-            playerRefObj.Add(temp);
-
+            var temp = Instantiate(playeRefObject).GetComponent<PlayerRefObject>();
             temp.transform.SetParent(scrollViewContent.transform, false);
+
+            // 자식중 컴포넌트 찾기 
+            Image image = temp.profileImage;
+            TextMeshProUGUI text = temp.nicknameText;
+
+            // 닉네임 설정
+            text.text = playerref[i].NickName;
+            // 프로필 세팅 
+            object steamIdObj;
+            if (playerref[i].CustomProperties.TryGetValue("SteamId", out steamIdObj))
+            {
+                string steamId = (string)steamIdObj;
+                CSteamID cSteam = new CSteamID( ulong.Parse(steamId));
+                Texture2D texture =SteamScript.Instance.ReturnProfileTexureByCSteamID(cSteam);
+                image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            }
+            else
+            {
+                Debug.LogWarning("SteamId 없음");
+            }
+            playerRefObj.Add(temp.gameObject);
         }
     }
 

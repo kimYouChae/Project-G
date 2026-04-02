@@ -68,7 +68,11 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     public void UpdateWaitinRoomView(Player[] playerref)
     {
         if (waitingRoomView == null)
-            Debug.Log("이게 NULL이고나");
+        {
+            Debug.Log("포톤의 플레어어 배열이 NULL 입니다");
+            return;
+        }
+
         waitingRoomView.UpdateWaitingRoomInfo(playerref);
     }
 

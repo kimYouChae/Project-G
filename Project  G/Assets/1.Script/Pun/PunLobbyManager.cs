@@ -86,7 +86,7 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
 
         // 포톤 커스텀 프로퍼티 설정 
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
-        props["SteamId"] = SteamUserData.Instance.SteamID;
+        props["SteamId"] = SteamUserData.Instance.SteamID.ToString();
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }

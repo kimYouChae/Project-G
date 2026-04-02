@@ -122,7 +122,7 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Pun : OnPlayerEnteredRoom 콜백실행 | {newPlayer.NickName} 방에 들어왔습니다");
 
-        PunLobbyManager.Instance.UpdateRoomUser();
+        LobbyUIManager.Instance.UpdateWaitinRoomView(PhotonNetwork.PlayerList);
 
         // MapData 동기화
         // 게임씬 -> 로비로 다시 돌아왔을 땐 해당 콜백이 실행이 안되니 또 실행안될듯 
@@ -140,7 +140,7 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Pun : OnPlayerLeftRoom 콜백실행 | {otherPlayer.NickName} 방을 나갔습니다");
 
-        PunLobbyManager.Instance.UpdateRoomUser();
+        LobbyUIManager.Instance.UpdateWaitinRoomView(PhotonNetwork.PlayerList);
     }
 
     /// <summary>
@@ -161,11 +161,12 @@ public class PunLauncher : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Pun : OnJoinedRoom 콜백실행 | Room에 접속 했습니다");
 
-        // 내가 방에 성공적으로 입장 헀을 때
-        PunLobbyManager.Instance.UpdateRoomUser();
+        // ex) 내가 방에 성공적으로 입장 헀을 때
+        // ex) 스팀에서 초대 받아서 게임에 들어왔을 때  
+        LobbyUIManager.Instance.UpdateWaitinRoomView(PhotonNetwork.PlayerList);
 
         // 방에 들어왔을 때 방 정보 출력
-        // PunLobbyManager.Instance.PrintRoomInfo(PhotonNetwork.CurrentRoom);
+        PunLobbyManager.Instance.PrintRoomInfo(PhotonNetwork.CurrentRoom);
 
         // MapData 동기화
         // 게임씬 -> 로비로 다시 돌아왔을 땐 해당 콜백이 실행이 안되니 또 실행안될듯 
