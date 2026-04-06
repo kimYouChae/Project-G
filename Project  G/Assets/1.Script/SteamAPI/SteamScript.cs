@@ -30,13 +30,18 @@ public class SteamScript : Singleton<SteamScript>
     // 스팀 유저 데이터 가져온 뒤 실행할 액션
     private Action afterGetSteamUserAction;
 
+    // 도전과제 타입별 스팀 도전과제 API
+    private Dictionary<AchiveType, string> achiveTypeBySteamAPI;
+
     public List<CSteamID> FriendCSteamIDs { get => friendCSteamIDs; }
 
     protected override void Singleton_Awake()
     {
         steamIdByProfileTexture = new Dictionary<ulong, Texture2D>();
         friendCSteamIDs = new List<CSteamID>();
-        friendIdByStruct = new Dictionary<ulong, CSteamID>();   
+        friendIdByStruct = new Dictionary<ulong, CSteamID>();
+
+        InitAchiveByApiContainer();
     }
 
     private void OnEnable()
@@ -283,7 +288,37 @@ public class SteamScript : Singleton<SteamScript>
         Debug.Log(builder.ToString());
     }
 
-    #endregion 
+    #endregion
+
+    #region 도전과제 관련
+    private void InitAchiveByApiContainer() 
+    {
+        achiveTypeBySteamAPI = new Dictionary<AchiveType, string>() 
+        {
+            { AchiveType.Stage_Forest , "ACH_CLEAR_FOREST"},
+            { AchiveType.Stage_GiganticTree , "ACH_CLEAR_GIGANTIC_TREE"},
+            { AchiveType.Stage_Island , "ACH_CLEAR_ISLAND"}
+        };
+    }
+
+    public void SetSteamAchivement(AchiveType type) 
+    {
+        string apiName;
+        if (!achiveTypeBySteamAPI.TryGetValue(type, out apiName))
+        {
+            Debug.Log($"[SteamAchivement] {type}에 해당하는 도전과제가 없습니다");
+            return;
+        }
+
+        // API 호출
+        bool flag = SteamUserStats.SetAchievement(apiName);
+        // 오버레이 알람 표시
+        SteamUserStats.StoreStats();
+
+        Debug.Log($"[SteamAchivement] {apiName} : 도전과제 달성 성공 여부 {flag}");
+    }
+
+    #endregion
 
     private CSteamID GetCSteamId(int index)
     {
