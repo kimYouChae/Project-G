@@ -6,19 +6,16 @@ using UnityEngine;
 
 public class SteamAchivement : MonoBehaviour
 {
-    // 도전과제 저장 콜백
-    private Callback<UserAchievementStored_t> userAchiveCallBack;
-
-
     private void Start()
     {
-        userAchiveCallBack = Callback<UserAchievementStored_t>.Create(SuccessAchive);
+        Debug.Log($"[SteamDebug] SteamManager.Initialized = {SteamManager.Initialized}");
+
+        if (!SteamManager.Initialized)
+        {
+            Debug.LogError("[SteamDebug] Steam API 초기화 안됨");
+            return;
+        }
     }
 
-    // 도전과제가 성공적으로 저장될 때마다 호출되는 콜백
-    private void SuccessAchive(UserAchievementStored_t callback) 
-    {
-        Debug.Log($"[SteamAchivement] - 도전과제를 성공적으로 저장했습니다 {callback.m_rgchAchievementName} ");
-    }
 
 }
