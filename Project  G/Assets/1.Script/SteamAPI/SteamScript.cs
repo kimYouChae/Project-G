@@ -64,6 +64,11 @@ public class SteamScript : Singleton<SteamScript>
         }
     }
 
+    private void Start()
+    {
+        StartCoroutine(SteamRunCallbacks());
+    }
+
     #region (테스트용) 스팀 오버레이 콜백
 
     // 스팀 오버레이 켜고 끄기 
@@ -79,6 +84,16 @@ public class SteamScript : Singleton<SteamScript>
         }
     }
     #endregion
+
+    IEnumerator SteamRunCallbacks()
+    {
+        while (true) 
+        {
+            yield return new WaitForSeconds(0.2f);
+
+            SteamAPI.RunCallbacks();
+        }
+    }
 
     // 내 스팀 정보 가져오기 
     private void GetUserSteamID() 
@@ -176,6 +191,14 @@ public class SteamScript : Singleton<SteamScript>
     private void LoginStart() 
     {
         StartCoroutine(LoginUser());
+
+#if STEAM_FEATURE_TEST
+        // 초기화
+        SteamUserStats.ClearAchievement("ACH_CLEAR_FOREST");
+        // 도전과제 클리어
+        SetSteamAchivement(AchiveType.Stage_Forest);
+#endif
+
     }
 
     private IEnumerator LoginUser()
@@ -312,7 +335,7 @@ public class SteamScript : Singleton<SteamScript>
 
         // API 호출
         bool flag = SteamUserStats.SetAchievement(apiName);
-        // 오버레이 알람 표시
+        // 서버에 등록, 오버레이 알람 표시
         SteamUserStats.StoreStats();
 
         Debug.Log($"[SteamAchivement] {apiName} : 도전과제 달성 성공 여부 {flag}");
