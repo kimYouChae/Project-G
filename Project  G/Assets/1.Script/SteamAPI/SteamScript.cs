@@ -66,7 +66,8 @@ public class SteamScript : Singleton<SteamScript>
 
     private void Start()
     {
-        StartCoroutine(SteamRunCallbacks());
+        // 나중에 콜백을 받을일이 생기면 주석 제거
+        // StartCoroutine(SteamRunCallbacks());
     }
 
     #region (테스트용) 스팀 오버레이 콜백
