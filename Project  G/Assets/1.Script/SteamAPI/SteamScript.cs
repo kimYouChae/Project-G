@@ -197,7 +197,7 @@ public class SteamScript : Singleton<SteamScript>
         // 초기화
         SteamUserStats.ClearAchievement("ACH_CLEAR_FOREST");
         // 도전과제 클리어
-        SetSteamAchivement(AchiveType.Stage_Forest);
+        // SetSteamAchivement(AchiveType.Stage_Forest);
 #endif
 
     }
@@ -325,10 +325,11 @@ public class SteamScript : Singleton<SteamScript>
         };
     }
 
-    public void SetSteamAchivement(AchiveType type) 
+    // 도전과제 성공 
+    private void SetSteamAchivement(AchiveType type) 
     {
-        string apiName;
-        if (!achiveTypeBySteamAPI.TryGetValue(type, out apiName))
+        string apiName = SteamAchiveApiName(type);
+        if (apiName == string.Empty)
         {
             Debug.Log($"[SteamAchivement] {type}에 해당하는 도전과제가 없습니다");
             return;
@@ -340,6 +341,45 @@ public class SteamScript : Singleton<SteamScript>
         SteamUserStats.StoreStats();
 
         Debug.Log($"[SteamAchivement] {apiName} : 도전과제 달성 성공 여부 {flag}");
+    }
+
+    // 도전과제 리스트 바탕으로 도전과제 성공여부 체크
+    public void SetAchivement(List<AchiveProgressResponse> list) 
+    {
+        for (int i = 0; i < list.Count; i++) 
+        {
+            AchiveProgressResponse progress = list[i];
+            AchiveType type = progress.AchiveType;
+
+            string apiName = SteamAchiveApiName(type);
+            if (apiName == string.Empty)
+            {
+                Debug.Log($"[SteamAchivement] {type}에 해당하는 도전과제가 없습니다");
+                continue;
+            }
+
+            // 깬 도전과제 일 때 
+            if (progress.isClear) 
+            {
+                // 도전과제가 스팀에서 깨져있는지 확인 
+                bool achieved;
+                SteamUserStats.GetAchievement(apiName, out achieved);
+
+                // 안깨져있으면 -> 스팀 도전과제 업데이트 필요            
+                if (!achieved)
+                    SetSteamAchivement(type);
+            }
+        }
+    }
+
+    private string SteamAchiveApiName(AchiveType aType) 
+    {
+        string apiName;
+        if (!achiveTypeBySteamAPI.TryGetValue(aType, out apiName))
+            return string.Empty;
+
+        return apiName;
+
     }
 
     #endregion

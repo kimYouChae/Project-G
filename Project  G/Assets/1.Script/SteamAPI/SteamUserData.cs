@@ -33,7 +33,7 @@ public class SteamUserData
 #if UNITY_EDITOR
         return (long) steamID;
 #elif UNITY_STANDALONE
-        return 7890000012;
+        return 22463504765611990;
 #endif
     }
 
@@ -42,7 +42,7 @@ public class SteamUserData
 #if UNITY_EDITOR
         return nickName;
 #elif UNITY_STANDALONE
-        return "빌드환경의유저";
+        return "김감자고구마";
 #endif
     }
 
