@@ -72,7 +72,9 @@ public class RoomListView : MonoBehaviour, ILocalizable
             TextMeshProUGUI roomTitle = temp.GetComponentInChildren<TextMeshProUGUI>();
             if (roomTitle != null)
             {
-                roomTitle.text = roomInfo.Name;
+                object roomName;
+                roomInfo.CustomProperties.TryGetValue("RoomName", out roomName);
+                roomTitle.text = (string)roomName;
             }
 
             // 인덱스 설정

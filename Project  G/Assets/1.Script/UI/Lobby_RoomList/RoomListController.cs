@@ -89,9 +89,10 @@ public class RoomListController : ILobbyPanelInitionlize
         // 선택한 방
         RoomInfo info = PunLobbyManager.Instance.RoomInfoByIndex(roomListModel.currSelectRoomIndex);
         if (info == null)
-        { 
+        {
             // POPUP : 알수없는오류
-
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText("(로컬라이징 전) 방 정보가 NULL입니다");
             return;
         }
 
@@ -103,19 +104,22 @@ public class RoomListController : ILobbyPanelInitionlize
         if (!hashtable.TryGetValue("Password", out passwordValue))
         {
             // POPUP : 알수없는오류
-            
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText("(로컬라이징 전) 방 비밀번호가 없습니다 왜지 ? ");
             return;
         }
         if (inputPassword.Equals(string.Empty))
         {
             // POPUP : 입력한 password가 빈칸입니다
-
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText("(로컬라이징 전)비밀번호가 빈칸입니다");
             return;
         }
         if (!hashtable.TryGetValue("RoomCode", out roomCodeValue)) 
         {
             // POPUP : 방 코드가 존재하지 않습니다. 
-
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText("(로컬라이징 전) 방코드가 존재하지 않습니다");
             return;           
         }
 
@@ -136,8 +140,8 @@ public class RoomListController : ILobbyPanelInitionlize
         else
         {
             // POPUP : 비밀번호가 다릅니다
-
-            Debug.Log("비밀번호가 다릅니다! ");
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText("(로컬라이징 전) 비밀번호가 다릅니다 !");
         }
 
     }

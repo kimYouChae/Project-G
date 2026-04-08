@@ -118,7 +118,7 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
             // 로비에서 방 리스트 볼 때 노출할 목록
             CustomRoomPropertiesForLobby = new string[]
             {
-                "RoomName", "Password" , "MapType"
+                "RoomCode" , "RoomName", "Password" , "MapType"
             }
         };
 
@@ -126,7 +126,7 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         // PhotonNetwork의 CurrentRoom에 방 정보가 저장됨 
         bool isSuccess = PhotonNetwork.CreateRoom
         (
-            PhotonRoomInfo.RoomName,
+            PhotonRoomInfo.RoomCode,
             roomOption
         );
 

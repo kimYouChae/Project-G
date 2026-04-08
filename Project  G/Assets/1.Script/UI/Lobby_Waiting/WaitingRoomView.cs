@@ -44,7 +44,9 @@ public class WaitingRoomView : MonoBehaviour, ILocalizable
         Room info = PhotonNetwork.CurrentRoom;
 
         // 방제 업데이트
-        roomTitle.text = info.Name;
+        object roomName;
+        info.CustomProperties.TryGetValue("RoomName", out roomName);
+        roomTitle.text = (string)roomName;
 
         // 리스트 초기화
         LobbyUIManager.Instance.DestoryListObject(playerRefObj);
