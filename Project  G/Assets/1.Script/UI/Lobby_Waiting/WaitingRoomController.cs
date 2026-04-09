@@ -18,10 +18,21 @@ public class WaitingRoomController : ILobbyPanelInitionlize
 
     private void GetFriend() 
     {
+        // 포톤 호스트만 친구 초대 가능
         if (!PhotonNetwork.IsMasterClient)
         {
             TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
             textPopUp.UpdateText("(로컬라이징전) 방장만 스팀 친구를 초대할 수 있습니다");
+
+            return;
+        }
+
+        // 방의 인원이 MaxCount와 같으면 
+        int count = PhotonNetwork.CurrentRoom.PlayerCount;
+        if (count >= PhotonRoomInfo.MaxUser) 
+        {
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText($"(로컬라이징전) 한 방에 최대 {PhotonRoomInfo.MaxUser}명 입니다.");
 
             return;
         }
