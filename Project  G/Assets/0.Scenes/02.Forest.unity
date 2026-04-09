@@ -3900,9 +3900,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeHeadling: {fileID: 618835366}
   scoreHeading: {fileID: 1596871457}
-  gameOverScoreText: {fileID: 1694994260}
-  gameOverTimeText: {fileID: 1737396349}
-  bestScoreText: {fileID: 949945005}
+  achiveScoreText: {fileID: 1694994260}
+  achiveStageText: {fileID: 1737396349}
+  bestScoreHeading: {fileID: 949945005}
   backToRoom: {fileID: 662682521}
   isnotMasterText: {fileID: 1482859055}
 --- !u!114 &1030372162
