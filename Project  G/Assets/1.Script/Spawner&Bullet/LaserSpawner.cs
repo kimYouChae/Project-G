@@ -47,7 +47,7 @@ public class LaserSpawner : NetSpawner
 
             if (photonView.IsMine)
             {
-                // 차징 오브젝트 생성
+                // 레이저 차징 오브젝트 생성
                 view.RPC(nameof(RPC_ChargingObject), RpcTarget.AllBuffered);
                 // sfx 차징 사운드 실행
                 SFXManager.Instance.PlaySFX(SFXType.LaserCharge);
@@ -56,7 +56,8 @@ public class LaserSpawner : NetSpawner
                 yield return new WaitForSeconds(1f);
                 if (currLaserChargeObj != null)
                 {
-                    RPC_DestoryChargingObj();
+                    // 레이저 차징 오브젝트 삭제
+                    view.RPC(nameof(RPC_DestoryChargingObj), RpcTarget.AllBuffered);
                     currLaserChargeObj = null;
                 }
 
@@ -116,5 +117,4 @@ public class LaserSpawner : NetSpawner
     {
         Destroy(currLaserChargeObj);
     }
-
 }
