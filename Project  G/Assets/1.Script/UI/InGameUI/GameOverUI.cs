@@ -14,13 +14,13 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreHeading;  // "점수" 텍스트
 
     [Header("===numberText")]
-    [SerializeField] private TextMeshProUGUI gameOverScoreText; // 점수(숫자) 텍스트
-    [SerializeField] private TextMeshProUGUI gameOverTimeText;  // 시간(숫자) 텍스트
-
+    [SerializeField] private TextMeshProUGUI achiveScoreText;       // 점수(숫자) 텍스트
+    [SerializeField] private TextMeshProUGUI achiveStageText;       // 시간(숫자) 텍스트
+   
     [Header("===other===")]
-    [SerializeField] private TextMeshProUGUI bestScoreText;
+    [SerializeField] private TextMeshProUGUI bestScoreHeading;      // 최고 점수 달성 여부 텍스트
     [SerializeField] private Button backToRoom;
-    [SerializeField] private TextMeshProUGUI isnotMasterText;
+    [SerializeField] private TextMeshProUGUI isnotMasterText;       // "마스터가 아닙니다" 텍스트 
 
     private void Awake()
     {
@@ -29,14 +29,20 @@ public class GameOverUI : MonoBehaviour
 
     public void GameOverText(float score, float time, bool isUpdated) 
     {
-        gameOverScoreText.text = score.ToString();
-        gameOverTimeText.text = time.ToString();
+        achiveScoreText.text = score.ToString();
+        achiveStageText.text = time.ToString();
 
-        if (isUpdated) 
+        if (isUpdated)
         {
             // 최고점수일때만 
-            // !최고점수입니다! 켜기 
-            bestScoreText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.InGame_Renewal);
+            // " 최고 점수 달성 ! "
+            bestScoreHeading.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.InGame_Renewal);
+        }
+        else 
+        {
+            // 최고 점수가 아니면 
+            // " 최고 점수 달성에 실패"
+            bestScoreHeading.text = "(로컬라이징 전) 최고점수 갱신에 실패";
         }
 
         // 마스터 클라이언트만 버튼 ON

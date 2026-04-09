@@ -65,18 +65,20 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             float currTime = (float)data[1];
             MapType maptype = (MapType)data[2];
 
+            Debug.Log($"[BestScoreSync] {json}");
             BestScoreUpdateResponse bsResponse = JsonConvert.DeserializeObject<BestScoreUpdateResponse>(json);
         
             for(int i = 0; i < bsResponse.results.Count; i++) 
             {
                 UserBestScoreResult result = bsResponse.results[i];
 
-                // (임시)출력
-                Debug.Log($"{i}번째 유저 정보 \n {result.steamId} / 점수 : {result.score} / 스테이지 {result.stage}");
 
                 // 응답클래스의 id와 로컬에 있는 id가 같으면 
-                if(result.steamId == UserDataManager.Instance.SteamID) 
+                if(result.steamId == SteamUserData.Instance.GetSteamID()) 
                 {
+                    // (임시)출력
+                    Debug.Log($"{i}번째 유저 정보 \n {result.steamId} / 점수 : {result.score} / 스테이지 {result.stage}");
+
                     // 1. gameOver UI에 텍스트 표시
                     InGameUI.Instance.gameOverUI.GameOverText(result.score, currTime, result.isUpdated);
 
