@@ -18,6 +18,14 @@ public class WaitingRoomController : ILobbyPanelInitionlize
 
     private void GetFriend() 
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText("(로컬라이징전) 방장만 스팀 친구를 초대할 수 있습니다");
+
+            return;
+        }
+
         // 친구 팝업 띄우기 
         FriendPopUP popup = UIManager.Instance.GetPopUP<FriendPopUP>();
         popup.OpenFriendPopUP();
