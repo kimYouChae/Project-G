@@ -30,6 +30,7 @@ public class ChartHandlerFactory
             { DataType.Localization_basic, new LocalizationChart()},
             { DataType.Localization_Ingame, new LocalizationChart() },
             { DataType.Localization_Player, new LocalizationChart() },
+            { DataType.Localization_Temp , new LocalizationChart()},
             { DataType.Character, new CharacterChart()},
             { DataType.Achievement, new StageAchievementChart()}
         };

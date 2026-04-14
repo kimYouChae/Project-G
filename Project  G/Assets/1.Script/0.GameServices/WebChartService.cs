@@ -46,12 +46,12 @@ public class WebChartService : IChartService
         ApiResponse<object> apiResponse = JsonConvert.DeserializeObject<ApiResponse<object>>(responseText);
         if (apiResponse == null)
         {
-            Debug.Log($"WebChartService : 차트 파싱 중에 오류 발생 , Json으로 변환 불가 \n {responseText}");
+            Debug.Log($"[WebChartService] 차트 파싱 중에 오류 발생 , Json으로 변환 불가 \n {responseText}");
             yield break;
         }
         if (apiResponse.success == false)
         {
-            Debug.Log($"차트 불러오기 실패. 타입 {dataType}");
+            Debug.Log($"[WebChartService] 차트 불러오기 실패. 타입 {dataType}");
             yield break;
         }
 
@@ -62,9 +62,13 @@ public class WebChartService : IChartService
     {
         ICharHandler chartH = ChartHandlerFactory.Instance.DataTypeByChart(dataType);
 
-        if (chartH != null) 
+        if (chartH != null)
         {
             chartH.IParseAndStore(jsonStr);
+        }
+        else 
+        {
+            Debug.LogError($"[WebChartService] 차트 펙토리에 {dataType} 에 해당하는 {nameof(ICharHandler)}가 없습니다");
         }
     }
 }

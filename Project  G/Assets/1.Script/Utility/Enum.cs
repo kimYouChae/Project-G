@@ -23,6 +23,7 @@ public enum DataType
     Localization_basic,
     Localization_Ingame,
     Localization_Player,
+    Localization_Temp,
     Map,
     Spawner,
     Stage_Forest_SpawnerInfo
