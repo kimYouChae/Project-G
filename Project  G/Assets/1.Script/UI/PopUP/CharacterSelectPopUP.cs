@@ -40,8 +40,9 @@ public class CharacterSelectPopUP : UIPopUP
         // UI ON, 팝업 사운드 실행
         base.OpenPopUP();
 
-        // 타이틀 로컬라이징
+        // 로컬라이징
         characterPopUpTitle.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Character);
+        // selectButtonText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Select);
 
         // 도전과제 정보 가져오기
         StartCoroutine(GetInfo(hasOpend));
@@ -126,11 +127,11 @@ public class CharacterSelectPopUP : UIPopUP
 
 
         // 클리어했으면 or 기본캐릭터이면 
-        if (achiveResponse.isClear)
+        if (achiveResponse.isClear || data.CharacterType == CharacterType.BasicCharacter)
         {
             SetUnLockUi();
-            selectButtonText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Select);
-
+            selectButtonText.text =
+                LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Select);
             return;
         }
 

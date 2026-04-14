@@ -18,11 +18,12 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
     [SerializeField] Button rightButton;
     [SerializeField] Button leftButton;
 
-    [SerializeField] Button backButton;     // µÚ·Î°¡±â ¹öÆ° 
+    [SerializeField] Button backButton;     // ë’¤ë¡œê°€ê¸° ë²„íŠ¼ 
 
     [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI roomNameText;
     [SerializeField] TextMeshProUGUI roomNameInputFieldText;
+    [SerializeField] TextMeshProUGUI roomNamePlaceHolder;
     [SerializeField] TextMeshProUGUI passwordText;
     [SerializeField] TextMeshProUGUI createText;
 
@@ -63,6 +64,7 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
     {
         roomNameText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.CreateRoom_RoomName);
         roomNameInputFieldText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.CreateRoom_RoomName);
+        roomNamePlaceHolder.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.CreateRoom_RoomName);
         passwordText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.CreateRoom_Password);
         createText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Lobby_CreateRoom);
     }

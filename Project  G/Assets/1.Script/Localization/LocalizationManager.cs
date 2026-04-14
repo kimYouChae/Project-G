@@ -52,8 +52,10 @@ public class LocalizationManager : Singleton<LocalizationManager>
     protected override void Singleton_Awake()
     {
         SetUpDontDestroy();
-        
-        SetLanguageType();
+
+        // SetLanguageType();
+        // 로컬라이징 테스트 용 
+        currLanguateType = LanguageType.Japanese;
 
         languages = new Dictionary<LanguageType, Language>();
 
