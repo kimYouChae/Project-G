@@ -21,7 +21,8 @@ public class WaitingRoomView : MonoBehaviour, ILocalizable
     [SerializeField] Button backButton;         // 뒤로가기 버튼 
 
     [Header("===Localize Text===")]
-    [SerializeField] TextMeshProUGUI gameStartText;
+    [SerializeField] TextMeshProUGUI friendListText;  // 친구 목록 텍스트
+    [SerializeField] TextMeshProUGUI gameStartText; // 게임 시작 텍스트 
 
     private Action GetFriendAction;
     private Action GameStartAction;
@@ -87,5 +88,6 @@ public class WaitingRoomView : MonoBehaviour, ILocalizable
     public void IUpdateLocalization(LanguageType type)
     {
         gameStartText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Waiting_StartGame);
+        friendListText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.WaitingRoom_FriendList);
     }
 }

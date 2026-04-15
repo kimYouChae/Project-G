@@ -585,7 +585,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "(\uCE5C\uAD6C\uBAA9\uB85D\uBD88\uB7EC\uC624\uB294\uC911)\uD14D\uC2A4\uD2B8"
+  m_text: '**'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7277d645a94ed5643aa135da400ddc73, type: 2}
   m_sharedMaterial: {fileID: -3465769952903100189, guid: 7277d645a94ed5643aa135da400ddc73, type: 2}
@@ -1050,3 +1050,4 @@ MonoBehaviour:
   friendObj: {fileID: 259196964040640329, guid: 6c20df55f3c55984c83d94abedef1774, type: 3}
   friendObjList: []
   loadingText: {fileID: 4142125512075182156}
+  popupTitleText: {fileID: 4216255774572272120}

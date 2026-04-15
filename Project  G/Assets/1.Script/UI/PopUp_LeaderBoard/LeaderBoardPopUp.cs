@@ -28,7 +28,7 @@ public class LeaderBoardPopUp : UIPopUP
         base.OpenPopUP();
 
         // 타이틀 로컬라이징
-        // leaderBoardText.text = LocalizationManager.Instance.ReturnLocalizationString();
+        leaderBoardText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Lobby_Ranking);
 
         // 랭커 불러오기 
         StartCoroutine(GetRank());

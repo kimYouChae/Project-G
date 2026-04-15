@@ -65,7 +65,8 @@ public class AchivePopUP : UIPopUP
             StageAchive achive = AchievDataManager.Instance.GetAchiveByType(progressData.AchiveType);
 
             // 도전과제 타이틀 텍스트
-            achObj.SetAchiveTitle(achive.Title);
+            string title = LocalizationAchiveTitle(progressData.AchiveType);
+            achObj.SetAchiveTitle(title);
             // 도전과제 완료 여부 체그
             // 성공했으면 
             if (progressData.isClear) 
@@ -94,6 +95,12 @@ public class AchivePopUP : UIPopUP
             achiveObjList.Add(achi);
             achi.OnOffCompleteImage(false);
         }
+    }
+
+    private string LocalizationAchiveTitle(AchiveType type)
+    {
+        string key = type.ToString() + "_Title";
+        return LocalizationManager.Instance.ReturnLocalizationString(key);
     }
 
 }

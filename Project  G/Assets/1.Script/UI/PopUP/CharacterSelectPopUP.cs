@@ -19,12 +19,13 @@ public class CharacterSelectPopUP : UIPopUP
     [SerializeField] CharacterType selectCharacterType;
 
     [Header("===Datail===")]
-    [SerializeField] TextMeshProUGUI characterTitle;
-    [SerializeField] TextMeshProUGUI characterToolTip;
-    [SerializeField] Image characterImage;
+    [SerializeField] Image characterImage;          // 캐릭터 이미지
+    [SerializeField] TextMeshProUGUI characterTitle;    // 캐릭터 이름
+    [SerializeField] TextMeshProUGUI characterToolTip;  // 캐릭터 툴팁
     [SerializeField] TextMeshProUGUI cantSelectText;    // 미션 수행 전 텍스트
     [SerializeField] Button selectButton;      // 미션 수행 후 선택 버튼
     [SerializeField] TextMeshProUGUI selectButtonText;  // 선택 버튼 텍스트 
+    [SerializeField] TextMeshProUGUI currAchivementTitle;   // 도전과제 텍스트 
 
     [Header("===Localization===")]
     [SerializeField] TextMeshProUGUI characterPopUpTitle;
@@ -41,8 +42,9 @@ public class CharacterSelectPopUP : UIPopUP
         base.OpenPopUP();
 
         // 로컬라이징
+        // 버튼-선택 로컬라이징 : 그냥 팝업 켤 때 1회 하면 될듯 ? 껏다켯다만 하니까 
         characterPopUpTitle.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Character);
-        // selectButtonText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Select);
+        selectButtonText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Select);
 
         // 도전과제 정보 가져오기
         StartCoroutine(GetInfo(hasOpend));
@@ -118,6 +120,7 @@ public class CharacterSelectPopUP : UIPopUP
         if (data.AchiveType == AchiveType.None) 
         {
             SetUnLockUi();
+
             return;
         }
 
@@ -126,12 +129,11 @@ public class CharacterSelectPopUP : UIPopUP
             = GameServices.Instance.AchiveProgressModel.GetAchiveProgress(data.AchiveType);
 
 
-        // 클리어했으면 or 기본캐릭터이면 
-        if (achiveResponse.isClear || data.CharacterType == CharacterType.BasicCharacter)
+        // 클리어했으면
+        if (achiveResponse.isClear)
         {
             SetUnLockUi();
-            selectButtonText.text =
-                LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Select);
+
             return;
         }
 
@@ -140,8 +142,17 @@ public class CharacterSelectPopUP : UIPopUP
         StageAchive achiveData = AchievDataManager.Instance.GetAchiveByType(achiveResponse.AchiveType);
 
         SetLockUi();
-        cantSelectText.text = achiveData.Title + "\n" + UserDataManager.Instance.ReturnUserStage(achiveData.MapType)
+
+        // 도전과제 타이틀 로컬라이징 
+        // 후 도전과제 이름 + 진행사항 표시
+        cantSelectText.text = LocalizationAchiveTitle(data.AchiveType) + "\n" + UserDataManager.Instance.ReturnUserStage(achiveData.MapType)
             + " / " + achiveData.AchiveStage;
+    }
+
+    private string LocalizationAchiveTitle(AchiveType type) 
+    {
+        string key = type.ToString() + "_Title";
+        return LocalizationManager.Instance.ReturnLocalizationString(key);
     }
 
     private void SelectCharacterButton() 
@@ -153,8 +164,10 @@ public class CharacterSelectPopUP : UIPopUP
 
     private void UpdatBaseDetailUI(CharacterData data) 
     {
+        // 캐릭터 이름, 툴팁 로컬라이징
         characterTitle.text = LocalizationManager.Instance.ReturnLocalizationString(data.CharacterType.ToString() + "_Name");
         characterToolTip.text = LocalizationManager.Instance.ReturnLocalizationString(data.CharacterType.ToString() + "_ToolTip");
+        // 캐릭터 이미지 설정
         characterImage.sprite = ResourceManager.Instance.CharacterSprite(data.CharacterType);
     }
 

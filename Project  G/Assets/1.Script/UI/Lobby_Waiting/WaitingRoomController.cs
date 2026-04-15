@@ -22,7 +22,8 @@ public class WaitingRoomController : ILobbyPanelInitionlize
         if (!PhotonNetwork.IsMasterClient)
         {
             TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
-            textPopUp.UpdateText("(로컬라이징전) 방장만 스팀 친구를 초대할 수 있습니다");
+            string local = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Popup_OnlyHostCanInvite);
+            textPopUp.UpdateText(local);
 
             return;
         }
@@ -74,7 +75,8 @@ public class WaitingRoomController : ILobbyPanelInitionlize
         {
             // PopUp 띄우기 
             TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
-            textPopUp.UpdateText("(로컬라이징전) 마스터가아닙니다" );
+            string local = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Popup_NotMasterClient);
+            textPopUp.UpdateText(local);
         }
     }
 }

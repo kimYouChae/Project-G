@@ -10,24 +10,20 @@ using UnityEngine.UIElements;
 public class FriendPopUP : UIPopUP
 {
     [Header("FriendPopUP")]
-    [SerializeField]
-    private GameObject scrollView;
-    [SerializeField]
-    private Transform content;  // 친구 목록 스크롤뷰 content에 해당하는 부분 
-    [SerializeField]
-    private FriendObject friendObj;
-    [SerializeField] 
-    private List<FriendObject> friendObjList;
-    [SerializeField]
-    private TextMeshProUGUI loadingText;
+    [SerializeField] private GameObject scrollView;
+    [SerializeField] private Transform content;  // 친구 목록 스크롤뷰 content에 해당하는 부분 
+    [SerializeField] private FriendObject friendObj;
+    [SerializeField] private List<FriendObject> friendObjList;
+    [SerializeField] private TextMeshProUGUI loadingText;
+    [SerializeField] private TextMeshProUGUI popupTitleText;    // 타이틀 텍스트 
 
     const int firstInstanceCount = 20;
+    private bool isOpened = false; // 연적이있는지 여부 
 
     public void OpenFriendPopUP() 
     {
-        scrollView.SetActive(false);
-        loadingText.gameObject.SetActive(true);
-        loadingText.text = "(로컬라이징 전 입니다) 친구 목록 불러오는중";
+        // 팝업 타이틀 로컬라이징
+        popupTitleText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.FriendPopup_Title);
 
         // 리스트가 비어있으면 생성 
         if (friendObjList.Count <= 0)
@@ -45,8 +41,17 @@ public class FriendPopUP : UIPopUP
     {
         SteamScript.Instance.GetSteamFriend();
 
-        // 임시로 1초 기다리기 
-        yield return new WaitForSeconds(1f);
+        // 연적이 없으면 
+        if (!isOpened)
+        {
+            scrollView.SetActive(false);
+            loadingText.gameObject.SetActive(true);
+            loadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.FriendPopup_Loading);
+
+            isOpened = true;
+            // 임시로 1초 기다리기 
+            yield return new WaitForSeconds(1f);
+        }
 
         // 텍스트 끄기 
         loadingText.gameObject.SetActive(false);
