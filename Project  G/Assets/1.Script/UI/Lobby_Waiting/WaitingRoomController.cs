@@ -33,7 +33,8 @@ public class WaitingRoomController : ILobbyPanelInitionlize
         if (count >= PhotonRoomInfo.MaxUser) 
         {
             TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
-            textPopUp.UpdateText($"(로컬라이징전) 한 방에 최대 {PhotonRoomInfo.MaxUser}명 입니다.");
+            string local = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Popup_RoomFull);
+            textPopUp.UpdateText($"{local}{PhotonRoomInfo.MaxUser}");
 
             return;
         }

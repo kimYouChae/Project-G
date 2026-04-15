@@ -12,4 +12,8 @@ public static partial class LocalizationKey
 
     public const string GameOver_ReturnToLobby = "GameOver_ReturnToLobby";
     public const string GameOver_BestScoreUpdateFailed = "GameOver_BestScoreUpdateFailed";
+
+    public const string Popup_RoomFull = "Popup_RoomFull";
+
+
 }
