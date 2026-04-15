@@ -2154,7 +2154,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB85C\uBE44\uB85C \uB3CC\uC544\uAC00\uAE30"
+  m_text: '**'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7277d645a94ed5643aa135da400ddc73, type: 2}
   m_sharedMaterial: {fileID: -3465769952903100189, guid: 7277d645a94ed5643aa135da400ddc73, type: 2}
@@ -3898,12 +3898,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d6741115fb4694d97e798d9067642a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeHeadling: {fileID: 618835366}
   scoreHeading: {fileID: 1596871457}
+  timeHeadling: {fileID: 618835366}
   achiveScoreText: {fileID: 1694994260}
-  achiveStageText: {fileID: 1737396349}
+  achiveTimeText: {fileID: 1737396349}
   bestScoreHeading: {fileID: 949945005}
-  backToRoom: {fileID: 662682521}
+  backToLobby: {fileID: 662682521}
+  backToLobbyText: {fileID: 862056862}
   isnotMasterText: {fileID: 1482859055}
 --- !u!114 &1030372162
 MonoBehaviour:

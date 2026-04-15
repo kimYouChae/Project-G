@@ -1460,7 +1460,8 @@ MonoBehaviour:
   openFriendButton: {fileID: 2122521769}
   gameStartButton: {fileID: 902814394}
   backButton: {fileID: 1826353436}
-  gameStartText: {fileID: 1945588150}
+  friendListText: {fileID: 298118708}
+  gameStartText: {fileID: 1898253524}
 --- !u!114 &116153340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1534,6 +1535,7 @@ MonoBehaviour:
   backButton: {fileID: 1690995269}
   roomNameText: {fileID: 1975341161}
   roomNameInputFieldText: {fileID: 1670458440}
+  roomNamePlaceHolder: {fileID: 1283146148}
   passwordText: {fileID: 459412407}
   createText: {fileID: 213095800}
 --- !u!114 &116153344
