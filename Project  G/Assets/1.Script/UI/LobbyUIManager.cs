@@ -14,6 +14,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     [SerializeField] private GameObject[] panelList;
     [SerializeField] private LobbyPanelType prePanel;
     [SerializeField] private LobbyPanelType currPanel;
+    [SerializeField] private TitleUI titleUI;
 
     [SerializeField] private GameObject darkPanel;
 
@@ -93,7 +94,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
             panelList[(int)currPanel].SetActive(true);
 
             // 해당하는 controller의 Init실행하기
-            var init = TypeByController(currPanel);
+            ILobbyPanelInitionlize init = TypeByController(currPanel);
             if (init != null)
                 init.IInitPanel();
         }
@@ -120,6 +121,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     { 
         switch(type) 
         {
+            case LobbyPanelType.Title: return titleUI;
             case LobbyPanelType.Lobby: return lobbyController;
             case LobbyPanelType.RoomList: return roomListController;
             case LobbyPanelType.CreateRoom : return createRoomController;
