@@ -53,15 +53,6 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         // Lobby MVC
         lobbyView = GetComponent<LobbyView>();
         lobbyController = new LobbyController(lobbyView);
-
-        // POPUP 관련 MVC
-        // Setting MVC
-        SettingPopUP settingpopup = UIManager.Instance.GetPopUP<SettingPopUP>();
-        settingpopup.gameObject.SetActive(false);
-
-        AudioMixer mixer = ResourceManager.Instance.GetAudioMixer;
-        SoundModel soundModel = new SoundModel(mixer);
-        SettingController settingCT = new SettingController(soundModel, settingpopup);
     }
 
     #region 외부에서 view를 수정

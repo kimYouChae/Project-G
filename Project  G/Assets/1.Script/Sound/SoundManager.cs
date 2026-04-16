@@ -17,13 +17,19 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] 
     private AudioMixerGroup bgmMixerGroup;  // 오디오 믹서 안 bgm 그룹
 
+    [SerializeField]
+    private SoundVolume soundVolume;
     const string SFX_MIXER_GROUP = "SFX";
     const string BGM_MIXER_GROUP = "BGM";
 
+    public AudioMixer AudioMixer { get => audioMixer; }
+
     protected override void Singleton_Awake()
     {
-        // 오디오 믹서 가져오기 
+        // 오디오믹서, 사운드 볼륨 초기화
         audioMixer = ResourceManager.Instance.GetAudioMixer;
+        soundVolume = new SoundVolume();
+
         if (audioMixer != null)
         {
             sfxMixerGroup = audioMixer.FindMatchingGroups(SFX_MIXER_GROUP)[0];
@@ -52,5 +58,42 @@ public class SoundManager : Singleton<SoundManager>
         obj.transform.SetParent(soundTrs);
 
         return obj.transform;
+    }
+
+    public void ChangeVolumeByType(SoundType type, float volume) 
+    {
+        // 오디오 믹서의 볼륨 바꾸기 
+        audioMixer.SetFloat(type.ToString(), Mathf.Log10(Mathf.Max(0.001f, volume)) * 20);
+
+        // 볼륨 데이터에 저장 하긴해야함
+    }
+
+    public float GetVolumeByType(SoundType type) 
+    {
+        switch (type) 
+        {
+            case SoundType.Master: return soundVolume.MasterVolume;
+            case SoundType.BGM: return soundVolume.BGMVolume;
+            case SoundType.SFX: return soundVolume.SFXVolume;
+            default: return 0;
+        }
+    }
+
+    public void SaveSoundVolume(SoundType type, float volume) 
+    {
+        Debug.Log($"[SoundManager] 사운드 {type}에 대한 볼륨 저장 : {volume}");
+
+        switch (type)
+        {
+            case SoundType.Master:
+                soundVolume.MasterVolume = volume;
+                break;
+            case SoundType.BGM: 
+                soundVolume.BGMVolume = volume;
+                break;
+            case SoundType.SFX: 
+                soundVolume.SFXVolume = volume;
+                break;
+        }
     }
 }
