@@ -8,16 +8,15 @@ using UnityEngine.UI;
 
 public class SettingPopUP : UIPopUP , ILocalizable
 {
+    [Header("===Sound===")]
     [SerializeField] Slider MasterSlider;
     [SerializeField] Slider BGMSlier;
     [SerializeField] Slider SFXSlider;
 
+    [Header("===Localization===")]
     [SerializeField] TMP_Dropdown languageDropDown;
     [SerializeField] int selectLanguage;
     [SerializeField] Button applyButton;
-
-    private Action<SoundType, float> soundValueChangedAction;
-    private Action<int> applyLanguageAction;
 
     [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI soundText;
@@ -30,26 +29,30 @@ public class SettingPopUP : UIPopUP , ILocalizable
     {
         // UI ON, 팝업 사운드 실행
         base.OpenPopUP();
+
+        // 사운드 슬라이드 초기화 
+        MasterSlider.value = SoundManager.Instance.GetVolumeByType(SoundType.Master);
+        BGMSlier.value = SoundManager.Instance.GetVolumeByType(SoundType.BGM);
+        SFXSlider.value = SoundManager.Instance.GetVolumeByType(SoundType.SFX);
     }
 
-    public void RegisterSoundValue(Action<SoundType, float> action) 
+    private void OnDisable()
     {
-        soundValueChangedAction += action;
-    }
-
-    public void RegisterLanguageApply(Action<int> action) 
-    {
-        applyLanguageAction += action;    
+        // 꺼질 때 
+        // 사운드 볼륨 저장
+        SoundManager.Instance.SaveSoundVolume(SoundType.Master, MasterSlider.value);
+        SoundManager.Instance.SaveSoundVolume(SoundType.BGM, BGMSlier.value);
+        SoundManager.Instance.SaveSoundVolume(SoundType.SFX, SFXSlider.value);
     }
 
     void Start()
     {
-        MasterSlider.onValueChanged.AddListener(value => { soundValueChangedAction?.Invoke(SoundType.Master, value); });
-        BGMSlier.onValueChanged.AddListener(value => { soundValueChangedAction?.Invoke(SoundType.BGM, value); });
-        SFXSlider.onValueChanged.AddListener(value => { soundValueChangedAction?.Invoke(SoundType.SFX, value) ; });
+        MasterSlider.onValueChanged.AddListener(value => { ChangeVolume(SoundType.Master, value); });
+        BGMSlier.onValueChanged.AddListener(value => { ChangeVolume(SoundType.BGM, value); });
+        SFXSlider.onValueChanged.AddListener(value => { ChangeVolume(SoundType.SFX, value) ; });
 
         languageDropDown.onValueChanged.AddListener( value => selectLanguage = value);
-        applyButton.onClick.AddListener( () => applyLanguageAction?.Invoke(selectLanguage) );
+        applyButton.onClick.AddListener(() => ChangeLanguage(selectLanguage) );
 
         // 드롭다운 관리
         languageDropDown.ClearOptions();
@@ -79,5 +82,17 @@ public class SettingPopUP : UIPopUP , ILocalizable
         sfxText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Setting_SFX);
         bgmText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Setting_BGM);
         languageText.text = LocalizationManager.Instance.ReturnLocalizationString(type, LocalizationKey.Setting_Language);
+    }
+
+    // 볼륨 변경 
+    private void ChangeVolume(SoundType type, float volume)
+    {
+        SoundManager.Instance.ChangeVolumeByType(type, volume);
+    }
+
+    // 언어 변경 
+    private void ChangeLanguage(int index)
+    {
+        LocalizationManager.Instance.ChangeLanguageType((LanguageType)index);
     }
 }
