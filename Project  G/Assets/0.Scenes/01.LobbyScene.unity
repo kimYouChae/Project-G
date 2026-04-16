@@ -1559,6 +1559,7 @@ MonoBehaviour:
   - {fileID: 1570162270}
   prePanel: 0
   currPanel: 0
+  titleUI: {fileID: 116153345}
   darkPanel: {fileID: 1907261436}
 --- !u!114 &116153345
 MonoBehaviour:
@@ -6893,6 +6894,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa2cb1ce92bf26468bac67679a3abaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nowSceneName: 
+  nowSceneType: 0
 --- !u!4 &859893253
 Transform:
   m_ObjectHideFlags: 0
