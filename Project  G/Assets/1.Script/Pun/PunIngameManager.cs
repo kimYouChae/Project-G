@@ -85,6 +85,18 @@ public class PunIngameManager : Singleton<PunIngameManager>
         StartCoroutine(GameStartCorutine());
     }
 
+#if DEV_BUILD_TEST
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F12)) 
+        {
+            Debug.Log("[DEV_BUILD_TEST] 테스트용, 게임씬에서 로비씬으로 넘어감");
+            PhotonSceneManager.Instance.ChangeScene(SceneType.Lobby);
+        }
+    }
+#endif
+
     private void SycnGameId()
     {
         Debug.Log("[GameIdSync]게임 고유 ID Raise 이벤트");

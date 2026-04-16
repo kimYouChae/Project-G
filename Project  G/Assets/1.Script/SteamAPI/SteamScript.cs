@@ -193,7 +193,7 @@ public class SteamScript : Singleton<SteamScript>
     {
         StartCoroutine(LoginUser());
 
-#if STEAM_FEATURE_TEST
+#if DEV_BUILD_TEST
         // 초기화
         SteamUserStats.ClearAchievement("ACH_CLEAR_FOREST");
         // 도전과제 클리어
