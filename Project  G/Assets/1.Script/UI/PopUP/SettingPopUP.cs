@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class SettingPopUP : UIPopUP , ILocalizable
+public class SettingPopUP : UIPopUP
 {
     [Header("===Sound===")]
     [SerializeField] Slider MasterSlider;
@@ -25,7 +23,7 @@ public class SettingPopUP : UIPopUP , ILocalizable
     [SerializeField] TextMeshProUGUI bgmText;
     [SerializeField] TextMeshProUGUI languageText;
 
-    public void OpenSetting() 
+    public void OpenSetting()
     {
         // UI ON, 팝업 사운드 실행
         base.OpenPopUP();
@@ -49,10 +47,10 @@ public class SettingPopUP : UIPopUP , ILocalizable
     {
         MasterSlider.onValueChanged.AddListener(value => { ChangeVolume(SoundType.Master, value); });
         BGMSlier.onValueChanged.AddListener(value => { ChangeVolume(SoundType.BGM, value); });
-        SFXSlider.onValueChanged.AddListener(value => { ChangeVolume(SoundType.SFX, value) ; });
+        SFXSlider.onValueChanged.AddListener(value => { ChangeVolume(SoundType.SFX, value); });
 
-        languageDropDown.onValueChanged.AddListener( value => selectLanguage = value);
-        applyButton.onClick.AddListener(() => ChangeLanguage(selectLanguage) );
+        languageDropDown.onValueChanged.AddListener(value => selectLanguage = value);
+        applyButton.onClick.AddListener(() => ChangeLanguage(selectLanguage));
 
         // 드롭다운 관리
         languageDropDown.ClearOptions();
@@ -62,11 +60,11 @@ public class SettingPopUP : UIPopUP , ILocalizable
         LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
     }
 
-    private void InitDropDown() 
+    private void InitDropDown()
     {
         List<string> optionList = new List<string>();
 
-        for (int i = 0; i < Extension.EnumCount<LanguageType>(); i++) 
+        for (int i = 0; i < Extension.EnumCount<LanguageType>(); i++)
         {
             LanguageType type = Extension.GetElement<LanguageType>(i);
             optionList.Add(Define.languageNames[type]);

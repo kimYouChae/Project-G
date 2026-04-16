@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 
 public class SoundVolume
 {
-    private const float baseVolume = 0f;
+    private const float baseVolume = 0.2f;
 
     public SoundVolume()
     {

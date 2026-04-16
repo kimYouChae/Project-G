@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using System;
+using System.Collections;
 
 public class SoundManager : Singleton<SoundManager>
 {
@@ -35,7 +37,20 @@ public class SoundManager : Singleton<SoundManager>
             sfxMixerGroup = audioMixer.FindMatchingGroups(SFX_MIXER_GROUP)[0];
             bgmMixerGroup = audioMixer.FindMatchingGroups(BGM_MIXER_GROUP)[0];
         }
+
+        StartCoroutine(Temp());
     }
+
+    IEnumerator Temp() 
+    {
+        yield return null;
+
+        // 플레이어프리팹에 저장되어 있는 볼룸으로 변경 필요
+        ChangeVolumeByType(SoundType.Master, soundVolume.MasterVolume);
+        ChangeVolumeByType(SoundType.BGM, soundVolume.BGMVolume);
+        ChangeVolumeByType(SoundType.SFX, soundVolume.SFXVolume);
+    }
+
 
     public void SettingAudioMixerOutput(AudioSource source, SoundType soundType) 
     {
@@ -64,8 +79,6 @@ public class SoundManager : Singleton<SoundManager>
     {
         // 오디오 믹서의 볼륨 바꾸기 
         audioMixer.SetFloat(type.ToString(), Mathf.Log10(Mathf.Max(0.001f, volume)) * 20);
-
-        // 볼륨 데이터에 저장 하긴해야함
     }
 
     public float GetVolumeByType(SoundType type) 
