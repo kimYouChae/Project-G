@@ -53,9 +53,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
     {
         SetUpDontDestroy();
 
-        // SetLanguageType();
-        // 로컬라이징 테스트 용 
-        currLanguateType = LanguageType.Japanese;
+        SetLanguageType();
 
         languages = new Dictionary<LanguageType, Language>();
 
@@ -65,6 +63,12 @@ public class LocalizationManager : Singleton<LocalizationManager>
 
         // fallBack 로컬라이제이션 테이블 사용
         FallBackLocalization();
+    }
+
+    private void Start()
+    {
+        // 씬 변경 시 로컬라이징 ( 게임 -> 로비 씬 돌아올 때 )
+        PhotonSceneManager.Instance.RegisterAction(SceneType.Lobby, ChangeLanguageType);
     }
 
     private void FallBackLocalization() 
@@ -136,11 +140,13 @@ public class LocalizationManager : Singleton<LocalizationManager>
     {
         currLanguateType = type;
 
+        Debug.Log($"[LocalizationManager] 언어 변경 메서드 실행, 언어타입 : {currLanguateType}");
         ChangeLanguageAction?.Invoke(currLanguateType);
     }
 
     public void ChangeLanguageType() 
     {
+        Debug.Log($"[LocalizationManager] 언어 변경 메서드 실행, 언어타입 : {currLanguateType}");
         ChangeLanguageAction?.Invoke(currLanguateType);
     }
 
