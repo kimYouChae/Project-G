@@ -18,5 +18,5 @@ public static partial class LocalizationKey
     public const string Popup_PASSWORD_NOT_ENTERED = "Popup_PASSWORD_NOT_ENTERED";
     public const string Popup_PASSWORD_INCORRECT = "Popup_PASSWORD_INCORRECT";
 
-
+    public const string RoomCreate_Fail = "RoomCreate_Fail";
 }
