@@ -39,12 +39,27 @@ public class CreateRoomController : ILobbyPanelInitionlize
         roomView.RegisterBackButton(BackAction);
     }
 
+    private void ClearRoomInfo() 
+    {
+        // 방 정보 초기화 
+        PhotonRoomInfo.Clear();
+
+        // 클립보드 빈칸
+        GUIUtility.systemCopyBuffer = string.Empty;
+
+        // 비밀번호 복사 플래그 false
+        roomModel.isCreatePassword = false;
+    }
+
     private void BackAction()
     {
         // SFX 실행
         SFXManager.Instance.PlaySFX(SFXType.UIBack);
 
+        // 로비로 패널 전환 
         LobbyUIManager.Instance.ChangePanel(LobbyPanelType.CreateRoom, LobbyPanelType.Lobby);
+
+        ClearRoomInfo();
     }
 
     private void CopyPassWord() 
@@ -54,9 +69,10 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
         roomModel.roomPassword = roomModel.GetRandomNPassword();
 
-        // 복사하기
+        // 클립보드에 복사하기
         GUIUtility.systemCopyBuffer = roomModel.roomPassword.ToString();
 
+        // 비밀번호 복사 플래그 true
         roomModel.isCreatePassword = true;
     }
 
@@ -86,7 +102,7 @@ public class CreateRoomController : ILobbyPanelInitionlize
         {
             //Debug.Log("비밀 번호를 복사 해야합니다!");
 
-            //팝업 띄우기 
+            // 팝업 띄우기 
             TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
             textPopUp.UpdateText(LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Popup_PasswordCopyFailed));
 
@@ -97,7 +113,7 @@ public class CreateRoomController : ILobbyPanelInitionlize
         {
             //Debug.LogError("방 이름이 비어 있습니다!");
 
-            // ##TODO : 팝업 띄우기 
+            // 팝업 띄우기 
             TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
             textPopUp.UpdateText(LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Popup_RoomNameEmpty));
 
@@ -132,7 +148,11 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
     public void IInitPanel()
     {
+        // 다른 panel -> 방 생성 패널 입장 시 
+        ClearRoomInfo();
+
         roomModel.currMapIndex = 0;
         roomView.ChangeMapImage(roomModel.currMapIndex);
+        roomView.EmptyRoomTitle();
     }
 }

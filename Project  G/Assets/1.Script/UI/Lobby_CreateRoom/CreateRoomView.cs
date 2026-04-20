@@ -55,6 +55,11 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
         mapTitle.text = LocalizationManager.Instance.MapNameReturn(index);
     }
 
+    public void EmptyRoomTitle() 
+    {
+        roomTitleField.text = "";
+    }
+
     private void OnEnable()
     {
         LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);

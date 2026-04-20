@@ -11,39 +11,19 @@ using UnityEngine;
 // room을 만들 때 설정하는 데이터를 담아놓는 용도
 public static class PhotonRoomInfo
 {
-    // 방 고유 번호
-    public static string RoomCode 
-    {
-        get => PlayerPrefs.GetString("RoomCode");
-        set => PlayerPrefs.SetString("RoomCode", value);
-    }
+    public static string RoomCode;
+    public static string RoomName;
+    public static int Password;
+    public static int MaxUser;
+    public static string MapTypeName;
 
-    // 방 이름
-    public static string RoomName
+    public static void Clear()
     {
-        get => PlayerPrefs.GetString("RoomName");
-        set => PlayerPrefs.SetString("RoomName", value);
-    }
-
-    // 비밀번호 
-    public static int Password
-    {
-        get => PlayerPrefs.GetInt("Password");
-        set => PlayerPrefs.SetInt("Password", value);
-    }
-
-    // 최대 유저
-    public static int MaxUser
-    {
-        get => PlayerPrefs.GetInt("MaxUser");
-        set => PlayerPrefs.SetInt("MaxUser", value);
-    }
-
-    // 맵 타입
-    public static string MapTypeName
-    {
-        get => PlayerPrefs.GetString("MapType");
-        set => PlayerPrefs.SetString("MapType", value);
+        RoomCode = string.Empty;
+        RoomName = string.Empty;
+        Password = 0;
+        MaxUser = 0;
+        MapTypeName = string.Empty;
     }
 }
 
@@ -137,10 +117,13 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         else
         { 
             Debug.Log("방 생성에 실패 했습니다 ");
-                
-            // PopUP : 방생성에 실패
-        }
 
+            // PopUP : 방생성에 실패
+            LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.RoomCreate_Fail);
+
+            // 방 정보 초기화 
+            PhotonRoomInfo.Clear();
+        }
     }
     
     public void PrintRoomInfo(Room info) 
