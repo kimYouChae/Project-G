@@ -14,6 +14,9 @@ public static partial class LocalizationKey
     public const string GameOver_BestScoreUpdateFailed = "GameOver_BestScoreUpdateFailed";
 
     public const string Popup_RoomFull = "Popup_RoomFull";
+    public const string Popup_ROOM_JOIN_FAILED_RETRY = "Popup_ROOM_JOIN_FAILED_RETRY";
+    public const string Popup_PASSWORD_NOT_ENTERED = "Popup_PASSWORD_NOT_ENTERED";
+    public const string Popup_PASSWORD_INCORRECT = "Popup_PASSWORD_INCORRECT";
 
 
 }
