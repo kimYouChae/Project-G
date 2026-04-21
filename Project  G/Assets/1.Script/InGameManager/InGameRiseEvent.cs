@@ -87,6 +87,15 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
                     {
                         UserDataManager.Instance.UpdateUserData(maptype, result.score, result.stage);
                     }
+
+                    // 3. 게임 종료 이벤트 호출 
+                    AnalyticsManager.SendGameEnd(
+                        isComplted: true,
+                        score: result.score,
+                        stage: result.stage,
+                        mapType: maptype.ToString(),
+                        isbestScore: result.isUpdated,
+                        playTime: currTime);
                 }
             }
         }

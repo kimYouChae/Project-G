@@ -50,6 +50,9 @@ public class TitleUI : MonoBehaviour, ILobbyPanelInitionlize
                     // 포톤의 로컬 player 데이터 세팅 
                     PunLobbyManager.Instance.SettingPhotonLocalPlayer();
 
+                    // 애널리스틱 이벤트 실행
+                    AnalyticsManager.SendSessionStart();
+
                     // panel 변경 
                     LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
 

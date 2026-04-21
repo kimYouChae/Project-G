@@ -185,5 +185,21 @@ public class PunLauncher : MonoBehaviourPunCallbacks
         textPopUp.UpdateText(LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Popup_CreateRoomFailed));
     }
 
+    public override void OnCreatedRoom()
+    {
+        Debug.Log($"Pun : OnCreatedRoom 콜백실행 | 방을 생성했습니다");
+        
+        // 방 생성 이벤트 실행
+        AnalyticsManager.SendRoomCreate();
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message) 
+    {
+        Debug.Log($"Pun : OnCreateRoomFailed 콜백실행 | 방 생성에 실패했습니다");
+
+        // 방 생성 실패 이벤트 실행
+        AnalyticsManager.SendRoomCreateFailed(message);
+    }
+
 }
 
