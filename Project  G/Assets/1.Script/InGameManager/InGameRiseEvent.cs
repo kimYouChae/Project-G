@@ -72,7 +72,6 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             {
                 UserBestScoreResult result = bsResponse.results[i];
 
-
                 // 응답클래스의 id와 로컬에 있는 id가 같으면 
                 if(result.steamId == SteamUserData.Instance.GetSteamID()) 
                 {
@@ -82,13 +81,17 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
                     // 1. gameOver UI에 텍스트 표시
                     InGameUI.Instance.gameOverUI.GameOverText(result.score, currTime, result.isUpdated);
 
+                    // 점수가 업데이트 됐으면 
                     // 2. 로컬의 유저 정보 업데이트 
                     if(result.isUpdated) 
                     {
                         UserDataManager.Instance.UpdateUserData(maptype, result.score, result.stage);
                     }
 
-                    // 3. 게임 종료 이벤트 호출 
+                    // 3~4. 도전과제 로직 실행
+                    StartCoroutine(AchiveLogic(result.steamId));
+
+                    // 5. 게임 종료 이벤트 호출 
                     AnalyticsManager.SendGameEnd(
                         isComplted: true,
                         score: result.score,
@@ -128,5 +131,14 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             */
         }
 
+    private IEnumerator AchiveLogic(long stemaId) 
+    {
+        // 3. 도전과제 API 실행 
+        yield return StartCoroutine(
+                   GameServices.Instance.UserProgressService.GetAchivementService(stemaId));
 
+        // 4. 이후 스팀 도전과제 성공여부 체크
+        // 도전과제 API 실행 후 model이 세팅됨
+        SteamScript.Instance.SetAchivement(GameServices.Instance.AchiveProgressModel.GetBestScoreInfo());
+    }   
 }

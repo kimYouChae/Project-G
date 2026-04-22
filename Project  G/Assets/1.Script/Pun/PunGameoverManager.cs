@@ -66,13 +66,6 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
 
         // 게임 Data API 실행 후 저장된 Model을 동기화
         GameDataRaiseEvent();
-
-        // 도전과제 API 실행 
-        yield return StartCoroutine(
-                   GameServices.Instance.UserProgressService.GetAchivementService(UserDataManager.Instance.SteamID));
-
-        // 이후 스팀 도전과제 성공여부 체크
-        SteamScript.Instance.SetAchivement(GameServices.Instance.AchiveProgressModel.GetBestScoreInfo());
     }
 
     private void GameDataRaiseEvent() 
