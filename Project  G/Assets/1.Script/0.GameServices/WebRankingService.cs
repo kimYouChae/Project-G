@@ -33,15 +33,15 @@ public class UserRankDTO
 
 public class WebRankingService : IRankingService
 {
-    private string baseUrl;
-    private static string userRankUrl = "Rank/GetRank";
-    private static string rankerUrl = "Rank/GetRankers";
+    private string userRankUrl = "";
+    private string rankersUrl = "";
 
     private IRankingModel rankingModel;
 
-    public WebRankingService(string url, IRankingModel rankingModel)
+    public WebRankingService(string userRankUrl, string rankersUrl  ,IRankingModel rankingModel)
     {
-        this.baseUrl = url;
+        this.userRankUrl = userRankUrl;
+        this.rankersUrl = rankersUrl;
         this.rankingModel = rankingModel;
     }
 
@@ -57,7 +57,7 @@ public class WebRankingService : IRankingService
         string requestJson = JsonUtility.ToJson(requestDTO);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestJson);
 
-        var request = new UnityWebRequest(baseUrl + userRankUrl, "POST");
+        var request = new UnityWebRequest(userRankUrl, "POST");
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
 
         yield return CoroutineHandler.Instance.Run(
@@ -84,7 +84,7 @@ public class WebRankingService : IRankingService
         string requestJson = JsonUtility.ToJson(requestDTO);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestJson);
 
-        var request = new UnityWebRequest(baseUrl + rankerUrl, "POST");
+        var request = new UnityWebRequest(rankersUrl, "POST");
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
 
         yield return CoroutineHandler.Instance.Run(

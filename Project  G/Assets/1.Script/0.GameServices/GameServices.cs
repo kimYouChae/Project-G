@@ -29,6 +29,9 @@ public sealed class GameServices
     private IGameDataModel gameDataModel;
     private IAchiveProgressModel achiveModel;
 
+    // Server Config
+    private ServerConfig serverConfig;
+
     public IAuthService AuthService { get => authService; }
     public IRankingService RankingService { get => rankingService; }
     public IRankingModel RankingModel { get => rankingModel; }
@@ -38,21 +41,26 @@ public sealed class GameServices
     public IUserProgressService UserProgressService { get => userProgressService; }
     public IAchiveProgressModel AchiveProgressModel { get => achiveModel; }
 
-    private static readonly string baseUrl = "http://" + "localhost/Project_G/api/";
-
     private GameServices() 
     {
+
+    }
+
+    public void Init(ServerConfig config) 
+    {
+        this.serverConfig = config;
+
         // 모델
         rankingModel = new RankingModel();
         gameDataModel = new GameDataModel();
         achiveModel = new AchiveProgressModel();
 
         // 서비스 
-        authService = new WebAuthService(baseUrl);
-        rankingService = new WebRankingService(baseUrl, rankingModel);
-        gameDataService = new WebGameDataService(baseUrl, gameDataModel);
-        chartDataService = new WebChartService(baseUrl);
-        userProgressService = new WebUserProgressService(baseUrl , achiveModel);
+        authService = new WebAuthService(config.LoginUrl);
+        rankingService = new WebRankingService(config.UserRankUrl, config.RankerUrl, rankingModel);
+        gameDataService = new WebGameDataService( config.GameDataUrl, gameDataModel);
+        chartDataService = new WebChartService(config.ChartUrl);
+        userProgressService = new WebUserProgressService(config.AchiveProgressUrl, achiveModel);
     }
 
     public IEnumerator ChartLogic() 

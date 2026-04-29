@@ -6,12 +6,11 @@ using Newtonsoft.Json;
 
 public class WebChartService : IChartService
 {
-    private string baseUrl;
-    private static string chartUrl = "Chart/";
+    private string chartUrl = "";
 
     public WebChartService(string url)
     {
-        this.baseUrl = url;
+        this.chartUrl = url;
     }
 
     public IEnumerator ChartService(DataType dataType)
@@ -20,7 +19,7 @@ public class WebChartService : IChartService
             yield break;
 
         // var request = new UnityWebRequest(baseUrl + dataType.ToString(), "GET");
-        var request = UnityWebRequest.Get(baseUrl + chartUrl + dataType.ToString());
+        var request = UnityWebRequest.Get(chartUrl + dataType.ToString());
         request.SetRequestHeader("Content-Type", "application/json");
         request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용
 

@@ -35,14 +35,13 @@ public class UserBestScoreResult
 
 public class WebGameDataService : IGameDataService
 {
-    private string baseUrl;
-    private static string gamdDataUrl = "GameData/Update";
+    private string gamdDataUrl = "";
 
     private IGameDataModel gameDataModel;
 
     public WebGameDataService(string url, IGameDataModel gameDataModel)
     {
-        this.baseUrl = url;
+        this.gamdDataUrl = url;
         this.gameDataModel = gameDataModel;
     }
 
@@ -61,7 +60,7 @@ public class WebGameDataService : IGameDataService
         string requestJson = JsonUtility.ToJson(updateUserInfoDTO);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestJson);
 
-        var request = new UnityWebRequest(baseUrl + gamdDataUrl, "POST");
+        var request = new UnityWebRequest(gamdDataUrl, "POST");
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.SetRequestHeader("Content-Type", "application/json");
         request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용

@@ -18,14 +18,13 @@ public class AchiveProgressResponse
 
 public class WebUserProgressService : IUserProgressService
 {
-    private string baseUrl;
-    private static string achiveProgressUrl = "UserProgress/AchiveProgress";
+    private string achiveProgressUrl = "";
 
     private IAchiveProgressModel achiveProgressModel;   
 
     public WebUserProgressService(string url, IAchiveProgressModel achiveProgressModel)
     {
-        this.baseUrl = url;
+        this.achiveProgressUrl = url;
         this.achiveProgressModel = achiveProgressModel;
     }
 
@@ -39,7 +38,7 @@ public class WebUserProgressService : IUserProgressService
         string requestJson = JsonUtility.ToJson(achiveProgress);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestJson);
 
-        var request = new UnityWebRequest(baseUrl + achiveProgressUrl, "POST");
+        var request = new UnityWebRequest(achiveProgressUrl, "POST");
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.SetRequestHeader("Content-Type", "application/json");
         request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용

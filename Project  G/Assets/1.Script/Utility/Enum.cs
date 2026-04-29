@@ -15,6 +15,12 @@ public enum PunEventType
 #endregion
 
 #region GameService
+public enum ServerEnvironment
+{
+    Local,
+    Azure
+}
+
 public enum DataType
 {
     None,

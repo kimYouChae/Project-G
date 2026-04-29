@@ -35,12 +35,11 @@ public class UserMapTypeByScoreDTO
 
 public class WebAuthService : IAuthService
 {
-    private string baseUrl;
-    private static string loginUrl = "Login/Login";
+    private string loginUrl = "";
 
     public WebAuthService(string url) 
     {
-        this.baseUrl = url;
+        this.loginUrl = url;
     }
 
     public IEnumerator AuthService(long steamID, string nick, string country)
@@ -55,7 +54,7 @@ public class WebAuthService : IAuthService
         string requestJson = JsonUtility.ToJson(loginRequestDTO);
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestJson);
 
-        var request = new UnityWebRequest(baseUrl + loginUrl, "POST");
+        var request = new UnityWebRequest(loginUrl, "POST");
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.SetRequestHeader("Content-Type", "application/json");
         request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용
