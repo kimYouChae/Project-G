@@ -1171,6 +1171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userProfile: {fileID: 0}
+  game_round_index: 0
 --- !u!1 &99158364
 GameObject:
   m_ObjectHideFlags: 0
@@ -6920,8 +6921,9 @@ GameObject:
   m_Component:
   - component: {fileID: 859893253}
   - component: {fileID: 859893252}
+  - component: {fileID: 859893254}
   m_Layer: 0
-  m_Name: Pun(DontD)
+  m_Name: Manger(DontD)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6956,6 +6958,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 196807098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &859893254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859893251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba067b4a2b9b48f47bea4b06e839f10e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  environment: 1
+  localConfig: {fileID: 11400000, guid: 876529aa4c09e46418f859b21b98fe1b, type: 2}
+  azureConfig: {fileID: 11400000, guid: cea3edc21795dc043963330de9965c58, type: 2}
 --- !u!1 &877357817
 GameObject:
   m_ObjectHideFlags: 0
