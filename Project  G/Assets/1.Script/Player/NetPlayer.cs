@@ -28,7 +28,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [SerializeField] IPlayerSkill playerSkill;
 
     [Header("===Test===")]
-    [SerializeField] bool flag = true; // true : 테스트할 때 충돌 x 
+    [SerializeField] bool netPlayerCantDieFlag = true; // true : 테스트할 때 충돌 x 
 
     public int PlayerIndex { get => playerIndex; }
     public bool IsReadToMove { get => isReadToMove; set => isReadToMove = value; }
@@ -152,9 +152,10 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         if (!photonView.IsMine)
             return;
 
-        // 테스트용 -> 충돌 x 
-        if (flag)
+#if DEV_BUILD_TEST
+        if (netPlayerCantDieFlag)
             return;
+#endif
 
         // 임시 총알 레이어 번호 설정 
         if (collision.gameObject.layer == 7)

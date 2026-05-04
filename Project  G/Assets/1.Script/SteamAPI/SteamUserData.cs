@@ -30,27 +30,24 @@ public class SteamUserData
 
     public long GetSteamID() 
     {
-#if UNITY_EDITOR
         return (long) steamID;
-#elif UNITY_STANDALONE
+#if DEV_BUILD_TEST
         return 22463504765611990;
 #endif
     }
 
     public string GetSteamNick() 
     {
-#if UNITY_EDITOR
         return nickName;
-#elif UNITY_STANDALONE
+#if DEV_BUILD_TEST
         return "김감자고구마";
 #endif
     }
 
     public string GetCountry() 
     {
-#if UNITY_EDITOR
         return country;
-#elif UNITY_STANDALONE
+#if DEV_BUILD_TEST
         return "SKY";
 #endif
     }
