@@ -187,9 +187,9 @@ public class PunIngameManager : Singleton<PunIngameManager>
     {
         if (PhotonNetwork.InRoom)
         {
-            // 고유한 ActorNum을 가짐 (1부터시작)
-            int index = PhotonNetwork.LocalPlayer.ActorNumber - 1;
-            // 보통 호스트가 1으로 설정되는듯
+            // 포톤에 현재 접속한 인원 기준으로,
+            // local 플레이어가 몇번째에 있는지 찾기
+            int index = System.Array.IndexOf(PhotonNetwork.PlayerList, PhotonNetwork.LocalPlayer);
 
             QuadrantType quType = (QuadrantType)index;
             Vector2 playerPosi = Define.twoMemberPoint[quType];
