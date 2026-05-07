@@ -156,8 +156,17 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
         // 로비를 재접속 하는것 만으로 OnRoomListUpdate가 실행 x
         // 로비를 벗어났다가 N초후에 다시 재접속 
 
-        PhotonNetwork.LeaveLobby();
+        // 로비에 이미 있으면
+        // waitingRoom -> back 버튼 -> refesh시 "로비"에 있는 상태가 아니라
+        // 
+        if (PhotonNetwork.InLobby) 
+        {
+            PhotonNetwork.LeaveLobby();
+        }
+
+        // 로비에 접속하기
         StartCoroutine(ReJoinLobbyDelay());
+
     }
 
     IEnumerator ReJoinLobbyDelay() 
