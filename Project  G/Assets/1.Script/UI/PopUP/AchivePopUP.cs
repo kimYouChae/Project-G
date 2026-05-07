@@ -5,9 +5,12 @@ using UnityEngine;
 
 public class AchivePopUP : UIPopUP
 {
+    [Header("===AchivePopUP===")]
     [SerializeField] GameObject achiveObj;
     [SerializeField] Transform content;
     [SerializeField] List<AchiveObject> achiveObjList;
+    [SerializeField] GameObject uiContents; // 팝업 내부 ui ( 캐릭터 선택 + 디테일창 )
+    [SerializeField] TextMeshProUGUI loadingText;   // 로딩중 텍스트
 
     [Header("===Localization===")]
     [SerializeField] TextMeshProUGUI achiveTitle;
@@ -32,9 +35,15 @@ public class AchivePopUP : UIPopUP
         // 한번도 UI를 안켰을 때만 
         if (!hasOpend) 
         {
+            loadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
+            uiContents.SetActive(false);
+
             // API 호출 필요 
             yield return StartCoroutine(
                 GameServices.Instance.UserProgressService.GetAchivementService(UserDataManager.Instance.SteamID));
+
+            loadingText.text = string.Empty;
+            uiContents.SetActive(true);
         }
 
         // GamdService의 도전과제모델에서 가져오기 

@@ -14,6 +14,8 @@ public class CharacterSelectPopUP : UIPopUP
     [SerializeField] GameObject characterPrefab;
     [SerializeField] GameObject contenct;   // 스크롤뷰 콘텐츠
     [SerializeField] List<CharacterObject> characterObjs;
+    [SerializeField] GameObject uiContents; // 팝업 내부 ui ( 캐릭터 선택 + 디테일창 )
+    [SerializeField] TextMeshProUGUI loadingText;   // 로딩중 텍스트
 
     [Space]
     [SerializeField] CharacterType selectCharacterType;
@@ -55,9 +57,15 @@ public class CharacterSelectPopUP : UIPopUP
         // 한번도 UI를 안켰을 때만 
         if (!hasOpend)
         {
+            loadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
+            uiContents.SetActive(false);
+
             // API 호출 필요 
             yield return StartCoroutine(
                 GameServices.Instance.UserProgressService.GetAchivementService(UserDataManager.Instance.SteamID));
+
+            loadingText.text = string.Empty;
+            uiContents.SetActive(true);
         }
 
         // UI 업데이트 
