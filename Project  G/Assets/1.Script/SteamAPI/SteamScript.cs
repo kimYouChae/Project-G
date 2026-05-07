@@ -279,9 +279,23 @@ public class SteamScript : Singleton<SteamScript>
 
     public void InviteFriendByIndex(int index) 
     {
+        // 친구 steam 구조체 가져오기
         CSteamID friend = GetCSteamId(index);
+
+        // 친구가 게임을 켰는지 확인
+        FriendGameInfo_t info;
+        bool friendIsInGame = SteamFriends.GetFriendGamePlayed(friend, out info);
+        if (!friendIsInGame)
+        {
+            // ##TODO : 팝업 띄우기
+            Debug.Log($"{friend.m_SteamID}에 해당하는 친구는 아직 게임을 켜지 않았습니다");
+
+            return;
+        }
+
         if (friend.m_SteamID != 0)
         {
+            // ##TODO : 팝업 띄우기
             Debug.Log("친구 초대를 합니다");
 
             // 친구의 CSteam, 보낼 문자열
@@ -290,7 +304,8 @@ public class SteamScript : Singleton<SteamScript>
                 = SteamFriends.InviteUserToGame(friend , PhotonRoomInfo.RoomCode);
         }
         else
-        { 
+        {
+            // ##TODO : 팝업 띄우기
             Debug.Log("친구의 CSteam이 NULL 입니다");
 
             // 친구 CSteam데이터를 출력해보기
