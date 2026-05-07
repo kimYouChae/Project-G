@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.Asteroids;
 using Photon.Realtime;
 using System;
 using System.Collections;
@@ -167,6 +168,16 @@ public class PunLauncher : MonoBehaviourPunCallbacks
 
         // 방에 들어왔을 때 방 정보 출력
         PunLobbyManager.Instance.PrintRoomInfo(PhotonNetwork.CurrentRoom);
+
+        // 스팀 초대로 방에 접속했을 때
+        if (PunConnected.isJoiningViaInvite) 
+        {
+            // 플래그 초기화
+            PunConnected.isJoiningViaInvite = false;
+
+            // 대기방으로 이동
+            LobbyUIManager.Instance.ChangePanel(LobbyPanelType.WaitingRoom);
+        }
 
         // MapData 동기화
         // 게임씬 -> 로비로 다시 돌아왔을 땐 해당 콜백이 실행이 안되니 또 실행안될듯 

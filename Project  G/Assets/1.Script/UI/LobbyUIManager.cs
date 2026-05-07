@@ -100,6 +100,11 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         }
     }
 
+    public void ChangePanel(LobbyPanelType next) 
+    {
+        ChangePanel(currPanel, next);
+    }
+
     // 리스트 비우기
     public void DestoryListObject(List<GameObject> list) 
     {

@@ -18,6 +18,8 @@ public class SteamFriend : MonoBehaviour
     {
         Debug.Log($"[SteamFriend] - 친구가 게임에 접속/ 방 고유 번호 : {callback.m_rgchConnect}");
 
+        PunConnected.isJoiningViaInvite = true;
+
         CSteamID friend = callback.m_steamIDFriend;
         string roomCode = callback.m_rgchConnect;
 

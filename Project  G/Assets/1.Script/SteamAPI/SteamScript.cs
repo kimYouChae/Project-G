@@ -282,9 +282,10 @@ public class SteamScript : Singleton<SteamScript>
         // 친구 steam 구조체 가져오기
         CSteamID friend = GetCSteamId(index);
 
-        // 친구가 게임을 켰는지 확인
+        // 친구가 이 게임(project G)을 켰는지 확인
         FriendGameInfo_t info;
-        bool friendIsInGame = SteamFriends.GetFriendGamePlayed(friend, out info);
+        bool friendIsInGame = SteamFriends.GetFriendGamePlayed(friend, out info)
+            &&info.m_gameID.m_GameID == SteamUtils.GetAppID().m_AppId;
         if (!friendIsInGame)
         {
             // ##TODO : 팝업 띄우기
