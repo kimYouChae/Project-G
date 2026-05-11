@@ -14,6 +14,8 @@ public class LeaderBoardPopUp : UIPopUP
     [SerializeField] LeaderBoardObject myrankingObj;            // 내 랭킹에 대한 리더보드 오브젝트 
 
     [Header("===Conponent===")]
+    [SerializeField] GameObject uiContents;         // 팝업 내부 ui ( 리더보드 + 디테일창 )
+    [SerializeField] TextMeshProUGUI loadingText;   // 로딩중 텍스트
     [SerializeField] Transform content;     // 오브젝트 상위 부모 
 
     [Header("===Localization===")]
@@ -37,11 +39,17 @@ public class LeaderBoardPopUp : UIPopUP
     // On 될 때 마다 업데이트 
     public IEnumerator GetRank()
     {
+        loadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
+        uiContents.SetActive(false);
+
         // 내 랭크 정보 출력 
         yield return GameServices.Instance.RankingService.
             GetMyRankingService(UserDataManager.Instance.SteamID, 0);
         // 랭커 정보 출력
         yield return GameServices.Instance.RankingService.GetRankerService(0);
+
+        loadingText.text = string.Empty;
+        uiContents.SetActive(true);
 
         // 정보 바탕으로 출력하기 
         GameServices.Instance.RankingModel.PrintUserRanker();
