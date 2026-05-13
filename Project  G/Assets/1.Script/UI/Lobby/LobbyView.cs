@@ -16,6 +16,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     [SerializeField] Button achivementButton;
     [SerializeField] Button exitButton;
     [SerializeField] Button rankButton;
+    [SerializeField] Button buyCoffeButton;
 
     [Header("===Localize Text===")]
     [SerializeField] TextMeshProUGUI createRoomText;
@@ -36,6 +37,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     private Action AchiveAction;
     private Action ExitGameAction;
     private Action RankAction;
+    private Action BuyCoffeeAction;
 
     private void Awake()
     {
@@ -47,6 +49,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
         achivementButton.onClick.AddListener(() => AchiveAction?.Invoke());
         characterSelectButton.onClick.AddListener(() => CharacterSelectAction?.Invoke());
         rankButton.onClick.AddListener(() => RankAction?.Invoke());
+        buyCoffeButton.onClick.AddListener(()=>BuyCoffeeAction?.Invoke());
     }
 
     public void RegisterCreateHostRoom(Action action) { CreatHostRoomAction += action;}
@@ -57,6 +60,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     public void RegisterAchivePopup(Action action) {  AchiveAction += action;}
     public void RegisterCharacterSelectButton(Action action) { CharacterSelectAction += action;}
     public void RegisterRankButton(Action action) { RankAction += action; }
+    public void RegisterBuyCoffeeButton(Action action){ BuyCoffeeAction += action;}
     
     private void OnEnable()
     {

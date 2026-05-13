@@ -23,6 +23,12 @@ public class LobbyController : ILobbyPanelInitionlize
         lobbyView.RegisterAchivePopup(AchivePopup);
         lobbyView.RegisterCharacterSelectButton(CharacterPopUp);
         lobbyView.RegisterRankButton(Rank);
+        lobbyView.RegisterBuyCoffeeButton(BuyCoffee);
+    }
+
+    private void BuyCoffee() 
+    {
+        Application.OpenURL("https://ko-fi.com/youchea");
     }
 
     private void Rank() 
