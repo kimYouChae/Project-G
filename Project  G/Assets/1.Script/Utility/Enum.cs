@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#region
+#region PUN
 public enum PunEventType
 {
     UserDataSync = 1,
@@ -37,6 +37,24 @@ public enum DataType
 
 #endregion
 
+#region Web Request 
+
+public enum HttpRequestType
+{
+    Post,
+    Get
+}
+
+public enum NetworkErrorType
+{
+    Connection,  // 서버에 아예 못 닿은 경우 (인터넷 끊김, 서버 다운)
+    Server,      // HTTP 4xx / 5xx 응답 (서버가 응답은 했지만 에러 코드)
+    Parse,       // JSON 역직렬화 실패 (응답 형식이 깨진 경우)
+    Api          // apiResponse.success == false (서버 비즈니스 로직 실패)
+}
+
+
+#endregion
 
 public enum LobbyPanelType
 { 
