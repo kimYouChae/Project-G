@@ -52,66 +52,24 @@ public class WebAuthService : IAuthService
         };
 
         string requestJson = JsonUtility.ToJson(loginRequestDTO);
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestJson);
 
-        var request = new UnityWebRequest(loginUrl, "POST");
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용
-
-        //request.timeout = 10;
-        //request.useHttpContinue = false;
-
-        yield return CoroutineHandler.Instance.Run(StartRequest(request));
+        yield return WebRequestCore.CommonLogic<LoginResponseDTO>
+            (
+                requestJson,
+                loginUrl,
+                HttpRequestType.Post,
+                LoginUser,
+                LoginFailed
+            );
     }
 
-    IEnumerator StartRequest(UnityWebRequest request) 
+    private void LoginFailed()
     {
-        Debug.Log($"[HTTP] 요청 코루틴 시작 URL = {request.url}");
-
-        // 요청보내기 (비동기)
-        yield return request.SendWebRequest();
-        Debug.Log($"[{nameof(WebAuthService)}] / responseBody={request.downloadHandler?.text}");
-
-        if (request.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError(request.error);
-            yield break;
-        }
         
-        // 받은 요청을 string 타입으로
-        string responseText = request.downloadHandler.text;
-
-        Pasing(responseText);
     }
 
-    private void Pasing(string responseText) 
+    private void LoginUser(LoginResponseDTO loginResponse) 
     {
-        // LoginAPi의 응답은 APi Response 타입의 Json임 
-        ApiResponse<LoginResponseDTO> apiResponse 
-            = JsonConvert.DeserializeObject<ApiResponse<LoginResponseDTO>>(responseText);
-
-        if (apiResponse == null) 
-        {
-            Debug.Log($"WebAuthService : 유저 정보 파싱 중에 오류 발생 , Json으로 변환 불가 \n {responseText}");
-            return;
-        }
-
-        if (apiResponse.success == false) 
-        {
-            Debug.Log($"WebAuthService : 유저 로그인 실패 \n {responseText}");
-            return;
-        }
-
-        // 기존 유저이면 
-        LoginResponseDTO loginResponse = apiResponse.data;
-
-        if (loginResponse == null)
-        {
-            Debug.Log("ApiResponse클래스의 data 타입 : LoginResponseDTO로 직렬화 하는데 실패했습니다");
-            return;
-        }
-
         if (loginResponse.isNewer == false) 
         {
             Debug.Log("WebAuthService : 기존 유저 로그인 성공 ");
