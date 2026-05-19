@@ -7,15 +7,8 @@ public class MapChart : ICharHandler
 {
     public void IParseAndStore(string jsonStr)
     {
-        ApiResponse<List<MapData>> obj = JsonConvert.DeserializeObject<ApiResponse<List<MapData>>>(jsonStr);
-
-        if (obj == null)
-        {
-            Debug.LogError($"ApiResponse 파싱 실패 : {nameof(MapChart)}");
-            return;
-        }
-
-        List<MapData> datalist = obj.data;
+        List<MapData> datalist;
+        datalist = JsonConvert.DeserializeObject<List<MapData>>(jsonStr);
 
         if (datalist == null || datalist.Count == 0)
         {

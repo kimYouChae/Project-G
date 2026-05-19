@@ -7,15 +7,8 @@ public class CharacterChart : ICharHandler
 {
     public void IParseAndStore(string jsonStr)
     {
-        ApiResponse<List<CharacterData>> obj = JsonConvert.DeserializeObject<ApiResponse<List<CharacterData>>>(jsonStr);
-
-        if (obj == null)
-        {
-            Debug.LogError($"ApiResponse 파싱 실패 : {nameof(CharacterChart)}");
-            return;
-        }
-
-        List<CharacterData> datalist = obj.data;
+        List<CharacterData> datalist;
+        datalist = JsonConvert.DeserializeObject<List<CharacterData>>(jsonStr);
 
         if (datalist == null || datalist.Count == 0)
         {

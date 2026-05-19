@@ -21,15 +21,8 @@ public class StageAchievementChart : ICharHandler
 {
     public void IParseAndStore(string jsonStr)
     {
-        ApiResponse<List<StageAchive>> obj = JsonConvert.DeserializeObject<ApiResponse<List<StageAchive>>>(jsonStr);
-
-        if (obj == null)
-        {
-            Debug.LogError($"ApiResponse 파싱 실패 : {nameof(StageAchievementChart)}");
-            return;
-        }
-
-        List<StageAchive> datalist = obj.data;
+        List<StageAchive> datalist;
+        datalist = JsonConvert.DeserializeObject<List<StageAchive>>(jsonStr);
 
         if (datalist == null || datalist.Count == 0)
         {

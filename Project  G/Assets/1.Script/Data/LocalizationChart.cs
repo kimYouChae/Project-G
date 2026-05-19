@@ -36,19 +36,10 @@ public class LocalizationChart : ICharHandler
     /// </summary>
     /// 
 
-
-
     public void IParseAndStore(string jsonStr)
     {
-        ApiResponse<List<LocalizationClass>> obj = JsonConvert.DeserializeObject<ApiResponse<List<LocalizationClass>>>(jsonStr);
-
-        if (obj == null)
-        {
-            Debug.LogError($"ApiResponse 파싱 실패 : {nameof(LocalizationChart)}");
-            return;
-        }
-
-        List<LocalizationClass> datalist = obj.data;
+        List<LocalizationClass> datalist;
+        datalist = JsonConvert.DeserializeObject<List<LocalizationClass>>(jsonStr);
 
         if (datalist == null || datalist.Count == 0)
         {
@@ -69,24 +60,5 @@ public class LocalizationChart : ICharHandler
                 LocalizationManager.Instance.AddLanguageDictionary(currType, key, temp.TypeByString(currType));
             }
         }
-
-        /*
-        foreach (LitJson.JsonData row in jsonData)
-        {
-            string key = row["key"].ToString();
-
-            // 언어만큼 for 돌기 
-            for(int i = 0; i < Extension.EnumCount<LanguageType>(); i++) 
-            {
-                LanguageType currType = Extension.GetElement<LanguageType>(i);
-
-                // lang 타입에 맞는 value 가져오기
-                string value = row[currType.ToString()].ToString();
-
-                LocalizationManager.Instance.AddLanguageDictionary(currType, key, value);
-            }
-        
-        }
-        */
     }
 }

@@ -18,43 +18,27 @@ public class WebChartService : IChartService
         if (dataType == DataType.None)
             yield break;
 
-        // var request = new UnityWebRequest(baseUrl + dataType.ToString(), "GET");
-        var request = UnityWebRequest.Get(chartUrl + dataType.ToString());
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용
-
-        yield return CoroutineHandler.Instance.Run(StartRequest(request, dataType));
+        yield return WebRequestCore.CommonLogic<object>
+            (
+                "",
+                chartUrl + dataType.ToString(),
+                HttpRequestType.Get,
+                (obj) => ParsingChart(obj, dataType),
+                () => ParsingFailed(dataType)
+            );
     }
 
-    IEnumerator StartRequest(UnityWebRequest request, DataType dataType)
+    private void ParsingFailed(DataType dataType) 
     {
-        // 요청보내기 (비동기)
-        yield return request.SendWebRequest();
-        Debug.Log($"[{nameof(WebChartService)}] : {dataType} / responseBody={request.downloadHandler?.text}");
+        Debug.Log($"[ {dataType} ]에 해당하는 차트 파싱 실패");
+    }
 
-        if (request.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError(request.error);
-            yield break;
-        }
+    // List<MapData> 같은 object가 들어옴
+    private void ParsingChart(object obj, DataType type) 
+    {
+        string json = JsonConvert.SerializeObject(obj);
 
-        // 받은 요청을 string 타입으로
-        string responseText = request.downloadHandler.text;
-        
-        // Chart 관련 API의 응답은 API Response 타입의 Json임 . 
-        ApiResponse<object> apiResponse = JsonConvert.DeserializeObject<ApiResponse<object>>(responseText);
-        if (apiResponse == null)
-        {
-            Debug.Log($"[WebChartService] 차트 파싱 중에 오류 발생 , Json으로 변환 불가 \n {responseText}");
-            yield break;
-        }
-        if (apiResponse.success == false)
-        {
-            Debug.Log($"[WebChartService] 차트 불러오기 실패. 타입 {dataType}");
-            yield break;
-        }
-
-        TypeByChartHandler(dataType, responseText);
+        TypeByChartHandler(type, json);
     }
 
     private void TypeByChartHandler( DataType dataType , string jsonStr ) 

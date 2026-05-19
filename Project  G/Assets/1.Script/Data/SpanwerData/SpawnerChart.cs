@@ -7,15 +7,8 @@ public class SpawnerChart : ICharHandler
 {
     public void IParseAndStore(string jsonStr)
     {
-        ApiResponse<List<SpawnerData>> obj = JsonConvert.DeserializeObject<ApiResponse<List<SpawnerData>>>(jsonStr);
-
-        if (obj == null)
-        {
-            Debug.LogError($"ApiResponse 파싱 실패 : {nameof(SpawnerChart)}");
-            return;
-        }
-
-        List<SpawnerData> datalist = obj.data;
+        List<SpawnerData> datalist;
+        datalist = JsonConvert.DeserializeObject<List<SpawnerData>>(jsonStr);
 
         if (datalist == null || datalist.Count == 0)
         {

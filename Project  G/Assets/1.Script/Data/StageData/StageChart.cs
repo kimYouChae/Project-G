@@ -8,15 +8,8 @@ public class StageChart : ICharHandler
 {
     public void IParseAndStore(string jsonStr)
     {
-        ApiResponse<List<StageData>> obj = JsonConvert.DeserializeObject<ApiResponse<List<StageData>>>(jsonStr);
-
-        if (obj == null)
-        {
-            Debug.LogError($"ApiResponse 파싱 실패 : {nameof(StageChart)}");
-            return;
-        }
-
-        List<StageData> datalist = obj.data;
+        List<StageData> datalist;
+        datalist = JsonConvert.DeserializeObject<List<StageData>>(jsonStr);
 
         if (datalist == null || datalist.Count == 0)
         {
