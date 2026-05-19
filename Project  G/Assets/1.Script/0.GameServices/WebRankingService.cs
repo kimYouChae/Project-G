@@ -38,6 +38,11 @@ public class WebRankingService : IRankingService
 
     private IRankingModel rankingModel;
 
+    [Header("===출력용 데이터===")]
+    private long printUserId;  // 출력용 유저 아이디
+    private MapType printMapType;   // 출력용 맵 타입
+    private MapType printRankersMapType;    // 출력용 맵 타입
+
     public WebRankingService(string userRankUrl, string rankersUrl  ,IRankingModel rankingModel)
     {
         this.userRankUrl = userRankUrl;
@@ -55,22 +60,19 @@ public class WebRankingService : IRankingService
         };
 
         string requestJson = JsonUtility.ToJson(requestDTO);
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestJson);
 
-        var request = new UnityWebRequest(userRankUrl, "POST");
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        // 출력용 데이터 저장
+        printUserId = myId;
+        printMapType = (MapType)mapType;
 
-        yield return CoroutineHandler.Instance.Run(
-            StartRequest(request,
-            (string responseText) =>
-                {
-                    UserInfoPasing(responseText);
-                },
-            (string errorText) =>
-                {
-                    Debug.Log($"WebRanking : 유저 랭킹 정보 APi 오류 ID: {myId} , MapType: {mapType} / 오류코드: {errorText}");
-                }
-        ));
+        yield return WebRequestCore.CommonLogic<UserRankDTO>
+        (
+            requestJson,
+            userRankUrl,
+            HttpRequestType.Post,
+            MyRanksParsing,
+            GetRankFailed
+        );
     }
 
     // 랭커들 보기
@@ -82,83 +84,37 @@ public class WebRankingService : IRankingService
         };
 
         string requestJson = JsonUtility.ToJson(requestDTO);
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestJson);
 
-        var request = new UnityWebRequest(rankersUrl, "POST");
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        // 출력용 데이터 저장
+        printRankersMapType = (MapType)mapType; 
 
-        yield return CoroutineHandler.Instance.Run(
-            StartRequest(request,
-            (string responseText) =>
-            {
-                RankersPasing(responseText);
-            },
-            (string errorText) =>
-            {
-                Debug.Log($"WebRanking : 랭커 정보 APi 오류 MapType: {mapType} / 오류코드: {errorText}");
-            }
-        ));
+        yield return WebRequestCore.CommonLogic<List<UserRankDTO>>
+        (
+            requestJson,
+            rankersUrl,
+            HttpRequestType.Post,
+            RankersPasing,
+            GetRankersFailed
+        );
+    }
+    private void GetRankFailed()
+    {
+        Debug.Log($"[ {printUserId} ] 에 해당하는 유저 랭킹 가져오기 실패! \n" +
+            $" MapType: {printMapType}");
     }
 
-    IEnumerator StartRequest(UnityWebRequest request, Action<string> success, Action<string> failed)
+    private void GetRankersFailed() 
     {
-        // 공통 요청 세팅
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용
-
-        // 요청보내기 (비동기)
-        yield return request.SendWebRequest();
-
-        if (request.result != UnityWebRequest.Result.Success)
-        {
-            failed?.Invoke(request.error);
-            yield break;
-        }
-
-        // 받은 요청을 string 타입으로
-        string responseText = request.downloadHandler.text;
-
-        // API의 응답은 API Response 타입의 Json임 . 
-        ApiResponse<object> apiResponse = JsonConvert.DeserializeObject<ApiResponse<object>>(responseText);
-        if (apiResponse == null)
-        {
-            failed?.Invoke($"랭킹 API 오류 발생 , Json으로 변환 불가 \n {responseText}");
-            yield break;
-        }
-        if (apiResponse.success == false)
-        {
-            failed?.Invoke($"랭킹 API 오류 발생 , 실패 \n {responseText}");
-            yield break;
-        }
-
-        // 성공하면 success Action 실행 
-        success?.Invoke(responseText);
-
+        Debug.Log($"[ {printRankersMapType }] 에 해당하는 랭커 정보 가져오기 실패! ");
     }
 
-    private void UserInfoPasing(string json) 
+    private void MyRanksParsing(UserRankDTO rankResponse) 
     {
-        ApiResponse<UserRankDTO> obj = JsonConvert.DeserializeObject<ApiResponse<UserRankDTO>>(json);
-
-        if (obj == null)
-        {
-            Debug.LogError($"ApiResponse 파싱 실패 : {nameof(WebRankingService)}");
-            return;
-        }
-
-        rankingModel.SetUserRanker(obj.data);
+        rankingModel.SetUserRanker(rankResponse);
     }
 
-    private void RankersPasing(string json) 
+    private void RankersPasing(List<UserRankDTO> rankResponse) 
     {
-        ApiResponse<List<UserRankDTO>> obj = JsonConvert.DeserializeObject<ApiResponse<List<UserRankDTO>>>(json);
-
-        if (obj == null)
-        {
-            Debug.LogError($"ApiResponse 파싱 실패 : {nameof(WebRankingService)}");
-            return;
-        }
-
-        rankingModel.SetRankers(obj.data);
+        rankingModel.SetRankers(rankResponse);
     }
 }
