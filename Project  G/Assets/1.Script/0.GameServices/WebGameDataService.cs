@@ -58,51 +58,25 @@ public class WebGameDataService : IGameDataService
         };
 
         string requestJson = JsonUtility.ToJson(updateUserInfoDTO);
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestJson);
 
-        var request = new UnityWebRequest(gamdDataUrl, "POST");
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.downloadHandler = new DownloadHandlerBuffer(); // 응답 바디 확인용
-
-        yield return CoroutineHandler.Instance.Run(StartRequest(request));
+        yield return WebRequestCore.CommonLogic<BestScoreUpdateResponse>
+        (
+            requestJson,
+            gamdDataUrl,
+            HttpRequestType.Post,
+            UpdateGameData,
+            () => UpdateGameDataFailed()
+        );
     }
 
-    IEnumerator StartRequest(UnityWebRequest request)
-    {
-        // 요청보내기 (비동기)
-        yield return request.SendWebRequest();
-
-        if (request.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError(request.error);
-            yield break;
-        }
-
-        // API의 응답은 API Response 타입의 Json임 . 
-        string responseText = request.downloadHandler.text;
-
-        // 응답은 APi Response 타입의 Json임
-        ApiResponse<BestScoreUpdateResponse> apiResponse
-            = JsonConvert.DeserializeObject<ApiResponse<BestScoreUpdateResponse>>(responseText);
-        if (apiResponse == null)
-        {
-            Debug.Log($"게임Data API 오류 발생 , Json으로 변환 불가 \n {responseText}");
-            yield break;
-        }
-        if (apiResponse.success == false)
-        {
-            Debug.Log($"게임Data API 오류 발생 , 실패 \n {responseText}");
-            yield break;
-        }
-
-        // 성공하면 
-        GameDataPasing(apiResponse.data);
-    }
-
-    private void GameDataPasing(BestScoreUpdateResponse response) 
+    private void UpdateGameData(BestScoreUpdateResponse apiResponse) 
     {
         // 모델에 값 넣기 
-        gameDataModel.SetGameData(response);
+        gameDataModel.SetGameData(apiResponse);
+    }
+
+    private void UpdateGameDataFailed() 
+    {
+        
     }
 }

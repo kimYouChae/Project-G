@@ -59,7 +59,7 @@ public class WebAuthService : IAuthService
                 loginUrl,
                 HttpRequestType.Post,
                 LoginUser,
-                LoginFailed
+                () => LoginFailed()
             );
     }
 
