@@ -31,6 +31,8 @@ public class WebChartService : IChartService
     private void ParsingFailed(DataType dataType) 
     {
         Debug.Log($"[ {dataType} ]에 해당하는 차트 파싱 실패");
+
+        // ##TODO : 차트 버전 관리 추가 후 , Resource에 fallback 차트 추가 후 가져오는 로직 필요 ! 
     }
 
     // List<MapData> 같은 object가 들어옴
