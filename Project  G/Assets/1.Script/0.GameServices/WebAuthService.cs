@@ -65,7 +65,8 @@ public class WebAuthService : IAuthService
 
     private void LoginFailed()
     {
-        
+        // 유저 데이터 - 오프라인 모드 ON
+        UserDataManager.IsOfflineMode = true;
     }
 
     private void LoginUser(LoginResponseDTO loginResponse) 
@@ -87,5 +88,8 @@ public class WebAuthService : IAuthService
 
         // 새로운 유저이면
         Debug.Log("WebAuthService : 새로운 유저 로그인 성공 ");
+
+        // 유저데이터 - 오프라인 모드 아님 
+        UserDataManager.IsOfflineMode = false;
     }
 }

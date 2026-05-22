@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class UserDataManager : Singleton<UserDataManager>
 {
+    // 로컬인지 체크 
+    public static bool IsOfflineMode;
+
     [SerializeField] 
     private UserData userdata = new UserData();
     [SerializeField]
