@@ -57,7 +57,7 @@ public static class WebRequestCore
                     _ => NetworkErrorType.Server
                 };
 
-            NetworkErrorAlert.AlertNetworkError(type);
+            // NetworkErrorAlert.AlertNetworkError(type);
             requestFailedAction?.Invoke();
             yield break;
         }
@@ -75,7 +75,7 @@ public static class WebRequestCore
         {
             Debug.LogError($"{typeof(T).Name} : JSON 파싱 예외: {ex.Message}");
 
-            NetworkErrorAlert.AlertNetworkError(NetworkErrorType.Parse);
+            // NetworkErrorAlert.AlertNetworkError(NetworkErrorType.Parse);
             requestFailedAction?.Invoke();
             yield break;
         }
@@ -84,7 +84,7 @@ public static class WebRequestCore
         {
             Debug.Log($"{typeof(T).Name} : 파싱 중에 오류 발생 , Json으로 변환 불가 \n {responseText}");
 
-            NetworkErrorAlert.AlertNetworkError(NetworkErrorType.Parse);
+            // NetworkErrorAlert.AlertNetworkError(NetworkErrorType.Parse);
             requestFailedAction?.Invoke();
             yield break;
         }
@@ -93,7 +93,7 @@ public static class WebRequestCore
         {
             Debug.Log($"{typeof(T).Name} : 요청 실패 \n {responseText}");
 
-            NetworkErrorAlert.AlertNetworkError(NetworkErrorType.Api);
+            // NetworkErrorAlert.AlertNetworkError(NetworkErrorType.Api);
             requestFailedAction?.Invoke();
             yield break;
         }
