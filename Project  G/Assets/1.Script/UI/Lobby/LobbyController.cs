@@ -97,6 +97,10 @@ public class LobbyController : ILobbyPanelInitionlize
 
     public void IInitPanel()
     {
-        
+        if (UserDataManager.IsOfflineMode)
+        {
+            TextPopUp popup = UIManager.Instance.GetPopUP<TextPopUp>();
+            popup.UpdateText("서버 오프라인입니다");
+        }
     }
 }
