@@ -35,6 +35,11 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
         StartCoroutine(AssembleInfo());
     }
 
+    public void GameOverOffline() 
+    {
+        StartCoroutine(AssembleInfoOffline());
+    }
+
     IEnumerator SettingMatchConx() 
     {
         // 사실 이 부분은 없어도됨, Assemble할 때 ScoreManger 바로 접근해도됨
@@ -42,6 +47,13 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
         yield return null;
         matchContext.synchedScore = ScoreManager.Instance.AchiveScore;
         matchContext.synchedStage = ScoreManager.Instance.AchiveStage;
+    }
+
+    IEnumerator AssembleInfoOffline()
+    {
+        yield return StartCoroutine(SettingMatchConx());
+
+        GameDataRaiseEventOffline();
     }
 
     IEnumerator AssembleInfo()
@@ -66,6 +78,27 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
 
         // 게임 Data API 실행 후 저장된 Model을 동기화
         GameDataRaiseEvent();
+    }
+
+    private void GameDataRaiseEventOffline() 
+    {
+        object[] content = new object[]
+        {
+            matchContext.synchedScore,
+            matchContext.synchedStage,
+            (int)matchContext.synchedGameMapType,
+            ScoreManager.Instance.CurrTime
+        };
+
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        SendOptions sendOption = new SendOptions { Reliability = true };
+
+        bool success = PhotonNetwork.RaiseEvent((byte)PunEventType.BestScoreSyncOffline,
+            content,
+            raiseEventOptions,
+            sendOption);
+
+        Debug.Log($"[BestScoreSyncOffline] RaiseEvent 보냄? {success}");
     }
 
     private void GameDataRaiseEvent() 

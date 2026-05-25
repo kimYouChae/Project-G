@@ -2,6 +2,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,16 @@ public class GameOverUI : MonoBehaviour
         timeHeadling.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.InGame_Time);
     }
 
+    public void GameOverTextOffline(float score, float time) 
+    {
+        achiveScoreText.text = score.ToString();
+        achiveTimeText.text = time.ToString();
+
+        bestScoreHeading.text = "오프라인입니다";
+
+        ReturnToLobbyButton();
+    }
+
     public void GameOverText(float score, float time, bool isUpdated) 
     {
         achiveScoreText.text = score.ToString();
@@ -50,6 +61,11 @@ public class GameOverUI : MonoBehaviour
             bestScoreHeading.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.GameOver_BestScoreUpdateFailed);
         }
 
+        ReturnToLobbyButton();
+    }
+
+    private void ReturnToLobbyButton() 
+    {
         // 마스터 클라이언트만 버튼 ON
         if (PhotonNetwork.IsMasterClient)
         {
@@ -57,7 +73,7 @@ public class GameOverUI : MonoBehaviour
             isnotMasterText.text = "";
             backToLobbyText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.GameOver_ReturnToLobby); ;
         }
-        else 
+        else
         {
             backToLobby.gameObject.SetActive(false);
             isnotMasterText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.InGame_Waiting); ;

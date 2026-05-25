@@ -199,10 +199,18 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
         BGMManager.Instance.PlayBGM(BGMType.GameOver);
 
-        // ONLY 호스트
-        if (PhotonNetwork.IsMasterClient) 
+        // ONLY 호스트 
+        if (PhotonNetwork.IsMasterClient ) 
         {
-            PunGameoverManager.Instance.GameOver();
+            // 오프라인이 아닐 때
+            if (!UserDataManager.IsOfflineMode) 
+            {
+                PunGameoverManager.Instance.GameOver();
+                return;
+            }
+
+            // 오프라인일 때
+            PunGameoverManager.Instance.GameOverOffline();
         }
     }
 

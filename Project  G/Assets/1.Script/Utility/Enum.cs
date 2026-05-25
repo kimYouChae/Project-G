@@ -9,7 +9,8 @@ public enum PunEventType
     GameIdSync = 2,
     MapDataSync = 3,
     BestScoreSync = 4,
-    SFXSync = 5
+    SFXSync = 5,
+    BestScoreSyncOffline = 6,
 }
 
 #endregion

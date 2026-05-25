@@ -55,6 +55,28 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             PunGameoverManager.Instance.SynchedGameMapType = mapType;
         }
 
+        if (eventCode == (int)PunEventType.BestScoreSyncOffline) 
+        {
+            Debug.Log("[BestScoreSyncOffline] 오프라인 게임 싱크 이벤트 OnEvent실행");
+            object[] data = (object[])photonEvent.CustomData;
+
+            float score = (float)data[0];
+            int stage = (int)data[1];
+            MapType type = (MapType)((int)data[2]);
+            float time = (float)data[3];
+
+            InGameUI.Instance.gameOverUI.GameOverTextOffline(score, time);
+
+            // 게임 종료 이벤트 호출 
+            AnalyticsManager.SendGameEnd(
+                isComplted: true,
+                score: score,
+                stage: stage,
+                mapType: type.ToString(),
+                isbestScore: false,
+                playTime: time);
+        }
+
         //  게임 종료 후 GameData API 데이터 이벤트
         if (eventCode == (int)PunEventType.BestScoreSync) 
         {
