@@ -8,6 +8,9 @@ public class RankingModel : IRankingModel
     private UserRankDTO myRankDto;
     private List<UserRankDTO> rankersDto;
 
+    // 랭커 가져오기 API 실패 시 flag
+    private bool isSuccessGetRankers;
+
     // Set
     public void SetRankers(List<UserRankDTO> list)
     {
@@ -30,6 +33,17 @@ public class RankingModel : IRankingModel
         return myRankDto;
     }
 
+    public void SetIsSuccessRankers(bool flag)
+    {
+        isSuccessGetRankers = flag;
+    }
+
+    public bool GetIsSuccessGetRankers()
+    {
+        return isSuccessGetRankers;
+    }
+
+    /*
     public void PrintUserRanker()
     {
         if(myRankDto == null) 
@@ -67,4 +81,5 @@ public class RankingModel : IRankingModel
                 $"날짜 : {ranker.createdAt}");
         }
     }
+    */
 }

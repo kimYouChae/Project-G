@@ -19,13 +19,11 @@ public interface IRankingModel
 {
     public void SetUserRanker(UserRankDTO dto);
     public void SetRankers(List<UserRankDTO> list);
+    public void SetIsSuccessRankers(bool flag);
 
     public UserRankDTO GetUserRanker();
     public List<UserRankDTO> GetRankersList();
-
-    // 디버깅용 
-    public void PrintUserRanker();
-    public void PrintRankersList();
+    public bool GetIsSuccessGetRankers();
 }
 
 public interface IGameDataModel 

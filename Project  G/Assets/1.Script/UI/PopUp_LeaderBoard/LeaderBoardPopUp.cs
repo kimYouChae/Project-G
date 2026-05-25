@@ -14,55 +14,79 @@ public class LeaderBoardPopUp : UIPopUP
     [SerializeField] LeaderBoardObject myrankingObj;            // 내 랭킹에 대한 리더보드 오브젝트 
 
     [Header("===Conponent===")]
-    [SerializeField] GameObject uiContents;         // 팝업 내부 ui ( 리더보드 + 디테일창 )
-    [SerializeField] TextMeshProUGUI loadingText;   // 로딩중 텍스트
+    [SerializeField] GameObject uiContentsRanking;          // 팝업 내부 ui ( 리더보드 )
+    [SerializeField] GameObject uiContentsDetails;          // 팝업 내부 ui ( 디테일창 )
+    [SerializeField] TextMeshProUGUI rankingLoadingText;   // 로딩중 텍스트 ( 리더보드 )
+    [SerializeField] TextMeshProUGUI myrankLoadingText;     // 로딩중 텍스트 ( 디테일창 )
     [SerializeField] Transform content;     // 오브젝트 상위 부모 
 
     [Header("===Localization===")]
     [SerializeField] TextMeshProUGUI leaderBoardText;
 
+    [Header("===MapType===")]
+    [SerializeField] MapType mapType = MapType.Forest;
+
     // 텍스트 사이에 구분선 ex) 감자|고구마
     private const string Divider = "|";
 
-    public void OpenLeaderBoardPopUp() 
+    public void OpenLeaderBoardPopUp()
     {
         // UI ON, 팝업 사운드 실행
         base.OpenPopUP();
 
         // 타이틀 로컬라이징
         leaderBoardText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Lobby_Ranking);
+        rankingLoadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
+        myrankLoadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
 
-        // 랭커 불러오기 
+        // 내 랭킹 가져오기
         StartCoroutine(GetRank());
+        // 랭커 가져오기 
+        StartCoroutine(GetRankers());
     }
 
-    // On 될 때 마다 업데이트 
-    public IEnumerator GetRank()
+    private IEnumerator GetRank()
     {
-        loadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
-        uiContents.SetActive(false);
+        // 서버에 로그인이 안됐으면 -> 내 랭킹 가져오기 API 실행 X
+        if (UserDataManager.IsOfflineMode)
+        {
+            myrankLoadingText.text = "오프라인입니다";
+            yield break;
+        }
 
-        // 내 랭크 정보 출력 
+        // 내 랭킹 가져오기 API 실행
         yield return GameServices.Instance.RankingService.
             GetMyRankingService(UserDataManager.Instance.SteamID, 0);
-        // 랭커 정보 출력
-        yield return GameServices.Instance.RankingService.GetRankerService(0);
 
-        loadingText.text = string.Empty;
-        uiContents.SetActive(true);
-
-        // 정보 바탕으로 출력하기 
-        GameServices.Instance.RankingModel.PrintUserRanker();
-        GameServices.Instance.RankingModel.PrintRankersList();
-
-        // 팝업 업데이트
-        StartCoroutine(UpdateLeaderBoard());
+        // UI 업데이트
+        MyRankUIUpdate();
     }
 
-    private IEnumerator UpdateLeaderBoard() 
+    private IEnumerator GetRankers() 
+    {
+        // 랭커 가져오기 API 실행
+        yield return GameServices.Instance.RankingService.GetRankerService((int)mapType);
+
+        // 랭커 API 실패 시 
+        if (!GameServices.Instance.RankingModel.GetIsSuccessGetRankers()) 
+        {
+            rankingLoadingText.text = "오프라인입니다";
+            yield break;
+        }
+
+        // UI 업데이트
+        yield return StartCoroutine(RankersUIUpdate());
+    }
+
+    private void MyRankUIUpdate() 
+    {
+        UserRankDTO myRank = GameServices.Instance.RankingModel.GetUserRanker();
+        UpdateLeaderBoardObj(myrankingObj, myRank);
+    }
+
+    private IEnumerator RankersUIUpdate() 
     {
         List<UserRankDTO> rankers = GameServices.Instance.RankingModel.GetRankersList();
-        UserRankDTO myRank = GameServices.Instance.RankingModel.GetUserRanker();
 
         // 생성된 UIㅇ 오브젝트가 없으면 
         if (leaderBoardObj.Count <= 0) 
@@ -73,7 +97,6 @@ public class LeaderBoardPopUp : UIPopUP
 
         // UI 업데이트
         UpdateRankers(rankers);
-        UpdateLeaderBoardObj(myrankingObj, myRank);
     }
 
     private IEnumerator InstantiateLBObject(int cnt)
