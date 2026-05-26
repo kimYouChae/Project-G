@@ -20,6 +20,7 @@ public class ResourceManager : Singleton<ResourceManager>
 
     [Header("===Text Asset===")]
     [SerializeField] private TextAsset fallBackLocalizionTextfile;
+    [SerializeField] private TextAsset[] fallBackChartTextfile;
 
     protected override void Singleton_Awake()
     {
@@ -34,6 +35,7 @@ public class ResourceManager : Singleton<ResourceManager>
         bgmClip                 = resourceLoader.RoadClipAll(resourcePath.SoundPath + "/" + resourcePath.BgmPath);
 
         fallBackLocalizionTextfile = resourceLoader.RoadFallBackLocalization(resourcePath.FallBackLocalizationData);
+        fallBackChartTextfile = resourceLoader.RoadeFallBackChartData(resourcePath.FallBackChartData);
     }
 
     public Sprite GetDefaultSprite() => defaultSprite;
@@ -61,7 +63,7 @@ public class ResourceManager : Singleton<ResourceManager>
     public AudioClip[] GetBGMClip => bgmClip;
 
     public TextAsset FallBackLocalizationText => fallBackLocalizionTextfile;
-
+    public TextAsset[] FallBackChartTextfile => fallBackChartTextfile;
 
 
 }

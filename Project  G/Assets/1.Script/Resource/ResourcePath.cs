@@ -34,4 +34,8 @@ public class ResourcePath : ScriptableObject
     [SerializeField] private string fallBackLocalizationData;
     public string FallBackLocalizationData => fallBackLocalizationData;
 
+    [Space]
+    [Header("===Chart Fallback===")]
+    [SerializeField] private string fallBackChartData;
+    public string FallBackChartData => fallBackChartData;
 }
