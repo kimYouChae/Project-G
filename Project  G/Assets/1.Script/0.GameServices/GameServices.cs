@@ -59,17 +59,7 @@ public sealed class GameServices
         authService = new WebAuthService(config.LoginUrl);
         rankingService = new WebRankingService(config.UserRankUrl, config.RankerUrl, rankingModel);
         gameDataService = new WebGameDataService( config.GameDataUrl, gameDataModel);
-        chartDataService = new WebChartService(config.ChartUrl);
+        chartDataService = new WebChartService(config.ChartUrl, config.ChartVersionUrl);
         userProgressService = new WebUserProgressService(config.AchiveProgressUrl, achiveModel);
-    }
-
-    public IEnumerator ChartLogic() 
-    {
-        DataType[] array = (DataType[])Enum.GetValues(typeof(DataType));
-        for (int i = 0; i < array.Length; i++)
-        {
-            yield return ChartDataService.ChartService(array[i]);
-        }
-
     }
 }

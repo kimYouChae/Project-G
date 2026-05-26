@@ -19,6 +19,8 @@ public class ServerConfig : ScriptableObject
     private string chartUrl;
     [SerializeField]
     private string achiveProgressUrl;
+    [SerializeField]
+    private string chartVersionUrl;
 
     public string LoginUrl { get => baseUrl + loginUrl; }
     public string UserRankUrl { get => baseUrl + userRankUrl; }
@@ -26,4 +28,5 @@ public class ServerConfig : ScriptableObject
     public string GameDataUrl { get => baseUrl + gameDataUrl; }
     public string ChartUrl { get => baseUrl + chartUrl; }
     public string AchiveProgressUrl { get => baseUrl + achiveProgressUrl; }
+    public string ChartVersionUrl { get => baseUrl + chartVersionUrl; }
 }
