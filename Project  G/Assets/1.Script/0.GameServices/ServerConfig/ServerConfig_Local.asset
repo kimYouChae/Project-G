@@ -19,3 +19,4 @@ MonoBehaviour:
   gameDataUrl: GameData/Update
   chartUrl: Chart/
   achiveProgressUrl: UserProgress/AchiveProgress
+  chartVersionUrl: Chart/ChartVersion

@@ -40,7 +40,7 @@ public interface IGameDataService
 
 public interface IChartService 
 {
-    public IEnumerator ChartService(DataType dataType);           
+    public IEnumerator ChartService();           
 }
 
 public interface IUserProgressService 

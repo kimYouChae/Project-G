@@ -217,7 +217,7 @@ public class SteamScript : Singleton<SteamScript>
             GameServices.Instance.AuthService.AuthService(steamID, nick, cnr));
 
         // 4. 차트 불러오기 
-        yield return GameServices.Instance.ChartLogic();
+        yield return GameServices.Instance.ChartDataService.ChartService();
 
         // API 호출까지 끝 
         SteamConnected.isSteamReady = true;
