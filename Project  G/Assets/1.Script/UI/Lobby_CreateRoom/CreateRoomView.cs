@@ -11,6 +11,7 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
     [SerializeField] TMP_InputField roomTitleField;
     [SerializeField] Image mapImage;
     [SerializeField] TextMeshProUGUI mapTitle;
+    [SerializeField] Image mapLockImage;
 
     [Header("===Button===")]
     [SerializeField] Button passwordCopyButton;
@@ -51,6 +52,11 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
 
     public void ChangeMapImage(int index) 
     {
+        if ((MapType)index != MapType.Forest)
+            mapLockImage.gameObject.SetActive(true);
+        else
+            mapLockImage.gameObject.SetActive(false);
+
         mapImage.sprite = ResourceManager.Instance.MapSprite(index);
         mapTitle.text = LocalizationManager.Instance.MapNameReturn(index);
     }
