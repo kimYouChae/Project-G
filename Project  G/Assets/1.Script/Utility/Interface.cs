@@ -30,7 +30,7 @@ public interface IRankingModel : IApiResult
     public List<UserRankDTO> GetRankersList();
 }
 
-public interface IGameDataModel 
+public interface IGameDataModel : IApiResult
 {
     public void SetGameData(BestScoreUpdateResponse response);
 

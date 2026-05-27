@@ -73,10 +73,12 @@ public class WebGameDataService : IGameDataService
     {
         // 모델에 값 넣기 
         gameDataModel.SetGameData(apiResponse);
+
+        gameDataModel.SetIsSuccess(true);
     }
 
     private void UpdateGameDataFailed() 
     {
-        
+        gameDataModel.SetIsSuccess(false);
     }
 }

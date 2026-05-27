@@ -76,6 +76,16 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
                 matchContext.synchedStage
             );
 
+        // 게임 데이터 API 실패 시
+        if (!GameServices.Instance.GameDataModel.GetIsSuccess())
+        {
+            // 인게임 UI 업데이트 
+            GameDataRaiseEventOffline();
+
+            yield break;
+        }
+
+        // 게임 데이터 API 성공 시 
         // 게임 Data API 실행 후 저장된 Model을 동기화
         GameDataRaiseEvent();
     }
