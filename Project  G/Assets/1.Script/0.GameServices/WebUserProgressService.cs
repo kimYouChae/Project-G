@@ -50,11 +50,15 @@ public class WebUserProgressService : IUserProgressService
     {
         // achive Progress 모델에 값 넣기
         achiveProgressModel.SetGameData(apiResponse);
+
+        // Api 성공 flag
+        achiveProgressModel.SetIsSuccess(true);
     }
 
     private void AchiveProgressFailed() 
     {
-    
+        // APi 실패 flag
+        achiveProgressModel.SetIsSuccess(false);
     }
 
 }

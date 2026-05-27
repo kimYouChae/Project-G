@@ -4,6 +4,12 @@ using System.Security.Cryptography;
 using UnityEngine;
 
 #region GameServies
+public interface IApiResult 
+{
+    public void SetIsSuccess(bool flag);
+    public bool GetIsSuccess();
+}
+
 public interface IAuthService
 {
     public IEnumerator AuthService(long id, string nick, string country );
@@ -15,15 +21,13 @@ public interface IRankingService
     public IEnumerator GetRankerService(int mapType);
 }
 
-public interface IRankingModel 
+public interface IRankingModel : IApiResult
 {
     public void SetUserRanker(UserRankDTO dto);
     public void SetRankers(List<UserRankDTO> list);
-    public void SetIsSuccessRankers(bool flag);
 
     public UserRankDTO GetUserRanker();
     public List<UserRankDTO> GetRankersList();
-    public bool GetIsSuccessGetRankers();
 }
 
 public interface IGameDataModel 
@@ -48,13 +52,12 @@ public interface IUserProgressService
     public IEnumerator GetAchivementService(long uid);
 }
 
-public interface IAchiveProgressModel 
+public interface IAchiveProgressModel : IApiResult
 {
     public void SetGameData(List<AchiveProgressResponse> response);
 
     public List<AchiveProgressResponse> GetBestScoreInfo();
 
-    // 추후 수정 할 예정!! 어우 지저분해
     public AchiveProgressResponse GetAchiveProgress(AchiveType type);
 }
 

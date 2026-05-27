@@ -7,6 +7,9 @@ public class AchiveProgressModel : IAchiveProgressModel
     private List<AchiveProgressResponse> data;
     private Dictionary<AchiveType, AchiveProgressResponse> keyValuePairs;
 
+    // API 실패 시 flag
+    private bool isSuccess;
+
     public AchiveProgressResponse GetAchiveProgress(AchiveType type)
     {
         if(keyValuePairs.ContainsKey(type))
@@ -20,6 +23,7 @@ public class AchiveProgressModel : IAchiveProgressModel
         return data;
     }
 
+
     public void SetGameData(List<AchiveProgressResponse> response)
     {
         this.data = response;
@@ -29,5 +33,15 @@ public class AchiveProgressModel : IAchiveProgressModel
         {
             keyValuePairs.Add(data[i].AchiveType, data[i]);
         }
+    }
+
+    public void SetIsSuccess(bool flag)
+    {
+        isSuccess = flag;
+    }
+
+    public bool GetIsSuccess()
+    {
+        return isSuccess;
     }
 }

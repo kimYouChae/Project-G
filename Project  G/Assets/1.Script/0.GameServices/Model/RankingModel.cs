@@ -33,12 +33,12 @@ public class RankingModel : IRankingModel
         return myRankDto;
     }
 
-    public void SetIsSuccessRankers(bool flag)
+    public void SetIsSuccess(bool flag)
     {
         isSuccessGetRankers = flag;
     }
 
-    public bool GetIsSuccessGetRankers()
+    public bool GetIsSuccess()
     {
         return isSuccessGetRankers;
     }

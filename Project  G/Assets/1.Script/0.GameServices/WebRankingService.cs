@@ -96,7 +96,7 @@ public class WebRankingService : IRankingService
         Debug.Log($"[ { (MapType)mapType} ] 에 해당하는 랭커 정보 가져오기 실패! ");
 
         // Model에 실패 여부 담아두기 
-        rankingModel.SetIsSuccessRankers(false);
+        rankingModel.SetIsSuccess(false);
     }
 
     private void MyRanksParsing(UserRankDTO rankResponse) 
@@ -106,7 +106,7 @@ public class WebRankingService : IRankingService
 
     private void RankersPasing(List<UserRankDTO> rankResponse) 
     {
-        rankingModel.SetIsSuccessRankers(true);
+        rankingModel.SetIsSuccess(true);
         rankingModel.SetRankers(rankResponse);
     }
 }
