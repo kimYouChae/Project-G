@@ -68,7 +68,7 @@ public class LeaderBoardPopUp : UIPopUP
         yield return GameServices.Instance.RankingService.GetRankerService((int)mapType);
 
         // 랭커 API 실패 시 
-        if (!GameServices.Instance.RankingModel.GetIsSuccessGetRankers()) 
+        if (!GameServices.Instance.RankingModel.GetIsSuccess()) 
         {
             rankingLoadingText.text = "오프라인입니다";
             yield break;

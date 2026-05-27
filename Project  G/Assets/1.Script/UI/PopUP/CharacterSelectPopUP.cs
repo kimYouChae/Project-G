@@ -64,6 +64,14 @@ public class CharacterSelectPopUP : UIPopUP
             yield return StartCoroutine(
                 GameServices.Instance.UserProgressService.GetAchivementService(UserDataManager.Instance.SteamID));
 
+            // API 호출이 실패하면 
+            if (!GameServices.Instance.AchiveProgressModel.GetIsSuccess())
+            {
+                loadingText.text = "오프라인입니다";
+
+                yield break;
+            }
+
             loadingText.text = string.Empty;
             uiContents.SetActive(true);
         }
