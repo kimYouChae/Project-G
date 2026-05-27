@@ -20,3 +20,4 @@ MonoBehaviour:
   sfxPath: SFX
   bgmPath: BGM
   fallBackLocalizationData: LocalizationChart
+  fallBackChartData: ChartFallback
