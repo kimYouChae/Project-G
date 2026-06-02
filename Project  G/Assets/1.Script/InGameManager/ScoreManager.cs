@@ -59,7 +59,7 @@ public class ScoreManager : Singleton<ScoreManager>
         isReadyToCount = true;
     }
 
-    public void AddScore(int score) 
+    public void AddScore(float score) 
     {
         Debug.Log($"점수증가 : {currScore} + {score} = {currScore + score}");
         currScore += score;

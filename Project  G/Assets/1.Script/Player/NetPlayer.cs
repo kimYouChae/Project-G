@@ -10,9 +10,12 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [SerializeField] private QuadrantType playerQuadtype;
     [SerializeField] private int playerIndex;
 
+    [Header("===Data===")]
+    [SerializeField] private float speed;
+    [SerializeField] protected PlayerStatusData playerStatus;
+
     [Header("===Move===")]
     [SerializeField] private bool isReadToMove = false;
-    [SerializeField] private float speed = 3.0f;
     [SerializeField] private Vector3 dir;
     [SerializeField] private Vector3 lastMoveDir = Vector3.down; // 기본 정면 아래
     
@@ -52,6 +55,9 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
         // 스킬인터페이스 - start
         playerSkill.IOnStart(this);
+
+        // 데이터 세팅
+        speed = PlayerStatus.GetPlayerSpeed();
     }
 
     private void FixedUpdate()

@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class ScorePlayer : MonoBehaviour, IPlayerSkill
 {
-    [SerializeField] private int scoreAddAmount = 10;   // 점수 증가 
-    [SerializeField] private float timeAmount = 10f;    // 증가 쿨타입
+    [SerializeField]
+    private PlayerStatusData playerStatusData;
+
+    private void Start()
+    {
+        playerStatusData = PlayerStatus.GetPlayerData(CharacterType.ScoreCharacter);
+    }
 
     public void IOnCollision(NetPlayer player, Collider2D c)
     {
@@ -29,10 +34,10 @@ public class ScorePlayer : MonoBehaviour, IPlayerSkill
 
         while (true) 
         {
-            yield return new WaitForSeconds(timeAmount);
+            yield return new WaitForSeconds(playerStatusData.ScoreCooltime);
 
             // 점수 증가
-            ScoreManager.Instance.AddScore(scoreAddAmount);
+            ScoreManager.Instance.AddScore(playerStatusData.ScoreAmount);
 
             // sfx 실행
             SFXManager.Instance.PlaySFX(SFXType.ScoreCoin);

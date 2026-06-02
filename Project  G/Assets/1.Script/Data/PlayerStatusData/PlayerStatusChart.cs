@@ -18,7 +18,7 @@ public class PlayerStatusChart : ICharHandler
 
         for (int i = 0; i < datalist.Count; i++)
         {
-            PlayStatus.SetPlayerStatusData(datalist[i]);
+            PlayerStatus.SetPlayerStatusData(datalist[i]);
         }
     }
 }

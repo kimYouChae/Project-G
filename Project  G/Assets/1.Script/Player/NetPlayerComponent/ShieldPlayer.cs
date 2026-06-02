@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class ShieldPlayer : MonoBehaviour, IPlayerSkill
 {
-    private const float ShieldAngle = 45f; // 방어 각도
-    private float ShieldDotThreshold => Mathf.Cos(ShieldAngle * Mathf.Deg2Rad);
+    private float ShieldDotThreshold => Mathf.Cos(shieldAngle * Mathf.Deg2Rad);
+
+    [SerializeField]
+    private PlayerStatusData playerStatusData;
+    [SerializeField]
+    private float shieldAngle;
+
+    private void Start()
+    {
+        playerStatusData = PlayerStatus.GetPlayerData(CharacterType.ShieldCharacter);
+        shieldAngle = playerStatusData.ShieldAngle;
+    }
 
     public void IOnCollision(NetPlayer player, Collider2D collider)
     {

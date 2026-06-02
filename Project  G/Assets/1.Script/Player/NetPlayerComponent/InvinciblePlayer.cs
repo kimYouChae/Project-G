@@ -5,11 +5,18 @@ using UnityEngine;
 public class InvinciblePlayer : MonoBehaviour, IPlayerSkill
 {
     [SerializeField] private bool isHitted = false;
-    [SerializeField] private float colorChangeTime = 0.1f;
     [SerializeField] private List<Color> invincibleColors;
     [SerializeField] private Color originalColor;
 
     Coroutine changeColorCoru;
+
+    [SerializeField]
+    private PlayerStatusData playerStatusData;
+
+    private void Start()
+    {
+        playerStatusData = PlayerStatus.GetPlayerData(CharacterType.InvincibleCharacter);
+    }
 
     public void IOnCollision(NetPlayer player, Collider2D collision)
     {
@@ -56,7 +63,7 @@ public class InvinciblePlayer : MonoBehaviour, IPlayerSkill
                 // sfx 실행
                 SFXManager.Instance.PlaySFX(SFXType.InvincibleSkill);
 
-                yield return new WaitForSeconds(colorChangeTime);
+                yield return new WaitForSeconds(playerStatusData.ColorChangeInterval);
             }
         }
     }
