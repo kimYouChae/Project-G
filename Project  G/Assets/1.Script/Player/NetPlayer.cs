@@ -12,7 +12,6 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
     [Header("===Data===")]
     [SerializeField] private float speed;
-    [SerializeField] protected PlayerStatusData playerStatus;
 
     [Header("===Move===")]
     [SerializeField] private bool isReadToMove = false;
