@@ -33,7 +33,16 @@ public enum DataType
     Localization_Temp,
     Map,
     Spawner,
-    Stage_Forest_SpawnerInfo
+    Stage_Forest_SpawnerInfo,
+    GameConfig,
+    PlayerStatus
+}
+
+public enum GameConfigType
+{
+    ScoreMultiplier,
+    BgmFadeTime,
+    SfxMinInterval
 }
 
 #endregion

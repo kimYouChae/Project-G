@@ -22,7 +22,7 @@ public class ChartHandlerFactory
     private ChartHandlerFactory() 
     {
         // 차트가 추가되면 이 부분에 차트 이름 - 해당 클래스 생성 필요! 
-        keyValuePairs = new Dictionary<DataType, ICharHandler>() 
+        keyValuePairs = new Dictionary<DataType, ICharHandler>()
         {
             { DataType.Map , new MapChart()},
             { DataType.Spawner , new SpawnerChart()},
@@ -32,7 +32,8 @@ public class ChartHandlerFactory
             { DataType.Localization_Player, new LocalizationChart() },
             { DataType.Localization_Temp , new LocalizationChart()},
             { DataType.Character, new CharacterChart()},
-            { DataType.Achievement, new StageAchievementChart()}
+            { DataType.Achievement, new StageAchievementChart()},
+            { DataType.GameConfig, new GameConfigChart()}
         };
     }
 
