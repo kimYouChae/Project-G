@@ -10,7 +10,7 @@ public class BasicSpawner : NetSpawner
 
     public override void StartShooting()
     {
-        StartCoroutine(ShootBulletCicle());
+        StartCoroutine(ShootBulletCycle());
     }
 
     public override void SettingBulletShootPosi()
@@ -24,7 +24,7 @@ public class BasicSpawner : NetSpawner
         SettingOwnerFollowMoving();
     }
 
-    private IEnumerator ShootBulletCicle()
+    private IEnumerator ShootBulletCycle()
     {
         while (true)
         {
@@ -38,7 +38,7 @@ public class BasicSpawner : NetSpawner
             if (photonView.IsMine)
             {
                 // 스포너 애니메이션 실행 
-                spanwerAnimator.ChangeAttackAnimation(SpanwerAnimState.Attack, true);
+                spawnerAnimator.ChangeAttackAnimation(SpawnerAnimState.Attack, true);
 
                 // 총알발사 
                 view.RPC(nameof(RPC_ShootBullet), RpcTarget.AllBuffered);

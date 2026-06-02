@@ -13,7 +13,7 @@ public class SpawnerData
     [JsonProperty("speed")]
     private float speed;
     [SerializeField]
-    [JsonProperty("accerleraion")]
+    [JsonProperty("acceleration")]
     private float smoothTime;
 
     public float Speed { get => speed; }
@@ -28,14 +28,14 @@ public class SpawnerData
     }
 }
 
-public class SpanwerDataManager : Singleton<SpanwerDataManager>
+public class SpawnerDataManager : Singleton<SpawnerDataManager>
 {
     private Dictionary<SpawnerType, SpawnerData> typeBySpawnerData;
 
     // 인스펙터 창에서 보기용
     [SerializeField] private List<SpawnerData> spawnerDataList;
 
-    public SpawnerData spanwerData(SpawnerType type) 
+    public SpawnerData SpawnerData(SpawnerType type)
     {
         if (typeBySpawnerData.ContainsKey(type)) 
         {

@@ -13,7 +13,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
     [SerializeField] protected PhotonView view;
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected Transform ownerTrs;    // 따라다닐 기준이 되는 trs
-    [SerializeField] protected SpanwerAnimator spanwerAnimator;
+    [SerializeField] protected SpawnerAnimator spawnerAnimator;
     
 
     [SerializeField] protected DirType directType;    // 내가 위치한 방향 
@@ -46,9 +46,9 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
         view = GetComponent<PhotonView>();
 
         // 애니메이터 초기화 
-        if(spanwerAnimator == null)
-            spanwerAnimator = gameObject.AddComponent<SpanwerAnimator>();
-        spanwerAnimator.SetAnimator(GetComponent<Animator>());
+        if(spawnerAnimator == null)
+            spawnerAnimator = gameObject.AddComponent<SpawnerAnimator>();
+        spawnerAnimator.SetAnimator(GetComponent<Animator>());
     }
 
     private void Start()
@@ -108,7 +108,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
 
     public void SettingParent(int index, DirType dir) 
     {
-        view.RPC(nameof(RPC_SetParentTrasform), RpcTarget.AllBuffered, index, dir);
+        view.RPC(nameof(RPC_SetParentTransform), RpcTarget.AllBuffered, index, dir);
     }
 
     public void SettingOwner(int viewId, DirType type) 
@@ -126,16 +126,16 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
         switch (directType)
         {
             case DirType.Left:
-                moveNetSpawner += MoveFllowToUpDown;
+                moveNetSpawner += MoveFollowToUpDown;
                 break;
             case DirType.Right:
-                moveNetSpawner += MoveFllowToUpDown;
+                moveNetSpawner += MoveFollowToUpDown;
                 break;
             case DirType.Top:
-                moveNetSpawner += MoveFllowToLeftRIght;
+                moveNetSpawner += MoveFollowToLeftRight;
                 break;
             case DirType.Bottom:
-                moveNetSpawner += MoveFllowToLeftRIght;
+                moveNetSpawner += MoveFollowToLeftRight;
                 break;
         }
     }
@@ -161,7 +161,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
         }
     }
 
-    private void MoveFllowToUpDown() 
+    private void MoveFollowToUpDown() 
     {
         // 목표지점 - 내위치 = 방향벡터 
         float directionY = ownerTrs.position.y - transform.position.y;
@@ -180,7 +180,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
             current, target, ref velRefY, spawnerData.SmoothTime, spawnerData.Speed, Time.deltaTime);
     }
 
-    private void MoveFllowToLeftRIght() 
+    private void MoveFollowToLeftRight() 
     {
         // 목표지점 - 내위치 = 방향벡터 
         float directionX = ownerTrs.position.x - transform.position.x;
@@ -202,7 +202,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
 
 
     [PunRPC]
-    public void RPC_SetParentTrasform(int playerIndex, DirType dir)
+    public void RPC_SetParentTransform(int playerIndex, DirType dir)
     {
         // 플레이어에 저장되어 있는 index , 좌상우하 방향
 

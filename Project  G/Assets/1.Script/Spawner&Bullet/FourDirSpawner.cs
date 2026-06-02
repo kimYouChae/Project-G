@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class FourDirSpawner : NetSpawner
 {
-    const string fourDirSpanwerName = "FourDirSpawnObj";
+    const string fourDirSpawnerName = "FourDirSpawnObj";
 
     public override void SettingBulletShootPosi()
     {
@@ -20,10 +20,10 @@ public class FourDirSpawner : NetSpawner
 
     public override void StartShooting()
     {
-        StartCoroutine(ShootBulletCicle());
+        StartCoroutine(ShootBulletCycle());
     }
 
-    private IEnumerator ShootBulletCicle()
+    private IEnumerator ShootBulletCycle()
     {
         // 위치 : 필드내 랜덤 
         // puninGameManager의 Quter값 바탕으로
@@ -40,7 +40,7 @@ public class FourDirSpawner : NetSpawner
             // 총알 두개 생성 방지 -> isMine 검사
             if (photonView.IsMine)
             {
-                spanwerAnimator.ChangeAttackAnimation(SpanwerAnimState.Attack, true);
+                spawnerAnimator.ChangeAttackAnimation(SpawnerAnimState.Attack, true);
 
                 Debug.Log("현재 로컬의 사분면 타입 : " + type);
 
@@ -55,7 +55,7 @@ public class FourDirSpawner : NetSpawner
     private void CreateFourBulletObj(float ranX, float ranY) 
     {
         // 네트워크 오브젝트 생성
-        PhotonNetwork.Instantiate(Define.DEFAULT_SPAWNER + fourDirSpanwerName, new Vector3(ranX, ranY, 0), Quaternion.identity);
+        PhotonNetwork.Instantiate(Define.DEFAULT_SPAWNER + fourDirSpawnerName, new Vector3(ranX, ranY, 0), Quaternion.identity);
 
         // sfx 실행 
         SFXManager.Instance.PlaySFX(SFXType.FourBulletObjPut);

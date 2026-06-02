@@ -19,7 +19,7 @@ public class LaserSpawner : NetSpawner
 
     public override void StartShooting()
     {
-        StartCoroutine(ShootLaserCicle());
+        StartCoroutine(ShootLaserCycle());
     }
 
     public override void SettingBulletShootPosi()
@@ -33,7 +33,7 @@ public class LaserSpawner : NetSpawner
         SettingOwnerFollowMoving();
     }
 
-    IEnumerator ShootLaserCicle() 
+    IEnumerator ShootLaserCycle() 
     {
         while (true)
         {

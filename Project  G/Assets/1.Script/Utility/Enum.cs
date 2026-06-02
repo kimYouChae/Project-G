@@ -106,10 +106,10 @@ public enum QuadrantType    // 맵 상 사분면
 
 public enum SpawnerType 
 {
-    BasicSpanwer,
+    BasicSpawner,
     GuideMissileSpawner,
     LaserSpawner,
-    FourDirSpanwer
+    FourDirSpawner
 }
 
 public enum CharaterAniState
@@ -117,7 +117,7 @@ public enum CharaterAniState
     none, front, back, left, right
 }
 
-public enum SpanwerAnimState 
+public enum SpawnerAnimState 
 {
     none, Idle, Attack
 }

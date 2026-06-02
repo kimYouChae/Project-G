@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
-public class SpanwerAnimator : MonoBehaviour
+public class SpawnerAnimator : MonoBehaviour
 {
     [SerializeField]
-    Dictionary<SpanwerAnimState, Action> spanwerAniStateToAction;
+    Dictionary<SpawnerAnimState, Action> spawnerAniStateToAction;
     [SerializeField]
     private Animator animator;
 
@@ -19,10 +19,10 @@ public class SpanwerAnimator : MonoBehaviour
     /// </summary>
     /// <param name="nextState">다음상태</param>
     /// <param name="flag"> true이면 idle로 바로 상태전환 </param>
-    public void ChangeAttackAnimation(SpanwerAnimState nextState , bool flag) 
+    public void ChangeAttackAnimation(SpawnerAnimState nextState , bool flag) 
     {
         Action action;
-        if (spanwerAniStateToAction.TryGetValue(nextState, out action))
+        if (spawnerAniStateToAction.TryGetValue(nextState, out action))
         {
             action?.Invoke();
 
@@ -32,10 +32,10 @@ public class SpanwerAnimator : MonoBehaviour
         }
     }
 
-    public void ChangeToIdle(SpanwerAnimState nextState) 
+    public void ChangeToIdle(SpawnerAnimState nextState) 
     {
         Action action;
-        if (spanwerAniStateToAction.TryGetValue(nextState, out action))
+        if (spawnerAniStateToAction.TryGetValue(nextState, out action))
         {
             action?.Invoke();
         }
@@ -58,19 +58,19 @@ public class SpanwerAnimator : MonoBehaviour
         }
 
         // Debug.Log("Attack 끝남 -> Idle 전환");
-        ChangeToIdle(SpanwerAnimState.Idle);
+        ChangeToIdle(SpawnerAnimState.Idle);
     }
 
     public void SetAnimator(Animator ani)
     {
         this.animator = ani;
-        spanwerAniStateToAction = new Dictionary<SpanwerAnimState, Action>() 
+        spawnerAniStateToAction = new Dictionary<SpawnerAnimState, Action>() 
         {
-            { SpanwerAnimState.Idle, () =>
+            { SpawnerAnimState.Idle, () =>
             {
                 animator.SetBool(AttackParameter , false);
             } },
-            { SpanwerAnimState.Attack, () =>
+            { SpawnerAnimState.Attack, () =>
             {
                 animator.SetBool(AttackParameter , true);
             } }

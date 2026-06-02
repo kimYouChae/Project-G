@@ -204,7 +204,7 @@ public class PunIngameManager : Singleton<PunIngameManager>
             UserDataRaiseEvent(index);
 
             // 스포너 manager에 로컬 플레이어 저장
-            spawnerManager.SetLoacalPlayer(localPlayer);
+            spawnerManager.SetLocalPlayer(localPlayer);
         }
     }
 

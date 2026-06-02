@@ -11,9 +11,9 @@ public class SpawnerManager : MonoBehaviour
     private Action<int> bulletSpawn;
 
     const string BASIC_BULLET_SPAWNER = "BulletSpawner";
-    const string GUIDED_MISSILE_SPAWNER = "GuidedMissileSpanwer";
+    const string GUIDED_MISSILE_SPAWNER = "GuidedMissileSpawner";
     const string LASER_SPAWNER = "LaserSpawner";
-    const string FOUR_DIRECET_SPAWNER = "FourDirectSpanwer";
+    const string FOUR_DIRECT_SPAWNER = "FourDirectSpawner";
 
     public Action<int> BulletSpawn { get => bulletSpawn; }
 
@@ -22,7 +22,7 @@ public class SpawnerManager : MonoBehaviour
         bulletSpawn += Temp;
     }
 
-    public void SetLoacalPlayer(PhotonView local) 
+    public void SetLocalPlayer(PhotonView local) 
     {
         localPlayer = local;
 
@@ -53,40 +53,40 @@ public class SpawnerManager : MonoBehaviour
         dirType = data.DirType;
 
         // 스포너 생성
-        CreateSpanwer(spawnerType, dirType);
+        CreateSpawner(spawnerType, dirType);
     }
 
-    private void CreateSpanwer(SpawnerType sType, DirType dType) 
+    private void CreateSpawner(SpawnerType sType, DirType dType) 
     {
         switch (sType) 
         {
-            case SpawnerType.BasicSpanwer:
-                InstanceSpanwer(sType, dType, Define.DEFAULT_SPAWNER + BASIC_BULLET_SPAWNER);
+            case SpawnerType.BasicSpawner:
+                InstanceSpawner(sType, dType, Define.DEFAULT_SPAWNER + BASIC_BULLET_SPAWNER);
                 break;
             case SpawnerType.GuideMissileSpawner: 
-                InstanceSpanwer(sType, dType, Define.DEFAULT_SPAWNER + GUIDED_MISSILE_SPAWNER);
+                InstanceSpawner(sType, dType, Define.DEFAULT_SPAWNER + GUIDED_MISSILE_SPAWNER);
                 break;
             case SpawnerType.LaserSpawner: 
-                InstanceSpanwer(sType, dType, Define.DEFAULT_SPAWNER + LASER_SPAWNER);
+                InstanceSpawner(sType, dType, Define.DEFAULT_SPAWNER + LASER_SPAWNER);
                 break;
-            case SpawnerType.FourDirSpanwer: 
-                InstanceSpanwer(sType, dType, Define.DEFAULT_SPAWNER + FOUR_DIRECET_SPAWNER);
+            case SpawnerType.FourDirSpawner: 
+                InstanceSpawner(sType, dType, Define.DEFAULT_SPAWNER + FOUR_DIRECT_SPAWNER);
                 break;
         }
     }
 
     /*
-    private void SpawnGuideSpanwer() 
+    private void SpawnGuideSpawner() 
     {
         // 만약 1사분면 플레이어면 -> 오른쪽에 생성
         // 만약 2사분면 플레이어면 -> 왼쪽에 생성
         if(localNetPlayer.PlayerQuadtype == QuadrantType.one) 
         {
-            CreateSpanwer(SpawnerType.GuideMissileSpawner ,DirType.Right, GUIDED_MISSILE_SPAWNER);
+            CreateSpawner(SpawnerType.GuideMissileSpawner ,DirType.Right, GUIDED_MISSILE_SPAWNER);
         }
         else if(localNetPlayer.PlayerQuadtype == QuadrantType.two)
         {
-            CreateSpanwer(SpawnerType.GuideMissileSpawner, DirType.Left, GUIDED_MISSILE_SPAWNER);
+            CreateSpawner(SpawnerType.GuideMissileSpawner, DirType.Left, GUIDED_MISSILE_SPAWNER);
         }
     }
 
@@ -96,11 +96,11 @@ public class SpawnerManager : MonoBehaviour
         // 만약 2사분면 플레이어면 -> 왼쪽에 생성
         if (localNetPlayer.PlayerQuadtype == QuadrantType.one)
         {
-            CreateSpanwer(SpawnerType.LaserSpawner,DirType.Right, LASER_SPAWNER);
+            CreateSpawner(SpawnerType.LaserSpawner,DirType.Right, LASER_SPAWNER);
         }
         else if (localNetPlayer.PlayerQuadtype == QuadrantType.two)
         {
-            CreateSpanwer(SpawnerType.LaserSpawner,DirType.Left, LASER_SPAWNER);
+            CreateSpawner(SpawnerType.LaserSpawner,DirType.Left, LASER_SPAWNER);
         }
     }
 
@@ -110,29 +110,29 @@ public class SpawnerManager : MonoBehaviour
         // 만약 2사분면 플레이어면 -> 오른쪽에 생성
         if (localNetPlayer.PlayerQuadtype == QuadrantType.one) 
         {
-            CreateSpanwer(SpawnerType.FourDirSpanwer,DirType.Left, FOUR_DIRECET_SPAWNER);
+            CreateSpawner(SpawnerType.FourDirSpawner,DirType.Left, FOUR_DIRECT_SPAWNER);
         }
         else if (localNetPlayer.PlayerQuadtype == QuadrantType.two)
         {
-            CreateSpanwer(SpawnerType.FourDirSpanwer,DirType.Right, FOUR_DIRECET_SPAWNER);
+            CreateSpawner(SpawnerType.FourDirSpawner,DirType.Right, FOUR_DIRECT_SPAWNER);
         }
     }
     */
 
     #region string에 따른 스포너 생성
-    private void InstanceSpanwer(SpawnerType type, DirType dir, string spawnerName)
+    private void InstanceSpawner(SpawnerType type, DirType dir, string spawnerName)
     {
         GameObject spawnerObj = null;
         try
         {
             // 스포너 네트워크 오브젝트 생성 
             // 스포너 데이터를 넘길 수 있음 -> object[] 배열로
-            SpawnerData spanerData = SpanwerDataManager.Instance.spanwerData(type);
+            SpawnerData spawnerData = SpawnerDataManager.Instance.SpawnerData(type);
             object[] data = new object[4]
             {
-                (int)spanerData.SpawnerType,
-                spanerData.Speed,
-                spanerData.SmoothTime,
+                (int)spawnerData.SpawnerType,
+                spawnerData.Speed,
+                spawnerData.SmoothTime,
                 dir
             };
             

@@ -10,7 +10,7 @@ public class GuidedMissileSpawner : NetSpawner
 
     public override void StartShooting()
     {
-        StartCoroutine(ShootBulletCicle());
+        StartCoroutine(ShootBulletCycle());
     }
 
     public override void SettingBulletShootPosi()
@@ -23,7 +23,7 @@ public class GuidedMissileSpawner : NetSpawner
         // 움직임 X
     }
 
-    private IEnumerator ShootBulletCicle()
+    private IEnumerator ShootBulletCycle()
     {
         while (true)
         {
@@ -37,10 +37,10 @@ public class GuidedMissileSpawner : NetSpawner
             if (photonView.IsMine)
             {
                 // 스포너 애니메이션 실행 
-                spanwerAnimator.ChangeAttackAnimation(SpanwerAnimState.Attack, true);
+                spawnerAnimator.ChangeAttackAnimation(SpawnerAnimState.Attack, true);
 
                 // 총알발사 ( 나 )
-                InstsanceBullet(true);
+                InstantiateBullet(true);
 
                 // 총알발사 ( 나 제외 다른 클라이언트 )
                 view.RPC(nameof(RPC_ShootGuideMissile), RpcTarget.Others);
@@ -54,10 +54,10 @@ public class GuidedMissileSpawner : NetSpawner
     [PunRPC]
     public void RPC_ShootGuideMissile()
     {
-        InstsanceBullet(false);
+        InstantiateBullet(false);
     }
 
-    private void InstsanceBullet(bool isLocalOwner) 
+    private void InstantiateBullet(bool isLocalOwner) 
     {
         // 총알생성
         GameObject temp = Instantiate(bulletPrefab, shootPosi.position, Quaternion.identity);

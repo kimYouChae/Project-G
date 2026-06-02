@@ -21,7 +21,7 @@ public class GuideMissile : BaseBullet
     {
         rb = GetComponent<Rigidbody2D>();
 
-        StartCoroutine(ShootGuideBulletCicle());
+        StartCoroutine(ShootGuideBulletCycle());
     }
 
     void FixedUpdate() 
@@ -39,7 +39,7 @@ public class GuideMissile : BaseBullet
         }
     }
 
-    IEnumerator ShootGuideBulletCicle() 
+    IEnumerator ShootGuideBulletCycle() 
     {
         while(true) 
         {
