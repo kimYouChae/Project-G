@@ -71,17 +71,18 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
     // PhotonNetwork.Instantiate로 생성할 떄 object[] 넘김 값이 들어옴 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
+        // SpawnerManger에서 생성 
         // 순서는 생성할 때 object 순서와 맞춰야함
+        // [0] 스포너 데이터 json 값
+        // [1] dir Type
+
         var data = info.photonView.InstantiationData;
 
-        // 파싱 
-        SpawnerType sType = (SpawnerType)(int)data[0];
-        float speed = (float)data[1];
-        float smooth = (float)data[2];
-        DirType dType = (DirType)(int)data[3];
+        string spawnerJson = (string)data[0];
+        DirType dType = (DirType)(int)data[1];
 
         // 로컬에 세팅
-        this.spawnerData = new SpawnerData(sType, speed, smooth);
+        this.spawnerData = SpawnerDataManager.Instance.DeserializationSpawnerData(spawnerJson);
         this.directType = dType;
     }
 

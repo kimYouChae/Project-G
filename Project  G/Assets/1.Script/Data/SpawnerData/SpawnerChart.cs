@@ -19,7 +19,7 @@ public class SpawnerChart : ICharHandler
         for (int i = 0; i < datalist.Count; i++)
         {
             SpawnerData data = datalist[i];
-            SpawnerDataManager.Instance.AddtoMapDictionary(data.SpawnerType, data);
+            SpawnerDataManager.Instance.AddtoMapDictionary(data.Type, data);
         }
 
     }

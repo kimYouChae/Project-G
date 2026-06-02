@@ -127,12 +127,10 @@ public class SpawnerManager : MonoBehaviour
         {
             // 스포너 네트워크 오브젝트 생성 
             // 스포너 데이터를 넘길 수 있음 -> object[] 배열로
-            SpawnerData spawnerData = SpawnerDataManager.Instance.SpawnerData(type);
-            object[] data = new object[4]
+            string spawnerData = SpawnerDataManager.Instance.SerializationSpawnerData(type);
+            object[] data = new object[2]
             {
-                (int)spawnerData.SpawnerType,
-                spawnerData.Speed,
-                spawnerData.SmoothTime,
+                spawnerData,
                 dir
             };
             
