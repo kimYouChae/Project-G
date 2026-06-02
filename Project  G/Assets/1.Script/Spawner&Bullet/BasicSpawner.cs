@@ -28,8 +28,7 @@ public class BasicSpawner : NetSpawner
     {
         while (true)
         {
-            // ## 임시 쿨타임 Nf
-            float coolTime = Random.Range(3f, 5f);
+            float coolTime = Random.Range(spawnerData.CoolTimeMin, spawnerData.CoolTimeMax);
 
             yield return new WaitForSeconds(coolTime);
 
@@ -57,7 +56,7 @@ public class BasicSpawner : NetSpawner
 
         // 총알에 방향벡터 지정해주기
         Vector3 dir = destination - shootPosi.position;
-        temp.GetComponent<BasicBullet>().DirectVector = dir;
+        temp.GetComponent<BasicBullet>().SettingBasicBullet(dir, spawnerData.BulletSpeed);
     }
 
 

@@ -8,18 +8,23 @@ public class GuideMissile : BaseBullet
 
     [SerializeField] Transform ownerPosition;
 
-    [SerializeField] float maxLifeTime = 3f;
     [SerializeField] float currTime = 0;
+    [SerializeField] float maxLifeTime; // 최대 생존시간
+    [SerializeField] float speed;           // 속도
+    [SerializeField] float bulletInterval;  // 유도 업데이트 간격 
 
     [SerializeField] bool isLocalOwner;
 
     public Transform OwnerPosition { get => ownerPosition; set => ownerPosition = value; }
     public bool IsLocalOwner { set => isLocalOwner = value; }
 
-
-    void Start()
+    public void SettingGuideMissile(float max, float speed, float intervavl ) 
     {
         rb = GetComponent<Rigidbody2D>();
+
+        this.maxLifeTime = max;
+        this.speed = speed;
+        this.bulletInterval = intervavl;
 
         StartCoroutine(ShootGuideBulletCycle());
     }
@@ -52,12 +57,13 @@ public class GuideMissile : BaseBullet
         {
             // 방향 벡터계산 후 속도주기
             Vector3 dir = ownerPosition.position - transform.position;
-            rb.velocity = dir.normalized * 3f;
+            rb.velocity = dir.normalized * speed;
 
             // sfx 실행 
             // SFXManager.Instance.PlaySFX(SFXType.MissileFly);
 
-            yield return new WaitForSeconds(0.5f);
+            // 유도 업데이트 간격 동안 기다리기 
+            yield return new WaitForSeconds(bulletInterval);
         }
     }
 

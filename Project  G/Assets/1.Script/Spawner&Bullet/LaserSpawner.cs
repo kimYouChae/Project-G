@@ -37,8 +37,7 @@ public class LaserSpawner : NetSpawner
     {
         while (true)
         {
-            // ## 임시 쿨타임 Nf
-            float coolTime = Random.Range(5f, 7f);
+            float coolTime = Random.Range(spawnerData.CoolTimeMin, spawnerData.CoolTimeMax);
 
             yield return new WaitForSeconds(coolTime);
 
@@ -52,8 +51,8 @@ public class LaserSpawner : NetSpawner
                 // sfx 차징 사운드 실행
                 SFXManager.Instance.PlaySFX(SFXType.LaserCharge);
 
-                // N초후 삭제
-                yield return new WaitForSeconds(1f);
+                // charging 시간 후 삭제
+                yield return new WaitForSeconds(spawnerData.ChargeTime);
                 if (currLaserChargeObj != null)
                 {
                     // 레이저 차징 오브젝트 삭제
@@ -66,8 +65,8 @@ public class LaserSpawner : NetSpawner
                 // sfx 레이저 발사 실행
                 SFXManager.Instance.PlaySFX(SFXType.LaserFire);
 
-                // N초후 삭제
-                yield return new WaitForSeconds(1f);
+                // charging 시간 후 삭제 
+                yield return new WaitForSeconds(spawnerData.ChargeDuration);
                 if (currLaserObj != null) 
                 {
                     view.RPC(nameof(RPC_DestroyLaser), RpcTarget.AllBuffered);

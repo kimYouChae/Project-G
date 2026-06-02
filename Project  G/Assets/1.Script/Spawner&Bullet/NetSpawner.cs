@@ -21,7 +21,7 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
     [SerializeField] protected bool canMove = true;
 
     [Header("===Data===")]
-    [SerializeField] SpawnerData spawnerData;
+    [SerializeField] protected SpawnerData spawnerData;
 
     [Header("===Bullet===")]
     [SerializeField] protected Transform[] shootPosiList;   //총알 쏠 위치 - left,top,right,bottom 순

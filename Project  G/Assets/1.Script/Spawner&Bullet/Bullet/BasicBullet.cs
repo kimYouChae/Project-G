@@ -1,5 +1,7 @@
+using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class BasicBullet : BaseBullet
@@ -7,17 +9,18 @@ public class BasicBullet : BaseBullet
     [SerializeField] Rigidbody2D rb;
 
     [SerializeField] Vector3 directVector;  // 방향 벡터 
+    [SerializeField] float speed;
 
-    public Vector3 DirectVector { get => directVector; set => directVector = value; }
-
-    void Start()
+    public void SettingBasicBullet(Vector3 dir, float sp) 
     {
         rb = GetComponent<Rigidbody2D>();
+
+        this.directVector = dir;
+        this.speed = sp;
     }
 
     private void FixedUpdate()
     {
-        // ## 임시 속도 Nf
-        rb.velocity = directVector.normalized * 3f;
+        rb.velocity = directVector.normalized * speed;
     }
 }

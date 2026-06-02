@@ -27,8 +27,7 @@ public class GuidedMissileSpawner : NetSpawner
     {
         while (true)
         {
-            // ## 임시 쿨타임 Nf
-            float coolTime = Random.Range(5f, 7f);
+            float coolTime = Random.Range(spawnerData.CoolTimeMin, spawnerData.CoolTimeMax);
 
             yield return new WaitForSeconds(coolTime);
 
@@ -66,6 +65,7 @@ public class GuidedMissileSpawner : NetSpawner
         {
             missile.OwnerPosition = ownerTrs;
             missile.IsLocalOwner = isLocalOwner;
+            missile.SettingGuideMissile(spawnerData.BulletLifeTime, spawnerData.BulletSpeed, spawnerData.BulletInterval);
         }
 
     }

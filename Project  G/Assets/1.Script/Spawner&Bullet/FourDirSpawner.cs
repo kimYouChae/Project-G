@@ -31,8 +31,7 @@ public class FourDirSpawner : NetSpawner
 
         while (true)
         {
-            // ## 임시 쿨타임 Nf
-            float coolTime = Random.Range(5f, 7f);
+            float coolTime = Random.Range(spawnerData.CoolTimeMin, spawnerData.CoolTimeMax);
 
             yield return new WaitForSeconds(coolTime);
 
@@ -55,7 +54,10 @@ public class FourDirSpawner : NetSpawner
     private void CreateFourBulletObj(float ranX, float ranY) 
     {
         // 네트워크 오브젝트 생성
-        PhotonNetwork.Instantiate(Define.DEFAULT_SPAWNER + fourDirSpawnerName, new Vector3(ranX, ranY, 0), Quaternion.identity);
+        var obj 
+            = PhotonNetwork.Instantiate(Define.DEFAULT_SPAWNER + fourDirSpawnerName, new Vector3(ranX, ranY, 0), Quaternion.identity);
+
+        obj.GetComponent<FourDirBullet>().SettingFourDirBullet(spawnerData.BulletInitWait, spawnerData.BulletLifeTime ,spawnerData.BulletSpeed);
 
         // sfx 실행 
         SFXManager.Instance.PlaySFX(SFXType.FourBulletObjPut);
