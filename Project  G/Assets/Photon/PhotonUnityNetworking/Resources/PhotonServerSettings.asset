@@ -61,6 +61,7 @@ MonoBehaviour:
   - RPC_LaserObject
   - RPC_DestroyLaser
   - RPC_DestoryChargingObj
+  - RPC_SetParentTransform
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
