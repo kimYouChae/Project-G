@@ -33,7 +33,8 @@ public class ChartHandlerFactory
             { DataType.Localization_Temp , new LocalizationChart()},
             { DataType.Character, new CharacterChart()},
             { DataType.Achievement, new StageAchievementChart()},
-            { DataType.GameConfig, new GameConfigChart()}
+            { DataType.GameConfig, new GameConfigChart()},
+            { DataType.PlayerStatus, new PlayerStatusChart()}
         };
     }
 
