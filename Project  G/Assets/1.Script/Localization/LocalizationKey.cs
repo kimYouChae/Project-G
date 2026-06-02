@@ -40,5 +40,13 @@ public static partial class LocalizationKey
     public const string Achievement = "Achievement";
     public const string Character = "Character";
     public const string Select = "Select";
+
+    public const string Achievement_Offline = "Achievement_Offline";
+    public const string Character_Offline = "Character_Offline";
+    public const string Ranking_MyRank_Offline = "Ranking_MyRank_Offline";
+    public const string Ranking_RankerList_Offline = "Ranking_RankerList_Offline";
+    public const string GameOver_Offline = "GameOver_Offline";
+    public const string Lobby_ServerOffline = "Lobby_ServerOffline";
+    public const string Map_DataError = "Map_DataError";
 }
 
