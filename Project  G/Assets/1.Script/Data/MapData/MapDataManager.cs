@@ -87,7 +87,7 @@ public class MapDataManager : Singleton<MapDataManager>
         
         // PopUp 띄우기 
         TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
-        textPopUp.UpdateText("(로컬라이징전) 맵 데이터를 설정하는데 오류가 발생하였습니다. 다시 실행해주세요");
+        textPopUp.UpdateText(LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Map_DataError));
     }
 
     private void SycnGameId(MapData mapdata)

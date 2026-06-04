@@ -100,7 +100,7 @@ public class LobbyController : ILobbyPanelInitionlize
         if (UserDataManager.IsOfflineMode)
         {
             TextPopUp popup = UIManager.Instance.GetPopUP<TextPopUp>();
-            popup.UpdateText("서버 오프라인입니다");
+            popup.UpdateText(LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Lobby_ServerOffline));
         }
     }
 }

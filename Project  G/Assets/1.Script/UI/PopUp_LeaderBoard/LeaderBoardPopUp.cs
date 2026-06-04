@@ -50,7 +50,8 @@ public class LeaderBoardPopUp : UIPopUP
         // 서버에 로그인이 안됐으면 -> 내 랭킹 가져오기 API 실행 X
         if (UserDataManager.IsOfflineMode)
         {
-            myrankLoadingText.text = "오프라인입니다";
+            myrankLoadingText.text
+                    = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Ranking_MyRank_Offline);
             yield break;
         }
 
@@ -70,7 +71,8 @@ public class LeaderBoardPopUp : UIPopUP
         // 랭커 API 실패 시 
         if (!GameServices.Instance.RankingModel.GetIsSuccess()) 
         {
-            rankingLoadingText.text = "오프라인입니다";
+            rankingLoadingText.text
+                    = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Ranking_RankerList_Offline);
             yield break;
         }
 

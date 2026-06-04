@@ -38,7 +38,8 @@ public class GameOverUI : MonoBehaviour
         achiveScoreText.text = score.ToString();
         achiveTimeText.text = time.ToString();
 
-        bestScoreHeading.text = "오프라인입니다";
+        bestScoreHeading.text 
+            = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.GameOver_Offline);
 
         ReturnToLobbyButton();
     }

@@ -45,8 +45,8 @@ public class AchivePopUP : UIPopUP
             // API 호출이 실패하면 
             if (!GameServices.Instance.AchiveProgressModel.GetIsSuccess()) 
             {
-                loadingText.text = "오프라인입니다";
-
+                loadingText.text 
+                    = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Achievement_Offline);
                 yield break;
             }
 
