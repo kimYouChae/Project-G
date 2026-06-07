@@ -77,13 +77,16 @@ public class SpawnerDataManager : Singleton<SpawnerDataManager>
     protected override void Singleton_Awake()
     {
         SetUpDontDestroy();
-
-        typeBySpawnerData = new Dictionary<SpawnerType, SpawnerData>();
-        spawnerDataList = new List<SpawnerData>();
     }
 
     public void AddtoMapDictionary(SpawnerType type, SpawnerData data)
     {
+        if(typeBySpawnerData == null)
+            typeBySpawnerData = new Dictionary<SpawnerType, SpawnerData>();
+
+        if(spawnerDataList == null)
+            spawnerDataList = new List<SpawnerData>();
+
         typeBySpawnerData.Add(type, data);
 
         // 인스펙터 창에서 보기용
