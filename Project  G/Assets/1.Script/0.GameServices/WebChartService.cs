@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static UnityEditor.LightingExplorerTableColumn;
 
 
 public class WebChartService : IChartService
@@ -31,6 +30,9 @@ public class WebChartService : IChartService
         getChartFailed = false;
 
         tempChartByjson = new Dictionary<DataType, string>();
+
+        // 테스트용 
+        // PlayerPrefs.DeleteKey(versionKey);
     }
 
     public IEnumerator ChartService()
@@ -45,18 +47,25 @@ public class WebChartService : IChartService
                 ChartVersionFailed
             );
 
+        Debug.Log($"[WebChartService] 로컬에 저장된 차트 버전 : {localChartVersion} " +
+            $"/ \n 서버 차트 버전 : {serverChartVersion}");
+
         // 차트 버전 비교 
         // 1. -1일 때 : api 실패했을 때
         if (serverChartVersion == -1)
         {
             // 차트 fall back 실행
-            ChartFallback();
+            UserCacheChart();
             yield break;
         }
 
-        // 2. 버전이 같으면 -> pass
+        // 2. 버전이 같으면 -> 차트 캐시 사용
         if (serverChartVersion == localChartVersion)
+        {
+            UserCacheChart();
             yield break;
+        }
+
         
         // 3. 버전이 다르거나 , 로컬에 없을 때  
         // 차트 불러오기 
@@ -73,17 +82,25 @@ public class WebChartService : IChartService
         if (getChartFailed)
         {
             // 차트 fall back 실행
-            ChartFallback();
+            UserCacheChart();
             yield break;
         }
 
         // 차트를 로컬에 저장 ( 임시로 저장된 json을 저장하기)
         for (int i = 0; i < array.Length; i++) 
         {
-            string path = Path.Combine(cacheDir, $"{array[i]}.json");
+            DataType dataType = array[i];
+            if (dataType == DataType.None)
+                continue;
+
+            string path = Path.Combine(cacheDir, $"{dataType}.json");
             Directory.CreateDirectory(cacheDir);
-            foreach (var kv in tempChartByjson)
-                File.WriteAllText(path, kv.Value);
+
+            string json;
+            if (tempChartByjson.TryGetValue(dataType, out json))
+            {
+                File.WriteAllText(path, json);
+            }
         }
 
         // 버전 갱신
@@ -94,13 +111,14 @@ public class WebChartService : IChartService
 
     }
 
-    private void ChartFallback()
+    private void UserCacheChart()
     {
         // 1. 로컬에 저장된 JSON파일이 있는지 
         string cacheDir = Path.Combine(Application.persistentDataPath, "ChartCache");
 
         // 1. 캐시 있으면 캐시 사용
-        if (Directory.Exists(cacheDir))
+        if (Directory.Exists(cacheDir)
+             && Directory.GetFiles(cacheDir).Length > 0)
         {
             // persistentDataPath에서 읽기
             DataType[] array = (DataType[])Enum.GetValues(typeof(DataType));
@@ -114,9 +132,12 @@ public class WebChartService : IChartService
                     TypeByChartHandler(array[i], File.ReadAllText(path));
             }
 
+
+            Debug.Log($"[WebChartService] : 로컬 캐시 사용");
             return;
         }
 
+        Debug.Log($"[WebChartService] : (!!) Resource 하위 Json에 접근");
         // 2. 캐시가 없으면 Resource 하위 json에 접근 (완전 최후의 방법)
         TextAsset[] textAssets = ResourceManager.Instance.FallBackChartTextfile;
 
@@ -152,7 +173,9 @@ public class WebChartService : IChartService
             return;
         }
 
-        serverChartVersion = int.Parse(version);
+        // int로 잘 변경되면 다시 파싱할 필요 X 
+        // try Parse에서 파싱한 값 들어감
+        // serverChartVersion = int.Parse(version);
     }
 
     private void ChartVersionFailed() 

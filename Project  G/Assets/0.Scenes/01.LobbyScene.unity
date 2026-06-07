@@ -5312,9 +5312,9 @@ GameObject:
   m_Component:
   - component: {fileID: 652674607}
   - component: {fileID: 652674608}
-  - component: {fileID: 652674609}
   - component: {fileID: 652674610}
   - component: {fileID: 652674611}
+  - component: {fileID: 652674612}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -5355,19 +5355,6 @@ MonoBehaviour:
     content: 
     rate: 0
   mapDataList: []
---- !u!114 &652674609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652674606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e49f0354d2882d24996a50f2957827e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnerDataList: []
 --- !u!114 &652674610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5396,6 +5383,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievements: []
+--- !u!114 &652674612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652674606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b65ce59f0b75dc44b8b8a6aa6b61367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnerDataList: []
 --- !u!1 &663391688
 GameObject:
   m_ObjectHideFlags: 0
