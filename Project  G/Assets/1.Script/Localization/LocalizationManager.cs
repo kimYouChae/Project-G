@@ -44,8 +44,6 @@ public class LocalizationManager : Singleton<LocalizationManager>
     private LanguageType currLanguateType;
     [SerializeField]
     private Dictionary<LanguageType, Language> languages;
-    [SerializeField]
-    private string[] mapNameLocalization;
 
     private Action<LanguageType> ChangeLanguageAction;
 
@@ -56,10 +54,6 @@ public class LocalizationManager : Singleton<LocalizationManager>
         SetLanguageType();
 
         languages = new Dictionary<LanguageType, Language>();
-
-        // 맵 type 길이만큼 초기화
-        mapNameLocalization = new string[ Extension.EnumCount<MapType>()];
-        RegisterChangeLanguage(LocalizationMapNameList);
 
         // fallBack 로컬라이제이션 테이블 사용
         FallBackLocalization();
@@ -174,25 +168,23 @@ public class LocalizationManager : Singleton<LocalizationManager>
     }
 
     #region Map Name Localizatin
-    // 현재 언어에 따라 mapName 배열의 값을 바꾸기
-    private void LocalizationMapNameList(LanguageType type)
-    {
-        mapNameLocalization[(int)MapType.Forest] = ReturnLocalizationString(LocalizationKey.Map_Forest);
-        mapNameLocalization[(int)MapType.GiganticTree] = ReturnLocalizationString(LocalizationKey.Map_GiganticTree);
-        mapNameLocalization[(int)MapType.Market] = ReturnLocalizationString(LocalizationKey.Map_Market);
-        mapNameLocalization[(int)MapType.Island] = ReturnLocalizationString(LocalizationKey.Map_Island);
-        mapNameLocalization[(int)MapType.Hell] = ReturnLocalizationString(LocalizationKey.Map_Hell);
-        mapNameLocalization[(int)MapType.IceVillage] = ReturnLocalizationString(LocalizationKey.Map_IceVillage);
-    }
-
     public string MapNameReturn(MapType type) 
     {
-        return mapNameLocalization[(int)type];
+        return ReturnLocalizationString(GetMapKey(type));
     }
 
-    public string MapNameReturn(int index) 
+    public string GetMapKey(MapType type)
     {
-        return mapNameLocalization[index];
+        switch (type)
+        {
+            case MapType.Forest: return LocalizationKey.Map_Forest;
+            case MapType.GiganticTree: return LocalizationKey.Map_GiganticTree;
+            case MapType.Market: return LocalizationKey.Map_Market;
+            case MapType.Island: return LocalizationKey.Map_Island;
+            case MapType.Hell: return LocalizationKey.Map_Hell;
+            case MapType.IceVillage: return LocalizationKey.Map_IceVillage;
+            default: return LocalizationKey.Map_DataError;
+        }
     }
 
     #endregion
