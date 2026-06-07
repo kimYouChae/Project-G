@@ -143,7 +143,7 @@ public class CreateRoomController : ILobbyPanelInitionlize
         roomModel.currMapIndex = currIndex;
 
         // view 메서드 호출
-        roomView.ChangeMapImage(roomModel.currMapIndex);
+        roomView.ChangeMapInfo(roomModel.currMapIndex);
     }
 
     public void IInitPanel()
@@ -152,7 +152,7 @@ public class CreateRoomController : ILobbyPanelInitionlize
         ClearRoomInfo();
 
         roomModel.currMapIndex = 0;
-        roomView.ChangeMapImage(roomModel.currMapIndex);
+        roomView.ChangeMapInfo(roomModel.currMapIndex);
         roomView.EmptyRoomTitle();
     }
 }

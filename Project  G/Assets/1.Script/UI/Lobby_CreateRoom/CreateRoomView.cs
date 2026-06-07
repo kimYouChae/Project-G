@@ -50,7 +50,7 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
     public void RegisterBackButton(Action action) { backButtonAction += action; }
 
 
-    public void ChangeMapImage(int index) 
+    public void ChangeMapInfo(int index) 
     {
         if ((MapType)index != MapType.Forest)
             mapLockImage.gameObject.SetActive(true);
