@@ -58,7 +58,7 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
             mapLockImage.gameObject.SetActive(false);
 
         mapImage.sprite = ResourceManager.Instance.MapSprite(index);
-        mapTitle.text = LocalizationManager.Instance.MapNameReturn(index);
+        mapTitle.text = LocalizationManager.Instance.MapNameReturn((MapType)index);
     }
 
     public void EmptyRoomTitle() 
