@@ -30,9 +30,6 @@ public class WebChartService : IChartService
         getChartFailed = false;
 
         tempChartByjson = new Dictionary<DataType, string>();
-
-        // 테스트용 
-        // PlayerPrefs.DeleteKey(versionKey);
     }
 
     public IEnumerator ChartService()
