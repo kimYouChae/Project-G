@@ -117,8 +117,8 @@ public class LocalizationManager : Singleton<LocalizationManager>
                 currLanguateType = LanguageType.English; break;
             case SystemLanguage.Japanese:
                 currLanguateType = LanguageType.Japanese; break;
-            case SystemLanguage.Korean:
-                currLanguateType = LanguageType.Korean; break;
+            // case SystemLanguage.Korean:
+            //    currLanguateType = LanguageType.Korean; break;
             case SystemLanguage.Chinese: 
                 currLanguateType = LanguageType.Chinese; break;
             default:
@@ -134,12 +134,18 @@ public class LocalizationManager : Singleton<LocalizationManager>
     {
         currLanguateType = type;
 
+        if (currLanguateType == LanguageType.Korean)
+            currLanguateType = LanguageType.English;
+
         Debug.Log($"[LocalizationManager] 언어 변경 메서드 실행, 언어타입 : {currLanguateType}");
         ChangeLanguageAction?.Invoke(currLanguateType);
     }
 
     public void ChangeLanguageType() 
     {
+        if (currLanguateType == LanguageType.Korean)
+            currLanguateType = LanguageType.English;
+
         Debug.Log($"[LocalizationManager] 언어 변경 메서드 실행, 언어타입 : {currLanguateType}");
         ChangeLanguageAction?.Invoke(currLanguateType);
     }

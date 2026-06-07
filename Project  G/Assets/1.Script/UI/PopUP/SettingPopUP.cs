@@ -60,6 +60,7 @@ public class SettingPopUP : UIPopUP
         LocalizationManager.Instance.RegisterChangeLanguage(IUpdateLocalization);
     }
 
+    // 드롭다운 초기화
     private void InitDropDown()
     {
         List<string> optionList = new List<string>();
@@ -67,6 +68,10 @@ public class SettingPopUP : UIPopUP
         for (int i = 0; i < Extension.EnumCount<LanguageType>(); i++)
         {
             LanguageType type = Extension.GetElement<LanguageType>(i);
+
+            if (type == LanguageType.Korean)
+                continue;
+
             optionList.Add(Define.languageNames[type]);
         }
 

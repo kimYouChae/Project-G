@@ -185,9 +185,9 @@ public enum BGMType
 public enum LanguageType
 {
     English,
-    Korean,
     Japanese,
-    Chinese
+    Chinese,
+    Korean
 }
 
 public enum AchiveType 

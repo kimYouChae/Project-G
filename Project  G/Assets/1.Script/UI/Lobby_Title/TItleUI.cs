@@ -56,6 +56,9 @@ public class TitleUI : MonoBehaviour, ILobbyPanelInitionlize
                     // panel 변경 
                     LobbyUIManager.Instance.ChangePanel(LobbyPanelType.Title, LobbyPanelType.Lobby);
 
+                    // 로컬라이징 실행
+                    LocalizationManager.Instance.ChangeLanguageType();
+
                     // SFX 실행
                     SFXManager.Instance.PlaySFX(SFXType.UIClick);
 
