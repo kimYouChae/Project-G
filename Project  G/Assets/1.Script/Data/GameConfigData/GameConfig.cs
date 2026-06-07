@@ -30,8 +30,9 @@ public static class GameConfig
         if(keyValuePairs == null)
             keyValuePairs= new Dictionary<GameConfigType, GameConfigData>();
 
-        keyValuePairs.Add(data.GameConfigType, data);
-    }
+        if(!keyValuePairs.ContainsKey(data.GameConfigType))
+            keyValuePairs.Add(data.GameConfigType, data);
+    }   
 
     public static float GetGameConfigValueByType(GameConfigType type) 
     {

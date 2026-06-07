@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public class PlayerStatusData
@@ -30,7 +31,8 @@ public static class PlayerStatus
         if (keyValuePairs == null)
             keyValuePairs = new Dictionary<CharacterType, PlayerStatusData>();
 
-        keyValuePairs.Add(data.CharacterType, data);
+        if(!keyValuePairs.ContainsKey(data.CharacterType))
+            keyValuePairs.Add(data.CharacterType, data);
     }
 
     public static PlayerStatusData GetPlayerData(CharacterType type) 
