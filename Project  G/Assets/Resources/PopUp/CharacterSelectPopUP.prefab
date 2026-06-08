@@ -338,7 +338,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2876270794347864984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.61, y: 0.1}
+  m_AnchorMin: {x: 0.66, y: 0.1}
   m_AnchorMax: {x: 1, y: 0.9}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
@@ -371,7 +371,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD574\uAE08 \uD544\uC694 ! \n\uD018\uC2A4\uD2B8 \uC9C4\uD589\uC774\uC5B4\uCA4C\uACE0"
+  m_text: "\uD574\uAE08 \uD544\uC694 ! \uD018\uC2A4\uD2B8 \uC9C4\uD589\uC774\uC5B4\uCA4C\uACE0\uD018\uC2A4\uD2B8
+    \uC9C4\uD589\uC774\uC5B4\uCA4C\uACE0\n\uD018\uC2A4\uD2B8 \uC9C4\uD589\uC774\uC5B4\uCA4C\uACE0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7277d645a94ed5643aa135da400ddc73, type: 2}
   m_sharedMaterial: {fileID: -3465769952903100189, guid: 7277d645a94ed5643aa135da400ddc73, type: 2}
@@ -803,7 +804,7 @@ MonoBehaviour:
   cantSelectText: {fileID: 8655529485683122924}
   selectButton: {fileID: 523849752782160838}
   selectButtonText: {fileID: 3792890278099789589}
-  currAchivementTitle: {fileID: 0}
+  currAchievementTitle: {fileID: 0}
   characterPopUpTitle: {fileID: 4277207084313486187}
 --- !u!1 &3280179426779372468
 GameObject:
@@ -1315,7 +1316,7 @@ RectTransform:
   m_Father: {fileID: 2876270794347864984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.1}
-  m_AnchorMax: {x: 0.6, y: 0.5}
+  m_AnchorMax: {x: 0.65, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1632,7 +1633,7 @@ RectTransform:
   m_Father: {fileID: 2876270794347864984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.5}
-  m_AnchorMax: {x: 0.6, y: 0.9}
+  m_AnchorMax: {x: 0.65, y: 0.9}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1691,8 +1692,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
