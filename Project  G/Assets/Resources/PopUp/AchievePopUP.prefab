@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 7665035139106773852}
   - component: {fileID: 2505526562036381386}
   m_Layer: 5
-  m_Name: AchivePopUP
+  m_Name: AchievePopUP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
