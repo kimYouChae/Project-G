@@ -18,5 +18,5 @@ MonoBehaviour:
   rankerUrl: Rank/GetRankers
   gameDataUrl: GameData/Update
   chartUrl: Chart/
-  achiveProgressUrl: UserProgress/AchiveProgress
+  achieveProgressUrl: UserProgress/AchiveProgress
   chartVersionUrl: Chart/ChartVersion
