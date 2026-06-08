@@ -48,5 +48,6 @@ public static partial class LocalizationKey
     public const string GameOver_Offline = "GameOver_Offline";
     public const string Lobby_ServerOffline = "Lobby_ServerOffline";
     public const string Map_DataError = "Map_DataError";
+    public const string Map_NotAvailable = "Map_NotAvailable";
 }
 

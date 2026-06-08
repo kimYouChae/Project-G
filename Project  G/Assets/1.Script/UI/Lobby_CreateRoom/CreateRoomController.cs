@@ -78,7 +78,17 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
     private void CreateRoom(string nameTitle) 
     {
-        // 방 정보 세팅
+        // 만약 forest 제외 잠겨있는 맵이라면 -> pass
+        if ( roomModel.currMapIndex != (int)MapType.Forest)
+        {
+            // 팝업 띄우기 
+            TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+            textPopUp.UpdateText(LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Map_NotAvailable));
+
+            return;
+        }
+
+         // 방 정보 세팅
         RoominfoSetting(nameTitle);
 
         // 방 생성
