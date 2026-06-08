@@ -39,6 +39,9 @@ public class LeaderBoardPopUp : UIPopUP
         rankingLoadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
         myrankLoadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
 
+        uiContentsRanking.gameObject.SetActive(false);
+        uiContentsDetails.gameObject.SetActive(false);
+
         // 내 랭킹 가져오기
         StartCoroutine(GetRank());
         // 랭커 가져오기 
@@ -83,6 +86,10 @@ public class LeaderBoardPopUp : UIPopUP
     private void MyRankUIUpdate() 
     {
         UserRankDTO myRank = GameServices.Instance.RankingModel.GetUserRanker();
+
+        myrankLoadingText.text = "";
+        uiContentsDetails.gameObject.SetActive(true);
+
         UpdateLeaderBoardObj(myrankingObj, myRank);
     }
 
@@ -117,7 +124,10 @@ public class LeaderBoardPopUp : UIPopUP
 
     private void UpdateRankers(List<UserRankDTO> rankers) 
     {
-        for(int i = 0; i < rankers.Count; i++) 
+        rankingLoadingText.text = "";
+        uiContentsRanking.gameObject.SetActive(true);
+
+        for (int i = 0; i < rankers.Count; i++) 
         {
             // 만약 넘으면 
             if (i >= leaderBoardObj.Count)
