@@ -111,7 +111,7 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
                     }
 
                     // 3~4. 도전과제 로직 실행
-                    StartCoroutine(AchiveLogic(result.steamId));
+                    StartCoroutine(AchieveLogic(result.steamId));
 
                     // 5. 게임 종료 이벤트 호출 
                     AnalyticsManager.SendGameEnd(
@@ -153,14 +153,14 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             */
         }
 
-    private IEnumerator AchiveLogic(long stemaId) 
+    private IEnumerator AchieveLogic(long stemaId)
     {
-        // 3. 도전과제 API 실행 
+        // 3. 도전과제 API 실행
         yield return StartCoroutine(
-                   GameServices.Instance.UserProgressService.GetAchivementService(stemaId));
+                   GameServices.Instance.UserProgressService.GetAchievementService(stemaId));
 
         // 4. 이후 스팀 도전과제 성공여부 체크
         // 도전과제 API 실행 후 model이 세팅됨
-        SteamScript.Instance.SetAchivement(GameServices.Instance.AchiveProgressModel.GetBestScoreInfo());
+        SteamScript.Instance.SetAchievement(GameServices.Instance.AchieveProgressModel.GetBestScoreInfo());
     }   
 }

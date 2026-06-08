@@ -8,19 +8,19 @@ public class CharacterData
     [SerializeField] private string charaterName;
     [SerializeField] private CharacterType characterType;
     [SerializeField] private string characterToolTip;
-    [SerializeField] private AchiveType achiveType;      // 달성해야할 도전과제 타입 
+    [SerializeField] private AchieveType achieveType;      // 달성해야할 도전과제 타입
 
-    public CharacterData(string name, CharacterType type, string tooptip , AchiveType aType) 
+    public CharacterData(string name, CharacterType type, string tooptip , AchieveType aType)
     {
         this.charaterName = name;
         this.characterType = type;
         this.characterToolTip = tooptip;
-        this.achiveType = aType;
+        this.achieveType = aType;
     }
 
     public string CharaterName { get => charaterName; }
     public string CharacterToolTip { get => characterToolTip; set => characterToolTip = value; }
-    public AchiveType AchiveType { get => achiveType; set => achiveType = value; }
+    public AchieveType AchieveType { get => achieveType; set => achieveType = value; }
     public CharacterType CharacterType { get => characterType; set => characterType = value; }
 }
 

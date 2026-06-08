@@ -15,8 +15,8 @@ public class ScoreManager : Singleton<ScoreManager>
     private float currTime = 0;         // 현재 시간 (초)
     private float scoreRate; // Mapdata의 난이도 증가 비율이 클 수록 작은 값으로 곱할 수있게 임시 비율설정 
 
-    public float AchiveScore { get => currScore; }
-    public int AchiveStage { get => nowLevel; }
+    public float AchieveScore { get => currScore; }
+    public int AchieveStage { get => nowLevel; }
     public float CurrTime { get => currTime;  }
     public bool IsReadyToCount { get => isReadyToCount; set => isReadyToCount = value; }
 

@@ -34,7 +34,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     private Action CharacterSelectAction;
     private Action ScorePopUpAction;
     private Action SettingAction;
-    private Action AchiveAction;
+    private Action AchieveAction;
     private Action ExitGameAction;
     private Action RankAction;
     private Action BuyCoffeeAction;
@@ -46,7 +46,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
         exitButton.onClick.AddListener(() => ExitGameAction?.Invoke());
         scoreButton.onClick.AddListener(() => ScorePopUpAction?.Invoke());
         settinButton.onClick.AddListener(() => SettingAction?.Invoke());
-        achivementButton.onClick.AddListener(() => AchiveAction?.Invoke());
+        achivementButton.onClick.AddListener(() => AchieveAction?.Invoke());
         characterSelectButton.onClick.AddListener(() => CharacterSelectAction?.Invoke());
         rankButton.onClick.AddListener(() => RankAction?.Invoke());
         buyCoffeButton.onClick.AddListener(()=>BuyCoffeeAction?.Invoke());
@@ -57,7 +57,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
     public void RegisterExitGame(Action action) {  ExitGameAction += action; }
     public void RegisterScorePopUp(Action action) { ScorePopUpAction += action; }
     public void RegisterSettingPopUp(Action action) { SettingAction += action;  }
-    public void RegisterAchivePopup(Action action) {  AchiveAction += action;}
+    public void RegisterAchievePopup(Action action) {  AchieveAction += action;}
     public void RegisterCharacterSelectButton(Action action) { CharacterSelectAction += action;}
     public void RegisterRankButton(Action action) { RankAction += action; }
     public void RegisterBuyCoffeeButton(Action action){ BuyCoffeeAction += action;}

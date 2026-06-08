@@ -641,7 +641,7 @@ MonoBehaviour:
   isOpend: 0
   achiveObj: {fileID: 3282036070050165544, guid: 279bb218e0c420548a898f33999e3007, type: 3}
   content: {fileID: 1112071903409731591}
-  achiveObjList: []
+  achieveObjList: []
   uiContents: {fileID: 1450214243661276739}
   loadingText: {fileID: 4100357472164723797}
   achiveTitle: {fileID: 7436060711280937952}

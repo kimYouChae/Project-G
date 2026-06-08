@@ -9,21 +9,21 @@ public abstract class Achievement :  IAchievement
 {
     [Header("===도전과제===")]
     [SerializeField] private string title;
-    [SerializeField] AchiveType achiveType;
+    [SerializeField] AchieveType achieveType;
 
-    public AchiveType AchiveType => achiveType;
+    public AchieveType AchieveType => achieveType;
 
-    public Achievement(string title, AchiveType type) 
+    public Achievement(string title, AchieveType type) 
     {
         this.title = title;
-        this.achiveType = type;
+        this.achieveType = type;
     }
 
     public abstract bool IIsComplete();
 
     public abstract string IProgressText();
 
-    public string ITitle() => LocalizationManager.Instance.ReturnLocalizationString(achiveType.ToString() + "_Title");
+    public string ITitle() => LocalizationManager.Instance.ReturnLocalizationString(achieveType.ToString() + "_Title");
 
 }
 
@@ -35,7 +35,7 @@ public class StageAchievement : Achievement
     [SerializeField] private int achiveStage;
     [SerializeField] private MapType mapType;
 
-    public StageAchievement(string title, AchiveType achiveType,int achiveStage, MapType mapType) : base(title, achiveType)
+    public StageAchievement(string title, AchieveType achieveType,int achieveStage, MapType mapType) : base(title, achieveType)
     {
         this.achiveStage = achiveStage;
         this.mapType = mapType;

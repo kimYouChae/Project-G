@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class StageAchive
+public class StageAchieve
 {
     [SerializeField] private string title;
-    [SerializeField] private AchiveType achiveType;
-    [SerializeField] private int achiveStage;
+    [SerializeField] private AchieveType achieveType;
+    [SerializeField] private int achieveStage;
     [SerializeField] private MapType mapType;
 
     public string Title { get => title; set => title = value; }
-    public AchiveType AchiveType { get => achiveType; set => achiveType = value; }
-    public int AchiveStage { get => achiveStage; set => achiveStage = value; }
+    public AchieveType AchieveType { get => achieveType; set => achieveType = value; }
+    public int AchieveStage { get => achieveStage; set => achieveStage = value; }
     public MapType MapType { get => mapType; set => mapType = value; }
 }
 
@@ -21,8 +21,8 @@ public class StageAchievementChart : ICharHandler
 {
     public void IParseAndStore(string jsonStr)
     {
-        List<StageAchive> datalist;
-        datalist = JsonConvert.DeserializeObject<List<StageAchive>>(jsonStr);
+        List<StageAchieve> datalist;
+        datalist = JsonConvert.DeserializeObject<List<StageAchieve>>(jsonStr);
 
         if (datalist == null || datalist.Count == 0)
         {
@@ -32,8 +32,8 @@ public class StageAchievementChart : ICharHandler
 
         for (int i = 0; i < datalist.Count; i++)
         {
-            StageAchive data = datalist[i];
-            AchievDataManager.Instance.AddtoAchiveContainer(data);
+            StageAchieve data = datalist[i];
+            AchievDataManager.Instance.AddtoAchieveContainer(data);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class SteamAchivement : MonoBehaviour
+public class SteamAchievement : MonoBehaviour
 {
     private void Start()
     {

@@ -45,8 +45,8 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
         // 사실 이 부분은 없어도됨, Assemble할 때 ScoreManger 바로 접근해도됨
         // 근데 Context만든김에 값이 ctx 안에 있었으면 좋겠음 
         yield return null;
-        matchContext.synchedScore = ScoreManager.Instance.AchiveScore;
-        matchContext.synchedStage = ScoreManager.Instance.AchiveStage;
+        matchContext.synchedScore = ScoreManager.Instance.AchieveScore;
+        matchContext.synchedStage = ScoreManager.Instance.AchieveStage;
     }
 
     IEnumerator AssembleInfoOffline()
@@ -145,8 +145,8 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
         // 점수, 스테이지
         object[] contcnt = new object[]
         {
-            ScoreManager.Instance.AchiveScore,
-            ScoreManager.Instance.AchiveStage,
+            ScoreManager.Instance.AchieveScore,
+            ScoreManager.Instance.AchieveStage,
         };
 
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };

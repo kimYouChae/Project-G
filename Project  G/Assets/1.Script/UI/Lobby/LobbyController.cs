@@ -20,7 +20,7 @@ public class LobbyController : ILobbyPanelInitionlize
         lobbyView.RegisterExitGame(ExitGame);
         lobbyView.RegisterScorePopUp(ScorePopUp);
         lobbyView.RegisterSettingPopUp(SettingPopUp);
-        lobbyView.RegisterAchivePopup(AchivePopup);
+        lobbyView.RegisterAchievePopup(AchievePopup);
         lobbyView.RegisterCharacterSelectButton(CharacterPopUp);
         lobbyView.RegisterRankButton(Rank);
         lobbyView.RegisterBuyCoffeeButton(BuyCoffee);
@@ -75,10 +75,10 @@ public class LobbyController : ILobbyPanelInitionlize
         settingpopup.OpenSetting();
     }
 
-    private void AchivePopup() 
+    private void AchievePopup()
     {
-        AchivePopUP achive = UIManager.Instance.GetPopUP<AchivePopUP>();
-        achive.OpenAchivePopup(hasOpenedAchievementUI);
+        AchievePopUP achive = UIManager.Instance.GetPopUP<AchievePopUP>();
+        achive.OpenAchievePopup(hasOpenedAchievementUI);
 
         // 도전과제 팝업
         if (!hasOpenedAchievementUI)

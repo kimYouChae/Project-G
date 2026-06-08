@@ -17,7 +17,7 @@ public sealed class GameServices
         }
     }
 
-    // 서비스 인터페이스 
+    // 서비스 인터페이스
     private IAuthService authService;
     private IRankingService rankingService;
     private IGameDataService gameDataService;
@@ -27,7 +27,7 @@ public sealed class GameServices
     // 모델 인터페이스
     private IRankingModel rankingModel;
     private IGameDataModel gameDataModel;
-    private IAchiveProgressModel achiveModel;
+    private IAchieveProgressModel achieveModel;
 
     // Server Config
     private ServerConfig serverConfig;
@@ -39,27 +39,27 @@ public sealed class GameServices
     public IGameDataModel GameDataModel { get => gameDataModel; }
     public IChartService ChartDataService { get => chartDataService; }
     public IUserProgressService UserProgressService { get => userProgressService; }
-    public IAchiveProgressModel AchiveProgressModel { get => achiveModel; }
+    public IAchieveProgressModel AchieveProgressModel { get => achieveModel; }
 
-    private GameServices() 
+    private GameServices()
     {
 
     }
 
-    public void Init(ServerConfig config) 
+    public void Init(ServerConfig config)
     {
         this.serverConfig = config;
 
         // 모델
         rankingModel = new RankingModel();
         gameDataModel = new GameDataModel();
-        achiveModel = new AchiveProgressModel();
+        achieveModel = new AchieveProgressModel();
 
-        // 서비스 
+        // 서비스
         authService = new WebAuthService(config.LoginUrl);
         rankingService = new WebRankingService(config.UserRankUrl, config.RankerUrl, rankingModel);
         gameDataService = new WebGameDataService( config.GameDataUrl, gameDataModel);
         chartDataService = new WebChartService(config.ChartUrl, config.ChartVersionUrl);
-        userProgressService = new WebUserProgressService(config.AchiveProgressUrl, achiveModel);
+        userProgressService = new WebUserProgressService(config.AchieveProgressUrl, achieveModel);
     }
 }

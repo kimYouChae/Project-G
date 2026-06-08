@@ -5,28 +5,28 @@ using UnityEngine;
 
 public class AchievDataManager : Singleton<AchievDataManager>
 {
-    [SerializeField] List<StageAchive> achievements;
-    [SerializeField] Dictionary<AchiveType, StageAchive> achievementsDict;
+    [SerializeField] List<StageAchieve> achievements;
+    [SerializeField] Dictionary<AchieveType, StageAchieve> achievementsDict;
 
-    public List<StageAchive> Achievements => achievements;
+    public List<StageAchieve> Achievements => achievements;
 
     protected override void Singleton_Awake()
     {
-        achievements = new List<StageAchive>();
-        achievementsDict = new Dictionary<AchiveType, StageAchive>();
+        achievements = new List<StageAchieve>();
+        achievementsDict = new Dictionary<AchieveType, StageAchieve>();
     }
 
-    public void AddtoAchiveContainer(StageAchive achi) 
+    public void AddtoAchieveContainer(StageAchieve achi)
     {
         achievements.Add(achi);
-        if ( ! achievementsDict.ContainsKey(achi.AchiveType)) 
+        if ( ! achievementsDict.ContainsKey(achi.AchieveType))
         {
-            achievementsDict.Add(achi.AchiveType, achi);
+            achievementsDict.Add(achi.AchieveType, achi);
         }
     }
 
     // 타입에 해당하는 도전과제 return
-    public StageAchive GetAchiveByType(AchiveType type)
+    public StageAchieve GetAchieveByType(AchieveType type)
     {
         if(achievementsDict.ContainsKey(type))
             return achievementsDict[type];

@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc0b5dec3885414484a3c798eb47019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  achiveTitleText: {fileID: 1135166933664440796}
+  achieveTitleText: {fileID: 1135166933664440796}
   progressText: {fileID: 5980089099639188498}
   completeImage: {fileID: 9154412920977038052}
 --- !u!1 &9115926073736311057

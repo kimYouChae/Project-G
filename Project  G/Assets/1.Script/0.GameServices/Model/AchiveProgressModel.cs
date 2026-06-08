@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AchiveProgressModel : IAchiveProgressModel
+public class AchieveProgressModel : IAchieveProgressModel
 {
-    private List<AchiveProgressResponse> data;
-    private Dictionary<AchiveType, AchiveProgressResponse> keyValuePairs;
+    private List<AchieveProgressResponse> data;
+    private Dictionary<AchieveType, AchieveProgressResponse> keyValuePairs;
 
     // API 실패 시 flag
     private bool isSuccess;
 
-    public AchiveProgressResponse GetAchiveProgress(AchiveType type)
+    public AchieveProgressResponse GetAchieveProgress(AchieveType type)
     {
         if(keyValuePairs.ContainsKey(type))
             return keyValuePairs[type];
@@ -18,20 +18,19 @@ public class AchiveProgressModel : IAchiveProgressModel
         return null;
     }
 
-    public List<AchiveProgressResponse> GetBestScoreInfo()
+    public List<AchieveProgressResponse> GetBestScoreInfo()
     {
         return data;
     }
 
-
-    public void SetGameData(List<AchiveProgressResponse> response)
+    public void SetGameData(List<AchieveProgressResponse> response)
     {
         this.data = response;
 
-        keyValuePairs = new Dictionary<AchiveType, AchiveProgressResponse>();
-        for(int i = 0;  i < data.Count; i++) 
+        keyValuePairs = new Dictionary<AchieveType, AchieveProgressResponse>();
+        for(int i = 0;  i < data.Count; i++)
         {
-            keyValuePairs.Add(data[i].AchiveType, data[i]);
+            keyValuePairs[data[i].AchieveType] = data[i];
         }
     }
 

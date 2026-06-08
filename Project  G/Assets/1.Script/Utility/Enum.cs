@@ -190,7 +190,7 @@ public enum LanguageType
     Korean
 }
 
-public enum AchiveType 
+public enum AchieveType 
 {
     Stage_Forest,
     Stage_GiganticTree,

@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 
 #region GameServies
-public interface IApiResult 
+public interface IApiResult
 {
     public void SetIsSuccess(bool flag);
     public bool GetIsSuccess();
@@ -42,23 +42,23 @@ public interface IGameDataService
     public IEnumerator UpdateGameDataService(string matchid, int mapType, long myId, long partnerId, float score, int stage);
 }
 
-public interface IChartService 
+public interface IChartService
 {
-    public IEnumerator ChartService();           
+    public IEnumerator ChartService();
 }
 
-public interface IUserProgressService 
+public interface IUserProgressService
 {
-    public IEnumerator GetAchivementService(long uid);
+    public IEnumerator GetAchievementService(long uid);
 }
 
-public interface IAchiveProgressModel : IApiResult
+public interface IAchieveProgressModel : IApiResult
 {
-    public void SetGameData(List<AchiveProgressResponse> response);
+    public void SetGameData(List<AchieveProgressResponse> response);
 
-    public List<AchiveProgressResponse> GetBestScoreInfo();
+    public List<AchieveProgressResponse> GetBestScoreInfo();
 
-    public AchiveProgressResponse GetAchiveProgress(AchiveType type);
+    public AchieveProgressResponse GetAchieveProgress(AchieveType type);
 }
 
 #endregion
@@ -74,7 +74,7 @@ public interface ILobbyPanelInitionlize
     public void IInitPanel();
 }
 
-public interface ILocalizable 
+public interface ILocalizable
 {
     public void IUpdateLocalization(LanguageType type);
 }

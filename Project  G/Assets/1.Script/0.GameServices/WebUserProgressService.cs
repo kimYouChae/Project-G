@@ -5,60 +5,60 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 #region DTO
-public class AchiveProgressRequest
+public class AchieveProgressRequest
 {
     public long SteamID;
 }
-public class AchiveProgressResponse
+public class AchieveProgressResponse
 {
-    public AchiveType AchiveType;
+    public AchieveType AchieveType;
     public bool isClear;
 }
 #endregion
 
 public class WebUserProgressService : IUserProgressService
 {
-    private string achiveProgressUrl = "";
+    private string achieaveProgressUrl = "";
 
-    private IAchiveProgressModel achiveProgressModel;   
+    private IAchieveProgressModel achieveProgressModel;
 
-    public WebUserProgressService(string url, IAchiveProgressModel achiveProgressModel)
+    public WebUserProgressService(string url, IAchieveProgressModel achieveProgressModel)
     {
-        this.achiveProgressUrl = url;
-        this.achiveProgressModel = achiveProgressModel;
+        this.achieaveProgressUrl = url;
+        this.achieveProgressModel = achieveProgressModel;
     }
 
-    public IEnumerator GetAchivementService(long uid)
+    public IEnumerator GetAchievementService(long uid)
     {
-        AchiveProgressRequest achiveProgress = new AchiveProgressRequest()
+        AchieveProgressRequest achieveProgress = new AchieveProgressRequest()
         {
             SteamID = uid
         };
 
-        string requestJson = JsonUtility.ToJson(achiveProgress);
-        yield return WebRequestCore.CommonLogic<List<AchiveProgressResponse>>
+        string requestJson = JsonUtility.ToJson(achieveProgress);
+        yield return WebRequestCore.CommonLogic<List<AchieveProgressResponse>>
          (
              requestJson,
-             achiveProgressUrl,
+             achieaveProgressUrl,
              HttpRequestType.Post,
-             AchiveProgressPasing,
-             () => AchiveProgressFailed()
+             AchieveProgressParsing,
+             () => AchieveProgressFailed()
          );
     }
 
-    private void AchiveProgressPasing(List<AchiveProgressResponse> apiResponse) 
+    private void AchieveProgressParsing(List<AchieveProgressResponse> apiResponse)
     {
-        // achive Progress 모델에 값 넣기
-        achiveProgressModel.SetGameData(apiResponse);
+        // achieve Progress 모델에 값 넣기
+        achieveProgressModel.SetGameData(apiResponse);
 
         // Api 성공 flag
-        achiveProgressModel.SetIsSuccess(true);
+        achieveProgressModel.SetIsSuccess(true);
     }
 
-    private void AchiveProgressFailed() 
+    private void AchieveProgressFailed()
     {
         // APi 실패 flag
-        achiveProgressModel.SetIsSuccess(false);
+        achieveProgressModel.SetIsSuccess(false);
     }
 
 }
