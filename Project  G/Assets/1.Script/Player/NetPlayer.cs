@@ -17,7 +17,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [SerializeField] private bool isReadToMove = false;
     [SerializeField] private Vector3 dir;
     [SerializeField] private Vector3 lastMoveDir = Vector3.down; // 기본 정면 아래
-    
+
     [Header("===Component===")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private PhotonView view;
@@ -59,6 +59,28 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         speed = PlayerStatus.GetPlayerSpeed();
     }
 
+#if DEV_BUILD_TEST
+    private void Update()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            netPlayerCantDieFlag = true;
+            Debug.Log("[DEV_BUILD_TEST] hit 판정 OFF");
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))                                                                     
+            {                                                                                                         
+                netPlayerCantDieFlag = false;                                                                         
+                Debug.Log("[DEV_BUILD_TEST] hit 판정 ON");                                                            
+            }
+        }                                                                                                     
+                                                                                                              
+                                                                                                     
+    }
+#endif            
+    
     private void FixedUpdate()
     {
         if (!isReadToMove)
