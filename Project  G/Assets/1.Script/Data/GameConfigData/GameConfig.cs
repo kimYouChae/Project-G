@@ -15,6 +15,15 @@ public class GameConfigData
     [SerializeField]
     private string description;
 
+    #region 멤버가 있는 생성자
+    public GameConfigData(GameConfigType gameConfigType, float value, string description)
+    {
+        this.gameConfigType = gameConfigType;
+        this.value = value;
+        this.description = description;
+    }
+    #endregion
+
     public GameConfigType GameConfigType { get => gameConfigType;  }
     public float Value { get => value; }
     public string Description { get => description; }

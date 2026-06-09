@@ -10,18 +10,20 @@ public class CharacterData
     [SerializeField] private string characterToolTip;
     [SerializeField] private AchieveType achieveType;      // 달성해야할 도전과제 타입
 
-    public CharacterData(string name, CharacterType type, string tooptip , AchieveType aType)
+    #region 멤버가 있는 생성자
+    public CharacterData(string charaterName, CharacterType characterType, string characterToolTip, AchieveType achieveType)
     {
-        this.charaterName = name;
-        this.characterType = type;
-        this.characterToolTip = tooptip;
-        this.achieveType = aType;
+        this.charaterName = charaterName;
+        this.characterType = characterType;
+        this.characterToolTip = characterToolTip;
+        this.achieveType = achieveType;
     }
+    #endregion
 
     public string CharaterName { get => charaterName; }
-    public string CharacterToolTip { get => characterToolTip; set => characterToolTip = value; }
-    public AchieveType AchieveType { get => achieveType; set => achieveType = value; }
-    public CharacterType CharacterType { get => characterType; set => characterType = value; }
+    public string CharacterToolTip { get => characterToolTip;}
+    public AchieveType AchieveType { get => achieveType;}
+    public CharacterType CharacterType { get => characterType;}
 }
 
 public class CharacterManager : Singleton<CharacterManager>

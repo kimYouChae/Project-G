@@ -20,6 +20,16 @@ public class StageData
     [JsonProperty("dirType")]
     private DirType dirType;
 
+    #region 멤버가 있는 생성자
+    public StageData(QuadrantType quadrantType, int stage, SpawnerType spawnerType, DirType dirType)
+    {
+        this.quadrantType = quadrantType;
+        this.stage = stage;
+        this.spawnerType = spawnerType;
+        this.dirType = dirType;
+    }
+    #endregion
+
     public QuadrantType QuadrantType { get => quadrantType; }
     public int Stage { get => stage;  }
     public SpawnerType SpawnerType { get => spawnerType;}

@@ -11,10 +11,21 @@ public class StageAchieve
     [SerializeField] private int achieveStage;
     [SerializeField] private MapType mapType;
 
-    public string Title { get => title; set => title = value; }
-    public AchieveType AchieveType { get => achieveType; set => achieveType = value; }
-    public int AchieveStage { get => achieveStage; set => achieveStage = value; }
-    public MapType MapType { get => mapType; set => mapType = value; }
+    #region 맴버가 있는 생성자
+
+    public StageAchieve(string title, AchieveType achieveType, int achieveStage, MapType mapType)
+    {
+        this.title = title;
+        this.achieveType = achieveType;
+        this.achieveStage = achieveStage;
+        this.mapType = mapType;
+    }
+    #endregion
+
+    public string Title { get => title; }
+    public AchieveType AchieveType { get => achieveType; }
+    public int AchieveStage { get => achieveStage;  }
+    public MapType MapType { get => mapType; }
 }
 
 public class StageAchievementChart : ICharHandler

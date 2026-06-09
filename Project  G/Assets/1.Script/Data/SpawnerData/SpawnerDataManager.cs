@@ -19,7 +19,7 @@ public class SpawnerData
     [SerializeField] private float bulletInterval;
     [SerializeField] private float bulletInitWait;
 
-    #region 생성자
+    #region 맴버가 있는 생성자
     public SpawnerData(SpawnerType type, float speed, float bulletSpeed, 
         float smoothTime, float coolTimeMin, float coolTimeMax, float chargeTime, float chargeDuration, float bulletLifeTime, float bulletInterval, float bulletInitWait)
     {
