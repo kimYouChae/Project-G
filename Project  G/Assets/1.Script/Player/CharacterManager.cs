@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,9 @@ using UnityEngine;
 [System.Serializable]
 public class CharacterData
 {
-    [SerializeField] private string charaterName;
+    [SerializeField][JsonProperty("name")] private string charaterName;
     [SerializeField] private CharacterType characterType;
-    [SerializeField] private string characterToolTip;
+    [SerializeField][JsonProperty("toolTip")]private string characterToolTip;
     [SerializeField] private AchieveType achieveType;      // 달성해야할 도전과제 타입
 
     #region 멤버가 있는 생성자
