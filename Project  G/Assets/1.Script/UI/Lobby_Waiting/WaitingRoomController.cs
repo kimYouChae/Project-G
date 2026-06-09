@@ -65,6 +65,16 @@ public class WaitingRoomController : ILobbyPanelInitionlize
         // 마스터클라이언트만 가능 
         if (PhotonNetwork.IsMasterClient)
         {
+            // 방에 MAX 인원만큼 안 들어왔으면 -> PopUp 띄우기
+            if (PhotonRoomInfo.MaxUser != PhotonNetwork.CurrentRoom.PlayerCount)
+            {
+                TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
+                string local = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Room_NotEnoughPlayers);
+                textPopUp.UpdateText($"{local}{PhotonRoomInfo.MaxUser}");
+
+                return;
+            }
+
             // SFX 실행
             SFXManager.Instance.PlaySFX(SFXType.UIClick);
 

@@ -49,5 +49,6 @@ public static partial class LocalizationKey
     public const string Lobby_ServerOffline = "Lobby_ServerOffline";
     public const string Map_DataError = "Map_DataError";
     public const string Map_NotAvailable = "Map_NotAvailable";
+    public const string Room_NotEnoughPlayers = "Room_NotEnoughPlayers";
 }
 
