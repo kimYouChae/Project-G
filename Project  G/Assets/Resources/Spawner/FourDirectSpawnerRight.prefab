@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 3319446283034669383}
   - component: {fileID: 8857986330214603515}
   m_Layer: 0
-  m_Name: FourDirectSpanwerRight
+  m_Name: FourDirectSpawnerRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
