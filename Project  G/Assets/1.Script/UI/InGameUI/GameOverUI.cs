@@ -10,6 +10,10 @@ using UnityEngine.UI;
 public class GameOverUI : MonoBehaviour
 {
     [Space]
+    [Header("===Context===")]
+    [SerializeField] private GameObject gameOverTextContent;
+    [SerializeField] private TextMeshProUGUI apiLoadingText;
+
     [Header("===Header===")]
     [SerializeField] private TextMeshProUGUI scoreHeading;  // "점수" 텍스트
     [SerializeField] private TextMeshProUGUI timeHeadling;  // "생존시간" 텍스트
@@ -31,6 +35,27 @@ public class GameOverUI : MonoBehaviour
         // 시간,점수 로컬라이징
         scoreHeading.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.InGame_Score);
         timeHeadling.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.InGame_Time);
+    }
+
+    public void OnOffGameContextTexts(bool flag) 
+    {
+        // flase 이면 
+        if (!flag)
+        {
+            // context 끄기
+            gameOverTextContent.SetActive(false);
+
+            // api 로딩 텍스트
+            // "데이터 로딩 하는 중"
+            apiLoadingText.gameObject.SetActive(true);
+            apiLoadingText.text 
+                = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Saving_In_Progress);
+
+            return;
+        }
+
+        gameOverTextContent.SetActive(true);
+        apiLoadingText.gameObject.SetActive(false);
     }
 
     public void GameOverTextOffline(float score, float time) 

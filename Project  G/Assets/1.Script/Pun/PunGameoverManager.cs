@@ -32,11 +32,13 @@ public class PunGameoverManager : Singleton<PunGameoverManager>
 
     public void GameOver() 
     {
+        InGameUI.Instance.gameOverUI.OnOffGameContextTexts(false);
         StartCoroutine(AssembleInfo());
     }
 
     public void GameOverOffline() 
     {
+        InGameUI.Instance.gameOverUI.OnOffGameContextTexts(false);
         StartCoroutine(AssembleInfoOffline());
     }
 

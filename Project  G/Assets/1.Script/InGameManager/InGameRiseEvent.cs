@@ -65,6 +65,7 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             MapType type = (MapType)((int)data[2]);
             float time = (float)data[3];
 
+            InGameUI.Instance.gameOverUI.OnOffGameContextTexts(true);
             InGameUI.Instance.gameOverUI.GameOverTextOffline(score, time);
 
             // 게임 종료 이벤트 호출 
@@ -101,6 +102,7 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
                     Debug.Log($"{i}번째 유저 정보 \n {result.steamId} / 점수 : {result.score} / 스테이지 {result.stage}");
 
                     // 1. gameOver UI에 텍스트 표시
+                    InGameUI.Instance.gameOverUI.OnOffGameContextTexts(true);
                     InGameUI.Instance.gameOverUI.GameOverText(result.score, currTime, result.isUpdated);
 
                     // 점수가 업데이트 됐으면 
