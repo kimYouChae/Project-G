@@ -39,8 +39,11 @@ public static class GameConfig
         if(keyValuePairs == null)
             keyValuePairs= new Dictionary<GameConfigType, GameConfigData>();
 
-        if(!keyValuePairs.ContainsKey(data.GameConfigType))
+        if (!keyValuePairs.ContainsKey(data.GameConfigType))
+        {
+            //Debug.Log($"[GameConfig] {data.GameConfigType}에 해당하는 값 : {data.Value}");
             keyValuePairs.Add(data.GameConfigType, data);
+        }
     }   
 
     public static float GetGameConfigValueByType(GameConfigType type) 
