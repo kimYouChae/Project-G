@@ -69,15 +69,12 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         {
             netPlayerCantDieFlag = true;
             Debug.Log("[DEV_BUILD_TEST] hit 판정 OFF");
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))                                                                     
-            {                                                                                                         
-                netPlayerCantDieFlag = false;                                                                         
-                Debug.Log("[DEV_BUILD_TEST] hit 판정 ON");                                                            
-            }
-        }                                                                                                     
-                                                                                                              
-                                                                                                     
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            netPlayerCantDieFlag = false;
+            Debug.Log("[DEV_BUILD_TEST] hit 판정 ON");
+        }
     }
 #endif            
     
