@@ -264,7 +264,7 @@ public class SFXManager : Singleton<SFXManager>
 
         if (footStepCoroutine != null)
         {
-            Debug.Log("발소리 루프(코루틴) 멈추기");
+            // Debug.Log("발소리 루프(코루틴) 멈추기");
             StopCoroutine(footStepCoroutine);
             footStepCoroutine = null;
 
@@ -276,7 +276,7 @@ public class SFXManager : Singleton<SFXManager>
 
     private IEnumerator FootStepLoop(AudioSource source, AudioClip clip)
     {
-        Debug.Log("발소리 루프(코루틴) 실행");
+        // Debug.Log("발소리 루프(코루틴) 실행");
 
         while (isFootStepPlaying)
         {

@@ -41,7 +41,7 @@ public class FourDirSpawner : NetSpawner
             {
                 spawnerAnimator.ChangeAttackAnimation(SpawnerAnimState.Attack, true);
 
-                Debug.Log("현재 로컬의 사분면 타입 : " + type);
+                // Debug.Log("현재 로컬의 사분면 타입 : " + type);
 
                 float ranX = Random.Range(Define.twoMemberFieldMin[type].x, Define.twoMemberFieldMax[type].x);
                 float ranY = Random.Range(Define.twoMemberFieldMin[type].y, Define.twoMemberFieldMax[type].y);
