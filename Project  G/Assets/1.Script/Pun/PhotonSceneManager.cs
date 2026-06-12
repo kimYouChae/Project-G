@@ -21,6 +21,15 @@ public class PhotonSceneManager : Singleton<PhotonSceneManager>
 
         // 딕셔너리 초기화 
         sceneTypeByAction = new Dictionary<SceneType, Action>();
+
+        // lobby로 다시 돌아왔을 때 
+        // 호스트,클라 둘다 timeScale을 1로 만들수 있도록
+        RegisterAction(SceneType.Lobby, () =>
+        {
+            // 만약 Time.scaleTime이 0이라면 다시 1로 돌리기
+            if (Time.timeScale == 0)
+                TimeManager.Play();
+        });
     }
 
     void OnEnable()
@@ -103,10 +112,6 @@ public class PhotonSceneManager : Singleton<PhotonSceneManager>
 
         if (nowSceneName == null)
             return;
-
-        // 만약 Time.scaleTime이 0이라면 다시 1로 돌리기
-        if (Time.timeScale == 0)
-            TimeManager.Play();
 
         PhotonNetwork.LoadLevel(nowSceneName);
     }

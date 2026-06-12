@@ -1382,6 +1382,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 104711235}
+  - component: {fileID: 104711237}
+  - component: {fileID: 104711236}
   m_Layer: 0
   m_Name: Lobby
   m_TagString: Untagged
@@ -1402,10 +1404,40 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2022759718}
   - {fileID: 116153338}
   m_Father: {fileID: 710974541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &104711236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104711234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3558b535d39c1eb4093fbf6ab1f2fe89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileList:
+  - {fileID: 1885441091}
+  - {fileID: 932190095}
+  - {fileID: 1201675581}
+  moveSpeed: 1
+  resetY: -10
+  startY: 20
+--- !u!114 &104711237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104711234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d39f57d7052acf4aa36f9df1d6fab51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &116153337
 GameObject:
   m_ObjectHideFlags: 0
@@ -22676,57 +22708,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 652674607}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2022759717
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2022759718}
-  - component: {fileID: 2022759719}
-  m_Layer: 0
-  m_Name: LobbyTile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2022759718
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022759717}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 104711235}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2022759719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022759717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3558b535d39c1eb4093fbf6ab1f2fe89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileList:
-  - {fileID: 1885441091}
-  - {fileID: 932190095}
-  - {fileID: 1201675581}
-  moveSpeed: 1
-  resetY: -10
-  startY: 20
 --- !u!1 &2023665640
 GameObject:
   m_ObjectHideFlags: 0

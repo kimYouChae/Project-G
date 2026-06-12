@@ -241,8 +241,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerQuadtype: 0
   playerIndex: 0
-  isReadToMove: 0
   speed: 3
+  isReadToMove: 0
   dir: {x: 0, y: 0, z: 0}
   lastMoveDir: {x: 0, y: -1, z: 0}
   rb: {fileID: 0}
@@ -251,7 +251,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   originalColor: {r: 0, g: 0, b: 0, a: 0}
   netAnimator: {fileID: 0}
-  flag: 1
+  netPlayerCantDieFlag: 1
 --- !u!114 &5060468974724905434
 MonoBehaviour:
   m_ObjectHideFlags: 0
