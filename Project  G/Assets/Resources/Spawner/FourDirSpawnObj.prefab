@@ -101,6 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   view: {fileID: 0}
   basicBullet: {fileID: 1370118796857302250, guid: 00eeb6ae98823284daa27404372c5584, type: 3}
+  bulletInitWait: 0
+  bulletLifeTime: 0
+  bulletSpeed: 0
 --- !u!114 &950230267641016931
 MonoBehaviour:
   m_ObjectHideFlags: 0

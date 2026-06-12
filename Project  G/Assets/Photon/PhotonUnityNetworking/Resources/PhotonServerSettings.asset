@@ -62,6 +62,8 @@ MonoBehaviour:
   - RPC_DestroyLaser
   - RPC_DestoryChargingObj
   - RPC_SetParentTransform
+  - RPC_DestoryFourDirBullet
+  - RPC_FourDirBulletInstance
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
-public class FourDirBullet : MonoBehaviour
+public class FourDirBullet : MonoBehaviour , IPunInstantiateMagicCallback
 {
     [SerializeField] PhotonView view;
     [SerializeField] GameObject basicBullet;
@@ -15,6 +15,12 @@ public class FourDirBullet : MonoBehaviour
     [SerializeField] float bulletLifeTime;  // basic bullet 발사 후, 파괴까지 걸리는 시간 
     [SerializeField] float bulletSpeed;     // four Dir Bullet에서 발사한 basic bullet의 속도 
 
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        var data = info.photonView.InstantiationData;
+        SettingFourDirBullet((float)data[0], (float)data[1], (float)data[2]);
+    }
 
     public void SettingFourDirBullet(float init, float life, float speed)
     {
@@ -27,7 +33,7 @@ public class FourDirBullet : MonoBehaviour
         StartCoroutine(BulletShoot());
     }
 
-    IEnumerator BulletShoot() 
+    IEnumerator BulletShoot()
     {
         yield return new WaitForSeconds(bulletInitWait);
 
@@ -45,10 +51,15 @@ public class FourDirBullet : MonoBehaviour
             SFXManager.Instance.PlaySFX(SFXType.BulletSpawnerShot);
         }
 
-        Destroy(gameObject, bulletLifeTime);
+        yield return new WaitForSeconds(bulletLifeTime);
+        
+        // 포톤네트워크로 실행했기 때문에 
+        // 포톤네트워크로 삭제 가능
+        if (view.IsMine)
+            PhotonNetwork.Destroy(gameObject);
     }
 
-    [PunRPC]
+        [PunRPC]
     public void RPC_ShootBasciBullet(Vector2 dir)
     {
         GameObject bullet = Instantiate(basicBullet, transform.position, Quaternion.identity);
@@ -58,4 +69,5 @@ public class FourDirBullet : MonoBehaviour
         }
         catch (Exception e) { Debug.Log(e); }
     }
+
 }

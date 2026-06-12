@@ -283,19 +283,29 @@ MonoBehaviour:
   view: {fileID: 0}
   rb: {fileID: 0}
   ownerTrs: {fileID: 0}
-  spanwerAnimator: {fileID: 0}
+  spawnerAnimator: {fileID: 0}
   directType: 0
   canMove: 1
   spawnerData:
     type: 0
     speed: 0
+    bulletSpeed: 0
     smoothTime: 0
+    coolTimeMin: 0
+    coolTimeMax: 0
+    chargeTime: 0
+    chargeDuration: 0
+    bulletLifeTime: 0
+    bulletInterval: 0
+    bulletInitWait: 0
   shootPosiList:
   - {fileID: 7012863170819128065}
   - {fileID: 3084768534854923528}
   - {fileID: 1765651863176286510}
   - {fileID: 3896975381956233723}
   shootPosi: {fileID: 0}
+  fourDirBulletPrefab: {fileID: 5540976154961557365, guid: 94d4a03fd3187a4438760bf6981f2724, type: 3}
+  fourDirBullet: {fileID: 0}
 --- !u!95 &3319446283034669383
 Animator:
   serializedVersion: 5

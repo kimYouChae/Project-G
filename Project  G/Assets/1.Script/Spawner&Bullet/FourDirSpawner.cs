@@ -8,6 +8,9 @@ public class FourDirSpawner : NetSpawner
 {
     const string fourDirSpawnerName = "FourDirSpawnObj";
 
+    [SerializeField] GameObject fourDirBulletPrefab;
+    [SerializeField] GameObject fourDirBullet;
+
     public override void SettingBulletShootPosi()
     {
         SettingBulletShotPosi();
@@ -53,11 +56,17 @@ public class FourDirSpawner : NetSpawner
 
     private void CreateFourBulletObj(float ranX, float ranY) 
     {
-        // 네트워크 오브젝트 생성
-        var obj 
-            = PhotonNetwork.Instantiate(Define.DEFAULT_SPAWNER + fourDirSpawnerName, new Vector3(ranX, ranY, 0), Quaternion.identity);
+        if (!photonView.IsMine)
+            return;
 
-        obj.GetComponent<FourDirBullet>().SettingFourDirBullet(spawnerData.BulletInitWait, spawnerData.BulletLifeTime ,spawnerData.BulletSpeed);
+        // Four Dir Bullet 오브젝트는 RPC를 사용해야함
+        // Photon view가 있어야함 -> 포톤네트워크를 통해 생성해야 할당됨.
+        // RPC 방식으로 생성 X , 포톤 네트워크 인스턴스로 생성 O
+        // 데이터 동기화를 위한 object[]배열로 넘기기
+        object[] data = { spawnerData.BulletInitWait, spawnerData.BulletLifeTime, spawnerData.BulletSpeed };
+        var obj
+            = PhotonNetwork.Instantiate(Define.DEFAULT_SPAWNER + fourDirSpawnerName, 
+            new Vector3(ranX, ranY, 0), Quaternion.identity, 0, data);
 
         // sfx 실행 
         SFXManager.Instance.PlaySFX(SFXType.FourBulletObjPut);
