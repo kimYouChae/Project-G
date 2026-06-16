@@ -67,8 +67,10 @@ public class InGameUI : Singleton<InGameUI>
         // (실제시간) 애니메이션 끝날 때 까지 대기 
         yield return new WaitForSecondsRealtime(highlightTime * 1.5f);
 
-        // 게임 Over UI 켜기
+        // 게임 Over 패널 켜기
         gameoverPanel.SetActive(true);
+        // 게임 오버 UI ( "로딩중..."텍스트)
+        gameOverUI.OnOffGameContextTexts(false);
     }
 
 
