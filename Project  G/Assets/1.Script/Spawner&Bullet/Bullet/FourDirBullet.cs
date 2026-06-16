@@ -42,10 +42,10 @@ public class FourDirBullet : MonoBehaviour , IPunInstantiateMagicCallback
         if (view.IsMine)
         {
             // 총알생성 
-            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.up);
-            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.right);
-            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.left);
-            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.AllBuffered, Vector2.down);
+            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.All, Vector2.up);
+            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.All, Vector2.right);
+            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.All, Vector2.left);
+            view.RPC(nameof(RPC_ShootBasciBullet), RpcTarget.All, Vector2.down);
 
             // sfx 실행 
             SFXManager.Instance.PlaySFX(SFXType.BulletSpawnerShot);

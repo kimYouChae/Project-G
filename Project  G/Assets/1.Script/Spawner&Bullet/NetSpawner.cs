@@ -109,14 +109,14 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
 
     public void SettingParent(int index, DirType dir) 
     {
-        view.RPC(nameof(RPC_SetParentTransform), RpcTarget.AllBuffered, index, dir);
+        view.RPC(nameof(RPC_SetParentTransform), RpcTarget.All, index, dir);
     }
 
     public void SettingOwner(int viewId, DirType type) 
     {
         // this.ownerTrs = trs;
         // owner 지정은 RPC : view아이디는 로컬의 플레이어 id
-        view.RPC(nameof(RPC_SettingOwner), RpcTarget.AllBuffered , viewId);
+        view.RPC(nameof(RPC_SettingOwner), RpcTarget.All, viewId);
     }
 
     protected void SettingOwnerFollowMoving() 
@@ -148,16 +148,16 @@ public abstract class NetSpawner : MonoBehaviourPun, IPunObservable , IPunInstan
         switch (directType)
         {
             case DirType.Left:
-                view.RPC(nameof(RPC_SettingAngle), RpcTarget.AllBuffered, DirType.Right);
+                view.RPC(nameof(RPC_SettingAngle), RpcTarget.All, DirType.Right);
                 break;
             case DirType.Right:
-                view.RPC(nameof(RPC_SettingAngle), RpcTarget.AllBuffered, DirType.Left);
+                view.RPC(nameof(RPC_SettingAngle), RpcTarget.All, DirType.Left);
                 break;
             case DirType.Top:
-                view.RPC(nameof(RPC_SettingAngle), RpcTarget.AllBuffered, DirType.Bottom);
+                view.RPC(nameof(RPC_SettingAngle), RpcTarget.All, DirType.Bottom);
                 break;
             case DirType.Bottom:
-                view.RPC(nameof(RPC_SettingAngle), RpcTarget.AllBuffered, DirType.Top);
+                view.RPC(nameof(RPC_SettingAngle), RpcTarget.All, DirType.Top);
                 break;
         }
     }

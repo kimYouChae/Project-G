@@ -105,13 +105,19 @@ public class PhotonSceneManager : Singleton<PhotonSceneManager>
         return SceneType.Game_Forest;
     }
 
-    public void ChangeScene(SceneType type) 
+    public void ChangeScene(SceneType type)
     {
-        nowSceneType = type;    
+        nowSceneType = type;
         nowSceneName = Define.sceneNames[type];
 
         if (nowSceneName == null)
             return;
+
+        if (type == SceneType.Lobby && PhotonNetwork.IsMasterClient)
+        {
+            foreach (var player in PhotonNetwork.PlayerList)
+                PhotonNetwork.RemoveRPCs(player);
+        }
 
         PhotonNetwork.LoadLevel(nowSceneName);
     }

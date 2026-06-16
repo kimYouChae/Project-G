@@ -40,7 +40,7 @@ public class BasicSpawner : NetSpawner
                 spawnerAnimator.ChangeAttackAnimation(SpawnerAnimState.Attack, true);
 
                 // 총알발사 
-                view.RPC(nameof(RPC_ShootBullet), RpcTarget.AllBuffered);
+                view.RPC(nameof(RPC_ShootBullet), RpcTarget.All);
 
                 // sfx 실행
                 SFXManager.Instance.PlaySFX(SFXType.BulletSpawnerShot);

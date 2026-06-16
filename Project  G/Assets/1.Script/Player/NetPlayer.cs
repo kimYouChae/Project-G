@@ -196,7 +196,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     public void DiePlayer() 
     {
         // 사망 로직 동기화 
-        view.RPC(nameof(RPC_TriggerBullet), RpcTarget.AllBuffered, photonView.ViewID);
+        view.RPC(nameof(RPC_TriggerBullet), RpcTarget.All, photonView.ViewID);
 
         // 사망 사운드 ( 동기화 
         SFXManager.Instance.PlaySFX(SFXType.CharacterDeath);
