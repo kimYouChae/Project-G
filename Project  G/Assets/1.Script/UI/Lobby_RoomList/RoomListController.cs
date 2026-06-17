@@ -21,7 +21,7 @@ public class RoomListModel
     public bool isValue() 
     {
         // 범위 안에 있는지 
-        return currSelectRoomIndex >= 0 && currSelectRoomIndex <= PunLobbyManager.Instance.RoomLength;
+        return currSelectRoomIndex >= 0 && currSelectRoomIndex < PunLobbyManager.Instance.RoomLength;
     }
 }
 
@@ -54,7 +54,15 @@ public class RoomListController : ILobbyPanelInitionlize
         // SFX 실행
         SFXManager.Instance.PlaySFX(SFXType.UIClick);
 
+        // 현재 선택되어 있는 방의 select Image를 Off
+        if(roomListModel.currSelectRoomIndex != -1)
+            roomListView.OnOffRoomSelect(roomListModel.currSelectRoomIndex , false);
+
+        // curr room Index 설정 
         roomListModel.SetRoomIndex(idex);
+
+        // 선택된 방의 select Image를 ON
+        roomListView.OnOffRoomSelect(roomListModel.currSelectRoomIndex, true);
     }
 
     private void RefrechRoomList() 
@@ -64,6 +72,9 @@ public class RoomListController : ILobbyPanelInitionlize
 
         // 포톤 - 룸 정보 업데이트 
         PunLobbyManager.Instance.RefreshRoomList();
+
+        // 선택된 방 index 초기화
+        roomListModel.SetRoomIndex(-1);
 
         // 룸 정보로 오브젝트 생성
         roomListView.UpdateRoomList();

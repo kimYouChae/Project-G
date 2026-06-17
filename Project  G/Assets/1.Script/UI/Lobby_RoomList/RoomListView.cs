@@ -15,7 +15,8 @@ public class RoomListView : MonoBehaviour, ILocalizable
     [SerializeField] TMP_InputField passWordText;
 
     [SerializeField] GameObject roomInfoPrefab;     // ##TODO 나중에 Resource에서 가져오는걸로 바꿔보기 
-    [SerializeField] List<GameObject> roomObjList;
+    [SerializeField] List<GameObject> roomObjList;      // 방 오브젝트 리스트
+    [SerializeField] List<RoomInfoObject> roomInfoObjectList; // 방 오브젝트 클래스 리스트
 
     [SerializeField] GameObject content;    // 스크롤뷰의 콘텐츠
     [SerializeField] Button backButton;     // 뒤로가기 버튼 
@@ -50,12 +51,21 @@ public class RoomListView : MonoBehaviour, ILocalizable
         SelectRoomIndex?.Invoke(index);
     }
 
+    public void OnOffRoomSelect(int index, bool flag) 
+    {
+        if (index < 0 || index >= roomInfoObjectList.Count)
+            return;
+
+        roomInfoObjectList[index].OnOffSelectImage(flag);
+    }
+
     public void UpdateRoomList()
     {
         // 방은 몇개 없으니까 그냥 생성 + 파괴 해도될듯 ? 
         LobbyUIManager.Instance.DestoryListObject(roomObjList);
 
         roomObjList.Clear();
+        roomInfoObjectList.Clear();
 
         // 다시 룸(세선) 정보로 생성 
         for (int i = 0; i < PunLobbyManager.Instance.RoomInfoList.Count; i++)
@@ -66,23 +76,22 @@ public class RoomListView : MonoBehaviour, ILocalizable
             GameObject temp = Instantiate(roomInfoPrefab);
             temp.transform.SetParent(content.transform, false);
 
-            roomObjList.Add(temp);
-
-            // 제목 설정 
-            TextMeshProUGUI roomTitle = temp.GetComponentInChildren<TextMeshProUGUI>();
-            if (roomTitle != null)
-            {
-                object roomName;
-                roomInfo.CustomProperties.TryGetValue("RoomName", out roomName);
-                roomTitle.text = (string)roomName;
-            }
-
-            // 인덱스 설정
             RoomInfoObject infoObj = temp.GetComponentInChildren<RoomInfoObject>();
+            
+            roomObjList.Add(temp);
+            roomInfoObjectList.Add(infoObj);
+
+            // 정보 세팅
             if (infoObj != null)
             {
+                // 인덱스, view 세팅
                 infoObj.RoomObjectIndex = i;
                 infoObj.roomListView = this;
+
+                // 방 이름 세팅
+                object roomName;
+                roomInfo.CustomProperties.TryGetValue("RoomName", out roomName);
+                infoObj.SetRoomName((string)roomName);
             }
         }
 
