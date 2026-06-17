@@ -1,3 +1,4 @@
+using Photon.Pun;
 using Photon.Realtime;
 using Steamworks;
 using System;
@@ -114,5 +115,8 @@ public class FriendPopUP : UIPopUP
     {
         // 친구 초대 실행 
         SteamScript.Instance.InviteFriendByIndex(index);
+
+        // 팝업 끄기 
+        OffPanel();
     }
 }
