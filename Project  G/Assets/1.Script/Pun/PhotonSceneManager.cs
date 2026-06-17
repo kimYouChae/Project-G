@@ -115,8 +115,17 @@ public class PhotonSceneManager : Singleton<PhotonSceneManager>
 
         if (type == SceneType.Lobby && PhotonNetwork.IsMasterClient)
         {
+            // 아래의 동작은 LoadLevel전에 실행해야함 !! 
             foreach (var player in PhotonNetwork.PlayerList)
+            {
+                // PhotonNetwork.Instantiate로 생성된 오브젝트를 Room Cache에서 제거.
+                // 이걸 안 하면 재접속한 클라이언트가 로비씬에서 인게임 오브젝트를 재생성함.
+                PhotonNetwork.DestroyPlayerObjects(player);
+
+                // 인게임에서 쌓인 RPC 버퍼 초기화.
+                // 이걸 안 하면 재접속 시 로비씬에서 인게임 전용 RPC가 실행되어 NullRef 발생.
                 PhotonNetwork.RemoveRPCs(player);
+            }
         }
 
         PhotonNetwork.LoadLevel(nowSceneName);
