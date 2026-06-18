@@ -29,12 +29,15 @@ public class WaitingRoomController : ILobbyPanelInitionlize
         }
 
         // 방의 인원이 MaxCount와 같으면 
+        // 포톤 네트워크의 현재 방의 인원과
+        // 방이 만들어질 때 호스트가 지정한 max 인원을 비교
+        // ( max 인원은 서버에 저장됨 , 호스트가 나가서 다른 클라가 호스트가 되어도 접근가능 .) 
         int count = PhotonNetwork.CurrentRoom.PlayerCount;
-        if (count >= PhotonRoomInfo.MaxUser) 
+        if (count >= PhotonNetwork.CurrentRoom.MaxPlayers) 
         {
             TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
             string local = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Popup_RoomFull);
-            textPopUp.UpdateText($"{local}{PhotonRoomInfo.MaxUser}");
+            textPopUp.UpdateText($"{local}{PhotonNetwork.CurrentRoom.MaxPlayers}");
 
             return;
         }
@@ -66,11 +69,11 @@ public class WaitingRoomController : ILobbyPanelInitionlize
         if (PhotonNetwork.IsMasterClient)
         {
             // 방에 MAX 인원만큼 안 들어왔으면 -> PopUp 띄우기
-            if (PhotonRoomInfo.MaxUser != PhotonNetwork.CurrentRoom.PlayerCount)
+            if (PhotonNetwork.CurrentRoom.MaxPlayers != PhotonNetwork.CurrentRoom.PlayerCount)
             {
                 TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
                 string local = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Room_NotEnoughPlayers);
-                textPopUp.UpdateText($"{local}{PhotonRoomInfo.MaxUser}");
+                textPopUp.UpdateText($"{local}{PhotonNetwork.CurrentRoom.MaxPlayers}");
 
                 return;
             }
