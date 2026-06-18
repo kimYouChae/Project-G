@@ -195,7 +195,7 @@ public class SteamScript : Singleton<SteamScript>
 
 #if DEV_BUILD_TEST
         // 초기화
-        SteamUserStats.ClearAchievement("ACH_CLEAR_FOREST");
+        // SteamUserStats.ClearAchievement("ACH_CLEAR_FOREST");
         // 도전과제 클리어
         // SetSteamAchievement(AchieveType.Stage_Forest);
 #endif
