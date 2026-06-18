@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 public static class WebRequestCore
 {
-    private static int DefaultRequestTime = 5;
+    private static int DefaultRequestTime = 30;
 
     /// <summary>
     /// 
