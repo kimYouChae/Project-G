@@ -30,7 +30,7 @@ public static class PhotonRoomInfo
 public class PunLobbyManager : Singleton<PunLobbyManager>
 {
     // 생성된 방 정보
-    private List<RoomInfo> roomInfoList;
+    private List<RoomInfo> roomInfoList =  new List<RoomInfo>();
     
     public List<RoomInfo> RoomInfoList { get { return roomInfoList; } }
     public int RoomLength { get { return roomInfoList.Count; } }
@@ -153,6 +153,9 @@ public class PunLobbyManager : Singleton<PunLobbyManager>
     // 룸 목록 업데이트
     public void RefreshRoomList() 
     {
+        // 방 정보 리스트 초기화
+        roomInfoList.Clear();
+
         // 로비를 재접속 하는것 만으로 OnRoomListUpdate가 실행 x
         // 로비를 벗어났다가 N초후에 다시 재접속 
 

@@ -77,7 +77,7 @@ public class RoomListController : ILobbyPanelInitionlize
         roomListModel.SetRoomIndex(-1);
 
         // 룸 정보로 오브젝트 생성
-        roomListView.UpdateRoomList();
+        // roomListView.UpdateRoomList();
     }
 
     private void JoinRoom(string password) 
