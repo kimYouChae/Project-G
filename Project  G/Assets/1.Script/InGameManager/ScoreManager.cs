@@ -32,6 +32,9 @@ public class ScoreManager : Singleton<ScoreManager>
 
     private void Update()
     {
+        // MapRate가 세팅되기 전에 사용되어 Infinity ( float를 0으로 나눴을 때 오류 ) 가 발생하지 않도록 
+        if (MapDataManager.Instance.MapRate <= 0) return;
+
         if (!isReadyToCount)
             return;
 
