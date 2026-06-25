@@ -89,6 +89,8 @@ public class WebRankingService : IRankingService
     {
         Debug.Log($"[ {id} ] 에 해당하는 유저 랭킹 가져오기 실패! \n" +
             $" MapType: {(MapType)mapType}");
+
+        rankingModel.SetUserRanker(null);
     }
 
     private void GetRankersFailed(int mapType) 

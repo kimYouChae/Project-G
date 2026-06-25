@@ -87,6 +87,13 @@ public class LeaderBoardPopUp : UIPopUP
     {
         UserRankDTO myRank = GameServices.Instance.RankingModel.GetUserRanker();
 
+        if (myRank == null)
+        {
+            myrankLoadingText.text
+                = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Ranking_MyRank_Offline);
+            return;
+        }
+
         myrankLoadingText.text = "";
         uiContentsDetails.gameObject.SetActive(true);
 
