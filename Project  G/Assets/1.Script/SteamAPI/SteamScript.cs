@@ -20,12 +20,12 @@ public class SteamScript : Singleton<SteamScript>
 
     // 아이디별 유저 프로필 텍스쳐
     // 나를 제외한 다른 유저 프로필텍스쳐를 저장하는 용도
-    private Dictionary<ulong, Texture2D> steamIdByProfileTexture;
+    private Dictionary<long, Texture2D> steamIdByProfileTexture;
 
     // 친구창에 있는 친구 정보 담아놓은 배열
     private List<CSteamID> friendCSteamIDs;
     // 친구의 스팀아이디별 CSteamID 담아두는 컨테이너
-    private Dictionary<ulong, CSteamID> friendIdByStruct;
+    private Dictionary<long, CSteamID> friendIdByStruct;
 
     // 스팀 유저 데이터 가져온 뒤 실행할 액션
     private Action afterGetSteamUserAction;
@@ -37,9 +37,9 @@ public class SteamScript : Singleton<SteamScript>
 
     protected override void Singleton_Awake()
     {
-        steamIdByProfileTexture = new Dictionary<ulong, Texture2D>();
+        steamIdByProfileTexture = new Dictionary<long, Texture2D>();
         friendCSteamIDs = new List<CSteamID>();
-        friendIdByStruct = new Dictionary<ulong, CSteamID>();
+        friendIdByStruct = new Dictionary<long, CSteamID>();
 
         InitAchieveByApiContainer();
     }
@@ -115,7 +115,7 @@ public class SteamScript : Singleton<SteamScript>
         Debug.Log($"스팀에서 가져온 유저 정보 = {id} / {nickName} / {country} ");
 
         // SteamUserData에 추가 
-        SteamUserData.Instance.SteamID = id;
+        SteamUserData.Instance.SteamID = (long)id;
         SteamUserData.Instance.NickName = nickName;
         SteamUserData.Instance.Country = country;
     }
@@ -244,7 +244,7 @@ public class SteamScript : Singleton<SteamScript>
 
             // 컨테이너에 저장 
             friendCSteamIDs.Add(friend);
-            friendIdByStruct.Add(friend.m_SteamID, friend);
+            friendIdByStruct.Add((long)friend.m_SteamID, friend);
         }
     }
 
@@ -259,16 +259,16 @@ public class SteamScript : Singleton<SteamScript>
     public Texture2D ReturnProfileTexureByCSteamID(CSteamID id) 
     {
         // 딕셔너리에 일단 검사
-        if(steamIdByProfileTexture.ContainsKey(id.m_SteamID)) 
+        if(steamIdByProfileTexture.ContainsKey((long)id.m_SteamID)) 
         {
             // 있으면 저장된 프로필 리턴하기
-            return steamIdByProfileTexture[id.m_SteamID];
+            return steamIdByProfileTexture[(long)id.m_SteamID];
         }
 
         // 없으면 프로필 이미지 생성
         Texture2D profileImage = GetProfileImage(id);
         // 딕셔너리에 저장
-        steamIdByProfileTexture.Add(id.m_SteamID, profileImage);
+        steamIdByProfileTexture.Add((long)id.m_SteamID, profileImage);
 
         // 리턴
         if (profileImage != null) 

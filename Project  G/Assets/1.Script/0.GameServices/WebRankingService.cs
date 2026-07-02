@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 
 public class RequestUserRankDTO
 {
-    public string SteamId;
+    public long SteamId;
     public int MapType;
 }
 
@@ -50,7 +50,7 @@ public class WebRankingService : IRankingService
     {
         RequestUserRankDTO requestDTO = new RequestUserRankDTO()
         {
-            SteamId = myId.ToString(),
+            SteamId = myId,
             MapType = mapType
         };
 

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 #region DTO
 public class LoginRequestDTO
 {
-    public string SteamID;
+    public long SteamId;
     public string NickName;
     public string Country;
 }
@@ -46,7 +46,7 @@ public class WebAuthService : IAuthService
     {
         LoginRequestDTO loginRequestDTO = new LoginRequestDTO() 
         {
-            SteamID = steamID.ToString(),
+            SteamId = steamID,
             NickName = nick,
             Country = country
         };

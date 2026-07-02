@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 #region DTO
 public class AchieveProgressRequest
 {
-    public long SteamID;
+    public long SteamId;
 }
 public class AchieveProgressResponse
 {
@@ -32,7 +32,7 @@ public class WebUserProgressService : IUserProgressService
     {
         AchieveProgressRequest achieveProgress = new AchieveProgressRequest()
         {
-            SteamID = uid
+            SteamId = uid
         };
 
         string requestJson = JsonUtility.ToJson(achieveProgress);

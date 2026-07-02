@@ -21,16 +21,16 @@ public class SteamUserData
     private SteamUserData() { }
 
     [Header("Field")]
-    private ulong steamID;
+    private long steamID;
     private string nickName;
     private string country;
-    public ulong SteamID { get => steamID; set => steamID = value; }
+    public long SteamID { get => steamID; set => steamID = value; }
     public string NickName { get => nickName; set => nickName = value; }
     public string Country { get => country; set => country = value; }
 
     public long GetSteamID() 
     {
-        return (long) steamID;
+        return steamID;
 #if DEV_BUILD_TEST
         return 22463504765611990;
 #endif
