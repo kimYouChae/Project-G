@@ -51,7 +51,7 @@ public class WebAuthService : IAuthService
             Country = country
         };
 
-        string requestJson = JsonUtility.ToJson(loginRequestDTO);
+        string requestJson = JsonConvert.SerializeObject(loginRequestDTO);
 
         yield return WebRequestCore.CommonLogic<LoginResponseDTO>
             (

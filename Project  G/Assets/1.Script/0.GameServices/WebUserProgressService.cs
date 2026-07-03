@@ -35,7 +35,7 @@ public class WebUserProgressService : IUserProgressService
             SteamId = uid
         };
 
-        string requestJson = JsonUtility.ToJson(achieveProgress);
+        string requestJson = JsonConvert.SerializeObject(achieveProgress);
         yield return WebRequestCore.CommonLogic<List<AchieveProgressResponse>>
          (
              requestJson,

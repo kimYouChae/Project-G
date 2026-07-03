@@ -54,7 +54,7 @@ public class WebRankingService : IRankingService
             MapType = mapType
         };
 
-        string requestJson = JsonUtility.ToJson(requestDTO);
+        string requestJson = JsonConvert.SerializeObject(requestDTO);
 
         yield return WebRequestCore.CommonLogic<UserRankDTO>
         (
@@ -74,7 +74,7 @@ public class WebRankingService : IRankingService
             MapType = mapType
         };
 
-        string requestJson = JsonUtility.ToJson(requestDTO);
+        string requestJson = JsonConvert.SerializeObject(requestDTO);
 
         yield return WebRequestCore.CommonLogic<List<UserRankDTO>>
         (

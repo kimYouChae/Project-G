@@ -57,7 +57,7 @@ public class WebGameDataService : IGameDataService
             Stage = stage
         };
 
-        string requestJson = JsonUtility.ToJson(updateUserInfoDTO);
+        string requestJson = JsonConvert.SerializeObject(updateUserInfoDTO);
 
         yield return WebRequestCore.CommonLogic<BestScoreUpdateResponse>
         (
