@@ -9,7 +9,11 @@ public class ScreenShot : MonoBehaviour
 
     private void Start()
     {
-        SavePNG();
+        // SavePNG();
+
+        // WebRequest 테스트 코드 
+        // SteamId = 0 → LoginController.cs:28 → BadRequest "Invalid SteamID value"
+        StartCoroutine(GameServices.Instance.AuthService.AuthService(0, "test", "KR"));
     }
 
     public void SavePNG()
