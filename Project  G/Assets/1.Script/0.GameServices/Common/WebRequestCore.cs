@@ -43,7 +43,13 @@ public static class WebRequestCore
         // 요청보내기 (비동기)
         yield return request.SendWebRequest();
 
-        if (request.result != UnityWebRequest.Result.Success)
+        // 조건을 (!= UnityWebRequest.Result.Success)로 할 시 BadRequest 응답은 모두 걸린다
+        // > success =  false 응답을 처리하지 못함
+        // 수정 : ConnectionError (서버까지 닿지못함/연결끊김/타임아웃)
+        //      / DataProcessingError (DownloadHandler 처리 불가능)
+        // > success = false 응답 처리 가능 
+        if (request.result == UnityWebRequest.Result.ConnectionError
+            || request.result == UnityWebRequest.Result.DataProcessingError)
         {
             Debug.Log($"{requestUrl} : APi 응답에 실패 했습니다.");
 
