@@ -97,7 +97,10 @@ public static class WebRequestCore
 
         if (apiResponse.success == false)
         {
-            Debug.Log($"{typeof(T).Name} : 요청 실패 \n {responseText}");
+            string reason = apiResponse.error != null ? $"[{apiResponse.error.code}] {apiResponse.error.message}"
+                : $"[{request.responseCode}] 규격 밖 응답 \n {responseText}";
+
+            Debug.LogError($"{typeof(T).Name} 요청 실패 : {requestUrl} \n {reason}");
 
             // NetworkErrorAlert.AlertNetworkError(NetworkErrorType.Api);
             requestFailedAction?.Invoke();
