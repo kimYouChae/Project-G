@@ -53,17 +53,6 @@ public static class WebRequestCore
         {
             Debug.Log($"{requestUrl} : APi 응답에 실패 했습니다.");
 
-            NetworkErrorType type = request.result 
-                switch
-                {
-                    // 서버 연결 실패
-                    UnityWebRequest.Result.ConnectionError => NetworkErrorType.Connection,
-                   // 잘못된 응답 전송 ( 4xx / 5xx 에러 리턴 )
-                    UnityWebRequest.Result.ProtocolError => NetworkErrorType.Server,
-                    _ => NetworkErrorType.Server
-                };
-
-            // NetworkErrorAlert.AlertNetworkError(type);
             requestFailedAction?.Invoke();
             yield break;
         }
