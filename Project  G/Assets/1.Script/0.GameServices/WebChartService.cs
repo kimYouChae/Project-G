@@ -16,8 +16,8 @@ public class WebChartService : IChartService
     private int serverChartVersion;     // API로 리턴되는 차트 버전
     private bool getChartFailed;         // 차트Get 할 때 성공,실패 flag
 
-    private Dictionary<DataType, string> tempChartByjson;   // json 임시 저장용
-    private string cacheDir = Path.Combine(Application.persistentDataPath, "ChartCache"); // 임시 json 로컬 저장 경로
+    private Dictionary<DataType, string> tempChartByjson;   // json 저장용
+    private string cacheDir = Path.Combine(Application.persistentDataPath, "ChartCache"); // json 로컬 저장 경로
 
     public WebChartService(string url, string versionUrl)
     {
