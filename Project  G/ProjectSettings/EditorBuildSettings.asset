@@ -29,4 +29,5 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/0.Scenes/Backend.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: aa5d0610114ecc5488405b0f2d9549cd, type: 2}
