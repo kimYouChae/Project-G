@@ -41,6 +41,8 @@ public class ResourceManager : Singleton<ResourceManager>
 
     protected override void Singleton_Awake()
     {
+        SetUpDontDestroy();
+
         defaultSprite = ResourceLoaderGeneric.LoadAsset<Sprite>(resourcePath.GetPathEntity("DefaultSprite"));
         mapSprite = ResourceLoaderGeneric.LoadAssetAll<Sprite>(resourcePath.GetPathEntity("MapSprite"));
         characterSprite = ResourceLoaderGeneric.LoadAssetAll<Sprite>(resourcePath.GetPathEntity("CharacterSprite"));
