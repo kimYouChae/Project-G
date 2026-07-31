@@ -47,7 +47,11 @@ public class ResourcePath : ScriptableObject
             keyByPathEntity = new Dictionary<string, PathEntity>();
             foreach (var entity in entities) 
             {
-                keyByPathEntity.Add(entity.key, entity);
+                // 딕셔너리에 없으면 추가 
+                if (!keyByPathEntity.ContainsKey(entity.key))
+                {
+                    keyByPathEntity.Add(entity.key, entity);
+                }
             }
         }
 
