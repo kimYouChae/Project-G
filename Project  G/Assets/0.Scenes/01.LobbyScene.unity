@@ -20704,13 +20704,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 407859c1392a05e4a86439409eb8b958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourcePath: {fileID: 11400000, guid: 40874f1644fcbb54fad7ae9381442e69, type: 2}
+  resourcePath: {fileID: 11400000, guid: 22a6897bfc3ac034782cc1daeb071ede, type: 2}
   defaultSprite: {fileID: 0}
   mapSprite: []
   characterSprite: []
-  mixer: {fileID: 0}
-  sfxClip: []
-  bgmClip: []
   fallBackLocalizionTextfile: {fileID: 0}
   fallBackChartTextfile: []
 --- !u!1 &1752042143
