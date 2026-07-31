@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 742d7d7414504934fb54c8d01b865d97
   m_currentHash:
     serializedVersion: 2
-    Hash: ad55c6516fb24d550f4a34a137ff910e
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 6a0df5bdc544b13409b0c176c0facf39, type: 2}
   - {fileID: 11400000, guid: 5e6802d948bfd67469eb1fa25988c68f, type: 2}
+  - {fileID: 11400000, guid: 653a2021ace418e48b1773ca2b9123f6, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -80,7 +81,7 @@ MonoBehaviour:
       - m_Id: f72a3cab1248ff54e88d0de668302719
         m_Value: ServerData/[BuildTarget]
       - m_Id: 8bb70a2c427745f44b634cf89a297ea1
-        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+        m_Value: 
     m_ProfileEntryNames:
     - m_Id: c231e364285764648afaae5681d7f1eb
       m_Name: BuildTarget
@@ -101,6 +102,10 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - Sound
+    - Mixer
+    - BGM
+    - SFX
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 9f20f1658657c8c43a9f4b7adf5f7549, type: 2}
