@@ -2,6 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#region 어드레서블
+public enum AddressableLabelType
+{
+    Mixer,
+    BGM,
+    SFX,
+    None
+}
+
+#endregion
+
 #region PUN
 public enum PunEventType
 {

@@ -35,29 +35,37 @@ public class SFXManager : Singleton<SFXManager>
         // 정책 생성 
         sfxPolicy = new SFXPolicy();
 
-        // 오디오 클립 가져오기
-        InitAudioClip();
-
-        // 오디오 소스 세팅 
-        InitAudioSource();
+        // 믹서가 초기화 되기 전 > action에 등록 
+        if (!SoundManager.Instance.EndSetupMixers)
+        {
+            // 오디오 클립 세팅
+            SoundManager.Instance.RegisterAction(InitAudioClip);
+            // 오디오 소스 세팅 
+            SoundManager.Instance.RegisterAction(InitAudioSource);
+        }
+        else
+        {
+            InitAudioClip();
+            InitAudioSource();
+        }
     }
 
-    private void InitAudioClip()
+    private async void InitAudioClip()
     {
         try 
         {
-            // 리소스manager에서 클립 가져오기 
-            var clips = ResourceManager.Instance.GetSFXClip;
+            // 어드레서블 - 클립 가져오기 
+            var clips =
+                await AddressableManager.Instance.GetAddressableAssets<AudioClip>(AddressableLabelType.SFX);
 
-            // 클립이름은 enum의 type과 같아야 한다.
-            for (int i = 0; i < clips.Length; i++)
+            foreach (AudioClip clip in clips)
             {
-                string name = clips[i].name;
+                string name = clip.name;
                 // name에 해당하는 type
                 SFXType type = Extension.StringToEnum<SFXType>(name);
 
                 // 딕셔너리에 저장
-                typeByClip.Add(type, clips[i]);
+                typeByClip.Add(type, clip);
             }
         }
         catch(Exception e) { Debug.LogError(e); }

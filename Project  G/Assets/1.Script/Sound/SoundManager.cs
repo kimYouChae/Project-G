@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 using System;
 using System.Collections;
+using System.Threading.Tasks;
+using Unity.VisualScripting;
 
 public class SoundManager : Singleton<SoundManager>
 {
@@ -24,27 +26,56 @@ public class SoundManager : Singleton<SoundManager>
     const string SFX_MIXER_GROUP = "SFX";
     const string BGM_MIXER_GROUP = "BGM";
 
-    public AudioMixer AudioMixer { get => audioMixer; }
+    private Action afterLoadSources;
+    private bool endSetupMixers = false;
+
+    public bool EndSetupMixers => endSetupMixers;
+
+    public void RegisterAction(Action action) 
+    {
+        afterLoadSources += action;
+    }
 
     protected override void Singleton_Awake()
     {
-        // 오디오믹서, 사운드 볼륨 초기화
-        audioMixer = ResourceManager.Instance.GetAudioMixer;
+
+    }
+
+    private async void Start()
+    {
+        // 사운드 볼륨 초기화
         soundVolume = new SoundVolume();
 
+        // 믹서 세팅 
+        await SetupMixer();
+
+        // 믹서 세팅 후 - action실행
+        afterLoadSources?.Invoke();
+
+        // 믹서 세팅 후 - 볼륨 변경 
+        ChangeVolume();
+    }
+
+    private async Task SetupMixer() 
+    {
+        // 믹서 비동기로 불러오기 
+       audioMixer
+        = await AddressableManager.Instance.GetAddressableAsset<AudioMixer>(AddressableLabelType.Mixer);
+
+        // 믹서그룹 세팅 
         if (audioMixer != null)
         {
             sfxMixerGroup = audioMixer.FindMatchingGroups(SFX_MIXER_GROUP)[0];
             bgmMixerGroup = audioMixer.FindMatchingGroups(BGM_MIXER_GROUP)[0];
         }
 
-        StartCoroutine(Temp());
+        // 믹서그룹 세팅 완료 
+        endSetupMixers = true;
     }
 
-    IEnumerator Temp() 
-    {
-        yield return null;
 
+    private void ChangeVolume() 
+    {
         // 플레이어프리팹에 저장되어 있는 볼룸으로 변경 필요
         ChangeVolumeByType(SoundType.Master, soundVolume.MasterVolume);
         ChangeVolumeByType(SoundType.BGM, soundVolume.BGMVolume);
@@ -52,6 +83,7 @@ public class SoundManager : Singleton<SoundManager>
     }
 
 
+    // Soundmanager의 믹서그룹이 세팅되고 난 후 실행해야 적절히 들어감 
     public void SettingAudioMixerOutput(AudioSource source, SoundType soundType) 
     {
         // bgm 오디오 믹서그룹 설정 
