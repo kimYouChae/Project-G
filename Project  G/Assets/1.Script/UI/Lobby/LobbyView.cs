@@ -49,7 +49,7 @@ public class LobbyView : MonoBehaviour, ILocalizable
         achivementButton.onClick.AddListener(() => AchieveAction?.Invoke());
         characterSelectButton.onClick.AddListener(() => CharacterSelectAction?.Invoke());
         rankButton.onClick.AddListener(() => RankAction?.Invoke());
-        buyCoffeButton.onClick.AddListener(()=>BuyCoffeeAction?.Invoke());
+        // buyCoffeButton.onClick.AddListener(()=>BuyCoffeeAction?.Invoke());
     }
 
     public void RegisterCreateHostRoom(Action action) { CreatHostRoomAction += action;}
