@@ -10,14 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51f831a9684db9d4cb688fada05b887a, type: 3}
-  m_Name: Resource Data
+  m_Name: Resource Path
   m_EditorClassIdentifier: 
-  defaultSpritePath: DefaultSprite
-  mapSpritePath: MapSprite
-  characterSpritePath: CharacterSprite
-  soundPath: Sound
-  audioMixerPath: Mixer
-  sfxPath: SFX
-  bgmPath: BGM
-  fallBackLocalizationData: LocalizationChart
-  fallBackChartData: ChartFallback
+  entities:
+  - method: 0
+    key: DefaultSprite
+    value: DefaultSprite
+  - method: 1
+    key: MapSprite
+    value: MapSprite
+  - method: 1
+    key: CharacterSprite
+    value: CharacterSprite
+  - method: 0
+    key: FallBackLocalization
+    value: LocalizationChart
+  - method: 1
+    key: FallBackChart
+    value: ChartFallback
