@@ -15,7 +15,7 @@ MonoBehaviour:
   entities:
   - method: 0
     key: DefaultSprite
-    value: DefaultSprite
+    value: DefaultSprite/DefaultSprite
   - method: 1
     key: MapSprite
     value: MapSprite
