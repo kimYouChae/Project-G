@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -35,22 +36,26 @@ public class SFXManager : Singleton<SFXManager>
         // 정책 생성 
         sfxPolicy = new SFXPolicy();
 
-        // 믹서가 초기화 되기 전 > action에 등록 
+        // 믹서가 초기화 되기 전 > 체인에 등록 
         if (!SoundManager.Instance.EndSetupMixers)
         {
-            // 오디오 클립 세팅
-            SoundManager.Instance.RegisterAction(InitAudioClip);
-            // 오디오 소스 세팅 
-            SoundManager.Instance.RegisterAction(InitAudioSource);
+            // 초기화 로직 세팅
+            SoundManager.Instance.RegisterAction(SettingSFX);
         }
         else
         {
-            InitAudioClip();
-            InitAudioSource();
+            _ = SettingSFX();
         }
     }
 
-    private async void InitAudioClip()
+    private async Task SettingSFX() 
+    {
+        await InitAudioClip();
+        InitAudioSource();
+
+    }
+
+    private async Task InitAudioClip()
     {
         try 
         {

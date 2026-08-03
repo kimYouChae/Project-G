@@ -25,25 +25,30 @@ public class BGMManager : Singleton<BGMManager>
     private const float DEFAULT_FADE_TIME = 0.5f;
     private const bool DEFAULT_LOOP = true;
 
-
     protected override void Singleton_Awake()
     {
         typeBySource = new Dictionary<BGMType, AudioSource>();
         typeByClip = new Dictionary<BGMType, AudioClip>();
 
-        // 믹서가 초기화 되기 전 > action에 등록 
+        // 믹서가 초기화 되기 전 > 체인에 등록 
         if (!SoundManager.Instance.EndSetupMixers)
         {
-            // 오디오 클립 세팅
-            SoundManager.Instance.RegisterAction(InitAudioClip);
-            // 오디오 소스 세팅 
-            SoundManager.Instance.RegisterAction(InitAudioSource);
+            // 초기화 로직 세팅 
+            SoundManager.Instance.RegisterAction(SettingBGM);
         }
         else 
         {
-            InitAudioClip();
-            InitAudioSource();
+            _ = SettingBGM();
         }
+    }
+
+    private async Task SettingBGM() 
+    {
+        await InitAudioClip();
+        InitAudioSource();
+
+        // 초기화 후 BGM 실행
+        PlayBGM(BGMType.Title);
     }
 
     private void InitAudioSource() 
@@ -70,7 +75,7 @@ public class BGMManager : Singleton<BGMManager>
         }
     }
 
-    private async void InitAudioClip()
+    private async Task InitAudioClip()
     {
         try
         {
@@ -106,7 +111,6 @@ public class BGMManager : Singleton<BGMManager>
 
     public void PlayBGM(BGMType bgmType)
     {
-        Debug.Log($"[{nameof(BGMManager)}] BGM실행 : type {bgmType}");
 
         // 실행되고 있으면 중지 
         StopBGM();
@@ -118,6 +122,13 @@ public class BGMManager : Singleton<BGMManager>
             Debug.LogWarning($"[{nameof(BGMManager)}] 오디오 소스 할당 실패");
             return;
         }
+        if (nowAudioSource.clip == null) 
+        {
+            Debug.LogWarning($"[{nameof(BGMManager)}] BGM 클립 할당 실패");
+            return;
+        }
+        
+        Debug.Log($"[{nameof(BGMManager)}] BGM실행 : type {bgmType}");
 
         // 1-1. 세팅
         nowAudioSource.loop = DEFAULT_LOOP;

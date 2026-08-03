@@ -26,19 +26,19 @@ public class SoundManager : Singleton<SoundManager>
     const string SFX_MIXER_GROUP = "SFX";
     const string BGM_MIXER_GROUP = "BGM";
 
-    private Action afterLoadSources;
+    private Func<Task> afterLoadSources;
     private bool endSetupMixers = false;
 
     public bool EndSetupMixers => endSetupMixers;
 
-    public void RegisterAction(Action action) 
+    public void RegisterAction(Func<Task> action) 
     {
         afterLoadSources += action;
     }
 
     protected override void Singleton_Awake()
     {
-
+        
     }
 
     private async void Start()
@@ -49,8 +49,14 @@ public class SoundManager : Singleton<SoundManager>
         // 믹서 세팅 
         await SetupMixer();
 
-        // 믹서 세팅 후 - action실행
-        afterLoadSources?.Invoke();
+        // 믹서 세팅 후 - Task들 순서대로 실행 
+        if (afterLoadSources != null) 
+        {
+            foreach (Func<Task> source in afterLoadSources.GetInvocationList()) 
+            {
+                await source();
+            }
+        }
 
         // 믹서 세팅 후 - 볼륨 변경 
         ChangeVolume();
