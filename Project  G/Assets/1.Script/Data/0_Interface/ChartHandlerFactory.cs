@@ -22,11 +22,11 @@ public class ChartHandlerFactory
     private ChartHandlerFactory() 
     {
         // 차트가 추가되면 이 부분에 차트 이름 - 해당 클래스 생성 필요! 
+        // (+) 맵별 스포너 차트는 WebChartService에서 직접 처리
         keyValuePairs = new Dictionary<DataType, ICharHandler>()
         {
             { DataType.Map , new MapChart()},
             { DataType.Spawner , new SpawnerChart()},
-            { DataType.Stage_Forest_SpawnerInfo , new StageChart()},
             { DataType.Localization_basic, new LocalizationChart()},
             { DataType.Localization_Ingame, new LocalizationChart() },
             { DataType.Localization_Player, new LocalizationChart() },

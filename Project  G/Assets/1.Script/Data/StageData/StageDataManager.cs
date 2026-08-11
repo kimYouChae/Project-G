@@ -43,20 +43,31 @@ public class StageDataManager : Singleton<StageDataManager>
     // 현재 스테이지 최대 번호
     [SerializeField] private int stageDataMaxLength = -1;
 
+    // mapType별 StageData
+    private Dictionary<MapType, StageData> mapTypeByData;
+
     public int StageDataMaxLength { get => stageDataMaxLength; }
 
     protected override void Singleton_Awake()
     {
+        mapTypeByData = new Dictionary<MapType, StageData>();
+
         quOneList = new List<StageData>();
         quTwoList = new List<StageData>();
     }
 
-    public void AddToData(StageData d) 
+    public void AddToData(StageData data, MapType type) 
     {
-        if(d.QuadrantType == QuadrantType.one)
-            quOneList.Add(d);
-        else if(d.QuadrantType== QuadrantType.two)
-            quTwoList.Add(d);
+        // 딕셔너리에 추가 
+        if ( !mapTypeByData.ContainsKey(type)) 
+        {
+            mapTypeByData.Add(type, data);
+        }
+
+        if(data.QuadrantType == QuadrantType.one)
+            quOneList.Add(data);
+        else if(data.QuadrantType== QuadrantType.two)
+            quTwoList.Add(data);
 
         stageDataMaxLength = Math.Max(quOneList.Count, stageDataMaxLength);
     }

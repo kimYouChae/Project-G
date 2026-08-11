@@ -4,9 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageChart : ICharHandler
+/// <summary>
+/// Map 관련 파서는 "ChartHandlerFactory"클래스 안에 속할일이 없음
+/// -> MapType기준으로 돌아가기 때문에
+/// 
+/// 그래서 interface 구현을 삭제함 
+/// </summary>
+public static class StageChart
 {
-    public void IParseAndStore(string jsonStr)
+    public static void ParseAndStoreMapData(string jsonStr, MapType type)
     {
         List<StageData> datalist;
         datalist = JsonConvert.DeserializeObject<List<StageData>>(jsonStr);
@@ -20,7 +26,7 @@ public class StageChart : ICharHandler
         for (int i = 0; i < datalist.Count; i++)
         {
             StageData data = datalist[i];
-            StageDataManager.Instance.AddToData(data);
+            StageDataManager.Instance.AddToData(data, type);
         }
     }
 }

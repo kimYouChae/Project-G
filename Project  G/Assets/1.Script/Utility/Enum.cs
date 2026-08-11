@@ -44,7 +44,6 @@ public enum DataType
     Localization_Temp,
     Map,
     Spawner,
-    Stage_Forest_SpawnerInfo,
     GameConfig,
     PlayerStatus
 }
