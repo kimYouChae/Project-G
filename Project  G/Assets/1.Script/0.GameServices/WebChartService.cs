@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 
@@ -288,6 +287,9 @@ public class WebChartService : IChartService
                 (obj) => ParsingMap(obj, type),
                 null
             );
+
+        // 실패 Action을 null
+        // -> 해당 맵만 데이터가 없는 상태가 되고, StageDataManager의 HasMapData()에서 잠긴 맵으로 처리됨
     }
 
     // 맵 파싱 메서드
