@@ -1,5 +1,0 @@
-spawnerType,speed,bulletSpeed,acceleration,coolTimeMin,coolTimeMax,chargeTime,chargeDuration,bulletLifeTime,bulletInterval,bulletInitWait
-BasicSpawner,5,3,0.5,3,5,0,0,0,0,0
-GuideMissileSpawner,0,3,0,5,7,0,0,3,0.5,0
-LaserSpawner,3,0,0.2,5,7,1,1,0,0,0
-FourDirSpawner,0,3,0,5,7,0,0,0.5,0,3

@@ -1,5 +1,0 @@
-characterType,moveSpeed,scoreAmount,scoreCooltime,shieldAngle,colorChangeInterval
-BasicCharacter,3,0,0,0,0
-ShieldCharacter,3,0,0,45,0
-ScoreCharacter,3,10,10,0,0
-InvincibleCharacter,3,0,0,0,0.1
