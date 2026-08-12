@@ -41,6 +41,12 @@ public class StageDataManager : Singleton<StageDataManager>
     private Dictionary<MapType, List<StageData>> quOneMapTypeByData; // 맵 타입별 (플레이어)1사분면 정보
     private Dictionary<MapType, List<StageData>> quTwoMapTypeByData; // 맵 타입별 (플레이어)2사분면 정보
 
+#if UNITY_EDITOR
+    // 인스펙터에서 확인용
+    [SerializeField] private List<StageData> forestStageData;
+    [SerializeField] private List<StageData> giganticTreeData;
+#endif
+
     protected override void Singleton_Awake()
     {
         quOneMapTypeByData = new Dictionary<MapType, List<StageData>>();
@@ -63,6 +69,13 @@ public class StageDataManager : Singleton<StageDataManager>
 
             quTwoMapTypeByData[type].Add(data);
         }
+
+#if UNITY_EDITOR
+        if (type == MapType.Forest)
+            forestStageData.Add(data);
+        else if(type == MapType.GiganticTree)
+            giganticTreeData.Add(data);
+#endif
     }
 
     public StageData StageData(MapType mapType, QuadrantType quType, int stage)
