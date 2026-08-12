@@ -79,7 +79,7 @@ public class CreateRoomController : ILobbyPanelInitionlize
     private void CreateRoom(string nameTitle) 
     {
         // model에 저장된 index (mapType)에 해당하는 데이터가 있는지 
-        if (StageDataManager.Instance.HasMapData((MapType)roomModel.currMapIndex))
+        if (!StageDataManager.Instance.HasMapData((MapType)roomModel.currMapIndex))
         {
             // 데이터 없으면 -> 팝업 띄우기 
             TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();

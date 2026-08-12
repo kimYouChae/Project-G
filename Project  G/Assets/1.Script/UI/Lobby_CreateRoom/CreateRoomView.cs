@@ -53,7 +53,8 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
     public void ChangeMapInfo(int index) 
     {
         // 맵 데이터가 있는지 여부 따라 lock이미지 on/off
-        mapLockImage.gameObject.SetActive(StageDataManager.Instance.HasMapData((MapType)index));
+        // 있으면(true) -> 이미지 끄기(false)
+        mapLockImage.gameObject.SetActive( !StageDataManager.Instance.HasMapData((MapType)index));
         // 이미지 세팅
         mapImage.sprite = ResourceManager.Instance.MapSprite(index);
         // 텍스트 세팅 
