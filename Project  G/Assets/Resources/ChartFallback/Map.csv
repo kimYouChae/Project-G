@@ -1,0 +1,7 @@
+MapType,Difficulty,MapContents,Rate
+Forest,Lower,제일 기본적인 맵입니다,15
+GiganticTree,Lower,나무로 둘러쌓여 있어 필드가 비교적 작습니다,15
+Market,Middle,시장 상인들이 사과를 던집니다,11
+Island,Middle,시간이 지날수록 섬이 가라앉습니다. 바다에 빠질 수 있으니 조심하세요!,11
+Hell,Upper,지옥의 생명체가 마구잡이로 던집니다,8
+IceVillage,Upper,넘어지지 않게 조심하세요! 플레이어의 이동속도가 대폭 증가합니다,8

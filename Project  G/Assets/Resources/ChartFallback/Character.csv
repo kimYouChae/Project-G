@@ -1,0 +1,5 @@
+charaterName,characterType,characterToolTip,achiveType
+신입 탐험가,BasicCharacter,모험의 시작을 함께하는 기본 플레이어.,None
+실드 나이트,ShieldCharacter,투사체를 막아내는 방패 플레이어.,Stage_Forest
+리워드 헌터,ScoreCharacter,일정 시간마다 자동으로 점수를 얻는 플레이어.,Stage_GiganticTree
+세이프가드,InvincibleCharacter,한 번의 무적으로 죽음을 초월하는 플레이어.,Stage_Island

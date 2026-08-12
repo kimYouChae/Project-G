@@ -1,0 +1,14 @@
+key,English,Korean,Japanese,Chinese
+WaitingRoom_FriendList,Friend List,친구 목록,フレンドリスト,好友列表
+WaitingRoom_StartGame,Start Game,게임 시작,ゲーム開始,开始游戏
+FriendPopup_Title,Friends,친구,フレンド,好友
+FriendPopup_Loading,Loading friend list...,친구목록을 불러오는 중입니다,フレンドリストを読み込み中です...,正在加载好友列表...
+Popup_OnlyHostCanInvite,Only the host can invite Steam friends.,방장만 스팀 친구를 초대할 수 있습니다,ホストのみがSteamフレンドを招待できます,只有房主可以邀请Steam好友
+Popup_NotMasterClient,You are not the master client.,마스터가 아닙니다,あなたはマスタークライアントではありません,你不是房主
+GameOver_ReturnToLobby,Return to Lobby,로비로 돌아가기,ロビーに戻る,返回大厅
+GameOver_BestScoreUpdateFailed,Failed to update best score.,최고 점수로 갱신 실패,ベストスコアの更新に失敗しました,最高分更新失败
+Popup_RoomFull,The room is full. Max players: ,방이 꽉 찼습니다. 방 최대 인원: ,部屋が満員です。最大人数：,房间已满。最大人数：
+Popup_ROOM_JOIN_FAILED_RETRY,Room join failed. Please try again.,방 입장 오류. 재시도해주세요,ルーム入場エラー。再試行してください,房间进入失败。请重试
+Popup_PASSWORD_NOT_ENTERED,Password not entered. Please enter it.,비밀번호 입력되지 않았습니다. 입력해주세요,パスワードが入力されていません。入力してください,未输入密码。请输入
+Popup_PASSWORD_INCORRECT,Incorrect password. Please try again.,비밀번호가 틀렸습니다. 다시 입력해주세요,パスワードが間違っています。再入力してください,密码错误。请重新输入
+RoomCreate_Fail,Failed to create room,방 생성에 실패했습니다,ルームの作成に失敗しました,创建房间失败

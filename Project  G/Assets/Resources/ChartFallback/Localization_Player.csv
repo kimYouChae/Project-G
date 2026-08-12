@@ -1,0 +1,13 @@
+key,English,Korean,Japanese,Chinese
+BasicCharacter_Name,Rookie Explorer,신입 탐험가,新人探検家,新手探险家
+BasicCharacter_ToolTip,A basic player who shares the beginning of the adventure.,모험의 시작을 함께하는 기본 플레이어.,冒険の始まりを共有する基本的なプレーヤーです。,一个分享冒险开始的基本玩家。
+ShieldCharacter_Name,Shield Night,실드 나이트,シールドナイト,盾夜
+ShieldCharacter_ToolTip,A shield player that prevents projectiles.,투사체를 막아내는 방패 플레이어.,発射を防ぐシールドプレーヤーです。,一款防止投射物的盾牌玩家。
+ScoreCharacter_Name,Reward Hunter,리워드 헌터,リワード·ハンター,奖励猎人
+ScoreCharacter_ToolTip,Players who automatically score points every time.,일정 시간마다 자동으로 점수를 얻는 플레이어.,プレイヤーは毎回自動的にポイントを獲得します。,每次自动得分的玩家。
+InvincibleCharacter_Name,Safeguard,세이프가드,セーフガード,保障
+InvincibleCharacter_ToolTip,One invincibly death-defying player.,한 번의 무적으로 죽음을 초월하는 플레이어.,無敵の死に立ち向かうプレイヤーです。,一位不可战胜的死亡挑战玩家。
+Stage_Forest_Title,Forest Stage Clear,숲 스테이지 클리어,森ステージクリア,森林舞台完成
+Stage_GiganticTree_Title,Giant Forest Stage Clear,거대 숲 스테이지 클리어,巨大森ステージクリア,完成巨大的森林舞台
+Stage_Island_Title,Island Stage Clear,섬 스테이지 클리어,サム·ステージ·クリア,岛屿舞台完成
+Stage,Stage,스테이지,ステージ,阶段

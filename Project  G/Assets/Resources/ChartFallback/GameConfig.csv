@@ -1,0 +1,4 @@
+key,value,description
+ScoreMultiplier,30,점수 배율 상수
+BgmFadeTime,0.5,BGM 페이드 시간
+SfxMinInterval,0.15,SFX 재실행 최소 대기

@@ -1,0 +1,47 @@
+key,English,Korean,Japanese,Chinese
+Server_Conneting,Connecting to server,서버에 연결 중,サーバーに接続中,连接到服务器
+Enter_AnyKey,Press any key to start,시작하려면 아무 키나 누르세요,開始するには任意のキーを押してください,请按任意键开始
+LoadingData,Loading data,데이터 로딩 하는 중,データロード中,正在加载数据
+Lobby_CreateRoom,Create a room,방 생성,防食性,创建房间
+Lobby_EnterRoom,Participating in the room,방 참가하기,部屋の参加,参加房间
+Lobby_Score,Look at the score,점수 보기,点数を見る,显示分数
+Lobby_Ranking,Ranking,랭킹,ランキング,排名
+Lobby_Setting,Setting,설정,設定,设置
+Lobby_Exit,Get out,나가기,出掛ける,退出
+Map_Forest,Forest,숲,森,树林
+Map_GiganticTree,Giant forest,거대 숲,巨大森,巨大的树林
+Map_Market,Market,마켓,マーケット,市场
+Map_Island,Island,섬,サム,蟾
+Map_Hell,Hell,지옥,地獄,地狱
+Map_IceVillage,Ice village,얼음 마을,氷の村,冰镇
+CreateRoom_RoomName,Name of the room,방 이름,部屋名,房间名
+CreateRoom_Password,Password,비밀번호,パスワード,密码
+Restart,Restarting,재시작하기,再起動,重新启动
+Restart_Tooltip,Internet Connection Lost! Restart,인터넷 연결이 끊겼습니다! 재시작하세요,インターネット接続が切れました！ 再起動してください,网络连接中断了！ 请重新启动
+NickName_Input,Type nicknames,닉네임 입력,ニックネーム入力,输入昵称
+Input,Enter,입력하기,入力,输入
+RoomList_Refresh,Refresh,새로고침,リロード,重新装入
+RoomList_InputPassword,Please enter your PIN number.,비밀번호를 입력하세요,パスワードを入力してください,请输入密码。
+RoomList_EnterRoom,Participating in the room,방 참가하기 ,部屋の参加,参加房间
+Waiting_StartGame,Getting started,시작하기,始めること,启动
+Popup_CreateRoomFailed,Failed to create room. Please try again,방 생성 실패. 다시 시도해 주세요,防食失敗。 もう一度お試しください,生成房间失败。 请再试一次
+Popup_PasswordCopyFailed,Please copy the password (copy and send it to your friend),비밀번호를 복사해 주세요 (복사 후 친구에게 전송),暗証番号をコピーしてください（コピー後友達に転送）,请复制密码( 复制后发送给朋友)
+Popup_RoomNameEmpty,Please enter your room name,방 이름을 입력해 주세요,部屋の名前を入力してください,请输入房间名
+Setting_Master,Master Volume,마스터 볼륨,マスターボリューム,主卷
+Setting_SFX,Sound effect,효과음,効果音,效果音
+Setting_BGM,Background music,배경 음악,バックミュージック,背景音乐
+Setting_Sound,Sound,사운드,サウンド,声音
+Setting_Language,Language,언어,げんご,语言
+Achievement,Challenge,도전과제,チャレンジ,挑战
+Character,Character,캐릭터,キャラクター.,角色
+Select,Select,선택,せんたく,挑
+Achievement_Offline,Failed to load achievement information. Please try again later.,도전과제 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.,无法加载成就信息。请稍后重试。,実績情報を読み込めませんでした。しばらくしてからもう一度お試しください。
+Character_Offline,Failed to load character information. Please try again later.,캐릭터 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.,无法加载角色信息。请稍后重试。,キャラクター情報を読み込めませんでした。しばらくしてからもう一度お試しください。
+Ranking_MyRank_Offline,Failed to load your ranking information. Please try again later.,내 랭킹 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.,无法加载我的排名信息。请稍后重试。,自分のランキング情報を読み込めませんでした。しばらくしてからもう一度お試しください。
+Ranking_RankerList_Offline,Failed to load the ranking list. Please try again later.,랭킹 목록을 불러올 수 없습니다. 잠시 후 다시 시도해주세요.,无法加载排行榜列表。请稍后重试。,ランキング一覧を読み込めませんでした。しばらくしてからもう一度お試しください。
+GameOver_Offline,Failed to load the best record. Please try again later.,최고 기록을 불러올 수 없습니다. 잠시 후 다시 시도해주세요.,无法加载最高记录。请稍后重试。,最高記録を読み込めませんでした。しばらくしてからもう一度お試しください。
+Lobby_ServerOffline,Unable to connect to the server. Please try again later.,서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.,无法连接到服务器。请稍后重试。,サーバーに接続できませんでした。しばらくしてからもう一度お試しください。
+Map_DataError,Failed to load map data. Please re-enter the room.,맵 데이터를 불러올 수 없습니다. 방에 다시 입장해주세요.,无法加载地图数据。请重新进入房间。,マップデータを読み込めませんでした。ルームに再入場してください。
+Map_NotAvailable,This map is not available yet. Please select another map.,아직 이용할 수 없는 맵입니다. 다른 맵을 선택해주세요.,该地图暂未开放，请选择其他地图。,このマップはまだ利用できません。別のマップを選択してください。
+Room_NotEnoughPlayers,The minimum number of players has not been met. Required Players: ,최소 인원을 충족하지 못했습니다. 필요 인원: ,未达到最低玩家人数要求。所需人数：,最低人数を満たしていません。必要人数：
+Saving_In_Progress,Saving...,저장 중입니다...,正在保存中...,保存中です...
