@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -55,16 +56,14 @@ public class WebChartService : IChartService
         if (serverChartVersion == -1)
         {
             // 차트 fall back 실행
-            GetCacheChart<DataType>(TypeByChartHandler);
-            GetCacheChart<MapType>(TypeByChartHandler);
+            UseCacheOrFallback();
             yield break;
         }
 
         // 2. 버전이 같으면 -> 차트 캐시 사용
         if (serverChartVersion == localChartVersion)
         {
-            GetCacheChart<DataType>(TypeByChartHandler);
-            GetCacheChart<MapType>(TypeByChartHandler);
+            UseCacheOrFallback();
             yield break;
         }
 
@@ -78,8 +77,7 @@ public class WebChartService : IChartService
         if (getChartFailed)
         {
             // 차트 fall back 실행
-            GetCacheChart<DataType>(TypeByChartHandler);
-            GetCacheChart<MapType>(TypeByChartHandler);
+            UseCacheOrFallback();
             yield break;
         }
 
@@ -133,31 +131,25 @@ public class WebChartService : IChartService
         }
     }
 
-    private void GetCacheChart<T>(Action<T, string> pars)
-        where T : Enum
+
+    /// <summary>
+    /// 텍스트에셋의 이름은 모두 type의 이름과 동일함! 
+    /// ex) MapType의 Forest관련 텍스트에셋 : Forest.text 등등
+    /// </summary>
+    private void UseCacheOrFallback()
     {
         // 1. 로컬에 저장된 JSON파일이 있는지 
         string cacheDir = Path.Combine(Application.persistentDataPath, "ChartCache");
 
         // 1. 캐시 있으면 캐시 사용
         if (Directory.Exists(cacheDir)
-             && Directory.GetFiles(cacheDir).Length > 0)
+             && Directory.GetFiles(cacheDir).Length > 0) 
         {
-            // persistentDataPath에서 읽기
-            T[] array = (T[])Enum.GetValues(typeof(T));
-            for (int i = 0; i < array.Length; i++)
-            {
-                string path = Path.Combine(cacheDir, $"{array[i]}.json");
-                if (File.Exists(path))
-                {
-                    pars?.Invoke(array[i], File.ReadAllText(path));
-                }
-            }
+            LoadCache<DataType>(TypeByChartHandler);
+            LoadCache<MapType>(TypeByChartHandler);
 
-            Debug.Log($"[WebChartService] : 로컬 캐시 사용");
             return;
         }
-
 
         Debug.Log($"[WebChartService] : (!!) Resource 하위 Json에 접근");
         // 2. 캐시가 없으면 Resource 하위 json에 접근 (완전 최후의 방법)
@@ -165,12 +157,45 @@ public class WebChartService : IChartService
 
         for (int i = 0; i < textAssets.Length; i++)
         {
-            T type = Extension.StringToEnum<T>(textAssets[i].name);
+            // 텍스트에셋이름을 enum으로 타입변경
+            // -> DataType와 MapType에 해당하는 메서드 각각 실행
 
-            pars?.Invoke(type, textAssets[i].text);
+            string name = textAssets[i].name;
+
+            if (Enum.TryParse(name, out DataType dataType)
+                && Enum.IsDefined(typeof(DataType), dataType))
+            {
+                TypeByChartHandler(dataType, textAssets[i].text);
+            }
+            else if (Enum.TryParse(name, out MapType mapType)
+                && Enum.IsDefined(typeof(MapType), mapType))
+            {
+                TypeByChartHandler(mapType, textAssets[i].text);
+            }
+            
         }
     }
 
+    private void LoadCache<T>(Action<T, string> pars)
+        where T : Enum
+    {
+        // 각 path에 맞는 json만 가져옴
+        // ex) T가 MapType , path가 .../Forest.json 
+        // 일 때 해당 json파일만 가져옴
+
+        T[] array = (T[])Enum.GetValues(typeof(T));
+        for (int i = 0; i < array.Length; i++)
+        {
+            string path = Path.Combine(cacheDir, $"{array[i]}.json");
+            if (File.Exists(path))
+            {
+                pars?.Invoke(array[i], File.ReadAllText(path));
+            }
+        }
+
+        Debug.Log($"[WebChartService] : 로컬 캐시 사용");
+        return;
+    }
 
     #region 버전 체크 메서드 
 
