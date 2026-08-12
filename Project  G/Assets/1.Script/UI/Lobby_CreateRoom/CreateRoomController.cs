@@ -78,10 +78,10 @@ public class CreateRoomController : ILobbyPanelInitionlize
 
     private void CreateRoom(string nameTitle) 
     {
-        // 만약 forest 제외 잠겨있는 맵이라면 -> pass
-        if ( roomModel.currMapIndex != (int)MapType.Forest)
+        // model에 저장된 index (mapType)에 해당하는 데이터가 있는지 
+        if (StageDataManager.Instance.HasMapData((MapType)roomModel.currMapIndex))
         {
-            // 팝업 띄우기 
+            // 데이터 없으면 -> 팝업 띄우기 
             TextPopUp textPopUp = UIManager.Instance.GetPopUP<TextPopUp>();
             textPopUp.UpdateText(LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Map_NotAvailable));
 
@@ -160,8 +160,6 @@ public class CreateRoomController : ILobbyPanelInitionlize
     {
         // 다른 panel -> 방 생성 패널 입장 시 
         ClearRoomInfo();
-
-        roomModel.currMapIndex = 0;
         roomView.ChangeMapInfo(roomModel.currMapIndex);
         roomView.EmptyRoomTitle();
     }

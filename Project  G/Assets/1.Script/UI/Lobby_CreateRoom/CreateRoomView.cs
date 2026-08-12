@@ -52,12 +52,11 @@ public class CreateRoomView : MonoBehaviour, ILocalizable
 
     public void ChangeMapInfo(int index) 
     {
-        if ((MapType)index != MapType.Forest)
-            mapLockImage.gameObject.SetActive(true);
-        else
-            mapLockImage.gameObject.SetActive(false);
-
+        // 맵 데이터가 있는지 여부 따라 lock이미지 on/off
+        mapLockImage.gameObject.SetActive(StageDataManager.Instance.HasMapData((MapType)index));
+        // 이미지 세팅
         mapImage.sprite = ResourceManager.Instance.MapSprite(index);
+        // 텍스트 세팅 
         mapTitle.text = LocalizationManager.Instance.MapNameReturn((MapType)index);
     }
 
