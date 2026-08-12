@@ -96,10 +96,12 @@ public class StageDataManager : Singleton<StageDataManager>
 
     public int StageDataMaxLength(MapType type) 
     {
+        // 한쪽이라도 데이터 없으면 -> 데이터 없음으로 판단 
         if( !quOneMapTypeByData.ContainsKey(type)
             || !quTwoMapTypeByData.ContainsKey(type))
             return 0;
 
+        // ##TODO : 사분면 별 스테이지 데이터의 갯수(행)이 다른 경우는 고려 안됨 
         // 그럴일이 없는데 만약 다르면 max로 리턴
         return Math.Max(quOneMapTypeByData[type].Count ,
             quTwoMapTypeByData[type].Count);
