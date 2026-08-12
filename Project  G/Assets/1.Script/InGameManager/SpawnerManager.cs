@@ -8,6 +8,7 @@ public class SpawnerManager : MonoBehaviour
     [SerializeField] private NetPlayer localNetPlayer;
     [SerializeField] private int localPlayerIndex;
 
+    private MapType currentMapType; // 현재 맵타입
     private Action<int> bulletSpawn;
 
     const string BASIC_BULLET_SPAWNER = "BulletSpawner";
@@ -20,6 +21,7 @@ public class SpawnerManager : MonoBehaviour
     private void Start()
     {
         bulletSpawn += Temp;
+
     }
 
     public void SetLocalPlayer(PhotonView local) 
@@ -28,6 +30,8 @@ public class SpawnerManager : MonoBehaviour
 
         localNetPlayer = localPlayer.GetComponent<NetPlayer>();
         localPlayerIndex = localNetPlayer.PlayerIndex;
+
+        currentMapType = PunIngameManager.Instance.GetMapType();
     }
 
     public void Temp(int stage) 
@@ -37,12 +41,12 @@ public class SpawnerManager : MonoBehaviour
         DirType dirType;
 
         // 스테이지데이터 길이와 stage가 넘어가면
-        if (stage > StageDataManager.Instance.StageDataMaxLength) 
+        if (stage > StageDataManager.Instance.StageDataMaxLength(currentMapType)) 
             return;
 
         // 플레이어 위치(qu)와 스테이지에 따른
         // 스테이지 데이터 가져오기
-        StageData data = StageDataManager.Instance.StageData(localNetPlayer.PlayerQuadtype, stage);
+        StageData data = StageDataManager.Instance.StageData(currentMapType, localNetPlayer.PlayerQuadtype, stage);
         if (data == null)
         {
             Debug.Log("스테이지Data가 NULL 입니다");

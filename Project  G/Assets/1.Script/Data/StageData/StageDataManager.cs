@@ -38,54 +38,78 @@ public class StageData
 
 public class StageDataManager : Singleton<StageDataManager>
 {
-    [SerializeField] private List<StageData> quOneList; // (플레이어)1사분면 정보
-    [SerializeField] private List<StageData> quTwoList; // (플레이어)2사분면 정보
-    // 현재 스테이지 최대 번호
-    [SerializeField] private int stageDataMaxLength = -1;
-
-    // mapType별 StageData
-    private Dictionary<MapType, StageData> mapTypeByData;
-
-    public int StageDataMaxLength { get => stageDataMaxLength; }
+    private Dictionary<MapType, List<StageData>> quOneMapTypeByData; // 맵 타입별 (플레이어)1사분면 정보
+    private Dictionary<MapType, List<StageData>> quTwoMapTypeByData; // 맵 타입별 (플레이어)2사분면 정보
 
     protected override void Singleton_Awake()
     {
-        mapTypeByData = new Dictionary<MapType, StageData>();
-
-        quOneList = new List<StageData>();
-        quTwoList = new List<StageData>();
+        quOneMapTypeByData = new Dictionary<MapType, List<StageData>>();
+        quTwoMapTypeByData = new Dictionary<MapType, List<StageData>>();
     }
 
     public void AddToData(StageData data, MapType type) 
     {
-        // 딕셔너리에 추가 
-        if ( !mapTypeByData.ContainsKey(type)) 
+        if (data.QuadrantType == QuadrantType.one)
         {
-            mapTypeByData.Add(type, data);
+            if (!quOneMapTypeByData.ContainsKey(type))
+                quOneMapTypeByData.Add(type, new List<StageData>());
+
+            quOneMapTypeByData[type].Add(data);
         }
+        else if(data.QuadrantType == QuadrantType.two) 
+        {
+            if (!quTwoMapTypeByData.ContainsKey(type))
+                quTwoMapTypeByData.Add(type, new List<StageData>());
 
-        if(data.QuadrantType == QuadrantType.one)
-            quOneList.Add(data);
-        else if(data.QuadrantType== QuadrantType.two)
-            quTwoList.Add(data);
-
-        stageDataMaxLength = Math.Max(quOneList.Count, stageDataMaxLength);
+            quTwoMapTypeByData[type].Add(data);
+        }
     }
 
-    public StageData StageData(QuadrantType type, int stage) 
+    public StageData StageData(MapType mapType, QuadrantType quType, int stage)
     {
-        if (stage - 1 < 0)
+        Dictionary<MapType, List<StageData>> dict =
+            (quType == QuadrantType.one) ? quOneMapTypeByData
+            : (quType == QuadrantType.two) ? quTwoMapTypeByData
+            : null;
+
+        if (dict == null)
         {
-            Debug.Log("인덱스가 0 미만"); 
+            Debug.Log($"[StageDataManager] 존재하지 않는 사분면 타입 {quType}");
             return null;
         }
 
-        if (type == QuadrantType.one)
-            return quOneList[stage - 1];
-        else if (type == QuadrantType.two)
-            return quTwoList[stage-1];
+        if (!dict.ContainsKey(mapType))
+        {
+            Debug.Log($"[StageDataManager] {mapType}에 해당하는 Stage 데이터가 없음");
+            return null;
+        }
 
-        return null;
+        if (stage > dict[mapType].Count || stage <= 0) 
+        {
+            Debug.Log($"[StageDataManager] 현재 스테이지 {stage}에 대한 정보가 없습니다");
+            return null;
+        }
+
+        // stage 정보는 항상 1부터 시작함 ( 1스테이지 -> 리스트[0]번째 데이터 리턴 )
+        return dict[mapType][stage - 1];
+    }
+
+    public int StageDataMaxLength(MapType type) 
+    {
+        if( !quOneMapTypeByData.ContainsKey(type)
+            || !quTwoMapTypeByData.ContainsKey(type))
+            return 0;
+
+        // 그럴일이 없는데 만약 다르면 max로 리턴
+        return Math.Max(quOneMapTypeByData[type].Count ,
+            quTwoMapTypeByData[type].Count);
+    }
+
+    public bool HasMapData(MapType type) 
+    {
+        // 맵 타입에 따른 데이터 여부
+        // 데이터가 있으면 true, 없으면 false
+        return StageDataMaxLength(type) > 0;
     }
 
 }
