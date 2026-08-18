@@ -1,7 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEngine;
+using Unity.VisualScripting;
+
+#region Map
+public interface IMapPattern 
+{
+    public void IMapPatternEnter(); // 맵 패턴 들어가서 1회 실행 
+
+    public MapType IGetMapType();
+}
+
+#endregion
 
 #region GameServies
 public interface IApiResult
