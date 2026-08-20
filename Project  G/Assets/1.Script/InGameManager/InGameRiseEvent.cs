@@ -138,6 +138,19 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             SFXManager.Instance.LocalPlaySFX((SFXType)sfxType);
         }
 
+        // 마켓 주민 생성
+        if (eventCode == (int)PunEventType.MerchantSpawn) 
+        {
+            Debug.Log("[MerchantSpawn] 주민생성 OnEvent실행");
+            object[] data = (object[])photonEvent.CustomData;
+
+            MerchantPatternType merchantType = (MerchantPatternType)data[0];
+            DirType dirType = (DirType)data[1];
+            Vector2 posi = new Vector2((int)data[2], (int)data[3]);
+
+            MapPatternManager.Instance.MarketMapPattern.GenerateMerchant(merchantType, dirType, posi);
+        }
+
             // (게임종료시) 점수, 스테이지 싱크 이벤트
             /*
             if (eventCode == (int)PunEventType.ScoreStageSync) 
@@ -153,6 +166,7 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
 
             }
             */
+
         }
 
     private IEnumerator AchieveLogic(long stemaId)
