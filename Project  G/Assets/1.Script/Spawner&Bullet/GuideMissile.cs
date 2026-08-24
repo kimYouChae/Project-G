@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GuideMissile : BaseBullet
+public class GuideMissile : OutOfBounds
 {
     [SerializeField] Rigidbody2D rb;
 

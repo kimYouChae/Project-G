@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class BasicBullet : BaseBullet
+public class BasicBullet : OutOfBounds
 {
     [SerializeField] Rigidbody2D rb;
 
