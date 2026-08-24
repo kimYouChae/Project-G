@@ -1,6 +1,7 @@
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using Steamworks;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,6 +13,9 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
     [SerializeField]
     private MapType mapType = MapType.Market;
 
+    [SerializeField]
+    private Transform merchantTrs; // 주민 오브젝트 담아둘 trs
+
     public MapType IGetMapType()
     {
         return mapType;
@@ -19,7 +23,7 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
 
     public void IMapPatternEnter()
     {
-        PatterLogin();
+        StartCoroutine(PatterLogin());
     }
 
     public IEnumerator PatterLogin() 
@@ -34,8 +38,10 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
         // 2사분변이면 왼쪽에 생성 ( 이동 : 왼쪽 > 오른쪽 )
         DirType dirtype = quType == QuadrantType.one ? DirType.Right : DirType.Left;
 
+        
+
         // 마켓 주민 생성 이벤트 송신
-        MerchantRaiseEvent( GetRandomMerchantType(), dirtype , GenerationPosi(dirtype) );
+        MerchantRaiseEvent( GetRandomMerchantType(), dirtype , GenerationPosi(dirtype) , StopRandX() );
     }
 
     private MerchantPatternType GetRandomMerchantType() 
@@ -45,17 +51,19 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
         return (MerchantPatternType)ran;
     }
 
-    private void MerchantRaiseEvent(MerchantPatternType mType, DirType dirtype, Vector2 randPosi)
+    private void MerchantRaiseEvent(MerchantPatternType mType, DirType dirtype, Vector2 randGenePosi , float stopRandX)
     {
         Debug.Log("[MerchantSpawn] 마켓 주민 생성 Raise Event");
 
-        // 주민 타입 , 주민 방향(DirType)
+        // 주민 타입 , 주민 방향(DirType) , 
+        // 생성할 랜덤 x/y 위치 , 멈출 랜덤 x 위치 ( 중간에서 만나는 주민도 사용 )
         object[] contcnt = new object[]
         {
             mType,
             dirtype,
-            randPosi.x,
-            randPosi.y,
+            randGenePosi.x,
+            randGenePosi.y,
+            stopRandX
         };
 
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
@@ -75,9 +83,18 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
         // 오른쪽 : x는 max
         // 왼쪽 : x는 min
         float x = dirtype == DirType.Right? Define.mapMaxX : Define.mapMinX;
-        float y = y = Random.Range(Define.mapMinY, Define.mapMaxY);
+        float y = Random.Range(Define.mapMinY, Define.mapMaxY);
 
         return new Vector2(x,y);
+    }
+
+    private float StopRandX() 
+    {
+        // 사분면 타입에 상관없이 왼쪽 ~ 오른쪽 필드 내에서 랜덤 위치 
+        float fieldMinX = Define.twoMemberFieldMin[QuadrantType.two].x;
+        float fieldMaxX = Define.twoMemberFieldMax[QuadrantType.one].x;
+
+        return Random.Range(fieldMaxX, fieldMaxX);
     }
 
     /// <summary>
@@ -87,9 +104,21 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
     /// / 생성 위치 
     ///     : 위치값에 따라 위치 랜덤 생성 후 동기화됨 
     /// </summary>
-    public void GenerateMerchant(MerchantPatternType merchantType, DirType dirtype, Vector2 posi) 
+    public void GenerateMerchant(MerchantPatternType merchantType, DirType dirtype, Vector2 randPosi, float stopX) 
     {
-        // GameObject merchat = Instantiate();
+        GameObject prefab = ResourceManager.Instance.MerchantObj(merchantType);
+
+        if (prefab != null)
+        {
+            GameObject merch = Instantiate(prefab);
+
+            // 위치지정
+            merch.transform.position = randPosi;
+            // 부모지정 
+            merch.transform.SetParent(merchantTrs);
+
+            merch.GetComponent<Merchant>().SetupMerchant(merchantType, dirtype, stopX);
+        }
     }
 
 }

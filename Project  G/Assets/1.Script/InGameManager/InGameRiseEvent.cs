@@ -146,9 +146,10 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
 
             MerchantPatternType merchantType = (MerchantPatternType)data[0];
             DirType dirType = (DirType)data[1];
-            Vector2 posi = new Vector2((int)data[2], (int)data[3]);
+            Vector2 posi = new Vector2((float)data[2], (float)data[3]);
+            float stopX = (float)data[4];
 
-            MapPatternManager.Instance.MarketMapPattern.GenerateMerchant(merchantType, dirType, posi);
+            MapPatternManager.Instance.MarketMapPattern.GenerateMerchant(merchantType, dirType, posi , stopX);
         }
 
             // (게임종료시) 점수, 스테이지 싱크 이벤트
