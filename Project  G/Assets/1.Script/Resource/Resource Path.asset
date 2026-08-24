@@ -28,3 +28,6 @@ MonoBehaviour:
   - method: 1
     key: FallBackChart
     value: ChartFallback
+  - method: 1
+    key: MarketMerchant
+    value: MarketMerchant

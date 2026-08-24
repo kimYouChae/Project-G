@@ -39,6 +39,9 @@ public class ResourceManager : Singleton<ResourceManager>
     [SerializeField] private TextAsset fallBackLocalizionTextfile;
     [SerializeField] private TextAsset[] fallBackChartTextfile;
 
+    [Header("===Marchat Merchant===")]
+    [SerializeField] private GameObject[] merchantPrefab;
+
     protected override void Singleton_Awake()
     {
         SetUpDontDestroy();
@@ -49,6 +52,8 @@ public class ResourceManager : Singleton<ResourceManager>
 
         fallBackLocalizionTextfile = ResourceLoaderGeneric.LoadAsset<TextAsset>(resourcePath.GetPathEntity("FallBackLocalization"));
         fallBackChartTextfile = ResourceLoaderGeneric.LoadAssetAll<TextAsset>(resourcePath.GetPathEntity("FallBackChart"));
+
+        merchantPrefab = ResourceLoaderGeneric.LoadAssetAll<GameObject>(resourcePath.GetPathEntity("MarketMerchant"));
     }
 
     public Sprite GetDefaultSprite() => defaultSprite;
@@ -73,6 +78,16 @@ public class ResourceManager : Singleton<ResourceManager>
 
     public TextAsset FallBackLocalizationText => fallBackLocalizionTextfile;
     public TextAsset[] FallBackChartTextfile => fallBackChartTextfile;
+
+    public GameObject MerchantObj(MerchantPatternType type) 
+    {
+        int idx = (int)type;
+
+        if (idx < 0 || idx >= merchantPrefab.Length)
+            return null;
+
+        return merchantPrefab[idx];
+    }
 
 
 }
