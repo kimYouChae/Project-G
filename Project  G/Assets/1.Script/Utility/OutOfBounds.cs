@@ -12,10 +12,10 @@ public class OutOfBounds : MonoBehaviour
     {
         UpdateLogic();
 
-        if (transform.position.x <= Define.mapMinX
-            || transform.position.y <= Define.mapMinY
-            || transform.position.x >= Define.mapMaxX
-            || transform.position.y >= Define.mapMaxY)
+        if (transform.position.x < Define.mapMinX
+            || transform.position.y < Define.mapMinY
+            || transform.position.x > Define.mapMaxX
+            || transform.position.y > Define.mapMaxY)
         { 
             Destroy(gameObject);
         }

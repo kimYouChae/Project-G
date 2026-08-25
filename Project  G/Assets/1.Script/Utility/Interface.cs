@@ -10,6 +10,12 @@ public interface IMapPattern
     public MapType IGetMapType();
 }
 
+public interface IMerchant 
+{
+    public void IOnStart(MerchantData data);
+    public IEnumerator IMerChantLogic(float stopX = 0);
+}
+
 #endregion
 
 #region GameServies

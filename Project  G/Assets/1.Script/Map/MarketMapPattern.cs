@@ -94,7 +94,7 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
         float fieldMinX = Define.twoMemberFieldMin[QuadrantType.two].x;
         float fieldMaxX = Define.twoMemberFieldMax[QuadrantType.one].x;
 
-        return Random.Range(fieldMaxX, fieldMaxX);
+        return Random.Range(fieldMinX, fieldMaxX);
     }
 
     /// <summary>

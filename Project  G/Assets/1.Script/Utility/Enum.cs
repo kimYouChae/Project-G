@@ -84,7 +84,7 @@ public enum MerchantPatternType
     Straight,    // 직선
     Stop,        // 정차 -  중앙에서 몇 초 멈춤
     Meeting,     // 조우 & 대화 - 쌍으로 스폰, 중앙에서 만나 정지
-    Procession,  // 행렬 - 한 줄 + 틈 하나
+    // Procession,  // 행렬 - 한 줄 + 틈 하나
     Cart,        // 수레 - 긴 히트박스
 }
 
