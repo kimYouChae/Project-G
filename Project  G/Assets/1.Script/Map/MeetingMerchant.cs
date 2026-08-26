@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
-public class StopMerchant : MonoBehaviour, IMerchant
+public class MeetingMerchant : MonoBehaviour, IMerchant
 {
     [SerializeField]
     private Animator animator;
     [SerializeField]
     private MerchantData data;
 
-    const string MiningParemeter = "Mining";
+    [SerializeField]
+    private GameObject bubbleObj;
+    [SerializeField]
+    private Animator bubbleAnimator;
+
+    const string TalkParameter = "Talk";
 
     public void IOnStart(MerchantData data)
     {
@@ -18,14 +24,15 @@ public class StopMerchant : MonoBehaviour, IMerchant
 
     public IEnumerator IMerChantLogic(float stopX = 0)
     {
-        if (animator != null)
+        if (animator != null) 
         {
-            // 스탑 애니메이션 실행
-            animator.SetTrigger(MiningParemeter);
+            bubbleObj.SetActive(true);
+            animator.SetTrigger(TalkParameter);
 
             yield return new WaitForSeconds(data.WaitTime);
+
+            bubbleObj.SetActive(false);
         }
     }
-
 
 }
