@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 76242df2ff2ed0645988705e15bcee5d
+guid: de2f176b22b042c469df8a3822dd4936
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Straight,Stop_0
+      name: Stop_minerSwing_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0b4caaefaf49ad4b8bcc51474bc7d7d
-      internalID: -123885876
+      spriteID: 5fbb10707b5358141ac74342b0daacef
+      internalID: -1212312856
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_1
+      name: Stop_minerSwing_1
       rect:
         serializedVersion: 2
         x: 32
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd008a839ba853a4c8911647fb0a4c18
-      internalID: -1852040506
+      spriteID: 351e0f7826b7a9c4eb8e44dd4d73b017
+      internalID: -238893705
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_2
+      name: Stop_minerSwing_2
       rect:
         serializedVersion: 2
         x: 64
@@ -179,14 +179,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23c023ae724ed4f43991199c7271b9db
-      internalID: 999790901
+      spriteID: 5095b84c99ce2cc4c9d5eff069738c1e
+      internalID: 1199973634
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_3
+      name: Stop_minerSwing_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da83fa6c38416ef439b2cb1b6f8424f9
+      internalID: -1650272533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stop_minerSwing_4
       rect:
         serializedVersion: 2
         x: 0
@@ -200,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02a5ac57b2f0fd44fb79a22f6eddb751
-      internalID: 2002535318
+      spriteID: 87040c7907211374bbc7bcb0102c62bb
+      internalID: 843172822
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_4
+      name: Stop_minerSwing_5
       rect:
         serializedVersion: 2
         x: 32
@@ -221,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00448ea7279aade4583f2dd1d7306cf0
-      internalID: 1412780030
+      spriteID: 0af042a6391b1a540bfd0fc8267a056e
+      internalID: -59325671
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_5
+      name: Stop_minerSwing_6
       rect:
         serializedVersion: 2
         x: 64
@@ -242,14 +263,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c43d31634744664fa632d93e6525b37
-      internalID: 13211002
+      spriteID: db0d1411566a3cd45864423146341a26
+      internalID: 659306449
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_6
+      name: Stop_minerSwing_7
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91918a029c8b8b3419d34178e97fc174
+      internalID: -1369403465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stop_minerSwing_8
       rect:
         serializedVersion: 2
         x: 0
@@ -263,14 +305,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 516c47908bb40e0448e184b334941cb9
-      internalID: -1645459170
+      spriteID: 3bf50b6a2738ad14d81e1347b5507f0b
+      internalID: 1553802471
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_7
+      name: Stop_minerSwing_9
       rect:
         serializedVersion: 2
         x: 32
@@ -284,14 +326,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81d3190126865034ca82fb18914cca80
-      internalID: 1759701311
+      spriteID: f433b4ad62bca7b41a1c699c3780c25d
+      internalID: 1637251891
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_8
+      name: Stop_minerSwing_10
       rect:
         serializedVersion: 2
         x: 64
@@ -305,14 +347,35 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c40968edbfc79d34581961f04d040c49
-      internalID: 40057138
+      spriteID: d7503b0d8865296408ad30b0e91d6f64
+      internalID: 500914791
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_9
+      name: Stop_minerSwing_11
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c9e942cdb35d3c4cae1096afa43a8b5
+      internalID: -192309693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stop_minerSwing_12
       rect:
         serializedVersion: 2
         x: 0
@@ -326,14 +389,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b7c94616c13652c4a83a186092688aea
-      internalID: 514516800
+      spriteID: fac958942b17d3a4fb00215aadfe04ee
+      internalID: -499095840
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_10
+      name: Stop_minerSwing_13
       rect:
         serializedVersion: 2
         x: 32
@@ -347,14 +410,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 969334f189136f94a898e6406d4c7504
-      internalID: -408475439
+      spriteID: b48c8f640e29afb4ea4f35702fca70b2
+      internalID: -73034213
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Straight,Stop_11
+      name: Stop_minerSwing_14
       rect:
         serializedVersion: 2
         x: 64
@@ -368,8 +431,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3920bfdc19027fa488d72de6db6a3fbb
-      internalID: 1772586451
+      spriteID: f6c360eac62fed94ba19eea24692edf3
+      internalID: -1974423956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stop_minerSwing_15
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49fad3d85e7346840be239ef4777263f
+      internalID: 754919117
       vertices: []
       indices: 
       edges: []
@@ -385,18 +469,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Straight,Stop_0: -123885876
-      Straight,Stop_1: -1852040506
-      Straight,Stop_10: -408475439
-      Straight,Stop_11: 1772586451
-      Straight,Stop_2: 999790901
-      Straight,Stop_3: 2002535318
-      Straight,Stop_4: 1412780030
-      Straight,Stop_5: 13211002
-      Straight,Stop_6: -1645459170
-      Straight,Stop_7: 1759701311
-      Straight,Stop_8: 40057138
-      Straight,Stop_9: 514516800
+      Stop_minerSwing_0: -1212312856
+      Stop_minerSwing_1: -238893705
+      Stop_minerSwing_10: 500914791
+      Stop_minerSwing_11: -192309693
+      Stop_minerSwing_12: -499095840
+      Stop_minerSwing_13: -73034213
+      Stop_minerSwing_14: -1974423956
+      Stop_minerSwing_15: 754919117
+      Stop_minerSwing_2: 1199973634
+      Stop_minerSwing_3: -1650272533
+      Stop_minerSwing_4: 843172822
+      Stop_minerSwing_5: -59325671
+      Stop_minerSwing_6: 659306449
+      Stop_minerSwing_7: -1369403465
+      Stop_minerSwing_8: 1553802471
+      Stop_minerSwing_9: 1637251891
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
