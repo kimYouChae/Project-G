@@ -3,18 +3,23 @@ using Photon.Pun;
 using Photon.Realtime;
 using Steamworks;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class MarketMapPattern : MonoBehaviour, IMapPattern
 {
-    const float coolTime = 10f;
+    const float coolTime = 5f;
 
     [SerializeField]
     private MapType mapType = MapType.Market;
 
     [SerializeField]
     private Transform merchantTrs; // 주민 오브젝트 담아둘 trs
+
+    // ##TODO : Resource 리펙토링 전 Merchant 오브젝트 담아두기 
+    [SerializeField]
+    private List<GameObject> merchantPrefab;    // enum 순서대로 담겨있음 
 
     public MapType IGetMapType()
     {
@@ -28,20 +33,21 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
 
     public IEnumerator PatterLogin() 
     {
-        yield return new WaitForSeconds(coolTime);
+        while (true) 
+        {
+            yield return new WaitForSeconds(coolTime);
 
-        // 내 사분면 가져오기 
-        QuadrantType quType = PunIngameManager.Instance.LocalQuadrantType;
+            // 내 사분면 가져오기 
+            QuadrantType quType = PunIngameManager.Instance.LocalQuadrantType;
 
-        // 사분면에 따라 생성할 방향 달라짐
-        // 1사분면이면 오른쪽에 생성 ( 이동 : 오른쪽 > 왼쪽 )
-        // 2사분변이면 왼쪽에 생성 ( 이동 : 왼쪽 > 오른쪽 )
-        DirType dirtype = quType == QuadrantType.one ? DirType.Right : DirType.Left;
+            // 사분면에 따라 생성할 방향 달라짐
+            // 1사분면이면 오른쪽에 생성 ( 이동 : 오른쪽 > 왼쪽 )
+            // 2사분변이면 왼쪽에 생성 ( 이동 : 왼쪽 > 오른쪽 )
+            DirType dirtype = quType == QuadrantType.one ? DirType.Right : DirType.Left;
 
-        
-
-        // 마켓 주민 생성 이벤트 송신
-        MerchantRaiseEvent( GetRandomMerchantType(), dirtype , GenerationPosi(dirtype) , StopRandX() );
+            // 마켓 주민 생성 이벤트 송신
+            MerchantRaiseEvent(GetRandomMerchantType(), dirtype, GenerationPosi(dirtype), StopRandX());
+        }
     }
 
     private MerchantPatternType GetRandomMerchantType() 
@@ -106,7 +112,9 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
     /// </summary>
     public void GenerateMerchant(MerchantPatternType merchantType, DirType dirtype, Vector2 randPosi, float stopX) 
     {
-        GameObject prefab = ResourceManager.Instance.MerchantObj(merchantType);
+        // GameObject prefab = ResourceManager.Instance.MerchantObj(merchantType);
+        // ##TODO : 임시 프리팹 가져오기 
+        GameObject prefab = merchantPrefab[(int)merchantType];
 
         if (prefab != null)
         {

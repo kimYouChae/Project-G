@@ -5,33 +5,24 @@ using UnityEngine;
 public class MapPatternManager : Singleton<MapPatternManager>
 {
     [SerializeField]
-    private Dictionary<MapType, IMapPattern> keyValuePairs;
+    private IMapPattern currentMapPattern;
 
-    //
-    private MarketMapPattern marketMapPattern;
-
-    public MarketMapPattern MarketMapPattern { get => marketMapPattern; }
+    public IMapPattern CurrentMapPattern { get => currentMapPattern; }
 
     protected override void Singleton_Awake()
     {
-        keyValuePairs = new Dictionary<MapType, IMapPattern>()
-        {
-            { MapType.Market , GetComponent<MarketMapPattern>() }
-            // { MapType.Island , GetComponent<>() }
-            // { MapType.Hell , GetComponent<>() }
-            // { MapType.IceVillage , GetComponent<>() }
-
-        };
-
-        marketMapPattern = GetComponent<MarketMapPattern>();
+        TryGetComponent<IMapPattern>(out currentMapPattern);
     }
 
-    public IMapPattern GetMapPattern(MapType mapType) 
+    public void StartMapPatternByType(MapType mapType) 
     {
-        if(keyValuePairs.ContainsKey(mapType))
-            return keyValuePairs[mapType];
+        // 맵 패턴이 NULL이면 
+        if(currentMapPattern == null) return;
+        // 맵 타입이 다르면 
+        if (mapType != currentMapPattern.IGetMapType()) return;
 
-        return null;    
+        // 같으면 실행
+        currentMapPattern.IMapPatternEnter();
     }
 
 }

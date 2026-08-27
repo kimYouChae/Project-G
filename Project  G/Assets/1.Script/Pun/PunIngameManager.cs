@@ -181,6 +181,9 @@ public class PunIngameManager : Singleton<PunIngameManager>
         // 로직실행
         localPlayer.GetComponent<NetPlayer>().IsReadToMove = true;
         ScoreManager.Instance.ScoreBegin((float)PhotonNetwork.Time);
+
+        // 맵 패턴 실행
+        MapPatternManager.Instance.StartMapPatternByType( GetMapType() );
     }
 
     private void CreateAndSyncLocalPlayer() 
