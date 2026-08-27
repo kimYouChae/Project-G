@@ -4804,6 +4804,7 @@ GameObject:
   - component: {fileID: 1528429920}
   - component: {fileID: 1528429921}
   - component: {fileID: 1528429922}
+  - component: {fileID: 1528429923}
   m_Layer: 0
   m_Name: MapPattern
   m_TagString: Untagged
@@ -4858,6 +4859,18 @@ MonoBehaviour:
   - {fileID: 3662476702196236981, guid: 1c35521f10acf2b43a2f57088c5ed9f2, type: 3}
   - {fileID: 8814427001826896697, guid: fa6e1cb544e3e514da76ecf5ea0385aa, type: 3}
   - {fileID: 5685133444575947598, guid: cb02e8dbe2588e04e8383bb627120736, type: 3}
+--- !u!114 &1528429923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528429919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 114029bd24b1d4a47bb452124f25ae4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1530671747
 GameObject:
   m_ObjectHideFlags: 0
