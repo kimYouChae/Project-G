@@ -10,7 +10,12 @@ using UnityEngine.SceneManagement;
 public class PunLauncher : MonoBehaviourPunCallbacks
 {
     // 게임 버젼
+// 테스트하는 방이 라이브유저의 방에 뜨지않게
+#if DEV_BUILD_TEST
+    private string gameVersion = "1-Test";
+#else   
     private string gameVersion = "1";
+#endif
 
     private bool isReturningFromGame = false;       // 게임씬 -> 로비씬 돌아왔는지
 
