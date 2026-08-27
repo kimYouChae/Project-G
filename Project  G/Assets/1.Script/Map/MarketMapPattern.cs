@@ -114,6 +114,12 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
     {
         // GameObject prefab = ResourceManager.Instance.MerchantObj(merchantType);
         // ##TODO : 임시 프리팹 가져오기 
+        if ((int)merchantType >= merchantPrefab.Count
+            || merchantPrefab[(int)merchantType] == null)
+        {
+            Debug.Log($"Type이 프리팹 배열을 넘습니다 , 타입 :{merchantType}");
+            return;
+        }
         GameObject prefab = merchantPrefab[(int)merchantType];
 
         if (prefab != null)
