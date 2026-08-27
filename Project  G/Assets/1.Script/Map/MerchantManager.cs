@@ -43,7 +43,7 @@ public class MerchantManager : Singleton<MerchantManager>
             { MerchantPatternType.Meeting , new MerchantData(
                 MerchantPatternType.Meeting , 3f, 1.5f, 2f ,true)},
             { MerchantPatternType.Cart , new MerchantData(
-                MerchantPatternType.Cart , 3f, 0, 0.5f ,true)},
+                MerchantPatternType.Meeting , 3f, 0, 0.5f ,true)},
         };
     }
 
