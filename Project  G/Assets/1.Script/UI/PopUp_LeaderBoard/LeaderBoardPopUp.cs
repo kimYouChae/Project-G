@@ -160,8 +160,8 @@ public class LeaderBoardPopUp : UIPopUP
         }
 
         // 리더보드 오브젝트 업데이트
-        lbObj.UpdateLeaderBoard(rankIcon, rankText, userRankDTO.player1_nick + Divider + userRankDTO
-            .player2_nick, userRankDTO.stage + Divider + userRankDTO.score);
+        lbObj.UpdateLeaderBoard(rankIcon, rankText, userRankDTO.player1_nick,  userRankDTO.player2_nick,
+             userRankDTO.score.ToString() , userRankDTO.stage.ToString());
     }
 
 
