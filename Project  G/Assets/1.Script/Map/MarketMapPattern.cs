@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 public class MarketMapPattern : MonoBehaviour, IMapPattern
 {
     const float coolTime = 5f;
+    const float offset = 3f;    // 너무 외곽에 생성되지 않게
 
     [SerializeField]
     private MapType mapType = MapType.Market;
@@ -89,7 +90,7 @@ public class MarketMapPattern : MonoBehaviour, IMapPattern
         // 오른쪽 : x는 max
         // 왼쪽 : x는 min
         float x = dirtype == DirType.Right? Define.mapMaxX : Define.mapMinX;
-        float y = Random.Range(Define.mapMinY, Define.mapMaxY);
+        float y = Random.Range(Define.mapMinY + offset, Define.mapMaxY - offset);
 
         return new Vector2(x,y);
     }
