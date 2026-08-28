@@ -206,7 +206,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -448213619
   m_SortingLayer: 2
-  m_SortingOrder: 30
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 14668263d67a89b4d8d52404ebc3bae5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -284,13 +284,21 @@ MonoBehaviour:
   view: {fileID: 0}
   rb: {fileID: 0}
   ownerTrs: {fileID: 0}
-  spanwerAnimator: {fileID: 0}
+  spawnerAnimator: {fileID: 0}
   directType: 0
   canMove: 1
   spawnerData:
     type: 0
     speed: 0
+    bulletSpeed: 0
     smoothTime: 0
+    coolTimeMin: 0
+    coolTimeMax: 0
+    chargeTime: 0
+    chargeDuration: 0
+    bulletLifeTime: 0
+    bulletInterval: 0
+    bulletInitWait: 0
   shootPosiList:
   - {fileID: 2166286633022701150}
   - {fileID: 1225818979480746989}

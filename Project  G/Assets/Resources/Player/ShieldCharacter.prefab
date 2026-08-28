@@ -78,9 +78,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1875672885
-  m_SortingLayer: 3
-  m_SortingOrder: 100
+  m_SortingLayerID: -448213619
+  m_SortingLayer: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 102707134, guid: cebe4b8e3c6f83a4f96621391ae9dfde, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -253,16 +253,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerQuadtype: 0
   playerIndex: 0
-  isReadToMove: 0
   speed: 3
+  isReadToMove: 0
   dir: {x: 0, y: 0, z: 0}
+  lastMoveDir: {x: 0, y: -1, z: 0}
   rb: {fileID: 0}
   view: {fileID: 0}
   animator: {fileID: 0}
   spriteRenderer: {fileID: 0}
   originalColor: {r: 0, g: 0, b: 0, a: 0}
   netAnimator: {fileID: 0}
-  flag: 1
+  netPlayerCantDieFlag: 1
 --- !u!114 &6199471201461185181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,3 +289,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 019f5aa44321c5a4992e99f9c44c3ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStatusData:
+    characterType: 0
+    moveSpeed: 0
+    scoreAmount: 0
+    scoreCooltime: 0
+    shieldAngle: 0
+    colorChangeInterval: 0
+  shieldAngle: 0

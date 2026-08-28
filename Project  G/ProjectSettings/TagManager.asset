@@ -45,9 +45,9 @@ TagManager:
   - name: BackGround
     uniqueID: 755141879
     locked: 0
-  - name: MapObject
+  - name: Moving
     uniqueID: 3846753677
     locked: 0
-  - name: Player
+  - name: Bullet
     uniqueID: 2419294411
     locked: 0
