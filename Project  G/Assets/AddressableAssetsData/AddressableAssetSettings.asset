@@ -81,7 +81,7 @@ MonoBehaviour:
       - m_Id: f72a3cab1248ff54e88d0de668302719
         m_Value: ServerData/[BuildTarget]
       - m_Id: 8bb70a2c427745f44b634cf89a297ea1
-        m_Value: 
+        m_Value: https://onehitoutassets.blob.core.windows.net/soundbundles
     m_ProfileEntryNames:
     - m_Id: c231e364285764648afaae5681d7f1eb
       m_Name: BuildTarget
