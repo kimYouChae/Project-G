@@ -24,10 +24,48 @@ public class LeaderBoardPopUp : UIPopUP
     [SerializeField] TextMeshProUGUI leaderBoardText;
 
     [Header("===MapType===")]
-    [SerializeField] MapType mapType = MapType.Forest;
+    [SerializeField]
+    private MapType currentMapType;
+    [SerializeField]
+    private LeaderBoardMapObject[] mapobjs;
 
-    // 텍스트 사이에 구분선 ex) 감자|고구마
-    private const string Divider = "|";
+    // MapObject 클릭 시 실행 
+    public void InitPopup(MapType type) 
+    {
+        // 현재 Maptype 지정
+        this.currentMapType = type;
+
+        // 아이콘 활성,비활성화 
+        OnOffMapIcons(type);
+
+        // 랭킹 가져오기전 화면 가리기
+        rankingLoadingText.gameObject.SetActive(true);
+        myrankLoadingText.gameObject.SetActive(true);
+        uiContentsRanking.gameObject.SetActive(false);
+        uiContentsDetails.gameObject.SetActive(false);
+
+        // 내 랭킹 가져오기
+        StartCoroutine(GetRank());
+        // 랭커 가져오기 
+        StartCoroutine(GetRankers());
+    }
+
+    private void OnOffMapIcons(MapType type) 
+    {
+        for (int i = 0; i < mapobjs.Length; i++) 
+        {
+            if ((int)type != i) 
+            {
+                // map 아이콘 회색으로 
+                mapobjs[i].OnOnffInActiveImage(true);
+                continue;
+            }
+            
+            // 선택 됏으면 회색 아이콘 끄기
+            mapobjs[i].OnOnffInActiveImage(false);
+
+        }
+    }
 
     public void OpenLeaderBoardPopUp()
     {
@@ -39,13 +77,8 @@ public class LeaderBoardPopUp : UIPopUP
         rankingLoadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
         myrankLoadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
 
-        uiContentsRanking.gameObject.SetActive(false);
-        uiContentsDetails.gameObject.SetActive(false);
-
-        // 내 랭킹 가져오기
-        StartCoroutine(GetRank());
-        // 랭커 가져오기 
-        StartCoroutine(GetRankers());
+        // 맨 처음엔 forest 
+        InitPopup(MapType.Forest);
     }
 
     private IEnumerator GetRank()
@@ -69,7 +102,7 @@ public class LeaderBoardPopUp : UIPopUP
     private IEnumerator GetRankers() 
     {
         // 랭커 가져오기 API 실행
-        yield return GameServices.Instance.RankingService.GetRankerService((int)mapType);
+        yield return GameServices.Instance.RankingService.GetRankerService((int)currentMapType);
 
         // 랭커 API 실패 시 
         if (!GameServices.Instance.RankingModel.GetIsSuccess()) 
@@ -94,7 +127,7 @@ public class LeaderBoardPopUp : UIPopUP
             return;
         }
 
-        myrankLoadingText.text = "";
+        myrankLoadingText.gameObject.SetActive(false);
         uiContentsDetails.gameObject.SetActive(true);
 
         UpdateLeaderBoardObj(myrankingObj, myRank);
@@ -131,7 +164,7 @@ public class LeaderBoardPopUp : UIPopUP
 
     private void UpdateRankers(List<UserRankDTO> rankers) 
     {
-        rankingLoadingText.text = "";
+        rankingLoadingText.gameObject.SetActive(false);
         uiContentsRanking.gameObject.SetActive(true);
 
         for (int i = 0; i < rankers.Count; i++) 
