@@ -22,6 +22,8 @@ public class Merchant : OutOfBounds
     [SerializeField]
     private float stopX;
     [SerializeField]
+    private float meetWaitTime;
+    [SerializeField]
     private MerchantStausType stausType;
 
     [Header("===Component===")]
@@ -43,7 +45,7 @@ public class Merchant : OutOfBounds
         TryGetComponent<IMerchant>(out merchantLogic);
     }
 
-    public void SetupMerchant(MerchantPatternType mtype, DirType dirtype, float stopX) 
+    public void SetupMerchant(MerchantPatternType mtype, DirType dirtype, float stopX, float waitTime) 
     {
         merchantData = MerchantManager.Instance.GetData(mtype);
         if(merchantLogic != null)
@@ -52,11 +54,19 @@ public class Merchant : OutOfBounds
         this.patternType = mtype;
         this.dirType = dirtype;
         this.stopX = stopX;
+        this.meetWaitTime = waitTime;
 
-        // dir방향이 left -> 오른쪽으로 가야함
-        if (dirtype == DirType.Left) directVector = Vector2.right;
-        // dir방향이 right -> 왼쪽으로 가야함
-        else if(dirtype == DirType.Right) directVector = Vector2.left;
+        // dir방향이 left -> 오른쪽으로 가야함 + 회전 필요 
+        if (dirtype == DirType.Left)
+        {
+            directVector = Vector2.right;
+            transform.localRotation = new Quaternion(0,180,0,0);
+        }
+        // dir방향이 right -> 왼쪽으로 가야함 + 회전 X 
+        else if (dirtype == DirType.Right) 
+        {
+            directVector = Vector2.left;
+        } 
         //잘못들어오면 일단 Up
         else directVector = Vector2.up;
 
@@ -100,7 +110,15 @@ public class Merchant : OutOfBounds
         // 주민 별 각 동작 실행
         // ex) 짐을 내려놓는다 or 이야기 애니메이션 실행 
         if (merchantLogic != null)
+        {
+            if (patternType == MerchantPatternType.Meeting)
+            {
+                MeetingMerchant temp = merchantLogic as MeetingMerchant;
+                temp.SetWaitTime(meetWaitTime);
+            }
             yield return merchantLogic.IMerChantLogic(stopX);
+        }
+
 
         rb.velocity = merchantData.Speed * directVector;
         stausType = MerchantStausType.Move;

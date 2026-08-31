@@ -151,8 +151,28 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
 
             // IMapPattern을 형변환
             MarketMapPattern market = MapPatternManager.Instance.CurrentMapPattern as MarketMapPattern;
-            market.GenerateMerchant(merchantType, dirType, posi , stopX);
+            market.GenerateMerchant(merchantType, dirType, posi, stopX);
         }
+
+        // Meeting 주민 생성
+        if (eventCode == (int)PunEventType.MerchantMeetingSpawn) 
+        {
+            Debug.Log("[MerchantMeetingSpawn] Meeting 주민생성 OnEvent실행");
+            object[] data = (object[])photonEvent.CustomData;
+
+            MerchantPatternType merchantType = (MerchantPatternType)data[0];
+            DirType dirType = (DirType)data[1];
+            Vector2 posi = new Vector2((float)data[2], (float)data[3]);
+            float stopX = (float)data[4];
+            // meeting -> 대기시간 존재
+            float waitTime = (float)data[5];
+
+            // IMapPattern을 형변환
+            MarketMapPattern market = MapPatternManager.Instance.CurrentMapPattern as MarketMapPattern;
+            market.GenerateMerchant(merchantType, dirType, posi, stopX, waitTime);
+        }
+
+
 
             // (게임종료시) 점수, 스테이지 싱크 이벤트
             /*

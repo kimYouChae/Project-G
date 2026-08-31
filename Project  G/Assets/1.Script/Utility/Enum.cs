@@ -23,6 +23,7 @@ public enum PunEventType
     SFXSync = 5,
     BestScoreSyncOffline = 6,
     MerchantSpawn = 7,
+    MerchantMeetingSpawn = 8
 }
 
 #endregion
