@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 public class MarketMapPattern : MonoBehaviour, IMapPattern
 {
-    const float coolTime = 5f;
+    const float coolTime = 15f;
     const float offset = 3f;    // 너무 외곽에 생성되지 않게
 
     [SerializeField]
