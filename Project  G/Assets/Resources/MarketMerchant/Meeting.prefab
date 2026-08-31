@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1875672885
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 2076147255, guid: 820bbcfe4e8ba334783e8e5a19797678, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -259,6 +259,7 @@ MonoBehaviour:
   dirType: 0
   directVector: {x: 0, y: 0}
   stopX: 0
+  meetWaitTime: 0
   stausType: 0
   rb: {fileID: 0}
 --- !u!114 &7352184013729549962
@@ -274,5 +275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5368744754288757813}
+  meetWaitTime: 0
   bubbleObj: {fileID: 2737548576238505840}
   bubbleAnimator: {fileID: 4006865358585031547}
