@@ -335,9 +335,8 @@ public class SteamScript : Singleton<SteamScript>
     {
         achieveTypeBySteamAPI = new Dictionary<AchieveType, string>()
         {
-            { AchieveType.Stage_Forest , "ACH_CLEAR_FOREST"},
-            { AchieveType.Stage_GiganticTree , "ACH_CLEAR_GIGANTIC_TREE"},
-            { AchieveType.Stage_Island , "ACH_CLEAR_ISLAND"}
+            { AchieveType.Stage_Forest , "ACH_Forest_0.1"},
+            { AchieveType.Stage_GiganticTree , "ACH_GiganticTree_0.1"}
         };
     }
 
