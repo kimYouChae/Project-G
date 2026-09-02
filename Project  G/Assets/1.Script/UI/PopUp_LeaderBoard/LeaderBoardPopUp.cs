@@ -44,6 +44,10 @@ public class LeaderBoardPopUp : UIPopUP
         uiContentsRanking.gameObject.SetActive(false);
         uiContentsDetails.gameObject.SetActive(false);
 
+        // 랭킹 로딩중... 텍스트
+        rankingLoadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
+        myrankLoadingText.text = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.LoadingData);
+        
         // 내 랭킹 가져오기
         StartCoroutine(GetRank());
         // 랭커 가져오기 
@@ -93,7 +97,7 @@ public class LeaderBoardPopUp : UIPopUP
 
         // 내 랭킹 가져오기 API 실행
         yield return GameServices.Instance.RankingService.
-            GetMyRankingService(UserDataManager.Instance.SteamID, 0);
+            GetMyRankingService(UserDataManager.Instance.SteamID, (int)currentMapType);
 
         // UI 업데이트
         MyRankUIUpdate();
@@ -137,12 +141,39 @@ public class LeaderBoardPopUp : UIPopUP
     {
         List<UserRankDTO> rankers = GameServices.Instance.RankingModel.GetRankersList();
 
+        if (rankers == null) 
+        {
+            // UI 다 끄기 
+            DeadAllRankerObj();
+
+            rankingLoadingText.text
+                        = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Ranking_RankerList_Offline);
+
+            yield break;
+        }
+
         // 생성된 UIㅇ 오브젝트가 없으면 
         if (leaderBoardObj.Count <= 0) 
         {
             // 생성
             yield return StartCoroutine(InstantiateLBObject(rankers.Count));
         }
+        // 랭커가 없으면 
+        if (rankers.Count <= 0) 
+        {
+            // UI 다 끄기 
+            DeadAllRankerObj();
+
+            // ##TODO 텍스트 교체 예정
+            rankingLoadingText.text
+                        = LocalizationManager.Instance.ReturnLocalizationString(LocalizationKey.Ranking_RankerList_Offline);
+
+            yield break;
+        }
+
+        // 부족한 만큼만 추가 생성 ( 맵마다 랭커 수가 다름 )
+        if (leaderBoardObj.Count < rankers.Count)
+            yield return StartCoroutine(InstantiateLBObject(rankers.Count - leaderBoardObj.Count));
 
         // UI 업데이트
         UpdateRankers(rankers);
@@ -162,19 +193,31 @@ public class LeaderBoardPopUp : UIPopUP
         yield break;
     }
 
+    private void DeadAllRankerObj() 
+    {
+        for (int i = 0; i < leaderBoardObj.Count; i++) 
+        {
+            leaderBoardObj[i].gameObject.SetActive(false);
+        }        
+    }
+
     private void UpdateRankers(List<UserRankDTO> rankers) 
     {
         rankingLoadingText.gameObject.SetActive(false);
         uiContentsRanking.gameObject.SetActive(true);
 
-        for (int i = 0; i < rankers.Count; i++) 
+        for (int i = 0; i < leaderBoardObj.Count; i++) 
         {
-            // 만약 넘으면 
-            if (i >= leaderBoardObj.Count)
-                return;
+            if (i >= rankers.Count)
+            { 
+                leaderBoardObj [i].gameObject.SetActive(false);
+                continue;
+            }
 
+            leaderBoardObj[i].gameObject.SetActive(true);
             UpdateLeaderBoardObj(leaderBoardObj[i], rankers[i]);
         }
+
     }
 
     private void UpdateLeaderBoardObj(LeaderBoardObject lbObj, UserRankDTO userRankDTO) 
