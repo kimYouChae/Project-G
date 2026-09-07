@@ -122,10 +122,6 @@ public class StageDataManager : Singleton<StageDataManager>
 
     public bool HasMapData(MapType type) 
     {
-// Market 테스트 위한 전처리문
-#if DEV_BUILD_TEST
-    if (type == MapType.Market) return true;
-#endif
         // 맵 타입에 따른 데이터 여부
         // 데이터가 있으면 true, 없으면 false
         return StageDataMaxLength(type) > 0;
