@@ -216,10 +216,13 @@ public class SteamScript : Singleton<SteamScript>
         yield return StartCoroutine(
             GameServices.Instance.AuthService.AuthService(steamID, nick, cnr));
 
-        // 4. 차트 불러오기 
+        // 4. 차트 불러오기
         yield return GameServices.Instance.ChartDataService.ChartService();
 
-        // API 호출까지 끝 
+        // 5. 개발 빌드 전용 - 미오픈 맵 차트 적재 ( 릴리즈 빌드에서는 아무 동작 없음 )
+        DevChartLoader.LoadForceOpenMaps();
+
+        // API 호출까지 끝
         SteamConnected.isSteamReady = true;
         Debug.Log($"스팀 API 호출이 끝났습니다 상태 : {SteamConnected.isSteamReady}");
     }

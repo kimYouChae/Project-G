@@ -120,8 +120,12 @@ public class StageDataManager : Singleton<StageDataManager>
             quTwoMapTypeByData[type].Count);
     }
 
-    public bool HasMapData(MapType type) 
+    public bool HasMapData(MapType type)
     {
+        // 개발 빌드에서 강제로 여는 맵 ( 릴리즈 빌드에서는 항상 false )
+        if (DevMapConfig.IsForceOpen(type))
+            return true;
+
         // 맵 타입에 따른 데이터 여부
         // 데이터가 있으면 true, 없으면 false
         return StageDataMaxLength(type) > 0;
