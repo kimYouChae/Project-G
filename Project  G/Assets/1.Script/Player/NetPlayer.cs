@@ -235,14 +235,14 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         // ONLY 호스트 
         if (PhotonNetwork.IsMasterClient ) 
         {
-            // 오프라인이 아닐 때
-            if (!UserDataManager.IsOfflineMode) 
+            // 오프라인이 아니고, 솔로 테스트도 아닐 때 ( 솔로는 서버에 1인 매치 기록을 남기지 않는다 )
+            if (!UserDataManager.IsOfflineMode && !PlayAloneConfig.IsSolo) 
             {
                 PunGameoverManager.Instance.GameOver();
                 return;
             }
 
-            // 오프라인일 때
+            // 오프라인이거나 솔로 테스트일 때 ( 서버 API 없이 UI만 갱신 )
             PunGameoverManager.Instance.GameOverOffline();
         }
     }

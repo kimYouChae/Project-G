@@ -100,7 +100,7 @@ public class CreateRoomController : ILobbyPanelInitionlize
         PhotonRoomInfo.RoomCode = Guid.NewGuid().ToString().Substring(0, 8);
         PhotonRoomInfo.RoomName = nameTitle;
         PhotonRoomInfo.Password = roomModel.roomPassword; 
-        PhotonRoomInfo.MaxUser = roomModel.roomMaxUser;
+        PhotonRoomInfo.MaxUser = PlayAloneConfig.RoomMaxUser(roomModel.roomMaxUser);
         PhotonRoomInfo.MapTypeName = ((MapType)roomModel.currMapIndex).ToString();
     }
 
