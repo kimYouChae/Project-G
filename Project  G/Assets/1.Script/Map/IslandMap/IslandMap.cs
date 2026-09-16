@@ -69,8 +69,8 @@ public class IslandMap : MonoBehaviour, IMapPattern
     [SerializeField] GameObject rightFieldBottomWave;
 
     [Header("===Wave Timing===")]
-    [SerializeField] private float minInterval = 30f;    // 웨이브 최소 간격
-    [SerializeField] private float maxInterval = 50f;    // 웨이브 최대 간격
+    [SerializeField] private float minInterval = 5f;    // 웨이브 최소 간격
+    [SerializeField] private float maxInterval = 10f;    // 웨이브 최대 간격
     [SerializeField] private float riseTime = 2f;        // 차오르는 시간
     [SerializeField] private float holdTime = 10f;       // 최대 침수 유지 시간
     [SerializeField] private float fallTime = 2.5f;      // 빠지는 시간
@@ -128,6 +128,7 @@ public class IslandMap : MonoBehaviour, IMapPattern
         if (!PhotonNetwork.IsMasterClient)
             return;
 
+        Debug.Log($"[IslandMap] 섬 맵의 MapPatternEnter() 실행 ");
         StartCoroutine(WaveTimerCorutine());
     }
 

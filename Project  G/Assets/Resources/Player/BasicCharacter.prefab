@@ -251,6 +251,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   originalColor: {r: 0, g: 0, b: 0, a: 0}
   netAnimator: {fileID: 0}
+  islandMap: {fileID: 0}
   netPlayerCantDieFlag: 1
 --- !u!114 &5060468974724905434
 MonoBehaviour:
