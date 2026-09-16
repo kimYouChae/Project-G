@@ -3884,6 +3884,7 @@ GameObject:
   m_Component:
   - component: {fileID: 608421213}
   - component: {fileID: 608421214}
+  - component: {fileID: 608421215}
   m_Layer: 0
   m_Name: MapPattern
   m_TagString: Untagged
@@ -3918,6 +3919,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bafd1847706f3a4faf1b983b36015e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &608421215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608421212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c36818296c9b9428ef947a279d3f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapType: 3
+  leftFieldLeftWave: {fileID: 1742063979}
+  leftFieldTopWave: {fileID: 600751043}
+  leftFieldRightWave: {fileID: 2021026941}
+  leftFieldBottomWave: {fileID: 697071196}
+  rightFieldLeftWave: {fileID: 1298105312}
+  rightFieldTopWave: {fileID: 495702361}
+  rightFieldRightWave: {fileID: 618072374}
+  rightFieldBottomWave: {fileID: 77410393}
+  minInterval: 30
+  maxInterval: 50
+  riseTime: 2
+  holdTime: 10
+  fallTime: 2.5
+  riseCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fallCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  slowMultiplier: 0.75
 --- !u!1 &618072374
 GameObject:
   m_ObjectHideFlags: 0
@@ -15308,6 +15384,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 883867370}
   - {fileID: 2060878172}
-  - {fileID: 820039500}
   - {fileID: 2094458714}
   - {fileID: 1970643892}
+  - {fileID: 820039500}
