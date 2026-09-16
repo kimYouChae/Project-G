@@ -172,6 +172,19 @@ public class InGameRiseEvent : MonoBehaviour, IOnEventCallback
             market.GenerateMerchant(merchantType, dirType, posi, stopX, waitTime);
         }
 
+        // Island 조수(파도) 시작
+        if (eventCode == (int)PunEventType.IslandWaveStart)
+        {
+            Debug.Log("[IslandWaveStart] 파도 시작 OnEvent실행");
+            object[] data = (object[])photonEvent.CustomData;
+
+            DirType dirType = (DirType)(byte)data[0];
+            double startTime = (double)data[1];
+
+            // IMapPattern을 형변환
+            IslandMap island = MapPatternManager.Instance.CurrentMapPattern as IslandMap;
+            island.StartWave(dirType, startTime);
+        }
 
 
             // (게임종료시) 점수, 스테이지 싱크 이벤트

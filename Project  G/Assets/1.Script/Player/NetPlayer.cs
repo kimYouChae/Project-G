@@ -28,6 +28,7 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
     [Header("===Script===")]
     [SerializeField] NetPlayerAnimator netAnimator;
     [SerializeField] IPlayerSkill playerSkill;
+    [SerializeField] IslandMap islandMap;   // Island 맵일 때만 세팅됨 ( 그 외 맵은 null )
 
     [Header("===Test===")]
     [SerializeField] bool netPlayerCantDieFlag = true; // true : 테스트할 때 충돌 x 
@@ -57,6 +58,9 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
 
         // 데이터 세팅
         speed = PlayerStatus.GetPlayerSpeed();
+
+        // 맵 패턴 ( Island가 아니면 null )
+        islandMap = MapPatternManager.Instance.CurrentMapPattern as IslandMap;
     }
 
 #if DEV_BUILD_TEST
@@ -101,11 +105,16 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
         if (dir.x == 0 && dir.y == 0)    // 가만히
             netAnimator.ChangeAnimation(CharaterAniState.none);
 
+        // 물에 잠겨있으면 감속 ( Island 맵 전용 )
+        float moveSpeed = speed;
+        if (islandMap != null && islandMap.IsInWater(transform.position))
+            moveSpeed *= islandMap.SlowMultiplier;
+
         // 입력이 있을 때 (이동할 때)
         if (dir != Vector3.zero)
         {
-            lastMoveDir = dir.normalized; 
-            rb.velocity = lastMoveDir * speed;
+            lastMoveDir = dir.normalized;
+            rb.velocity = lastMoveDir * moveSpeed;
 
             // 걷는 사운드 실행
             SFXManager.Instance.PlayCharacterFootStep(SFXType.CharacterFootstep);

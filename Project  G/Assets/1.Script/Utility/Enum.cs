@@ -23,7 +23,8 @@ public enum PunEventType
     SFXSync = 5,
     BestScoreSyncOffline = 6,
     MerchantSpawn = 7,
-    MerchantMeetingSpawn = 8
+    MerchantMeetingSpawn = 8,
+    IslandWaveStart = 9      // Island 맵 조수(파도) 시작
 }
 
 #endregion
