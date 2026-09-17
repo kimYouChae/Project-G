@@ -190,8 +190,10 @@ public class NetPlayer : MonoBehaviourPun, IPunObservable
             return;
 #endif
 
-        // 임시 총알 레이어 번호 설정 
-        if (collision.gameObject.layer == 7)
+        // ##TODO 플레이어 충돌 레이어
+        // 7 : 총알, 11 : 주민 
+        if (collision.gameObject.layer == 7
+            || collision.gameObject.layer == 11)
         {
             // 총알 삭제
             // ##TODO : 추후 pooling 추가 예정
