@@ -1798,7 +1798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a958b698e93dd4da0aa6a9a808e6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
+  camera: {fileID: 883867369}
   cameraFarZ: -10
   highlightBG: {fileID: 1606476477}
   gamePanel: {fileID: 1248808314}
